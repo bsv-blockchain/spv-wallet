@@ -48,7 +48,7 @@ jobs:
         with:
           go-version-file: 'go.mod'
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: ${{ env.LINT_VERSION }}
           args: --config=./.golangci-lint.yml
@@ -61,7 +61,7 @@ jobs:
         with:
           go-version-file: 'go.mod'
       - name: golangci-style-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: ${{ env.LINT_VERSION }}
           args: --config=./.golangci-style.yml
@@ -99,7 +99,7 @@ jobs:
         run: make test-all-db-ci
 
       - name: Update code coverage
-        uses: codecov/codecov-action@v5.4.0
+        uses: codecov/codecov-action@v5.4.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unittests
@@ -117,7 +117,7 @@ jobs:
           go-version-file: 'go.mod'
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: ${{ env.LINT_VERSION }}
           working-directory: './models'
@@ -132,7 +132,7 @@ jobs:
         with:
           go-version-file: 'go.mod'
       - name: golangci-style-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: ${{ env.LINT_VERSION }}
           working-directory: './models'
