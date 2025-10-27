@@ -365,3 +365,6 @@ View the [contributing guidelines](.github/CODE_STANDARDS.md#3-contributing) and
 ## License
 
 [![License](https://img.shields.io/github/license/bitcoin-sv/spv-wallet.svg?style=flat&v=3)](LICENSE)
+
+
+<!-- Documentation update -->
