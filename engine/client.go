@@ -123,6 +123,32 @@ func NewClient(ctx context.Context, opts ...ClientOps) (ClientInterface, error) 
 		client.options.logger = logging.GetDefaultLogger()
 	}
 
+	// Load the Cachestore client - needed for both V1 and V2
+	var err error
+	if err = client.loadCache(ctx); err != nil {
+		return nil, err
+	}
+
+	// Load the cluster coordinator - needed for both V1 and V2
+	if err = client.loadCluster(ctx); err != nil {
+		return nil, err
+	}
+
+	// Load the Datastore (automatically migrate models) - needed for both V1 and V2 (webhooks need datastore)
+	if err = client.loadDatastore(); err != nil {
+		return nil, err
+	}
+
+	if err = client.autoMigrate(ctx); err != nil {
+		return nil, err
+	}
+
+	// Load the Notification client (if client does not exist) - needs to be loaded before V2 check
+	// so that notifications work for both V1 and V2 engines
+	if err = client.loadNotificationClient(ctx); err != nil {
+		return nil, err
+	}
+
 	if client.options.config != nil && client.options.config.ExperimentalFeatures.V2 {
 		client.V2Interface = engine.NewEngine(
 			client.options.config,
@@ -133,33 +159,8 @@ func NewClient(ctx context.Context, opts ...ClientOps) (ClientInterface, error) 
 		return client, nil
 	}
 
-	// Load the Cachestore client
-	var err error
-	if err = client.loadCache(ctx); err != nil {
-		return nil, err
-	}
-
-	// Load the cluster coordinator
-	if err = client.loadCluster(ctx); err != nil {
-		return nil, err
-	}
-
-	// Load the Datastore (automatically migrate models)
-	if err = client.loadDatastore(); err != nil {
-		return nil, err
-	}
-
-	if err = client.autoMigrate(ctx); err != nil {
-		return nil, err
-	}
-
 	// Load the Paymail client and service (if does not exist)
 	if err = client.loadPaymailComponents(); err != nil {
-		return nil, err
-	}
-
-	// Load the Notification client (if client does not exist)
-	if err = client.loadNotificationClient(ctx); err != nil {
 		return nil, err
 	}
 

@@ -18,6 +18,9 @@ func WithDomainValidationDisabled() ConfigOpts {
 
 func WithNotificationsEnabled() ConfigOpts {
 	return func(c *config.AppConfig) {
+		if c.Notifications == nil {
+			c.Notifications = &config.NotificationsConfig{}
+		}
 		c.Notifications.Enabled = true
 	}
 }

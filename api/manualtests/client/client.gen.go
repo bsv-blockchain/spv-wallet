@@ -290,6 +290,12 @@ type ErrorsNoOperations struct {
 	Message interface{} `json:"message"`
 }
 
+// ErrorsNotificationsDisabled defines model for errors_NotificationsDisabled.
+type ErrorsNotificationsDisabled struct {
+	Code    interface{} `json:"code"`
+	Message interface{} `json:"message"`
+}
+
 // ErrorsProblemDetails defines model for errors_ProblemDetails.
 type ErrorsProblemDetails struct {
 	// Detail A human-readable explanation specific to this occurrence of the problem
@@ -402,6 +408,30 @@ type ErrorsUserAuthorization struct {
 
 // ErrorsUserDoNotOwnPaymail defines model for errors_UserDoNotOwnPaymail.
 type ErrorsUserDoNotOwnPaymail struct {
+	Code    interface{} `json:"code"`
+	Message interface{} `json:"message"`
+}
+
+// ErrorsWebhookTokenHeaderRequired defines model for errors_WebhookTokenHeaderRequired.
+type ErrorsWebhookTokenHeaderRequired struct {
+	Code    interface{} `json:"code"`
+	Message interface{} `json:"message"`
+}
+
+// ErrorsWebhookTokenValueRequired defines model for errors_WebhookTokenValueRequired.
+type ErrorsWebhookTokenValueRequired struct {
+	Code    interface{} `json:"code"`
+	Message interface{} `json:"message"`
+}
+
+// ErrorsWebhookUrlInvalid defines model for errors_WebhookUrlInvalid.
+type ErrorsWebhookUrlInvalid struct {
+	Code    interface{} `json:"code"`
+	Message interface{} `json:"message"`
+}
+
+// ErrorsWebhookUrlRequired defines model for errors_WebhookUrlRequired.
+type ErrorsWebhookUrlRequired struct {
 	Code    interface{} `json:"code"`
 	Message interface{} `json:"message"`
 }
@@ -677,6 +707,15 @@ type ModelsUserInfo struct {
 	CurrentBalance uint64 `json:"currentBalance"`
 }
 
+// ModelsWebhook defines model for models_Webhook.
+type ModelsWebhook struct {
+	Banned bool   `json:"banned"`
+	Url    string `json:"url"`
+}
+
+// ModelsWebhooks defines model for models_Webhooks.
+type ModelsWebhooks = []ModelsWebhook
+
 // RequestsAddPaymail defines model for requests_AddPaymail.
 type RequestsAddPaymail struct {
 	Address   string  `json:"address"`
@@ -768,6 +807,13 @@ type RequestsRecordTransactionOutlineForUser struct {
 // RequestsRecordTransactionOutlineForUserFormat Transaction format
 type RequestsRecordTransactionOutlineForUserFormat string
 
+// RequestsSubscribeWebhook defines model for requests_SubscribeWebhook.
+type RequestsSubscribeWebhook struct {
+	TokenHeader string `json:"tokenHeader"`
+	TokenValue  string `json:"tokenValue"`
+	Url         string `json:"url"`
+}
+
 // RequestsTransactionOutline defines model for requests_TransactionOutline.
 type RequestsTransactionOutline struct {
 	Annotations *ModelsOutputsAnnotations `json:"annotations,omitempty"`
@@ -790,6 +836,11 @@ type RequestsTransactionOutlineOutputSpecification struct {
 // RequestsTransactionSpecification defines model for requests_TransactionSpecification.
 type RequestsTransactionSpecification struct {
 	Outputs []RequestsTransactionOutlineOutputSpecification `json:"outputs"`
+}
+
+// RequestsUnsubscribeWebhook defines model for requests_UnsubscribeWebhook.
+type RequestsUnsubscribeWebhook struct {
+	Url string `json:"url"`
 }
 
 // RequestsUpdateContact defines model for requests_UpdateContact.
@@ -889,6 +940,12 @@ type ResponsesGetMerklerootsNotFound = ErrorsMerkleRootNotFound
 // ResponsesGetMerklerootsSuccess defines model for responses_GetMerklerootsSuccess.
 type ResponsesGetMerklerootsSuccess = ModelsGetMerkleRootResult
 
+// ResponsesGetWebhooksInternalServerError defines model for responses_GetWebhooksInternalServerError.
+type ResponsesGetWebhooksInternalServerError = ErrorsInternal
+
+// ResponsesGetWebhooksSuccess defines model for responses_GetWebhooksSuccess.
+type ResponsesGetWebhooksSuccess = ModelsWebhooks
+
 // ResponsesInternalServerError defines model for responses_InternalServerError.
 type ResponsesInternalServerError = ErrorsInternal
 
@@ -897,6 +954,9 @@ type ResponsesNotAuthorized = ErrorsAnyAuthorization
 
 // ResponsesNotAuthorizedToAdminEndpoint defines model for responses_NotAuthorizedToAdminEndpoint.
 type ResponsesNotAuthorizedToAdminEndpoint = ErrorsAdminAuthorization
+
+// ResponsesNotificationsDisabled defines model for responses_NotificationsDisabled.
+type ResponsesNotificationsDisabled = ErrorsNotificationsDisabled
 
 // ResponsesPaymailAddress defines model for responses_PaymailAddress.
 type ResponsesPaymailAddress = ModelsPaymail
@@ -925,6 +985,17 @@ type ResponsesSearchOperationsSuccess = ModelsOperationsSearchResult
 
 // ResponsesSharedConfig Shared config
 type ResponsesSharedConfig = ModelsSharedConfig
+
+// ResponsesSubscribeToWebhookBadRequest defines model for responses_SubscribeToWebhookBadRequest.
+type ResponsesSubscribeToWebhookBadRequest struct {
+	union json.RawMessage
+}
+
+// ResponsesSubscribeToWebhookInternalServerError defines model for responses_SubscribeToWebhookInternalServerError.
+type ResponsesSubscribeToWebhookInternalServerError = ErrorsCannotBindRequest
+
+// ResponsesUnsubscribeToWebhookInternalServerError defines model for responses_UnsubscribeToWebhookInternalServerError.
+type ResponsesUnsubscribeToWebhookInternalServerError = ErrorsCannotBindRequest
 
 // ResponsesUpdateContactBadRequest defines model for responses_UpdateContactBadRequest.
 type ResponsesUpdateContactBadRequest struct {
@@ -1002,6 +1073,12 @@ type CreateUserJSONRequestBody = RequestsCreateUser
 
 // AddPaymailToUserJSONRequestBody defines body for AddPaymailToUser for application/json ContentType.
 type AddPaymailToUserJSONRequestBody = RequestsAddPaymail
+
+// UnsubscribeWebhookJSONRequestBody defines body for UnsubscribeWebhook for application/json ContentType.
+type UnsubscribeWebhookJSONRequestBody = RequestsUnsubscribeWebhook
+
+// SubscribeWebhookJSONRequestBody defines body for SubscribeWebhook for application/json ContentType.
+type SubscribeWebhookJSONRequestBody = RequestsSubscribeWebhook
 
 // UpsertContactJSONRequestBody defines body for UpsertContact for application/json ContentType.
 type UpsertContactJSONRequestBody = RequestsUpsertContact
@@ -2310,6 +2387,146 @@ func (t *ResponsesRecordTransactionInternalServerError) UnmarshalJSON(b []byte) 
 	return err
 }
 
+// AsErrorsCannotBindRequest returns the union data inside the ResponsesSubscribeToWebhookBadRequest as a ErrorsCannotBindRequest
+func (t ResponsesSubscribeToWebhookBadRequest) AsErrorsCannotBindRequest() (ErrorsCannotBindRequest, error) {
+	var body ErrorsCannotBindRequest
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromErrorsCannotBindRequest overwrites any union data inside the ResponsesSubscribeToWebhookBadRequest as the provided ErrorsCannotBindRequest
+func (t *ResponsesSubscribeToWebhookBadRequest) FromErrorsCannotBindRequest(v ErrorsCannotBindRequest) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeErrorsCannotBindRequest performs a merge with any union data inside the ResponsesSubscribeToWebhookBadRequest, using the provided ErrorsCannotBindRequest
+func (t *ResponsesSubscribeToWebhookBadRequest) MergeErrorsCannotBindRequest(v ErrorsCannotBindRequest) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsErrorsWebhookUrlRequired returns the union data inside the ResponsesSubscribeToWebhookBadRequest as a ErrorsWebhookUrlRequired
+func (t ResponsesSubscribeToWebhookBadRequest) AsErrorsWebhookUrlRequired() (ErrorsWebhookUrlRequired, error) {
+	var body ErrorsWebhookUrlRequired
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromErrorsWebhookUrlRequired overwrites any union data inside the ResponsesSubscribeToWebhookBadRequest as the provided ErrorsWebhookUrlRequired
+func (t *ResponsesSubscribeToWebhookBadRequest) FromErrorsWebhookUrlRequired(v ErrorsWebhookUrlRequired) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeErrorsWebhookUrlRequired performs a merge with any union data inside the ResponsesSubscribeToWebhookBadRequest, using the provided ErrorsWebhookUrlRequired
+func (t *ResponsesSubscribeToWebhookBadRequest) MergeErrorsWebhookUrlRequired(v ErrorsWebhookUrlRequired) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsErrorsWebhookUrlInvalid returns the union data inside the ResponsesSubscribeToWebhookBadRequest as a ErrorsWebhookUrlInvalid
+func (t ResponsesSubscribeToWebhookBadRequest) AsErrorsWebhookUrlInvalid() (ErrorsWebhookUrlInvalid, error) {
+	var body ErrorsWebhookUrlInvalid
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromErrorsWebhookUrlInvalid overwrites any union data inside the ResponsesSubscribeToWebhookBadRequest as the provided ErrorsWebhookUrlInvalid
+func (t *ResponsesSubscribeToWebhookBadRequest) FromErrorsWebhookUrlInvalid(v ErrorsWebhookUrlInvalid) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeErrorsWebhookUrlInvalid performs a merge with any union data inside the ResponsesSubscribeToWebhookBadRequest, using the provided ErrorsWebhookUrlInvalid
+func (t *ResponsesSubscribeToWebhookBadRequest) MergeErrorsWebhookUrlInvalid(v ErrorsWebhookUrlInvalid) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsErrorsWebhookTokenHeaderRequired returns the union data inside the ResponsesSubscribeToWebhookBadRequest as a ErrorsWebhookTokenHeaderRequired
+func (t ResponsesSubscribeToWebhookBadRequest) AsErrorsWebhookTokenHeaderRequired() (ErrorsWebhookTokenHeaderRequired, error) {
+	var body ErrorsWebhookTokenHeaderRequired
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromErrorsWebhookTokenHeaderRequired overwrites any union data inside the ResponsesSubscribeToWebhookBadRequest as the provided ErrorsWebhookTokenHeaderRequired
+func (t *ResponsesSubscribeToWebhookBadRequest) FromErrorsWebhookTokenHeaderRequired(v ErrorsWebhookTokenHeaderRequired) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeErrorsWebhookTokenHeaderRequired performs a merge with any union data inside the ResponsesSubscribeToWebhookBadRequest, using the provided ErrorsWebhookTokenHeaderRequired
+func (t *ResponsesSubscribeToWebhookBadRequest) MergeErrorsWebhookTokenHeaderRequired(v ErrorsWebhookTokenHeaderRequired) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsErrorsWebhookTokenValueRequired returns the union data inside the ResponsesSubscribeToWebhookBadRequest as a ErrorsWebhookTokenValueRequired
+func (t ResponsesSubscribeToWebhookBadRequest) AsErrorsWebhookTokenValueRequired() (ErrorsWebhookTokenValueRequired, error) {
+	var body ErrorsWebhookTokenValueRequired
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromErrorsWebhookTokenValueRequired overwrites any union data inside the ResponsesSubscribeToWebhookBadRequest as the provided ErrorsWebhookTokenValueRequired
+func (t *ResponsesSubscribeToWebhookBadRequest) FromErrorsWebhookTokenValueRequired(v ErrorsWebhookTokenValueRequired) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeErrorsWebhookTokenValueRequired performs a merge with any union data inside the ResponsesSubscribeToWebhookBadRequest, using the provided ErrorsWebhookTokenValueRequired
+func (t *ResponsesSubscribeToWebhookBadRequest) MergeErrorsWebhookTokenValueRequired(v ErrorsWebhookTokenValueRequired) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t ResponsesSubscribeToWebhookBadRequest) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *ResponsesSubscribeToWebhookBadRequest) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
 // AsErrorsContactInWrongStatus returns the union data inside the ResponsesUpdateContactBadRequest as a ErrorsContactInWrongStatus
 func (t ResponsesUpdateContactBadRequest) AsErrorsContactInWrongStatus() (ErrorsContactInWrongStatus, error) {
 	var body ErrorsContactInWrongStatus
@@ -2728,6 +2945,19 @@ type ClientInterface interface {
 
 	AddPaymailToUser(ctx context.Context, id string, body AddPaymailToUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// UnsubscribeWebhookWithBody request with any body
+	UnsubscribeWebhookWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UnsubscribeWebhook(ctx context.Context, body UnsubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// Webhooks request
+	Webhooks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SubscribeWebhookWithBody request with any body
+	SubscribeWebhookWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	SubscribeWebhook(ctx context.Context, body SubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// SharedConfig request
 	SharedConfig(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -2979,6 +3209,66 @@ func (c *Client) AddPaymailToUserWithBody(ctx context.Context, id string, conten
 
 func (c *Client) AddPaymailToUser(ctx context.Context, id string, body AddPaymailToUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddPaymailToUserRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UnsubscribeWebhookWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnsubscribeWebhookRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UnsubscribeWebhook(ctx context.Context, body UnsubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnsubscribeWebhookRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) Webhooks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhooksRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SubscribeWebhookWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSubscribeWebhookRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) SubscribeWebhook(ctx context.Context, body SubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSubscribeWebhookRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -3634,6 +3924,113 @@ func NewAddPaymailToUserRequestWithBody(server string, id string, contentType st
 	}
 
 	operationPath := fmt.Sprintf("/api/v2/admin/users/%s/paymails", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUnsubscribeWebhookRequest calls the generic UnsubscribeWebhook builder with application/json body
+func NewUnsubscribeWebhookRequest(server string, body UnsubscribeWebhookJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUnsubscribeWebhookRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewUnsubscribeWebhookRequestWithBody generates requests for UnsubscribeWebhook with any type of body
+func NewUnsubscribeWebhookRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/admin/webhooks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewWebhooksRequest generates requests for Webhooks
+func NewWebhooksRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/admin/webhooks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSubscribeWebhookRequest calls the generic SubscribeWebhook builder with application/json body
+func NewSubscribeWebhookRequest(server string, body SubscribeWebhookJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSubscribeWebhookRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewSubscribeWebhookRequestWithBody generates requests for SubscribeWebhook with any type of body
+func NewSubscribeWebhookRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/admin/webhooks")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -4411,6 +4808,19 @@ type ClientWithResponsesInterface interface {
 
 	AddPaymailToUserWithResponse(ctx context.Context, id string, body AddPaymailToUserJSONRequestBody, reqEditors ...RequestEditorFn) (*AddPaymailToUserResponse, error)
 
+	// UnsubscribeWebhookWithBodyWithResponse request with any body
+	UnsubscribeWebhookWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UnsubscribeWebhookResponse, error)
+
+	UnsubscribeWebhookWithResponse(ctx context.Context, body UnsubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*UnsubscribeWebhookResponse, error)
+
+	// WebhooksWithResponse request
+	WebhooksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*WebhooksResponse, error)
+
+	// SubscribeWebhookWithBodyWithResponse request with any body
+	SubscribeWebhookWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SubscribeWebhookResponse, error)
+
+	SubscribeWebhookWithResponse(ctx context.Context, body SubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*SubscribeWebhookResponse, error)
+
 	// SharedConfigWithResponse request
 	SharedConfigWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*SharedConfigResponse, error)
 
@@ -4824,6 +5234,110 @@ func (r AddPaymailToUserResponse) Response() *http.Response {
 
 // Bytes is a convenience method to retrieve the raw bytes from the HTTP response
 func (r AddPaymailToUserResponse) Bytes() []byte {
+	return r.Body
+}
+
+type UnsubscribeWebhookResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON401      *ResponsesNotAuthorizedToAdminEndpoint
+	JSON404      *ResponsesNotificationsDisabled
+	JSON500      *ResponsesUnsubscribeToWebhookInternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r UnsubscribeWebhookResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnsubscribeWebhookResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// HTTPResponse returns http.Response from which this response was parsed.
+func (r UnsubscribeWebhookResponse) Response() *http.Response {
+	return r.HTTPResponse
+}
+
+// Bytes is a convenience method to retrieve the raw bytes from the HTTP response
+func (r UnsubscribeWebhookResponse) Bytes() []byte {
+	return r.Body
+}
+
+type WebhooksResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ResponsesGetWebhooksSuccess
+	JSON401      *ResponsesNotAuthorizedToAdminEndpoint
+	JSON404      *ResponsesNotificationsDisabled
+	JSON500      *ResponsesGetWebhooksInternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r WebhooksResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r WebhooksResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// HTTPResponse returns http.Response from which this response was parsed.
+func (r WebhooksResponse) Response() *http.Response {
+	return r.HTTPResponse
+}
+
+// Bytes is a convenience method to retrieve the raw bytes from the HTTP response
+func (r WebhooksResponse) Bytes() []byte {
+	return r.Body
+}
+
+type SubscribeWebhookResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *ResponsesSubscribeToWebhookBadRequest
+	JSON401      *ResponsesNotAuthorizedToAdminEndpoint
+	JSON404      *ResponsesNotificationsDisabled
+	JSON500      *ResponsesSubscribeToWebhookInternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r SubscribeWebhookResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SubscribeWebhookResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// HTTPResponse returns http.Response from which this response was parsed.
+func (r SubscribeWebhookResponse) Response() *http.Response {
+	return r.HTTPResponse
+}
+
+// Bytes is a convenience method to retrieve the raw bytes from the HTTP response
+func (r SubscribeWebhookResponse) Bytes() []byte {
 	return r.Body
 }
 
@@ -5532,6 +6046,49 @@ func (c *ClientWithResponses) AddPaymailToUserWithResponse(ctx context.Context, 
 	return ParseAddPaymailToUserResponse(rsp)
 }
 
+// UnsubscribeWebhookWithBodyWithResponse request with arbitrary body returning *UnsubscribeWebhookResponse
+func (c *ClientWithResponses) UnsubscribeWebhookWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UnsubscribeWebhookResponse, error) {
+	rsp, err := c.UnsubscribeWebhookWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnsubscribeWebhookResponse(rsp)
+}
+
+func (c *ClientWithResponses) UnsubscribeWebhookWithResponse(ctx context.Context, body UnsubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*UnsubscribeWebhookResponse, error) {
+	rsp, err := c.UnsubscribeWebhook(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnsubscribeWebhookResponse(rsp)
+}
+
+// WebhooksWithResponse request returning *WebhooksResponse
+func (c *ClientWithResponses) WebhooksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*WebhooksResponse, error) {
+	rsp, err := c.Webhooks(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseWebhooksResponse(rsp)
+}
+
+// SubscribeWebhookWithBodyWithResponse request with arbitrary body returning *SubscribeWebhookResponse
+func (c *ClientWithResponses) SubscribeWebhookWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SubscribeWebhookResponse, error) {
+	rsp, err := c.SubscribeWebhookWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSubscribeWebhookResponse(rsp)
+}
+
+func (c *ClientWithResponses) SubscribeWebhookWithResponse(ctx context.Context, body SubscribeWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*SubscribeWebhookResponse, error) {
+	rsp, err := c.SubscribeWebhook(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSubscribeWebhookResponse(rsp)
+}
+
 // SharedConfigWithResponse request returning *SharedConfigResponse
 func (c *ClientWithResponses) SharedConfigWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*SharedConfigResponse, error) {
 	rsp, err := c.SharedConfig(ctx, reqEditors...)
@@ -6037,6 +6594,140 @@ func ParseAddPaymailToUserResponse(rsp *http.Response) (*AddPaymailToUserRespons
 			return nil, err
 		}
 		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnsubscribeWebhookResponse parses an HTTP response from a UnsubscribeWebhookWithResponse call
+func ParseUnsubscribeWebhookResponse(rsp *http.Response) (*UnsubscribeWebhookResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnsubscribeWebhookResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ResponsesNotAuthorizedToAdminEndpoint
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ResponsesNotificationsDisabled
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest ResponsesUnsubscribeToWebhookInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseWebhooksResponse parses an HTTP response from a WebhooksWithResponse call
+func ParseWebhooksResponse(rsp *http.Response) (*WebhooksResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &WebhooksResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ResponsesGetWebhooksSuccess
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ResponsesNotAuthorizedToAdminEndpoint
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ResponsesNotificationsDisabled
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest ResponsesGetWebhooksInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSubscribeWebhookResponse parses an HTTP response from a SubscribeWebhookWithResponse call
+func ParseSubscribeWebhookResponse(rsp *http.Response) (*SubscribeWebhookResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SubscribeWebhookResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ResponsesSubscribeToWebhookBadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ResponsesNotAuthorizedToAdminEndpoint
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ResponsesNotificationsDisabled
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest ResponsesSubscribeToWebhookInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
 
 	}
 
