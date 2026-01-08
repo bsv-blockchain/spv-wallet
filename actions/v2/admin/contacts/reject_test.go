@@ -81,7 +81,6 @@ func TestRejectContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(500).
-			WithJSONf(apierror.ExpectedJSON("error-contact-updating-status-failed", "updating contact status failed"))
+			WithProblemDetails(500, "error-contact-updating-status-failed", "updating contact status failed")
 	})
 }

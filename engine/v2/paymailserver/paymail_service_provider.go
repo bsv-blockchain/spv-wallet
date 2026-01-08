@@ -29,7 +29,7 @@ type ServiceProvider interface {
 
 // NewServiceProvider create a new paymail service server which handlers incoming paymail requests
 func NewServiceProvider(
-	logger *zerolog.Logger,
+	logger zerolog.Logger,
 	paymails paymail.PaymailsService,
 	users paymail.UsersService,
 	addresses paymail.AddressesService,
@@ -37,8 +37,9 @@ func NewServiceProvider(
 	spv paymail.MerkleRootsVerifier,
 	recorder paymail.TxRecorder,
 ) ServiceProvider {
+	logger = logger.With().Str("subservice", "paymail-service-provider").Logger()
 	return &serviceProvider{
-		logger:    logger,
+		logger:    &logger,
 		paymails:  paymails,
 		users:     users,
 		addresses: addresses,

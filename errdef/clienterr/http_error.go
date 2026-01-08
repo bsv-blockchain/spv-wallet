@@ -49,6 +49,25 @@ func problemDetailsFromError(err error) (problem errdef.ProblemDetails, level ze
 		return
 	}
 
+	// Handle SPVError (legacy error type)
+	type spvError interface {
+		GetCode() string
+		GetMessage() string
+		GetStatusCode() int
+	}
+	var spvErr spvError
+	if errors.As(err, &spvErr) {
+		level = zerolog.WarnLevel
+		problem.Status = spvErr.GetStatusCode()
+		problem.Title = spvErr.GetMessage()
+		problem.Detail = spvErr.GetMessage()
+		problem.Type = spvErr.GetCode()
+		if problem.Status >= 500 {
+			level = zerolog.ErrorLevel
+		}
+		return
+	}
+
 	level = zerolog.ErrorLevel
 	problem.Title = "Unknown error"
 	problem.Status = 500

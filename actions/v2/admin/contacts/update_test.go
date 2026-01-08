@@ -64,8 +64,7 @@ func TestUpdateContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-bind-body-invalid", "cannot bind request body"))
+			WithProblemDetails(422, "unprocessable_entity")
 	})
 
 	t.Run("Update contact with user xpub", func(t *testing.T) {
@@ -99,7 +98,6 @@ func TestUpdateContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(500).
-			WithJSONf(apierror.ExpectedJSON("error-contact-updating-status-failed", "updating contact status failed"))
+			WithProblemDetails(500, "error-contact-updating-status-failed", "updating contact status failed")
 	})
 }

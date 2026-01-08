@@ -89,8 +89,7 @@ func TestCreateContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(404).
-			WithJSONf(apierror.ExpectedJSON("error-paymail-not-found", "paymail not found"))
+			WithProblemDetails(404, "error-paymail-not-found", "paymail not found")
 	})
 
 	t.Run("Create contact with unknown requester paymail", func(t *testing.T) {
@@ -111,8 +110,7 @@ func TestCreateContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-contact-getting-pki-failed", "getting PKI for contact failed"))
+			WithProblemDetails(400, "error-contact-getting-pki-failed", "getting PKI for contact failed")
 	})
 
 	t.Run("Create contact without creator paymail", func(t *testing.T) {
@@ -132,8 +130,7 @@ func TestCreateContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-contact-creator-paymail-missing", "missing creator paymail in contact"))
+			WithProblemDetails(400, "error-contact-creator-paymail-missing", "missing creator paymail in contact")
 	})
 
 	t.Run("Create contact without contact full name", func(t *testing.T) {
@@ -151,7 +148,6 @@ func TestCreateContact(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-contact-full-name-missing", "missing full name in contact"))
+			WithProblemDetails(400, "error-contact-full-name-missing", "missing full name in contact")
 	})
 }
