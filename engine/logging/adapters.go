@@ -87,15 +87,16 @@ func (a *GormLoggerAdapter) GetMode() logger.GormLogLevel {
 // If the level is Info, set the logLevel to 4 and set the Logger level to zerolog.InfoLevel.
 // There is no Debug mode inn GormLoggerAdapter.
 func (a *GormLoggerAdapter) SetMode(level logger.GormLogLevel) logger.GormLoggerInterface {
-	if level == logger.Silent {
+	switch level {
+	case logger.Silent:
 		a.logLevel = 1
-	} else if level == logger.Error {
+	case logger.Error:
 		a.Logger.Level(zerolog.ErrorLevel)
 		a.logLevel = 2
-	} else if level == logger.Warn {
+	case logger.Warn:
 		a.Logger.Level(zerolog.WarnLevel)
 		a.logLevel = 3
-	} else if level == logger.Info {
+	case logger.Info:
 		a.Logger.Level(zerolog.InfoLevel)
 		a.logLevel = 4
 	}

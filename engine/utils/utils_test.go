@@ -80,7 +80,7 @@ func TestValidateXPub(t *testing.T) {
 	})
 
 	t.Run("unable to decode key", func(t *testing.T) {
-		hdKey, err := ValidateXPub(strings.Replace(testXpub, "A", "B", -1))
+		hdKey, err := ValidateXPub(strings.ReplaceAll(testXpub, "A", "B"))
 		assert.Nil(t, hdKey)
 		assert.Error(t, err)
 	})

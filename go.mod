@@ -46,11 +46,16 @@ require (
 	github.com/swaggo/swag v1.16.6
 	github.com/vmihailenco/taskq/v3 v3.2.9
 	go.elastic.co/ecszerolog v0.2.0
-	gorm.io/datatypes v1.2.7
-	gorm.io/driver/postgres v1.6.0
-	gorm.io/driver/sqlite v1.6.0
-	gorm.io/gorm v1.30.0
-	gorm.io/plugin/dbresolver v1.6.2
+	// IMPORTANT: GORM v1.30.0 has breaking changes in subquery handling via Table() method.
+	// See: engine/v2/transaction/outlines/utxo/internal/sql/inputs_query_composer.go
+	// The .Table("(?) as alias", gormDB) pattern generates empty parens () instead of SQL.
+	// Do not upgrade to v1.30.0+ without fixing the query composition code.
+	// Related GitHub issue: https://github.com/go-gorm/gorm/issues/7507
+	gorm.io/datatypes v1.2.5
+	gorm.io/driver/postgres v1.5.11
+	gorm.io/driver/sqlite v1.5.7
+	gorm.io/gorm v1.25.12
+	gorm.io/plugin/dbresolver v1.5.3
 )
 
 require (

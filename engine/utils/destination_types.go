@@ -189,7 +189,8 @@ func GetDestinationTypeRegex(destType string) *regexp.Regexp {
 // FIXME: add logger on this scope to have info about returned errors
 func GetAddressFromScript(lockingScript string) (address string) {
 	scriptType := GetDestinationType(lockingScript)
-	if scriptType == ScriptTypePubKeyHash {
+	switch scriptType {
+	case ScriptTypePubKeyHash:
 		s, err := script.NewFromHex(lockingScript)
 		if err != nil {
 			return ""
@@ -201,7 +202,7 @@ func GetAddressFromScript(lockingScript string) (address string) {
 		}
 
 		address = addresses[0]
-	} else if scriptType == ScriptTypePubKey {
+	case ScriptTypePubKey:
 		s, err := script.NewFromHex(lockingScript)
 		if err != nil {
 			return ""
@@ -222,7 +223,7 @@ func GetAddressFromScript(lockingScript string) (address string) {
 		}
 
 		address = addressScript.AddressString
-	} else if scriptType == ScriptTypeTokenStas {
+	case ScriptTypeTokenStas:
 		// stas is just a normal PubKeyHash with more data appended
 		s, err := script.NewFromHex(lockingScript[:50])
 		if err != nil {
