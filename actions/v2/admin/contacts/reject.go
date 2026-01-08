@@ -3,7 +3,7 @@ package contacts
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +11,7 @@ import (
 func (s *APIAdminContacts) AdminRejectInvitation(c *gin.Context, id uint) {
 	_, err := s.contactsService.RejectContactByID(c, id)
 	if err != nil {
-		spverrors.ErrorResponse(c, err, s.logger)
+		clienterr.Response(c, err, s.logger)
 		return
 	}
 

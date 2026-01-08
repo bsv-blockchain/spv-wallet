@@ -5,7 +5,7 @@ import (
 
 	"github.com/bitcoin-sv/spv-wallet/actions/v2/internal/mapping"
 	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
@@ -15,13 +15,13 @@ func (s *APIAdminContacts) AdminUpdateContact(c *gin.Context, id uint) {
 	var requestBody api.RequestsUpdateContact
 	err := c.ShouldBindWith(&requestBody, binding.JSON)
 	if err != nil {
-		spverrors.ErrorResponse(c, spverrors.ErrCannotBindRequest.Wrap(err), s.logger)
+		clienterr.UnprocessableEntity.New().Wrap(err).Response(c, s.logger)
 		return
 	}
 
 	contact, err := s.contactsService.UpdateFullNameByID(c, id, requestBody.FullName)
 	if err != nil {
-		spverrors.ErrorResponse(c, err, s.logger)
+		clienterr.Response(c, err, s.logger)
 		return
 	}
 

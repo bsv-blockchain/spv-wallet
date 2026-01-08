@@ -5,8 +5,8 @@ import (
 
 	"github.com/bitcoin-sv/spv-wallet/actions/v2/internal/mapping"
 	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +14,7 @@ import (
 func (s *APIAdminContacts) AdminCreateContact(c *gin.Context, paymail string) {
 	var req api.RequestsAdminCreateContact
 	if err := c.Bind(&req); err != nil {
-		spverrors.ErrorResponse(c, spverrors.ErrCannotBindRequest.WithTrace(err), s.logger)
+		clienterr.UnprocessableEntity.New().Wrap(err).Response(c, s.logger)
 		return
 	}
 
@@ -27,7 +27,7 @@ func (s *APIAdminContacts) AdminCreateContact(c *gin.Context, paymail string) {
 
 	contact, err := s.contactsService.AdminCreateContact(c, newContact)
 	if err != nil {
-		spverrors.ErrorResponse(c, err, s.logger)
+		clienterr.Response(c, err, s.logger)
 		return
 	}
 

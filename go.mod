@@ -58,6 +58,8 @@ require (
 	gorm.io/plugin/dbresolver v1.5.3
 )
 
+require github.com/joomcode/errorx v1.2.0
+
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect

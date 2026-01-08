@@ -21,10 +21,8 @@ paths:
             responses:
                 "200":
                     description: Contact deleted
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "500":
-                    $ref: '#/components/responses/responses_DeleteContactInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -51,10 +49,8 @@ paths:
             responses:
                 "200":
                     $ref: '#/components/responses/responses_ContactSuccess'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "500":
-                    $ref: '#/components/responses/responses_AdminUpdateContactStatusInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -81,16 +77,8 @@ paths:
             responses:
                 "200":
                     $ref: '#/components/responses/responses_ContactSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_AdminCreateContactBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "404":
-                    $ref: '#/components/responses/responses_AdminCreateContactNotFound'
-                "409":
-                    $ref: '#/components/responses/responses_AdminCreateContactConflict'
-                "500":
-                    $ref: '#/components/responses/responses_AdminCreateContactInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -110,12 +98,8 @@ paths:
             responses:
                 "200":
                     description: Contact confirmed
-                "400":
-                    $ref: '#/components/responses/responses_AdminUserBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "500":
-                    $ref: '#/components/responses/responses_AdminConfirmContactInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -137,10 +121,8 @@ paths:
             responses:
                 "200":
                     description: Invitation rejected
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "500":
-                    $ref: '#/components/responses/responses_AdminUpdateContactStatusInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -161,10 +143,8 @@ paths:
             responses:
                 "200":
                     $ref: '#/components/responses/responses_ContactSuccess'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "500":
-                    $ref: '#/components/responses/responses_AdminUpdateContactStatusInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -199,12 +179,8 @@ paths:
             responses:
                 "201":
                     $ref: '#/components/responses/responses_AdminRecordTransactionOutlineForUserSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_AdminRecordTransactionOutlineForUserBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "500":
-                    $ref: '#/components/responses/responses_AdminRecordTransactionOutlineForUserInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -224,14 +200,8 @@ paths:
             responses:
                 "201":
                     $ref: '#/components/responses/responses_AdminCreateUserSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_AdminUserBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "422":
-                    $ref: '#/components/responses/responses_AdminInvalidAvatarURL'
-                "500":
-                    $ref: '#/components/responses/responses_AdminCreateUserInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -252,8 +222,8 @@ paths:
             responses:
                 "200":
                     $ref: '#/components/responses/responses_AdminGetUser'
-                "500":
-                    $ref: '#/components/responses/responses_AdminGetUserInternalServerError'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -280,12 +250,8 @@ paths:
             responses:
                 "201":
                     $ref: '#/components/responses/responses_AdminAddPaymailSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_AdminUserBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "422":
-                    $ref: '#/components/responses/responses_AdminInvalidAvatarURL'
+                default:
+                    $ref: '#/components/responses/responses_ProblemDetails'
             security:
                 - XPubAuth:
                     - admin
@@ -734,56 +700,6 @@ components:
                     schema:
                         $ref: '#/components/schemas/models_Paymail'
             description: Paymail added to user
-        responses_AdminConfirmContactInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_GetContact'
-                            - $ref: '#/components/schemas/errors_UpdateContactStatus'
-            description: Confirm contact internal server error
-        responses_AdminCreateContactBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CannotBindRequest'
-                            - $ref: '#/components/schemas/errors_MissingContactFullName'
-                            - $ref: '#/components/schemas/errors_MissingContactPaymailParam'
-                            - $ref: '#/components/schemas/errors_MissingContactCreatorPaymailParam'
-                            - $ref: '#/components/schemas/errors_RequesterContactInvalid'
-                            - $ref: '#/components/schemas/errors_GetPKIFailed'
-                            - $ref: '#/components/schemas/errors_SaveContact'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_AdminCreateContactConflict:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_ContactAlreadyExists'
-            description: Conflict is an error that occurs when the request conflicts with the current state of the server.
-        responses_AdminCreateContactInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_GetContact'
-            description: Create contact internal server error
-        responses_AdminCreateContactNotFound:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CouldNotFindPaymail'
-            description: Not found is an error that occurs when the requested resource is not found.
-        responses_AdminCreateUserInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_CreatingUser'
-            description: Internal error while creating user
         responses_AdminCreateUserSuccess:
             content:
                 application/json:
@@ -796,65 +712,12 @@ components:
                     schema:
                         $ref: '#/components/schemas/models_User'
             description: User found
-        responses_AdminGetUserInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_GettingUser'
-            description: Internal error while getting user
-        responses_AdminInvalidAvatarURL:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_InvalidAvatarURL'
-            description: Unprocessable entity is an error that occurs when the request cannot be fulfilled.
-        responses_AdminRecordTransactionOutlineForUserBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CannotBindRequest'
-                            - $ref: '#/components/schemas/errors_InvalidDataID'
-                            - $ref: '#/components/schemas/errors_AnnotationIndexOutOfRange'
-                            - $ref: '#/components/schemas/errors_UTXOSpent'
-                            - $ref: '#/components/schemas/errors_AnnotationIndexConversion'
-                            - $ref: '#/components/schemas/errors_NoOperations'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_AdminRecordTransactionOutlineForUserInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_GettingOutputs'
-                            - $ref: '#/components/schemas/errors_TxBroadcast'
-            description: Internal server error
         responses_AdminRecordTransactionOutlineForUserSuccess:
             content:
                 application/json:
                     schema:
                         $ref: '#/components/schemas/models_RecordedOutline'
             description: Transaction outline for user recorded
-        responses_AdminUpdateContactStatusInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_UpdateContactStatus'
-            description: Confirm contact internal server error
-        responses_AdminUserBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CannotBindRequest'
-                            - $ref: '#/components/schemas/errors_InvalidPubKey'
-                            - $ref: '#/components/schemas/errors_InvalidPaymail'
-                            - $ref: '#/components/schemas/errors_PaymailInconsistent'
-                            - $ref: '#/components/schemas/errors_InvalidDomain'
-            description: Bad request is an error that occurs when the request is malformed.
         responses_ContactNotFound:
             content:
                 application/json:
@@ -998,6 +861,12 @@ components:
                     schema:
                         $ref: '#/components/schemas/models_Paymail'
             description: Paymail address created successfully
+        responses_ProblemDetails:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/errors_ProblemDetails'
+            description: RFC 7807 Problem Details. For 4xx codes, you can switch by 'type' field to get more specific error.
         responses_RecordTransactionBadRequest:
             content:
                 application/json:
@@ -1205,15 +1074,6 @@ components:
                     message:
                         example: cannot bind request body
                   type: object
-        errors_ContactAlreadyExists:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-already-exists
-                    message:
-                        example: contact already exists
-                  type: object
         errors_ContactFailedToUpdate:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
@@ -1268,15 +1128,6 @@ components:
                     message:
                         example: paymail not found
                   type: object
-        errors_CreatingUser:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-user-creating
-                    message:
-                        example: error creating user
-                  type: object
         errors_DataNotFound:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
@@ -1304,15 +1155,6 @@ components:
                     message:
                         example: getting contact failed
                   type: object
-        errors_GetPKIFailed:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-getting-pki-failed
-                    message:
-                        example: getting pki for contact failed
-                  type: object
         errors_GettingOutputs:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
@@ -1331,15 +1173,6 @@ components:
                     message:
                         example: getting pki for contact failed
                   type: object
-        errors_GettingUser:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-unknown
-                    message:
-                        example: Internal server error
-                  type: object
         errors_Internal:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
@@ -1348,15 +1181,6 @@ components:
                         example: error-internal-server-error
                     message:
                         example: internal server error
-                  type: object
-        errors_InvalidAvatarURL:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-user-invalid-avatar-url
-                    message:
-                        example: invalid avatar url
                   type: object
         errors_InvalidBatchSize:
             allOf:
@@ -1376,33 +1200,6 @@ components:
                     message:
                         example: invalid data id
                   type: object
-        errors_InvalidDomain:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-invalid-domain
-                    message:
-                        example: invalid domain
-                  type: object
-        errors_InvalidPaymail:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-user-invalid-paymail
-                    message:
-                        example: invalid paymail
-                  type: object
-        errors_InvalidPubKey:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-user-invalid-pubkey
-                    message:
-                        example: invalid public key
-                  type: object
         errors_MerkleRootNotFound:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
@@ -1421,33 +1218,6 @@ components:
                     message:
                         example: Provided merkleroot is not part of the longest chain
                   type: object
-        errors_MissingContactCreatorPaymailParam:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-creator-paymail-missing
-                    message:
-                        example: missing creator paymail parameter in request
-                  type: object
-        errors_MissingContactFullName:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-full-name-missing
-                    message:
-                        example: missing full name in contact
-                  type: object
-        errors_MissingContactPaymailParam:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-paymail-missing
-                    message:
-                        example: missing paymail parameter in request
-                  type: object
         errors_NoOperations:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
@@ -1457,24 +1227,30 @@ components:
                     message:
                         example: no operations to save
                   type: object
-        errors_PaymailInconsistent:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-user-inconsistent-paymail
-                    message:
-                        example: inconsistent paymail address and alias/domain
-                  type: object
-        errors_RequesterContactInvalid:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-requested-contact-invalid
-                    message:
-                        example: requested contact paymail is invalid
-                  type: object
+        errors_ProblemDetails:
+            properties:
+                detail:
+                    description: A human-readable explanation specific to this occurrence of the problem
+                    type: string
+                instance:
+                    description: A URI reference that identifies the specific occurrence of the problem
+                    type: string
+                status:
+                    description: The HTTP status code
+                    type: integer
+                title:
+                    description: A short, human-readable summary of the problem type
+                    type: string
+                type:
+                    description: A URI reference that identifies the problem type
+                    type: string
+            required:
+                - type
+                - title
+                - status
+                - detail
+                - instance
+            type: object
         errors_SaveContact:
             allOf:
                 - $ref: '#/components/schemas/errors_Schema'
