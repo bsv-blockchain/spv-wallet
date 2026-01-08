@@ -60,7 +60,7 @@ func (m Metadata) Value() (driver.Value, error) {
 
 // GormDBDataType the gorm data type for metadata
 func (Metadata) GormDBDataType(db *gorm.DB, _ *schema.Field) string {
-	if db.Dialector.Name() == datastore.Postgres {
+	if db.Name() == datastore.Postgres {
 		return datastore.JSONB
 	}
 	return datastore.JSON
@@ -96,7 +96,7 @@ func (x XpubMetadata) Value() (driver.Value, error) {
 
 // GormDBDataType the gorm data type for metadata
 func (XpubMetadata) GormDBDataType(db *gorm.DB, _ *schema.Field) string {
-	if db.Dialector.Name() == datastore.Postgres {
+	if db.Name() == datastore.Postgres {
 		return datastore.JSONB
 	}
 	return datastore.JSON

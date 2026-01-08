@@ -48,10 +48,10 @@ func (m *Transaction) _processInputs(ctx context.Context) (err error) {
 	var utxo *Utxo
 
 	// check whether we are spending an internal utxo
-	for index := range m.TransactionBase.parsedTx.Inputs {
+	for index := range m.parsedTx.Inputs {
 		// todo: optimize this SQL SELECT to get all utxos in one query?
 		if utxo, err = m.transactionService.getUtxo(ctx,
-			m.TransactionBase.parsedTx.Inputs[index].SourceTXID.String(),
+			m.parsedTx.Inputs[index].SourceTXID.String(),
 			m.TransactionBase.parsedTx.Inputs[index].SourceTxOutIndex,
 			opts...,
 		); err != nil {
