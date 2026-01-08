@@ -116,7 +116,8 @@ func addDebugOpts(c *config.AppConfig, options []engine.ClientOps) []engine.Clie
 }
 
 func addCacheStoreOpts(c *config.AppConfig, options []engine.ClientOps) []engine.ClientOps {
-	if c.Cache.Engine == cachestore.Redis {
+	switch c.Cache.Engine {
+	case cachestore.Redis:
 		options = append(options, engine.WithRedis(&cachestore.RedisConfig{
 			DependencyMode:        c.Cache.Redis.DependencyMode,
 			MaxActiveConnections:  c.Cache.Redis.MaxActiveConnections,
@@ -126,7 +127,7 @@ func addCacheStoreOpts(c *config.AppConfig, options []engine.ClientOps) []engine
 			URL:                   c.Cache.Redis.URL,
 			UseTLS:                c.Cache.Redis.UseTLS,
 		}))
-	} else if c.Cache.Engine == cachestore.FreeCache {
+	case cachestore.FreeCache:
 		options = append(options, engine.WithFreeCache())
 	}
 
@@ -181,7 +182,8 @@ func addClusterOpts(c *config.AppConfig, options []engine.ClientOps) ([]engine.C
 
 func addDataStoreOpts(c *config.AppConfig, options []engine.ClientOps) ([]engine.ClientOps, error) {
 	// Select the datastore
-	if c.Db.Datastore.Engine == datastore.SQLite {
+	switch c.Db.Datastore.Engine {
+	case datastore.SQLite:
 		tablePrefix := c.Db.Datastore.TablePrefix
 		if len(c.Db.SQLite.TablePrefix) > 0 {
 			tablePrefix = c.Db.SQLite.TablePrefix
@@ -199,7 +201,7 @@ func addDataStoreOpts(c *config.AppConfig, options []engine.ClientOps) ([]engine
 			Shared:             c.Db.SQLite.Shared,
 			ExistingConnection: c.Db.SQLite.ExistingConnection,
 		}))
-	} else if c.Db.Datastore.Engine == datastore.PostgreSQL {
+	case datastore.PostgreSQL:
 		tablePrefix := c.Db.Datastore.TablePrefix
 		if len(c.Db.SQL.TablePrefix) > 0 {
 			tablePrefix = c.Db.SQL.TablePrefix
@@ -225,7 +227,7 @@ func addDataStoreOpts(c *config.AppConfig, options []engine.ClientOps) ([]engine
 			SslMode:   c.Db.SQL.SslMode,
 		}))
 
-	} else {
+	default:
 		return nil, spverrors.Newf("unsupported datastore engine: %s", c.Db.Datastore.Engine.String())
 	}
 
@@ -248,9 +250,6 @@ func addPaymailOpts(c *config.AppConfig, options []engine.ClientOps) []engine.Cl
 	}
 	if c.ExperimentalFeatures.PikePaymentEnabled {
 		options = append(options, engine.WithPaymailPikePaymentSupport())
-	}
-	if c.ExperimentalFeatures.V2 {
-		options = append(options, engine.WithPaymailExperimentalNewTransactionFlow())
 	}
 
 	return options
