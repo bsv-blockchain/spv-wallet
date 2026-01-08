@@ -30,6 +30,7 @@ func main() {
 	}
 
 	templateDoc.InternalizeRefs(context.Background(), mergedRefNameResolver)
+	ensureSchemaTypes(templateDoc)
 	saveMergedSpec(templateDoc, outputPath)
 	fmt.Printf("Merged OpenAPI spec saved to %s\n", outputPath)
 }
@@ -92,6 +93,27 @@ func saveMergedSpec(doc *openapi3.T, outputPath string) {
 
 	if err := os.WriteFile(outputPath, data, 0600); err != nil {
 		log.Fatalf("Failed to write merged spec to %s: %v", outputPath, err)
+	}
+}
+
+func ensureSchemaTypes(doc *openapi3.T) {
+	if doc.Components == nil || doc.Components.Schemas == nil {
+		return
+	}
+	for name, schemaRef := range doc.Components.Schemas {
+		if schemaRef.Value == nil {
+			continue
+		}
+		schema := schemaRef.Value
+		// If schema has properties or required fields but no type, set it to object
+		if (len(schema.Properties) > 0 || len(schema.Required) > 0) &&
+			schema.Type == nil &&
+			len(schema.AllOf) == 0 &&
+			len(schema.OneOf) == 0 &&
+			len(schema.AnyOf) == 0 {
+			log.Printf("Fixing missing type for schema: %s", name)
+			schema.Type = &openapi3.Types{"object"}
+		}
 	}
 }
 

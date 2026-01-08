@@ -13,13 +13,14 @@ type DatabaseLogWrapper struct {
 // LogMode will set the log level/mode
 func (d *DatabaseLogWrapper) LogMode(level gLogger.LogLevel) gLogger.Interface {
 	newLogger := *d
-	if level == gLogger.Info {
+	switch level {
+	case gLogger.Info:
 		newLogger.SetMode(zLogger.Info)
-	} else if level == gLogger.Warn {
+	case gLogger.Warn:
 		newLogger.SetMode(zLogger.Warn)
-	} else if level == gLogger.Error {
+	case gLogger.Error:
 		newLogger.SetMode(zLogger.Error)
-	} else if level == gLogger.Silent {
+	case gLogger.Silent:
 		newLogger.SetMode(zLogger.Silent)
 	}
 

@@ -12,6 +12,7 @@ import (
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses"
+	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/data"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/database/repository"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/engine/internal"
@@ -42,6 +43,7 @@ type V2 struct {
 	usersService               *users.Service
 	paymailsService            *paymails.Service
 	addressesService           *addresses.Service
+	contactsService            *contacts.Service
 	dataService                *data.Service
 	operationsService          *operations.Service
 	transactionsOutlineService outlines.Service
@@ -96,6 +98,7 @@ func NewEngine(cfg *config.AppConfig, logger zerolog.Logger, overridesOpts ...In
 	userService := users.NewService(repos.Users, cfg)
 	paymailService := paymails.NewService(repos.Paymails, userService, cfg)
 	addressesService := addresses.NewService(repos.Addresses)
+	contactsService := contacts.NewService(repos.Contacts, paymailService, paymailServiceClient, logger)
 	dataService := data.NewService(repos.Data)
 	operationsService := operations.NewService(repos.Operations)
 	txSyncService := txsync.NewService(logger, repos.Transactions)
@@ -126,6 +129,7 @@ func NewEngine(cfg *config.AppConfig, logger zerolog.Logger, overridesOpts ...In
 		paymailService,
 		userService,
 		addressesService,
+		contactsService,
 		chainService,
 		transactionsRecordService,
 	)
@@ -140,6 +144,7 @@ func NewEngine(cfg *config.AppConfig, logger zerolog.Logger, overridesOpts ...In
 		usersService:               userService,
 		paymailsService:            paymailService,
 		addressesService:           addressesService,
+		contactsService:            contactsService,
 		dataService:                dataService,
 		operationsService:          operationsService,
 		transactionsOutlineService: transactionsOutlineService,
@@ -198,6 +203,11 @@ func (e *V2) DataService() *data.Service {
 // OperationsService returns the operations service
 func (e *V2) OperationsService() *operations.Service {
 	return e.operationsService
+}
+
+// ContactService returns the contacts service
+func (e *V2) ContactService() *contacts.Service {
+	return e.contactsService
 }
 
 // TransactionOutlinesService returns the transaction outlines service

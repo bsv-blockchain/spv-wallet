@@ -15,6 +15,7 @@ import (
 	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
 	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses"
+	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/data"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/database/repository"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/operations"
@@ -174,6 +175,7 @@ type V2Interface interface {
 	TransactionOutlinesService() outlines.Service
 	TransactionRecordService() *record.Service
 	PaymailServerConfiguration() *server.Configuration
+	ContactService() *contacts.Service
 	TxSyncService() *txsync.Service
 	Close(context.Context) error
 }

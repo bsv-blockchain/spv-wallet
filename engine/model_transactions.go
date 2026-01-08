@@ -186,8 +186,8 @@ func (m *Transaction) GetID() string {
 // setID will set the ID from the transaction hex
 func (m *Transaction) setID() (err error) {
 	// Parse the hex (if not already parsed)
-	if m.TransactionBase.parsedTx == nil {
-		if m.TransactionBase.parsedTx, err = trx.NewTransactionFromHex(m.Hex); err != nil {
+	if m.parsedTx == nil {
+		if m.parsedTx, err = trx.NewTransactionFromHex(m.Hex); err != nil {
 			return
 		}
 	}
@@ -201,7 +201,7 @@ func (m *Transaction) setID() (err error) {
 // getValue calculates the value of the transaction
 func (m *Transaction) getValues() (outputValue uint64, fee uint64) {
 	// Parse the outputs
-	for _, output := range m.TransactionBase.parsedTx.Outputs {
+	for _, output := range m.parsedTx.Outputs {
 		outputValue += output.Satoshis
 	}
 
@@ -213,7 +213,7 @@ func (m *Transaction) getValues() (outputValue uint64, fee uint64) {
 	} else { // external transaction
 
 		var inputValue uint64
-		for _, input := range m.TransactionBase.parsedTx.Inputs {
+		for _, input := range m.parsedTx.Inputs {
 			sourceTxSato := input.SourceTxSatoshis()
 			if sourceTxSato == nil {
 				continue

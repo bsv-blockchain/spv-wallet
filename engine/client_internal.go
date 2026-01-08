@@ -225,6 +225,7 @@ func (c *Client) loadPaymailServer() (err error) {
 		c.options.paymail.serverConfig.options...,
 	)
 	return
+
 }
 
 func (c *Client) askForFeeUnit(ctx context.Context) error {

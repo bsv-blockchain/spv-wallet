@@ -63,7 +63,7 @@ func (m Metadata) Value() (driver.Value, error) {
 }
 
 func (Metadata) GormDBDataType(db *gorm.DB, _ *schema.Field) string {
-	if db.Dialector.Name() == Postgres {
+	if db.Name() == Postgres {
 		return JSONB
 	}
 	return JSON
@@ -105,7 +105,7 @@ func (i IDs) Value() (driver.Value, error) {
 
 // GormDBDataType the gorm data type for metadata
 func (IDs) GormDBDataType(db *gorm.DB, _ *schema.Field) string {
-	if db.Dialector.Name() == Postgres {
+	if db.Name() == Postgres {
 		return JSONB
 	}
 	return JSON

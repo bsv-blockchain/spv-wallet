@@ -11,11 +11,12 @@ func (d *DbConfig) Validate() error {
 		return spverrors.Newf("missing a valid datastore engine")
 	}
 
-	if d.Datastore.Engine == datastore.SQLite {
+	switch d.Datastore.Engine {
+	case datastore.SQLite:
 		if d.SQLite == nil {
 			return spverrors.Newf("missing sqlite config")
 		}
-	} else if d.Datastore.Engine == datastore.PostgreSQL {
+	case datastore.PostgreSQL:
 		if d.SQL == nil {
 			return spverrors.Newf("missing sql config")
 		} else if len(d.SQL.Host) == 0 {
