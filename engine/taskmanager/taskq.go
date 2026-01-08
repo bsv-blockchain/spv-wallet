@@ -25,7 +25,7 @@ type TasqOps func(*taskq.QueueOptions)
 func WithRedis(addr string) TasqOps {
 	return func(queueOptions *taskq.QueueOptions) {
 		queueOptions.Redis = redis.NewClient(&redis.Options{
-			Addr: strings.Replace(addr, "redis://", "", -1),
+			Addr: strings.ReplaceAll(addr, "redis://", ""),
 		})
 	}
 }
@@ -78,9 +78,10 @@ func (c *TaskManager) loadTaskQ(ctx context.Context) error {
 	}
 
 	var factory taskq.Factory
-	if factoryType == FactoryMemory {
+	switch factoryType {
+	case FactoryMemory:
 		factory = memqueue.NewFactory()
-	} else if factoryType == FactoryRedis {
+	case FactoryRedis:
 		factory = redisq.NewFactory()
 	}
 

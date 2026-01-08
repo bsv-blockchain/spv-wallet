@@ -409,10 +409,10 @@ func validateOutputsInputs(inputs []*TransactionInput, outputs []*TransactionOut
 	outputValue := uint64(0)
 
 	for _, input := range inputs {
-		if utils.StringInSlice(input.Utxo.ID, usedUtxos) {
+		if utils.StringInSlice(input.ID, usedUtxos) {
 			return spverrors.ErrDuplicateUTXOs
 		}
-		usedUtxos = append(usedUtxos, input.Utxo.ID)
+		usedUtxos = append(usedUtxos, input.ID)
 		inputValue += input.Satoshis
 	}
 
@@ -533,7 +533,8 @@ func (m *DraftTransaction) addOutputsToTx(tx *trx.Transaction) (err error) {
 				scriptType = utils.GetDestinationType(sc.Script)
 			}
 
-			if scriptType == utils.ScriptTypeNullData {
+			switch scriptType {
+			case utils.ScriptTypeNullData:
 				// op_return output - only one allowed to have 0 satoshi value ???
 				if sc.Satoshis > 0 {
 					return spverrors.ErrInvalidOpReturnOutput
@@ -543,7 +544,7 @@ func (m *DraftTransaction) addOutputsToTx(tx *trx.Transaction) (err error) {
 					LockingScript: s,
 					Satoshis:      0,
 				})
-			} else if scriptType == utils.ScriptTypePubKeyHash {
+			case utils.ScriptTypePubKeyHash:
 				// sending to a p2pkh
 				if sc.Satoshis == 0 {
 					return spverrors.ErrOutputValueTooLow
@@ -554,7 +555,7 @@ func (m *DraftTransaction) addOutputsToTx(tx *trx.Transaction) (err error) {
 						LockingScript: s,
 						Satoshis:      sc.Satoshis,
 					})
-			} else {
+			default:
 				// add non-standard output script
 				tx.AddOutput(&trx.TransactionOutput{
 					LockingScript: s,
@@ -650,9 +651,10 @@ func (m *DraftTransaction) getChangeSatoshis(satoshisChange uint64) (changeSatos
 	var lastDestination string
 	changeUsed := uint64(0)
 
-	if m.Configuration.ChangeDestinationsStrategy == ChangeStrategyNominations {
+	switch m.Configuration.ChangeDestinationsStrategy {
+	case ChangeStrategyNominations:
 		return nil, spverrors.ErrChangeStrategyNotImplemented
-	} else if m.Configuration.ChangeDestinationsStrategy == ChangeStrategyRandom {
+	case ChangeStrategyRandom:
 		nDestinations := float64(len(m.Configuration.ChangeDestinations))
 		var a *big.Int
 		for _, destination := range m.Configuration.ChangeDestinations {
@@ -668,7 +670,7 @@ func (m *DraftTransaction) getChangeSatoshis(satoshisChange uint64) (changeSatos
 			lastDestination = destination.LockingScript
 			changeUsed += changeForDestination
 		}
-	} else {
+	default:
 		// default
 		changePerDestination := uint64(float64(satoshisChange) / float64(len(m.Configuration.ChangeDestinations)))
 		for _, destination := range m.Configuration.ChangeDestinations {

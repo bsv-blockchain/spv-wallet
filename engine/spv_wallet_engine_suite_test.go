@@ -93,7 +93,8 @@ func (ts *EmbeddedDBTestSuite) createTestClient(ctx context.Context, database da
 	}
 
 	// Load the in-memory version of the database
-	if database == datastore.SQLite {
+	switch database {
+	case datastore.SQLite:
 		opts = append(opts, WithSQLite(&datastore.SQLiteConfig{
 			CommonConfig: datastore.CommonConfig{
 				MaxIdleConnections: 1,
@@ -103,7 +104,7 @@ func (ts *EmbeddedDBTestSuite) createTestClient(ctx context.Context, database da
 			Shared: true, // mrz: TestTransaction_Save requires this to be true for some reason
 			// I get the error: no such table: _17a1f3e22f2eec56_utxos
 		}))
-	} else if database == datastore.PostgreSQL {
+	case datastore.PostgreSQL:
 
 		// Sanity check
 		if ts.PostgresqlServer == nil {
@@ -124,7 +125,7 @@ func (ts *EmbeddedDBTestSuite) createTestClient(ctx context.Context, database da
 			Port:     fmt.Sprintf("%d", postgresqlTestPort),
 		}))
 
-	} else {
+	default:
 		return nil, ErrDatastoreNotSupported
 	}
 
