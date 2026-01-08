@@ -88,6 +88,9 @@ type ServerInterface interface {
 	// Create Paymail Address
 	// (POST /api/v2/users/address)
 	CreateAddress(c *gin.Context)
+	// Delete current user
+	// (DELETE /api/v2/users/current)
+	DeleteCurrentUser(c *gin.Context)
 	// Get current user
 	// (GET /api/v2/users/current)
 	CurrentUser(c *gin.Context)
@@ -713,6 +716,21 @@ func (siw *ServerInterfaceWrapper) CreateAddress(c *gin.Context) {
 	siw.Handler.CreateAddress(c)
 }
 
+// DeleteCurrentUser operation middleware
+func (siw *ServerInterfaceWrapper) DeleteCurrentUser(c *gin.Context) {
+
+	c.Set(XPubAuthScopes, []string{"user"})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.DeleteCurrentUser(c)
+}
+
 // CurrentUser operation middleware
 func (siw *ServerInterfaceWrapper) CurrentUser(c *gin.Context) {
 
@@ -780,5 +798,6 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.POST(options.BaseURL+"/api/v2/transactions", wrapper.RecordTransactionOutline)
 	router.POST(options.BaseURL+"/api/v2/transactions/outlines", wrapper.CreateTransactionOutline)
 	router.POST(options.BaseURL+"/api/v2/users/address", wrapper.CreateAddress)
+	router.DELETE(options.BaseURL+"/api/v2/users/current", wrapper.DeleteCurrentUser)
 	router.GET(options.BaseURL+"/api/v2/users/current", wrapper.CurrentUser)
 }

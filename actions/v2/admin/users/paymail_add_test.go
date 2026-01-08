@@ -45,7 +45,7 @@ func TestAddPaymail(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(201).
+			IsCreated().
 			WithJSONMatching(`{
 			  "alias": "{{ .alias }}",
 			  "avatar": "{{ .avatar }}",
@@ -98,7 +98,7 @@ func TestAddPaymail(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(201).
+			IsCreated().
 			WithJSONMatching(`{
 			  "alias": "{{ .alias }}",
 			  "avatar": "",
@@ -222,7 +222,6 @@ func TestAddPaymailWithWrongDomain(t *testing.T) {
 		then.Response(res).
 			WithProblemDetails(400, "unsupported_domain", "Unsupported domain")
 	})
-
 }
 
 func TestAddPaymailWithBothPaymailAndAliasDomainPair(t *testing.T) {
@@ -256,8 +255,7 @@ func TestAddPaymailWithBothPaymailAndAliasDomainPair(t *testing.T) {
 			Post("/api/v2/admin/users/{id}/paymails")
 
 		// then:
-		then.Response(res).
-			HasStatus(201)
+		then.Response(res).IsCreated()
 	})
 
 	t.Run("Try to add with inconsistent paymail and alias-domain pair", func(t *testing.T) {

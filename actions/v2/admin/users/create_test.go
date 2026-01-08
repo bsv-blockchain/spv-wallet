@@ -40,7 +40,7 @@ func TestCreateUserWithoutPaymail(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(201).
+			IsCreated().
 			WithJSONMatching(`{
 				"id": "{{ matchAddress }}",
 				"createdAt": "{{ matchTimestamp }}",
@@ -131,7 +131,6 @@ func TestCreateUserWithBadURLAvatar(t *testing.T) {
 	// then:
 	then.Response(res).
 		WithProblemDetails(422, "invalid_avatar_url", "Invalid avatar URL")
-
 }
 
 func TestCreateUserWithoutPublicName(t *testing.T) {
@@ -166,7 +165,7 @@ func TestCreateUserWithoutPublicName(t *testing.T) {
 
 	// then:
 	then.Response(res).
-		HasStatus(201).
+		IsCreated().
 		WithJSONMatching(`{
 				"id": "{{ matchAddress }}",
 				"createdAt": "{{ matchTimestamp }}",
@@ -230,7 +229,7 @@ func TestCreateUserWithPaymail(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(201).
+			IsCreated().
 			WithJSONMatching(`{
 				"id": "{{ matchAddress }}",
 				"createdAt": "{{ matchTimestamp }}",
@@ -292,7 +291,6 @@ func TestCreateUserWithPaymail(t *testing.T) {
 				"alias":      userCandidate.DefaultPaymail().Alias(),
 			})
 	})
-
 }
 
 func TestCreateUserWithAliasAndDomain(t *testing.T) {
@@ -337,7 +335,7 @@ func TestCreateUserWithAliasAndDomain(t *testing.T) {
 
 		// then:
 		then.Response(res).
-			HasStatus(201).
+			IsCreated().
 			WithJSONMatching(`{
 				"id": "{{ matchAddress }}",
 				"createdAt": "{{ matchTimestamp }}",

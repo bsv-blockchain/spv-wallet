@@ -2778,6 +2778,9 @@ type ClientInterface interface {
 
 	CreateAddress(ctx context.Context, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteCurrentUser request
+	DeleteCurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CurrentUser request
 	CurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
@@ -3192,6 +3195,18 @@ func (c *Client) CreateAddressWithBody(ctx context.Context, contentType string, 
 
 func (c *Client) CreateAddress(ctx context.Context, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateAddressRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteCurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteCurrentUserRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -4254,6 +4269,33 @@ func NewCreateAddressRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
+// NewDeleteCurrentUserRequest generates requests for DeleteCurrentUser
+func NewDeleteCurrentUserRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/users/current")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewCurrentUserRequest generates requests for CurrentUser
 func NewCurrentUserRequest(server string) (*http.Request, error) {
 	var err error
@@ -4418,6 +4460,9 @@ type ClientWithResponsesInterface interface {
 	CreateAddressWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAddressResponse, error)
 
 	CreateAddressWithResponse(ctx context.Context, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAddressResponse, error)
+
+	// DeleteCurrentUserWithResponse request
+	DeleteCurrentUserWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DeleteCurrentUserResponse, error)
 
 	// CurrentUserWithResponse request
 	CurrentUserWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CurrentUserResponse, error)
@@ -5273,6 +5318,39 @@ func (r CreateAddressResponse) Bytes() []byte {
 	return r.Body
 }
 
+type DeleteCurrentUserResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON401      *ResponsesUserNotAuthorized
+	JSON500      *ResponsesInternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteCurrentUserResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteCurrentUserResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// HTTPResponse returns http.Response from which this response was parsed.
+func (r DeleteCurrentUserResponse) Response() *http.Response {
+	return r.HTTPResponse
+}
+
+// Bytes is a convenience method to retrieve the raw bytes from the HTTP response
+func (r DeleteCurrentUserResponse) Bytes() []byte {
+	return r.Body
+}
+
 type CurrentUserResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -5610,6 +5688,15 @@ func (c *ClientWithResponses) CreateAddressWithResponse(ctx context.Context, bod
 		return nil, err
 	}
 	return ParseCreateAddressResponse(rsp)
+}
+
+// DeleteCurrentUserWithResponse request returning *DeleteCurrentUserResponse
+func (c *ClientWithResponses) DeleteCurrentUserWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DeleteCurrentUserResponse, error) {
+	rsp, err := c.DeleteCurrentUser(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteCurrentUserResponse(rsp)
 }
 
 // CurrentUserWithResponse request returning *CurrentUserResponse
@@ -6602,6 +6689,39 @@ func ParseCreateAddressResponse(rsp *http.Response) (*CreateAddressResponse, err
 		}
 		response.JSON400 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ResponsesUserNotAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest ResponsesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteCurrentUserResponse parses an HTTP response from a DeleteCurrentUserWithResponse call
+func ParseDeleteCurrentUserResponse(rsp *http.Response) (*DeleteCurrentUserResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteCurrentUserResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest ResponsesUserNotAuthorized
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
