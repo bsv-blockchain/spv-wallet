@@ -1911,6 +1911,7 @@ components:
             required:
                 - type
                 - instruction
+            type: object
         models_SPVWalletCustomInstructions:
             items:
                 $ref: '#/components/schemas/models_SPVWalletCustomInstruction'
@@ -2061,6 +2062,7 @@ components:
             required:
                 - fullName
                 - creatorPaymail
+            type: object
         requests_CreatePaymailAddress:
             properties:
                 paymail:
