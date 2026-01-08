@@ -56,7 +56,7 @@ func _createExternalTxToRecord(ctx context.Context, eTx *externalIncomingTx, c C
 	// Create NEW tx model
 	tx := txFromSDKTx(eTx.SDKTx, c.DefaultModelOptions(append(opts, New())...)...)
 
-	if !tx.TransactionBase.hasOneKnownDestination(ctx, c) {
+	if !tx.hasOneKnownDestination(ctx, c) {
 		return nil, ErrNoMatchingOutputs
 	}
 
