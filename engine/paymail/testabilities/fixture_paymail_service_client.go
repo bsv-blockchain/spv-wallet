@@ -68,17 +68,17 @@ func (a *paymailServiceClientAbility) ExternalPaymailHost() PaymailHostFixture {
 }
 
 func (a *paymailServiceClientAbility) WillRespondWithNotFoundOnP2PDestination() {
-	a.PaymailClientMock.WillRespondWithP2PCapabilities()
+	a.WillRespondWithP2PCapabilities()
 	a.PaymailClientMock.WillRespondOnCapability(paymail.BRFCP2PPaymentDestination).WithNotFound()
 }
 
 func (a *paymailServiceClientAbility) WillRespondWithErrorOnP2PDestinations() {
-	a.PaymailClientMock.WillRespondWithP2PCapabilities()
+	a.WillRespondWithP2PCapabilities()
 	a.PaymailClientMock.WillRespondOnCapability(paymail.BRFCP2PPaymentDestination).WithInternalServerError()
 }
 
 func (a *paymailServiceClientAbility) WillRespondWithP2PDestinationsWithSats(satoshis bsv.Satoshis, moreSatoshis ...bsv.Satoshis) {
-	a.PaymailClientMock.WillRespondWithP2PCapabilities()
+	a.WillRespondWithP2PCapabilities()
 	a.PaymailClientMock.
 		WillRespondOnCapability(paymail.BRFCP2PPaymentDestination).
 		With(paymailmock.P2PDestinationsForSats(satoshis, moreSatoshis...))
