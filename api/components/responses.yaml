@@ -59,6 +59,36 @@ components:
           schema:
             $ref: "./errors.yaml#/components/schemas/GettingUser"
 
+    AdminRecordTransactionOutlineForUserSuccess:
+      description: Transaction outline for user recorded
+      content:
+        application/json:
+          schema:
+            $ref: "./models.yaml#/components/schemas/RecordedOutline"
+
+    AdminRecordTransactionOutlineForUserBadRequest:
+      description: Bad request is an error that occurs when the request is malformed.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/CannotBindRequest"
+              - $ref: "./errors.yaml#/components/schemas/InvalidDataID"
+              - $ref: "./errors.yaml#/components/schemas/AnnotationIndexOutOfRange"
+              - $ref: "./errors.yaml#/components/schemas/UTXOSpent"
+              - $ref: "./errors.yaml#/components/schemas/AnnotationIndexConversion"
+              - $ref: "./errors.yaml#/components/schemas/NoOperations"
+
+    AdminRecordTransactionOutlineForUserInternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/GettingOutputs"
+              - $ref: "./errors.yaml#/components/schemas/TxBroadcast"
+
     NotAuthorized:
       description: Security requirements failed
       content:
@@ -173,6 +203,13 @@ components:
           schema:
             $ref: "./models.yaml#/components/schemas/RecordedOutline"
 
+    ProblemDetails:
+      description: RFC 7807 Problem Details. For 4xx codes, you can switch by 'type' field to get more specific error.
+      content:
+        application/json:
+          schema:
+            $ref: "./errors.yaml#/components/schemas/ProblemDetails"
+
     RecordTransactionBadRequest:
       description: Bad request is an error that occurs when the request is malformed.
       content:
@@ -194,6 +231,163 @@ components:
               - $ref: "./errors.yaml#/components/schemas/Internal"
               - $ref: "./errors.yaml#/components/schemas/GettingOutputs"
               - $ref: "./errors.yaml#/components/schemas/TxBroadcast"
+
+    ContactSuccess:
+      description: Contact success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "./models.yaml#/components/schemas/Contact"
+
+    SearchContactsSuccess:
+      description: Contacts success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "./models.yaml#/components/schemas/ContactsSearchResult"
+
+    ContactSearchInternalServerError:
+      description: Contact search internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/FailedToGetPaginatedResults"
+
+    ContactUpsertInternalServerError:
+      description: Contact search internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/GetContact"
+              - $ref: "./errors.yaml#/components/schemas/ContactFailedToUpdate"
+
+    UpsertContactBadRequest:
+      description: Bad request is an error that occurs when the request is malformed.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/CannotBindRequest"
+              - $ref: "./errors.yaml#/components/schemas/UserDoNotOwnPaymail"
+              - $ref: "./errors.yaml#/components/schemas/ContactInvalidPaymail"
+              - $ref: "./errors.yaml#/components/schemas/GettingPKIFailed"
+              - $ref: "./errors.yaml#/components/schemas/SaveContact"
+              - $ref: "./errors.yaml#/components/schemas/ContactFullNameRequired"
+
+    UpsertContactNotFound:
+      description: Not found is an error that occurs when the requested resource is not found.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/CouldNotFindPaymail"
+
+    GetContactInternalServerError:
+      description: Get contact internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/GetContact"
+
+    ContactNotFound:
+      description: Not found is an error that occurs when the requested resource is not found.
+      content:
+        application/json:
+          schema:
+            $ref: "./errors.yaml#/components/schemas/ContactNotFound"
+
+    DeleteContactInternalServerError:
+      description: Delete contact internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/DeleteContact"
+
+    UpdateContactBadRequest:
+      description: Bad request is an error that occurs when the request is malformed.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/ContactInWrongStatus"
+
+    UpdateContactInternalServerError:
+      description: Update contact status internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/UpdateContactStatus"
+
+    AdminCreateContactBadRequest:
+      description: Bad request is an error that occurs when the request is malformed.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/CannotBindRequest"
+              - $ref: "./errors.yaml#/components/schemas/MissingContactFullName"
+              - $ref: "./errors.yaml#/components/schemas/MissingContactPaymailParam"
+              - $ref: "./errors.yaml#/components/schemas/MissingContactCreatorPaymailParam"
+              - $ref: "./errors.yaml#/components/schemas/RequesterContactInvalid"
+              - $ref: "./errors.yaml#/components/schemas/GetPKIFailed"
+              - $ref: "./errors.yaml#/components/schemas/SaveContact"
+
+    AdminCreateContactNotFound:
+      description: Not found is an error that occurs when the requested resource is not found.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/CouldNotFindPaymail"
+
+    AdminCreateContactInternalServerError:
+      description: Create contact internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/GetContact"
+
+    AdminCreateContactConflict:
+      description: Conflict is an error that occurs when the request conflicts with the current state of the server.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/ContactAlreadyExists"
+
+    AdminConfirmContactInternalServerError:
+      description: Confirm contact internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/GetContact"
+              - $ref: "./errors.yaml#/components/schemas/UpdateContactStatus"
+
+    AdminUpdateContactStatusInternalServerError:
+      description: Confirm contact internal server error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "./errors.yaml#/components/schemas/Internal"
+              - $ref: "./errors.yaml#/components/schemas/UpdateContactStatus"
 
     GetMerklerootsSuccess:
       description: Merkleroots found
@@ -314,3 +508,10 @@ components:
         application/json:
           schema:
             $ref: "./errors.yaml#/components/schemas/NotificationsDisabled"
+
+    PaymailAddress:
+      description: Paymail address created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "./models.yaml#/components/schemas/Paymail"
