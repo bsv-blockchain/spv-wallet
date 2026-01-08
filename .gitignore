@@ -47,3 +47,4 @@ config.yaml
 config.*.yaml
 !config.example.yaml
 /regression_tests/regression-tests
+/bin
