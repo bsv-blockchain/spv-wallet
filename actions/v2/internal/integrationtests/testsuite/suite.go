@@ -45,7 +45,7 @@ func SetupDBMSTest(t *testing.T, dbms string) (
 	if dbms == DbmsPostgres {
 		t.Setenv(testmode.EnvDBMode, testmode.PostgresContainerMode)
 
-		container := given.(testengine.EngineFixture).GetPostgresContainer()
+		container := given.EngineFixture().GetPostgresContainer()
 		testmode.CleanDatabaseSchema(t, container)
 
 		cleanup = given.StartedSPVWalletV2()

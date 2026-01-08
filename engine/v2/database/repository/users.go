@@ -5,6 +5,7 @@ import (
 
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
+	dberrors "github.com/bitcoin-sv/spv-wallet/engine/v2/database/errors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/users/usersmodels"
 	"github.com/bitcoin-sv/spv-wallet/models/bsv"
@@ -28,10 +29,39 @@ func (u *Users) Exists(ctx context.Context, userID string) (bool, error) {
 	var count int64
 	err := u.db.WithContext(ctx).Model(&database.User{}).Where("id = ?", userID).Count(&count).Error
 	if err != nil {
-		return false, spverrors.Wrapf(err, "failed to check if user exists")
+		return false, dberrors.QueryFailed.Wrap(err, "failed to check if user exists by ID")
 	}
 
 	return count > 0, nil
+}
+
+// Delete deletes user with userID and deletes their associated paymails, addresses, operations and tracked outputs
+func (u *Users) Delete(ctx context.Context, userID string) error {
+	txErr := u.db.WithContext(ctx).Unscoped().Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete(&database.Paymail{}, "user_id = ?", userID).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&database.Address{}, "user_id = ?", userID).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&database.Operation{}, "user_id = ?", userID).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&database.TrackedOutput{}, "user_id = ?", userID).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Delete(&database.User{}, "id = ?", userID).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	return spverrors.Wrapf(txErr, "failed to delete user")
 }
 
 // GetIDByPubKey returns a user by its public key. If the user does not exist, it returns error.
@@ -44,7 +74,7 @@ func (u *Users) GetIDByPubKey(ctx context.Context, pubKey string) (string, error
 		Where("pub_key = ?", pubKey).
 		First(&user).Error
 	if err != nil {
-		return "", spverrors.Wrapf(err, "failed to get user by public key")
+		return "", dberrors.QueryFailed.Wrap(err, "failed to get user by public key")
 	}
 
 	return user.ID, nil
@@ -58,7 +88,7 @@ func (u *Users) Get(ctx context.Context, userID string) (*usersmodels.User, erro
 		Where("id = ?", userID).
 		First(&user).Error
 	if err != nil {
-		return nil, spverrors.Wrapf(err, "failed to get user by public key")
+		return nil, dberrors.QueryOrNotFoundError(err, "failed to get user by ID")
 	}
 
 	return mapToDomainUser(&user), nil
@@ -81,7 +111,7 @@ func (u *Users) Create(ctx context.Context, newUser *usersmodels.NewUser) (*user
 	}
 
 	if err := query.Create(row).Error; err != nil {
-		return nil, spverrors.Wrapf(err, "failed to save user")
+		return nil, dberrors.QueryFailed.Wrap(err, "failed to create new user")
 	}
 
 	return mapToDomainUser(row), nil
@@ -97,9 +127,8 @@ func (u *Users) GetBalance(ctx context.Context, userID string, bucket bucket.Nam
 		Select("COALESCE(SUM(satoshis), 0)").
 		Row().
 		Scan(&balance)
-
 	if err != nil {
-		return 0, spverrors.Wrapf(err, "failed to get balance")
+		return 0, dberrors.QueryFailed.Wrap(err, "failed to get balance for user by ID")
 	}
 
 	return balance, nil

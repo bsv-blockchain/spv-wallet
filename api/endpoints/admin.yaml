@@ -40,14 +40,8 @@ paths:
       responses:
         201:
           $ref: "../components/responses.yaml#/components/responses/AdminCreateUserSuccess"
-        400:
-          $ref: "../components/responses.yaml#/components/responses/AdminUserBadRequest"
-        401:
-          $ref: "../components/responses.yaml#/components/responses/NotAuthorizedToAdminEndpoint"
-        422:
-          $ref: "../components/responses.yaml#/components/responses/AdminInvalidAvatarURL"
-        500:
-          $ref: "../components/responses.yaml#/components/responses/AdminCreateUserInternalServerError"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
 
   /api/v2/admin/users/{id}:
     get:
@@ -70,8 +64,8 @@ paths:
       responses:
         200:
           $ref: "../components/responses.yaml#/components/responses/AdminGetUser"
-        500:
-          $ref: "../components/responses.yaml#/components/responses/AdminGetUserInternalServerError"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
 
   /api/v2/admin/users/{id}/paymails:
     post:
@@ -100,9 +94,263 @@ paths:
       responses:
         201:
           $ref: "../components/responses.yaml#/components/responses/AdminAddPaymailSuccess"
-        400:
-          $ref: "../components/responses.yaml#/components/responses/AdminUserBadRequest"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+  /api/v2/admin/webhooks:
+    get:
+      operationId: webhooks
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Get webhooks
+      description: >-
+        This endpoint gets all webhooks.
+      responses:
+        200:
+          $ref: "../components/responses.yaml#/components/responses/GetWebhooksSuccess"
         401:
           $ref: "../components/responses.yaml#/components/responses/NotAuthorizedToAdminEndpoint"
-        422:
-          $ref: "../components/responses.yaml#/components/responses/AdminInvalidAvatarURL"
+        404:
+          $ref: "../components/responses.yaml#/components/responses/NotificationsDisabled"
+        500:
+          $ref: "../components/responses.yaml#/components/responses/GetWebhooksInternalServerError"
+
+    post:
+      operationId: subscribeWebhook
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Create webhook
+      description: >-
+        This endpoint creates a new webhook.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/requests.yaml#/components/schemas/SubscribeWebhook"
+      responses:
+        200:
+          description: Success
+        400:
+          $ref: "../components/responses.yaml#/components/responses/SubscribeToWebhookBadRequest"
+        401:
+          $ref: "../components/responses.yaml#/components/responses/NotAuthorizedToAdminEndpoint"
+        404:
+          $ref: "../components/responses.yaml#/components/responses/NotificationsDisabled"
+        500:
+          $ref: "../components/responses.yaml#/components/responses/SubscribeToWebhookInternalServerError"
+
+    delete:
+      operationId: unsubscribeWebhook
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Delete webhooks
+      description: >-
+        This endpoint deletes all webhooks.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/requests.yaml#/components/schemas/UnsubscribeWebhook"
+      responses:
+        200:
+          description: Webhooks deleted
+        401:
+          $ref: "../components/responses.yaml#/components/responses/NotAuthorizedToAdminEndpoint"
+        404:
+          $ref: "../components/responses.yaml#/components/responses/NotificationsDisabled"
+        500:
+          $ref: "../components/responses.yaml#/components/responses/UnsubscribeToWebhookInternalServerError"
+
+  /api/v2/admin/transactions/record:
+    post:
+      operationId: recordTransactionOutlineForUser
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Record transaction outline for user
+      description: >-
+        This endpoint allows for admin to record outline transaction for user with given id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/requests.yaml#/components/schemas/RecordTransactionOutlineForUser"
+      responses:
+        201:
+          $ref: "../components/responses.yaml#/components/responses/AdminRecordTransactionOutlineForUserSuccess"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+  /api/v2/admin/contacts/{id}:
+    put:
+      operationId: adminUpdateContact
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Update contact
+      description: >-
+        This endpoint updates contact.
+      parameters:
+        - name: id
+          in: path
+          description: Contact ID
+          required: true
+          schema:
+            type: integer
+            format: uint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/requests.yaml#/components/schemas/UpdateContact"
+      responses:
+        200:
+          $ref: "../components/responses.yaml#/components/responses/ContactSuccess"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+    delete:
+      operationId: adminDeleteContact
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Delete contact
+      description: >-
+        This endpoint deletes contact.
+      parameters:
+        - name: id
+          in: path
+          description: Contact ID
+          required: true
+          schema:
+            type: integer
+            format: uint
+      responses:
+        200:
+          description: Contact deleted
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+
+  /api/v2/admin/contacts/{paymail}:
+    post:
+      operationId: adminCreateContact
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Create contact
+      description: >-
+        This endpoint creates contact.
+      parameters:
+        - name: paymail
+          in: path
+          description: Contact paymail
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/requests.yaml#/components/schemas/AdminCreateContact"
+      responses:
+        200:
+          $ref: "../components/responses.yaml#/components/responses/ContactSuccess"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+  /api/v2/admin/contacts/confirmations:
+    post:
+      operationId: adminConfirmContact
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Confirm contact
+      description: >-
+        This endpoint confirms contact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "../components/requests.yaml#/components/schemas/AdminConfirmContact"
+      responses:
+        200:
+          description: Contact confirmed
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+  /api/v2/admin/invitations/{id}:
+    post:
+      operationId: adminAcceptInvitation
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Accept invitation
+      description: >-
+        This endpoint allows to accept invitation for selected ID
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            ID of the contact that the admin would like to accept
+          required: true
+          schema:
+            type: integer
+            format: uint
+      responses:
+        200:
+          $ref: "../components/responses.yaml#/components/responses/ContactSuccess"
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"
+
+    delete:
+      operationId: adminRejectInvitation
+      security:
+        - XPubAuth:
+            - "admin"
+      tags:
+        - Admin endpoints
+      summary: Reject invitation
+      description: >-
+        This endpoint allows to reject invitation for selected ID
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            ID of the contact that the admin would like to reject
+          required: true
+          schema:
+            type: integer
+            format: uint
+      responses:
+        200:
+          description: Invitation rejected
+        default:
+          $ref: "../components/responses.yaml#/components/responses/ProblemDetails"

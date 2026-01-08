@@ -40,7 +40,7 @@ func getDataFromOpReturn(lockingScript *script.Script) ([]byte, error) {
 func processDataOutputs(tx *trx.Transaction, userID string, annotations *transaction.Annotations) ([]txmodels.NewOutput, error) {
 	txID := tx.TxID().String()
 
-	var dataOutputs []txmodels.NewOutput //nolint: prealloc
+	var dataOutputs []txmodels.NewOutput
 
 	for vout, annotation := range annotations.Outputs {
 		if annotation.Bucket != bucket.Data {

@@ -17,6 +17,8 @@ type IntegrationTestFixtures interface {
 	Alice() *fixtures.User
 	Bob() *fixtures.User
 	Charlie() *fixtures.User
+
+	EngineFixture() testengine.EngineFixture
 }
 
 type fixture struct {

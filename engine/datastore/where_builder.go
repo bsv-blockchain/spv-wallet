@@ -105,11 +105,12 @@ func (builder *whereBuilder) applyJSONCondition(tx customWhereInterface, key str
 	columnName := builder.getColumnNameOrPanic(key)
 	engine := builder.client.Engine()
 
-	if engine == PostgreSQL {
+	switch engine {
+	case PostgreSQL:
 		builder.applyPostgresJSONB(tx, columnName, condition)
-	} else if engine == SQLite {
+	case SQLite:
 		builder.applyJSONExtract(tx, columnName, condition)
-	} else {
+	default:
 		panic("Database engine not supported")
 	}
 }

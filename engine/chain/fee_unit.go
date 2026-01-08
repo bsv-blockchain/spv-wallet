@@ -9,7 +9,7 @@ import (
 
 // GetFeeUnit returns the current fee unit from the ARC policy.
 func (s *chainService) GetFeeUnit(ctx context.Context) (*bsv.FeeUnit, error) {
-	policy, err := s.arcService.GetPolicy(ctx)
+	policy, err := s.GetPolicy(ctx)
 	if err != nil {
 		return nil, chainerrors.ErrGetFeeUnit.Wrap(err)
 	}

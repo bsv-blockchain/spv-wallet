@@ -64,7 +64,7 @@ func printTypename(err error, builder *strings.Builder) {
 func printStatusCodeForSPVError(err error, builder *strings.Builder) {
 	//nolint:errorlint //errors.Is/As would check also the wrapped error but here only the current one should be concerned
 	if spvErr, ok := err.(models.SPVError); ok {
-		builder.WriteString(fmt.Sprintf("(%d)", spvErr.GetStatusCode()))
+		fmt.Fprintf(builder, "(%d)", spvErr.GetStatusCode())
 	}
 }
 

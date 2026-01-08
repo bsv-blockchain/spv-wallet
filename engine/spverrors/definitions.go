@@ -179,6 +179,21 @@ var ErrConfirmContact = models.SPVError{Message: "confirming contact failed", St
 // ErrGetContact is when getting contact failed
 var ErrGetContact = models.SPVError{Message: "getting contact failed", StatusCode: 500, Code: "error-contact-getting-contact-failed"}
 
+// ErrContactInvalidPaymail is returned when the paymail is invalid
+var ErrContactInvalidPaymail = models.SPVError{Message: "invalid paymail", StatusCode: 400, Code: "error-contacts-invalid-paymail"}
+
+// ErrUpdateContactStatus is when updating contact status failed
+var ErrUpdateContactStatus = models.SPVError{Message: "updating contact status failed", StatusCode: 500, Code: "error-contact-updating-status-failed"}
+
+// ErrContactFailedToGetPaginatedResults is when failed to get paginated results
+var ErrContactFailedToGetPaginatedResults = models.SPVError{Message: "failed to get paginated results", StatusCode: 500, Code: "error-contact-failed-to-get-paginated-results"}
+
+// ErrContactInWrongStatus is when contact is in wrong status to perform operation
+var ErrContactInWrongStatus = models.SPVError{Message: "contact is in wrong status", StatusCode: 400, Code: "error-contact-wrong-status"}
+
+// ErrCannotGetUpdatedContact is when error occurred during getting updated contact
+var ErrCannotGetUpdatedContact = models.SPVError{Message: "cannot get updated contact", StatusCode: 500, Code: "error-get-updated-contact"}
+
 // ////////////////////////////////// PAYMAIL ERRORS
 
 // ErrCouldNotFindPaymail is when paymail could not be found
@@ -216,6 +231,12 @@ var ErrPaymailInvalidMerkleRoots = models.SPVError{Message: "invalid merkle root
 
 // ErrRetrivePaymailInfo is when error occurred during retrieving paymail info
 var ErrRetrivePaymailInfo = models.SPVError{Message: "error during retrieving paymail info", StatusCode: 500, Code: "error-paymail-retrieve-info"}
+
+// ErrUserDoNotOwnPaymail is when user do not own paymail
+var ErrUserDoNotOwnPaymail = models.SPVError{Message: "user do not own paymail", StatusCode: 400, Code: "error-paymail-user-do-not-own"}
+
+// ErrContactFullNameRequired is when required full name was not provided
+var ErrContactFullNameRequired = models.SPVError{Message: "full name is required", StatusCode: 400, Code: "error-contact-full-name-required"}
 
 // ////////////////////////////////// CAPABILITIES ERRORS
 
@@ -431,6 +452,18 @@ var ErrWebhookGetAll = models.SPVError{Message: "cannot get all the stored webho
 
 // ErrNotificationsDisabled happens when the notifications are not enabled in the config
 var ErrNotificationsDisabled = models.SPVError{Message: "notifications are disabled", StatusCode: 404, Code: "error-notifications-disabled"}
+
+// ErrWebhookTokenHeaderRequired is when webhook token header is required
+var ErrWebhookTokenHeaderRequired = models.SPVError{Message: "webhook token header is required", StatusCode: 400, Code: "error-webhook-token-header-required"}
+
+// ErrWebhookUrlRequired is when webhook url is required
+var ErrWebhookUrlRequired = models.SPVError{Message: "webhook url is required", StatusCode: 400, Code: "error-webhook-url-required"}
+
+// ErrWebhookTokenValueRequired is when webhook token value is required
+var ErrWebhookTokenValueRequired = models.SPVError{Message: "webhook token value is required", StatusCode: 400, Code: "error-webhook-token-value-required"}
+
+// WebhookUrlInvalid is when webhook url is required
+var WebhookUrlInvalid = models.SPVError{Message: "webhook url is invalid", StatusCode: 400, Code: "error-webhook-url-invalid"}
 
 // ////////////////////////////////// ROUTES ERRORS
 
