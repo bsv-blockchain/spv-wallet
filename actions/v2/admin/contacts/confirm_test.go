@@ -32,8 +32,8 @@ func TestConfirmContact(t *testing.T) {
 			Post("/api/v2/admin/contacts/confirmations")
 
 		// then:
-		then.Response(res).HasStatus(500).
-			WithJSONf(apierror.ExpectedJSON("error-contact-getting-contact-failed", "getting contact failed"))
+		then.Response(res).
+			WithProblemDetails(500, "error-contact-getting-contact-failed", "getting contact failed")
 	})
 
 	t.Run("Only one side has contact", func(t *testing.T) {
@@ -52,8 +52,8 @@ func TestConfirmContact(t *testing.T) {
 			Post("/api/v2/admin/contacts/confirmations")
 
 		// then:
-		then.Response(res).HasStatus(500).
-			WithJSONf(apierror.ExpectedJSON("error-contact-getting-contact-failed", "getting contact failed"))
+		then.Response(res).
+			WithProblemDetails(500, "error-contact-getting-contact-failed", "getting contact failed")
 	})
 
 	t.Run("Confirm contact", func(t *testing.T) {
