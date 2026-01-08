@@ -67,11 +67,11 @@ func MapToTransactionContractForAdmin(t *engine.Transaction) *response.Transacti
 
 func processMetadata(t *engine.Transaction, xpubID string, model *response.Transaction) {
 	if len(t.XpubMetadata) > 0 && len(t.XpubMetadata[xpubID]) > 0 {
-		if t.Model.Metadata == nil {
-			model.Model.Metadata = make(models.Metadata)
+		if t.Metadata == nil {
+			model.Metadata = make(models.Metadata)
 		}
 		for key, value := range t.XpubMetadata[xpubID] {
-			model.Model.Metadata[key] = value
+			model.Metadata[key] = value
 		}
 	}
 }
