@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/bitcoin-sv/go-sdk v1.1.18
 	github.com/bitcoin-sv/spv-wallet-go-client v1.0.0-beta.24
-	github.com/go-viper/mapstructure/v2 v2.2.1
+	github.com/go-viper/mapstructure/v2 v2.4.0
 	github.com/joomcode/errorx v1.2.0
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/rs/zerolog v1.33.0
