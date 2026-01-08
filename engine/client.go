@@ -123,7 +123,7 @@ func NewClient(ctx context.Context, opts ...ClientOps) (ClientInterface, error) 
 		client.options.logger = logging.GetDefaultLogger()
 	}
 
-	// Load the Cachestore client - needed for both V1 and V2 (webhooks need datastore)
+	// Load the Cachestore client - needed for both V1 and V2
 	var err error
 	if err = client.loadCache(ctx); err != nil {
 		return nil, err

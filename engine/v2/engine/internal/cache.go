@@ -46,7 +46,8 @@ func (o *cacheOptions) configureLogger(cfg *config.AppConfig, logger zerolog.Log
 }
 
 func (o *cacheOptions) configureEngine(cfg *config.AppConfig) *cacheOptions {
-	if cfg.Cache.Engine == cachestore.Redis {
+	switch cfg.Cache.Engine {
+	case cachestore.Redis:
 		o.opts = append(o.opts, cachestore.WithRedis(&cachestore.RedisConfig{
 			DependencyMode:        cfg.Cache.Redis.DependencyMode,
 			MaxActiveConnections:  cfg.Cache.Redis.MaxActiveConnections,
@@ -56,9 +57,9 @@ func (o *cacheOptions) configureEngine(cfg *config.AppConfig) *cacheOptions {
 			URL:                   cfg.Cache.Redis.URL,
 			UseTLS:                cfg.Cache.Redis.UseTLS,
 		}))
-	} else if cfg.Cache.Engine == cachestore.FreeCache {
+	case cachestore.FreeCache:
 		o.opts = append(o.opts, cachestore.WithFreeCache())
-	} else {
+	default:
 		panic(fmt.Sprintf("invalid configuration: unsupported cache engine: %s", cfg.Cache.Engine))
 	}
 

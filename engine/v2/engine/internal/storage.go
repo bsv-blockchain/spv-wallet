@@ -108,7 +108,8 @@ func (s *Storage) configureLogger(opts []datastore.ClientOps) []datastore.Client
 
 func (s *Storage) configureSQL(options []datastore.ClientOps) []datastore.ClientOps {
 	// Select the datastore
-	if s.config.Db.Datastore.Engine == datastore.SQLite {
+	switch s.config.Db.Datastore.Engine {
+	case datastore.SQLite:
 		tablePrefix := s.config.Db.Datastore.TablePrefix
 		if len(s.config.Db.SQLite.TablePrefix) > 0 {
 			tablePrefix = s.config.Db.SQLite.TablePrefix
@@ -126,7 +127,7 @@ func (s *Storage) configureSQL(options []datastore.ClientOps) []datastore.Client
 			Shared:             s.config.Db.SQLite.Shared,
 			ExistingConnection: s.config.Db.SQLite.ExistingConnection,
 		}))
-	} else if s.config.Db.Datastore.Engine == datastore.PostgreSQL {
+	case datastore.PostgreSQL:
 		tablePrefix := s.config.Db.Datastore.TablePrefix
 		if len(s.config.Db.SQL.TablePrefix) > 0 {
 			tablePrefix = s.config.Db.SQL.TablePrefix
@@ -154,7 +155,7 @@ func (s *Storage) configureSQL(options []datastore.ClientOps) []datastore.Client
 			},
 		}))
 
-	} else {
+	default:
 		panic(spverrors.Newf("invalid configuration: unsupported datastore engine: %s", s.config.Db.Datastore.Engine.String()))
 	}
 
