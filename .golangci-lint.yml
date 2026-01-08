@@ -1,6 +1,9 @@
 # This file contains all available configuration options
 # with their default values.
 
+# version of golangci-lint configuration
+version: 2
+
 # options for analysis running
 run:
   # timeout for analysis, e.g. 30s, 5m, default is 1m
@@ -30,7 +33,7 @@ run:
 output:
   # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
   formats:
-    - format: colored-line-number
+    colored-line-number:
       path: stdout
 
   # print lines of code with issue, default is true
@@ -62,7 +65,6 @@ linters:
     - sqlclosecheck
     - nolintlint
     - errcheck
-    - gosimple
     - staticcheck
     - unused
     - wrapcheck
@@ -188,7 +190,7 @@ severity:
   # issues. Severity rules have the same filtering capability as exclude rules except you
   # are allowed to specify one matcher per severity rule.
   # Only affects out formats that support setting severity information.
-  rules:
-    - linters:
-        - dupl
-      severity: info
+  # rules:
+  #   - linters:
+  #       - dupl
+  #     severity: info
