@@ -3,6 +3,7 @@ package webhooks
 import (
 	"context"
 
+	"github.com/bitcoin-sv/spv-wallet/engine"
 	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
 	"github.com/rs/zerolog"
 )
@@ -20,11 +21,10 @@ type APIAdminWebhooks struct {
 }
 
 // NewAPIAdminWebhooks creates a new APIAdminWebhooks
-func NewAPIAdminWebhooks(webhooks webhooksService, log *zerolog.Logger) APIAdminWebhooks {
-	logger := log.With().Str("api", "webhooks").Logger()
-
+func NewAPIAdminWebhooks(engine engine.ClientInterface, logger *zerolog.Logger) APIAdminWebhooks {
+	log := logger.With().Str("api", "webhooks").Logger()
 	return APIAdminWebhooks{
-		webhooks: webhooks,
-		logger:   &logger,
+		webhooks: engine,
+		logger:   &log,
 	}
 }
