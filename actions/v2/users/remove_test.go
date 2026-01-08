@@ -78,7 +78,7 @@ func TestCreateAndDeleteUser(t *testing.T) {
 			Get("/api/v2/admin/users/{id}")
 
 		// then:
-		then.Response(res).HasStatus(http.StatusNotFound).WithJSONf(apierror.ExpectedJSON("error-user-not-found", "user not found"))
+		then.Response(res).WithProblemDetails(http.StatusNotFound, "not_found")
 	})
 
 	t.Run("Try to make a request as deleted user", func(t *testing.T) {
