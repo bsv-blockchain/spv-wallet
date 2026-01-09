@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"slices"
 
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 

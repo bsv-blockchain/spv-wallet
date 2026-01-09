@@ -4,9 +4,9 @@ import (
 	"encoding/hex"
 	"testing"
 
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	crypto "github.com/bitcoin-sv/go-sdk/primitives/hash"
-	script "github.com/bitcoin-sv/go-sdk/script"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	crypto "github.com/bsv-blockchain/go-sdk/primitives/hash"
+	script "github.com/bsv-blockchain/go-sdk/script"
 	assert "github.com/stretchr/testify/require"
 )
 

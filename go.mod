@@ -1,6 +1,6 @@
 module github.com/bitcoin-sv/spv-wallet
 
-go 1.24.1
+go 1.24.3
 
 // NOTE: The following replace directives are essential for maintaining the cohesion and functionality of this project.
 // We are using the packages github.com/bitcoin-sv/spv-wallet/models and github.com/bitcoin-sv/spv-wallet/engine directly
@@ -11,10 +11,10 @@ replace github.com/bitcoin-sv/spv-wallet/models => ./models
 
 require (
 	github.com/99designs/gqlgen v0.17.85
-	github.com/bitcoin-sv/go-paymail v0.23.0
-	github.com/bitcoin-sv/go-sdk v1.1.18
-	github.com/bitcoin-sv/spv-wallet/models v0.28.0
+	github.com/bitcoin-sv/spv-wallet/models v1.0.0-beta.46
 	github.com/bitcoinschema/go-map v0.2.2
+	github.com/bsv-blockchain/go-paymail v0.25.0
+	github.com/bsv-blockchain/go-sdk v1.2.14
 	github.com/coocood/freecache v1.2.4
 	github.com/fergusstrange/embedded-postgres v1.33.0
 	github.com/getkin/kin-openapi v0.133.0
@@ -73,7 +73,6 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bitcoinschema/go-bpu v0.2.2 // indirect
 	github.com/bsm/redislock v0.9.4 // indirect
-	github.com/bsv-blockchain/go-sdk v1.1.22 // indirect
 	github.com/bytedance/sonic v1.14.2 // indirect
 	github.com/bytedance/sonic/loader v0.4.0 // indirect
 	github.com/capnm/sysinfo v0.0.0-20130621111458-5909a53897f3 // indirect
@@ -127,7 +126,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-sqlite3 v1.14.33
-	github.com/miekg/dns v1.1.63 // indirect
+	github.com/miekg/dns v1.1.70 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/patternmatcher v0.6.0 // indirect
 	github.com/moby/sys/sequential v0.6.0 // indirect
@@ -213,6 +212,7 @@ require (
 	github.com/moby/go-archive v0.2.0 // indirect
 	github.com/moby/sys/userns v0.1.0 // indirect
 	github.com/shirou/gopsutil/v4 v4.25.12 // indirect
+	github.com/stretchr/objx v0.5.3 // indirect
 )
 
 // Issue with redislock package

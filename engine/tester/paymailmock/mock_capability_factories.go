@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/bitcoin-sv/go-paymail"
+	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
 	"github.com/jarcoal/httpmock"
 )

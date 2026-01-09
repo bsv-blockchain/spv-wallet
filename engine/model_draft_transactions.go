@@ -8,12 +8,13 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/bitcoin-sv/go-paymail"
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/go-sdk/script"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
-	"github.com/bitcoin-sv/go-sdk/transaction/template/p2pkh"
+	"github.com/bsv-blockchain/go-paymail"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	"github.com/bsv-blockchain/go-sdk/script"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
+	"github.com/bsv-blockchain/go-sdk/util"
 	"github.com/bitcoin-sv/spv-wallet/conv"
 	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
@@ -481,7 +482,7 @@ func (m *DraftTransaction) processUtxos(ctx context.Context, utxos []*Utxo) erro
 func (m *DraftTransaction) estimateSize() uint64 {
 	size := defaultOverheadSize // version + nLockTime
 
-	inputSize := trx.VarInt(len(m.Configuration.Inputs))
+	inputSize := util.VarInt(len(m.Configuration.Inputs))
 
 	value, err := conv.IntToUint64(inputSize.Length())
 	if err != nil {
@@ -494,7 +495,7 @@ func (m *DraftTransaction) estimateSize() uint64 {
 		size += utils.GetInputSizeForType(input.Type)
 	}
 
-	outputSize := trx.VarInt(len(m.Configuration.Outputs))
+	outputSize := util.VarInt(len(m.Configuration.Outputs))
 	value, err = conv.IntToUint64(outputSize.Length())
 	if err != nil {
 		m.client.Logger().Error().Msg(err.Error())

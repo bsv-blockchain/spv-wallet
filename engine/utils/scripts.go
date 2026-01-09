@@ -1,10 +1,10 @@
 package utils
 
 import (
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
-	sighash "github.com/bitcoin-sv/go-sdk/transaction/sighash"
-	"github.com/bitcoin-sv/go-sdk/transaction/template/p2pkh"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	sighash "github.com/bsv-blockchain/go-sdk/transaction/sighash"
+	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 

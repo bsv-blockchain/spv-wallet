@@ -1,13 +1,14 @@
 package testabilities
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/go-sdk/script"
-	"github.com/bitcoin-sv/go-sdk/spv"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
-	"github.com/bitcoin-sv/go-sdk/transaction/template/p2pkh"
+	"github.com/bsv-blockchain/go-sdk/script"
+	"github.com/bsv-blockchain/go-sdk/spv"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"
 	"github.com/stretchr/testify/require"
 )
@@ -161,7 +162,7 @@ func (t *TxGraphBuilder) EnsureGraphIsValid() {
 
 		for i, input := range descriptor.tx.Inputs {
 			require.NotNil(t.t, input, "Tx node %s input %d should not be nil")
-			verified, err := spv.VerifyScripts(input.SourceTransaction)
+			verified, err := spv.VerifyScripts(context.Background(), input.SourceTransaction)
 			require.NoErrorf(t.t, err, "Tx node %s failed to verify input at index %d", node, i)
 			require.Truef(t.t, verified, "Tx node %s script verification failed for input at index %d", node, i)
 		}

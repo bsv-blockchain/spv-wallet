@@ -1,8 +1,8 @@
 package record
 
 import (
-	"github.com/bitcoin-sv/go-sdk/script"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/script"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/conv"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
@@ -21,20 +21,36 @@ func getDataFromOpReturn(lockingScript *script.Script) ([]byte, error) {
 		return nil, txerrors.ErrParsingScript.Wrap(err)
 	}
 
-	startIndex := 2
-	if chunks[0].Op == script.OpRETURN {
-		startIndex = 1
-	}
-
 	var bytes []byte
-	for _, chunk := range chunks[startIndex:] {
-		if chunk.Op > script.OpPUSHDATA4 || chunk.Op == script.OpZERO {
-			return nil, txerrors.ErrOnlyPushDataAllowed
+
+	// Find the OP_RETURN chunk
+	for i, chunk := range chunks {
+		if chunk.Op == script.OpRETURN {
+			// The OP_RETURN chunk.Data contains: OP_RETURN_OPCODE + PUSH_LENGTH + DATA
+			// Example: 0x6a 0x0b "hello world"
+			// We need to skip the first two bytes and extract the data
+			if len(chunk.Data) > 2 {
+				// chunk.Data[0] = 0x6a (OP_RETURN opcode)
+				// chunk.Data[1] = length of data
+				// chunk.Data[2...] = actual data
+				pushLength := int(chunk.Data[1])
+				if len(chunk.Data) >= pushLength+2 {
+					bytes = chunk.Data[2 : pushLength+2]
+				}
+			}
+
+			// Also check for subsequent chunks (alternative format)
+			for j := i + 1; j < len(chunks); j++ {
+				if chunks[j].Op > script.OpPUSHDATA4 || chunks[j].Op == script.OpZERO {
+					return nil, txerrors.ErrOnlyPushDataAllowed
+				}
+				bytes = append(bytes, chunks[j].Data...)
+			}
+			return bytes, nil
 		}
-		bytes = append(bytes, chunk.Data...)
 	}
 
-	return bytes, nil
+	return nil, txerrors.ErrAnnotationMismatch
 }
 
 func processDataOutputs(tx *trx.Transaction, userID string, annotations *transaction.Annotations) ([]txmodels.NewOutput, error) {

@@ -2,13 +2,22 @@ package logging
 
 import (
 	"os"
+	"sync"
 
 	"github.com/rs/zerolog"
 	"go.elastic.co/ecszerolog"
 )
 
-// GetDefaultLogger generates and returns a default logger instance.
+var (
+	loggerMutex sync.Mutex
+)
+
+// GetDefaultLogger generates and returns a new default logger instance.
+// Uses a mutex to protect ecszerolog.New() which has non-thread-safe global state.
 func GetDefaultLogger() *zerolog.Logger {
+	loggerMutex.Lock()
+	defer loggerMutex.Unlock()
+
 	logger := ecszerolog.New(os.Stdout, ecszerolog.Level(zerolog.InfoLevel)).
 		With().
 		Timestamp().

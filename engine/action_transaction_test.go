@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/assert"

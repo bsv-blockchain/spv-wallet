@@ -4,9 +4,9 @@ import (
 	"context"
 	"iter"
 
-	"github.com/bitcoin-sv/go-paymail"
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-paymail"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses/addressesmodels"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"

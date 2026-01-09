@@ -1,8 +1,8 @@
 package utils
 
 import (
-	ecies "github.com/bitcoin-sv/go-sdk/compat/ecies"
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	ecies "github.com/bsv-blockchain/go-sdk/compat/ecies"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 

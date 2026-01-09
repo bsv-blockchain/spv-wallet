@@ -3,7 +3,7 @@ package conv
 import (
 	"math"
 
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/util"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 
@@ -77,7 +77,7 @@ func IntToUint32(value int) (uint32, error) {
 }
 
 // VarIntToInt will convert a VarInt to an int, with range checks
-func VarIntToInt(varInt *sdk.VarInt) (int, error) {
+func VarIntToInt(varInt *util.VarInt) (int, error) {
 	if varInt == nil {
 		return 0, spverrors.ErrInvalidInt
 	}

@@ -1,10 +1,11 @@
 package beef
 
 import (
+	"context"
 	"errors"
 
-	"github.com/bitcoin-sv/go-sdk/spv"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/spv"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
 )
@@ -88,7 +89,7 @@ type SourceTransactionResolver struct {
 }
 
 // Resolve sets the source transaction per input of subject transaction and verifies SPV scripts.
-func (s *SourceTransactionResolver) Resolve() error {
+func (s *SourceTransactionResolver) Resolve(ctx context.Context) error {
 	if err := s.resolveRecursive(s.subjectTx.Inputs); err != nil {
 		return spverrors.Wrapf(err, "failed to resolve source transactions")
 	}
@@ -97,7 +98,7 @@ func (s *SourceTransactionResolver) Resolve() error {
 		if input == nil || input.SourceTransaction == nil {
 			return txerrors.ErrInvalidTransactionInput
 		}
-		if _, err := spv.VerifyScripts(input.SourceTransaction); err != nil {
+		if _, err := spv.VerifyScripts(ctx, input.SourceTransaction); err != nil {
 			return spverrors.Wrapf(err, "SPV script verification failed for input %d", i)
 		}
 	}

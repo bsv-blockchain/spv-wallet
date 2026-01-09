@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/bitcoin-sv/go-paymail"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-paymail"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	pmerrors "github.com/bitcoin-sv/spv-wallet/engine/paymail/errors"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/models/bsv"

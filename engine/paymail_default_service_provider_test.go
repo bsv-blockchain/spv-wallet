@@ -3,7 +3,7 @@ package engine
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/go-paymail"
+	"github.com/bsv-blockchain/go-paymail"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

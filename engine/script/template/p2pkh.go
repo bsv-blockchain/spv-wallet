@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"sync"
 
-	script "github.com/bitcoin-sv/go-sdk/script"
+	script "github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 

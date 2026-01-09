@@ -3,9 +3,9 @@ package paymail
 import (
 	"context"
 
-	"github.com/bitcoin-sv/go-paymail/spv"
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-paymail/spv"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses/addressesmodels"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"

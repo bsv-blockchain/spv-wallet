@@ -3,7 +3,7 @@ package utils
 import (
 	"testing"
 
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -3,7 +3,7 @@ package testabilities
 import (
 	"testing"
 
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
 	"github.com/stretchr/testify/require"
 )

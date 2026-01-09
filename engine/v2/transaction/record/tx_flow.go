@@ -5,8 +5,8 @@ import (
 	"iter"
 	"maps"
 
-	"github.com/bitcoin-sv/go-sdk/spv"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/spv"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/conv"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
@@ -79,7 +79,7 @@ func (f *txFlow) setHex() error {
 }
 
 func (f *txFlow) verifyScripts() error {
-	if ok, err := spv.VerifyScripts(f.tx); err != nil {
+	if ok, err := spv.VerifyScripts(f.ctx, f.tx); err != nil {
 		return txerrors.ErrTxValidation.Wrap(err)
 	} else if !ok {
 		return txerrors.ErrTxValidation

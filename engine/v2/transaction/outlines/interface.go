@@ -3,8 +3,8 @@ package outlines
 import (
 	"context"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/bsv"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
 	bsvmodel "github.com/bitcoin-sv/spv-wallet/models/bsv"

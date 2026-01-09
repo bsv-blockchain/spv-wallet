@@ -82,7 +82,7 @@ type appFixture struct {
 	engineFixture    testengine.EngineFixture
 	t                testing.TB
 	logger           zerolog.Logger
-	server           testServer
+	server           *testServer
 }
 
 func Given(t testing.TB) SPVWalletApplicationFixture {
@@ -90,6 +90,7 @@ func Given(t testing.TB) SPVWalletApplicationFixture {
 		t:             t,
 		engineFixture: testengine.Given(t),
 		logger:        tester.Logger(t),
+		server:        &testServer{},
 	}
 	return f
 }
@@ -99,8 +100,12 @@ func (f *appFixture) NewTest(t testing.TB) SPVWalletApplicationFixture {
 	newFixture.t = t
 	newFixture.logger = tester.Logger(t)
 	newFixture.engineFixture = f.engineFixture.NewTest(t)
+	// Create a new testServer instance with a copy of the handlers pointer
+	// This avoids concurrent writes to the handlers field while allowing
+	// the same gin.Engine to handle requests from multiple subtests
+	newFixture.server = &testServer{handlers: f.server.handlers}
 
-	newFixture.engineFixture.PaymailClient().RedirectTransportIfDomain(fixtures.PaymailDomain, f.server)
+	newFixture.engineFixture.PaymailClient().RedirectTransportIfDomain(fixtures.PaymailDomain, newFixture.server)
 	return &newFixture
 }
 

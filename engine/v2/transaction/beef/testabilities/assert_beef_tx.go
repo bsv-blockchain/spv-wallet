@@ -1,10 +1,11 @@
 package testabilities
 
 import (
+	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/go-sdk/spv"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/spv"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -85,7 +86,7 @@ func (a *assertion) WithSourceTransactions() BEEFTransactionAssertion {
 	a.require.NotNil(a.tx, "Transaction must not be nil")
 	a.require.NotNil(a.tx.Inputs, "Transaction inputs must not be nil")
 	for _, input := range a.tx.Inputs {
-		ok, err := spv.VerifyScripts(input.SourceTransaction)
+		ok, err := spv.VerifyScripts(context.Background(), input.SourceTransaction)
 		a.require.True(ok, "SPV script verification failed")
 		a.require.NoError(err, "Unexpected error during SPV script verification")
 	}

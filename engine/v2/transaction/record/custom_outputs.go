@@ -3,7 +3,7 @@ package record
 import (
 	"iter"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/custominstructions"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"

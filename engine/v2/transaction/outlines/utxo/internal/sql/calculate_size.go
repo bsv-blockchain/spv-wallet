@@ -1,7 +1,8 @@
 package sql
 
 import (
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/util"
 )
 
 const (
@@ -34,7 +35,7 @@ func outputsSize(outputs []*sdk.TransactionOutput) uint64 {
 
 //nolint:gosec // No need to check for overflows from int to uint64 here
 func varIntSize(val int) uint64 {
-	length := sdk.VarInt(val).Length()
+	length := util.VarInt(val).Length()
 	return toU64(length)
 }
 

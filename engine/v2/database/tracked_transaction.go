@@ -30,12 +30,13 @@ type TrackedTransaction struct {
 	BlockHeight *int64
 	BlockHash   *string
 
-	Data []*Data `gorm:"foreignKey:TxID"`
+	Data []*Data `gorm:"-"` // Don't auto-save, handled in AfterCreate hook
 
 	Inputs  []*TrackedOutput `gorm:"foreignKey:SpendingTX"`
 	Outputs []*TrackedOutput `gorm:"foreignKey:TxID"`
 
-	newUTXOs []*UserUTXO `gorm:"-"`
+	newUTXOs       []*UserUTXO `gorm:"-"`
+	newDataOutputs []*Data     `gorm:"-"`
 
 	BeefHex        *string   `gorm:"column:beef_hex"`
 	RawHex         *string   `gorm:"column:raw_hex"`
@@ -70,17 +71,26 @@ func (t *TrackedTransaction) CreateUTXO(
 
 // CreateDataOutput prepares a new Data output and adds it to the transaction.
 func (t *TrackedTransaction) CreateDataOutput(data *Data) {
-	t.Data = append(t.Data, data)
+	t.Data = append(t.Data, data)                     // For GORM association (may be cleared)
+	t.newDataOutputs = append(t.newDataOutputs, data) // For AfterCreate hook (survives)
 }
 
 // AfterCreate is a hook that is called after creating the transaction.
-// It is responsible for adding new (User's) UTXOs and removing spent UTXOs.
+// It is responsible for adding new (User's) UTXOs, Data outputs, and removing spent UTXOs.
 func (t *TrackedTransaction) AfterCreate(tx *gorm.DB) error {
 	// Add new UTXOs
 	if len(t.newUTXOs) > 0 {
 		err := tx.Model(&UserUTXO{}).Create(t.newUTXOs).Error
 		if err != nil {
 			return spverrors.Wrapf(err, "failed to save user utxos")
+		}
+	}
+
+	// Add new Data outputs
+	if len(t.newDataOutputs) > 0 {
+		err := tx.Model(&Data{}).Create(t.newDataOutputs).Error
+		if err != nil {
+			return spverrors.Wrapf(err, "failed to save data outputs")
 		}
 	}
 

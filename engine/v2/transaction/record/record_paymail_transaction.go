@@ -3,7 +3,7 @@ package record
 import (
 	"context"
 
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
 )

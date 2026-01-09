@@ -3,8 +3,8 @@ package utils
 import (
 	"encoding/hex"
 
-	crypto "github.com/bitcoin-sv/go-sdk/primitives/hash"
-	"github.com/bitcoin-sv/go-sdk/util"
+	crypto "github.com/bsv-blockchain/go-sdk/primitives/hash"
+	"github.com/bsv-blockchain/go-sdk/util"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 

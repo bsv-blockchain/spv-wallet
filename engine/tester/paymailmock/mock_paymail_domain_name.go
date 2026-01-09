@@ -1,7 +1,7 @@
 package paymailmock
 
 import (
-	"github.com/bitcoin-sv/go-paymail"
+	"github.com/bsv-blockchain/go-paymail"
 )
 
 type paymailDomainName string

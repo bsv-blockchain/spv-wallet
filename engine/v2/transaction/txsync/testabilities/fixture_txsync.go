@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/go-sdk/chainhash"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/chainhash"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"

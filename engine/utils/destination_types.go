@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"regexp"
 
-	"github.com/bitcoin-sv/go-sdk/script"
+	"github.com/bsv-blockchain/go-sdk/script"
 )
 
 const (
