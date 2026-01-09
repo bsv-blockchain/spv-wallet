@@ -13,7 +13,7 @@ func TestXpubFilter(t *testing.T) {
 		filter := XpubFilter{}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Nil(t, dbConditions["deleted_at"])
 	})
 
@@ -23,7 +23,7 @@ func TestXpubFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with id", func(t *testing.T) {
@@ -33,7 +33,7 @@ func TestXpubFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, "test", dbConditions["id"])
 	})
 
@@ -44,7 +44,7 @@ func TestXpubFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, uint64(100), dbConditions["current_balance"])
 	})
 }

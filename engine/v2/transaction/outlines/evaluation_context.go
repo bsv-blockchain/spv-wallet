@@ -13,6 +13,7 @@ import (
 
 type evaluationContext struct {
 	context.Context
+
 	userID                string
 	log                   *zerolog.Logger
 	paymail               paymail.ServiceClient

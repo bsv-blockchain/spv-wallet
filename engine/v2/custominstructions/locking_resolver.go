@@ -68,6 +68,7 @@ func (ar *AddressResolver) Finalize() error {
 // Uses the AddressResolver because a locking script is easily derived from an address.
 type LockingScriptResolver struct {
 	AddressResolver
+
 	LockingScript *script.Script
 }
 

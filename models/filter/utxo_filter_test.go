@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestUtxoFilter(t *testing.T) {
@@ -13,8 +14,8 @@ func TestUtxoFilter(t *testing.T) {
 		filter := UtxoFilter{}
 		dbConditions, err := filter.ToDbConditions()
 
-		assert.NoError(t, err)
-		assert.Equal(t, 1, len(dbConditions))
+		require.NoError(t, err)
+		assert.Len(t, dbConditions, 1)
 		assert.Nil(t, dbConditions["deleted_at"])
 	})
 
@@ -24,8 +25,8 @@ func TestUtxoFilter(t *testing.T) {
 		}`)
 		dbConditions, err := filter.ToDbConditions()
 
-		assert.NoError(t, err)
-		assert.Equal(t, 0, len(dbConditions))
+		require.NoError(t, err)
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with type", func(t *testing.T) {
@@ -35,8 +36,8 @@ func TestUtxoFilter(t *testing.T) {
 		}`)
 		dbConditions, err := filter.ToDbConditions()
 
-		assert.NoError(t, err)
-		assert.Equal(t, 1, len(dbConditions))
+		require.NoError(t, err)
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, "pubkey", dbConditions["type"])
 	})
 
@@ -47,7 +48,7 @@ func TestUtxoFilter(t *testing.T) {
 		}`)
 		dbConditions, err := filter.ToDbConditions()
 
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.Nil(t, dbConditions)
 	})
 

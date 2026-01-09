@@ -60,21 +60,24 @@ type (
 
 	// cacheStoreOptions holds the cache configuration and client
 	cacheStoreOptions struct {
-		cachestore.ClientInterface                        // Client for Cachestore
-		options                    []cachestore.ClientOps // List of options
+		cachestore.ClientInterface // Client for Cachestore
+
+		options []cachestore.ClientOps // List of options
 	}
 
 	// clusterOptions holds the cluster configuration for SPV Wallet Engine clusters
 	// at the moment we only support redis as the cluster coordinator
 	clusterOptions struct {
 		cluster.ClientInterface
+
 		options []cluster.ClientOps // List of options
 	}
 
 	// dataStoreOptions holds the data storage configuration and client
 	dataStoreOptions struct {
-		datastore.ClientInterface                       // Client for Datastore
-		options                   []datastore.ClientOps // List of options
+		datastore.ClientInterface // Client for Datastore
+
+		options []datastore.ClientOps // List of options
 	}
 
 	// notificationsOptions holds the configuration for notifications
@@ -93,17 +96,19 @@ type (
 
 	// PaymailServerOptions is the options for the Paymail server
 	PaymailServerOptions struct {
-		*server.Configuration                    // Server configuration if Paymail is enabled
-		options               []server.ConfigOps // Options for the paymail server
-		DefaultFromPaymail    string             // IE: from@domain.com
-		ExperimentalProvider  bool
+		*server.Configuration // Server configuration if Paymail is enabled
+
+		options              []server.ConfigOps // Options for the paymail server
+		DefaultFromPaymail   string             // IE: from@domain.com
+		ExperimentalProvider bool
 	}
 
 	// taskManagerOptions holds the configuration for taskmanager
 	taskManagerOptions struct {
-		taskmanager.TaskEngine                          // Client for TaskManager
-		options                []taskmanager.Options    // List of options
-		cronCustomPeriods      map[string]time.Duration // will override the default period of cronJob
+		taskmanager.TaskEngine // Client for TaskManager
+
+		options           []taskmanager.Options    // List of options
+		cronCustomPeriods map[string]time.Duration // will override the default period of cronJob
 	}
 )
 

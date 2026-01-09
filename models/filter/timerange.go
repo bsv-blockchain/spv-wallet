@@ -35,9 +35,9 @@ func (tr *TimeRange) isEmpty() bool {
 }
 
 func (tr *TimeRange) hasFrom() bool {
-	return !(tr.From == nil || tr.From.IsZero())
+	return tr.From != nil && !tr.From.IsZero()
 }
 
 func (tr *TimeRange) hasTo() bool {
-	return !(tr.To == nil || tr.To.IsZero())
+	return tr.To != nil && !tr.To.IsZero()
 }

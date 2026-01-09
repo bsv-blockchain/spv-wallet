@@ -13,7 +13,7 @@ func TestAccessKeyFilter(t *testing.T) {
 		filter := AccessKeyFilter{}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Nil(t, dbConditions["deleted_at"])
 	})
 
@@ -23,7 +23,7 @@ func TestAccessKeyFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with full RevokedRange", func(t *testing.T) {
@@ -36,7 +36,7 @@ func TestAccessKeyFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 2, len(dbConditions["revoked_at"].(map[string]interface{})))
+		assert.Len(t, dbConditions["revoked_at"].(map[string]interface{}), 2)
 	})
 
 	t.Run("with empty RevokedRange", func(t *testing.T) {
@@ -46,7 +46,7 @@ func TestAccessKeyFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with partially filled RevokedRange", func(t *testing.T) {
@@ -58,7 +58,7 @@ func TestAccessKeyFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions["revoked_at"].(map[string]interface{})))
+		assert.Len(t, dbConditions["revoked_at"].(map[string]interface{}), 1)
 	})
 
 	t.Run("admin filter with xpubid", func(t *testing.T) {

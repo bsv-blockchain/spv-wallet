@@ -14,6 +14,7 @@ type (
 	// Client is the client (configuration)
 	Client struct {
 		pubSubService
+
 		options *clientOptions
 	}
 

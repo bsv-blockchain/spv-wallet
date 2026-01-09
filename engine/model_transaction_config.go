@@ -45,6 +45,7 @@ type TransactionConfig struct {
 // TransactionInput is an input on the transaction config
 type TransactionInput struct {
 	Utxo
+
 	Destination Destination `json:"destination" toml:"destination" yaml:"destination"`
 }
 

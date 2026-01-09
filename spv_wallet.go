@@ -1,4 +1,4 @@
-// Package spvwallet is a comprehensive non-custodial wallet for BSV digital currency.
+// Package spvwallet is a comprehensive noncustodial wallet for BSV digital currency.
 //
 // Run: go run cmd/main.go
 //

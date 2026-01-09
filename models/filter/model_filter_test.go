@@ -14,7 +14,7 @@ func TestModelFilter(t *testing.T) {
 		filter := ModelFilter{}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Nil(t, dbConditions["deleted_at"])
 	})
 
@@ -24,7 +24,7 @@ func TestModelFilter(t *testing.T) {
 		}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with full CreatedRange", func(t *testing.T) {
@@ -36,7 +36,7 @@ func TestModelFilter(t *testing.T) {
 		}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 2, len(dbConditions))
+		assert.Len(t, dbConditions, 2)
 	})
 
 	t.Run("with empty CreatedRange", func(t *testing.T) {
@@ -46,6 +46,6 @@ func TestModelFilter(t *testing.T) {
 		}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 }
