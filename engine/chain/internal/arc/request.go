@@ -7,9 +7,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
 	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"

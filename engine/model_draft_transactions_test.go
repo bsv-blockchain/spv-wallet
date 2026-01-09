@@ -57,8 +57,8 @@ func TestDraftTransaction_newDraftTransaction(t *testing.T) {
 		)
 		require.NoError(t, err)
 		require.NotNil(t, draftTx)
-		assert.NotEqual(t, "", draftTx.ID)
-		assert.Equal(t, 64, len(draftTx.ID))
+		assert.NotEmpty(t, draftTx.ID)
+		assert.Len(t, draftTx.ID, 64)
 		assert.WithinDurationf(t, expires, draftTx.ExpiresAt, 1*time.Second, "within 1 second")
 		assert.Equal(t, DraftStatusDraft, draftTx.Status)
 		assert.Equal(t, testXPubID, draftTx.XpubID)
@@ -242,7 +242,7 @@ func TestDraftTransaction_getDraftTransactionID(t *testing.T) {
 		var draftTx *DraftTransaction
 		draftTx, err = getDraftTransactionID(ctx, testXPubID, draftTransaction.ID, client.DefaultModelOptions()...)
 		require.NoError(t, err)
-		assert.Equal(t, 64, len(draftTx.GetID()))
+		assert.Len(t, draftTx.GetID(), 64)
 		assert.Equal(t, testXPubID, draftTx.XpubID)
 	})
 }
@@ -298,11 +298,11 @@ func TestDraftTransaction_createTransaction(t *testing.T) {
 		assert.Equal(t, uint64(expectedFee), draftTransaction.Configuration.Fee)
 		assert.Equal(t, mockDefaultFee, *draftTransaction.Configuration.FeeUnit)
 
-		assert.Equal(t, 1, len(draftTransaction.Configuration.Inputs))
+		assert.Len(t, draftTransaction.Configuration.Inputs, 1)
 		assert.Equal(t, testLockingScript, draftTransaction.Configuration.Inputs[0].ScriptPubKey)
 		assert.Equal(t, uint64(startingBalance), draftTransaction.Configuration.Inputs[0].Satoshis)
 
-		assert.Equal(t, 2, len(draftTransaction.Configuration.Outputs))
+		assert.Len(t, draftTransaction.Configuration.Outputs, 2)
 		assert.Equal(t, uint64(txAmount), draftTransaction.Configuration.Outputs[0].Satoshis)
 		assert.Equal(t, uint64((startingBalance - txAmount - expectedFee)), draftTransaction.Configuration.Outputs[1].Satoshis)
 		assert.Equal(t, draftTransaction.Configuration.ChangeDestinations[0].LockingScript, draftTransaction.Configuration.Outputs[1].Scripts[0].Script)
@@ -311,11 +311,11 @@ func TestDraftTransaction_createTransaction(t *testing.T) {
 		btTx, err = trx.NewTransactionFromHex(draftTransaction.Hex)
 		require.NoError(t, err)
 
-		assert.Equal(t, 1, len(btTx.Inputs))
+		assert.Len(t, btTx.Inputs, 1)
 		assert.Equal(t, testTxID, btTx.Inputs[0].SourceTXID.String())
 		assert.Equal(t, uint32(0), btTx.Inputs[0].SourceTxOutIndex)
 
-		assert.Equal(t, 2, len(btTx.Outputs))
+		assert.Len(t, btTx.Outputs, 2)
 		assert.Equal(t, uint64(txAmount), btTx.Outputs[0].Satoshis)
 		assert.Equal(t, draftTransaction.Configuration.Outputs[0].Scripts[0].Script, btTx.Outputs[0].LockingScript.String())
 
@@ -568,11 +568,11 @@ func TestDraftTransaction_createTransaction(t *testing.T) {
 		assert.Equal(t, testExternalAddress, draftTransaction.Configuration.Outputs[0].Scripts[0].Address)
 		assert.Equal(t, uint64(txAmount), draftTransaction.Configuration.Outputs[0].Scripts[0].Satoshis)
 
-		assert.Equal(t, "", draftTransaction.Configuration.Outputs[1].To)
+		assert.Empty(t, draftTransaction.Configuration.Outputs[1].To)
 		assert.Equal(t, uint64(lockedAmount), draftTransaction.Configuration.Outputs[1].Satoshis)
 		assert.Equal(t, testSTASLockingScript, draftTransaction.Configuration.Outputs[1].Script)
 		assert.Len(t, draftTransaction.Configuration.Outputs[1].Scripts, 1)
-		assert.Equal(t, "", draftTransaction.Configuration.Outputs[1].Scripts[0].Address)
+		assert.Empty(t, draftTransaction.Configuration.Outputs[1].Scripts[0].Address)
 		assert.Equal(t, uint64(lockedAmount), draftTransaction.Configuration.Outputs[1].Scripts[0].Satoshis)
 		assert.Equal(t, testSTASLockingScript, draftTransaction.Configuration.Outputs[1].Scripts[0].Script)
 
@@ -665,7 +665,7 @@ func TestDraftTransaction_createTransaction(t *testing.T) {
 		assert.Equal(t, uint64(expectedFee), draftTransaction.Configuration.Fee)
 		assert.Equal(t, testExternalAddress, draftTransaction.Configuration.Outputs[1].To)
 		assert.Equal(t, uint64(txAmount), draftTransaction.Configuration.Outputs[1].Satoshis)
-		assert.Equal(t, "", draftTransaction.Configuration.Outputs[2].To)
+		assert.Empty(t, draftTransaction.Configuration.Outputs[2].To)
 		assert.Equal(t, uint64(0), draftTransaction.Configuration.Outputs[2].Satoshis)
 	})
 
@@ -712,7 +712,7 @@ func TestDraftTransaction_createTransaction(t *testing.T) {
 		assert.Equal(t, "76a9143e2d1d795f8acaa7957045cc59376177eb04a3c588ac", draftTransaction.Configuration.Outputs[0].Scripts[0].Script)
 		assert.Equal(t, uint64(lockingScriptAmount1+lockingScriptAmount2-expectedFee), draftTransaction.Configuration.Outputs[0].Scripts[0].Satoshis)
 		assert.Equal(t, uint64(expectedFee), draftTransaction.Configuration.Fee)
-		assert.Equal(t, "", draftTransaction.Configuration.Outputs[1].To)
+		assert.Empty(t, draftTransaction.Configuration.Outputs[1].To)
 		assert.Equal(t, uint64(0), draftTransaction.Configuration.Outputs[1].Satoshis)
 	})
 
@@ -926,7 +926,7 @@ func TestDraftTransaction_getInputsFromUtxos(t *testing.T) {
 		inputUtxos, satoshisReserved, err := draftTransaction.getInputsFromUtxos(reservedUtxos)
 		require.NoError(t, err)
 		assert.Equal(t, uint64(124235), satoshisReserved)
-		assert.Equal(t, 1, len(inputUtxos))
+		assert.Len(t, inputUtxos, 1)
 		assert.Equal(t, testTxID, inputUtxos[0].TxID.String())
 		assert.Equal(t, uint32(123), (inputUtxos)[0].Vout)
 		assert.Equal(t, testLockingScript, (inputUtxos)[0].LockingScript.String())
@@ -954,7 +954,7 @@ func TestDraftTransaction_getInputsFromUtxos(t *testing.T) {
 		inputUtxos, satoshisReserved, err := draftTransaction.getInputsFromUtxos(reservedUtxos)
 		require.NoError(t, err)
 		assert.Equal(t, uint64(124235+52313), satoshisReserved)
-		assert.Equal(t, 2, len(inputUtxos))
+		assert.Len(t, inputUtxos, 2)
 
 		assert.Equal(t, testTxID, inputUtxos[0].TxID.String())
 		assert.Equal(t, uint32(124), (inputUtxos)[0].Vout)
@@ -1019,7 +1019,7 @@ func TestDraftTransaction_addIncludeUtxos(t *testing.T) {
 		}
 		includeUtxoSatoshis, err := draft.addIncludeUtxos(ctx)
 		require.NoError(t, err)
-		assert.Len(t, draft.Configuration.Inputs, 0)
+		assert.Empty(t, draft.Configuration.Inputs)
 		assert.Equal(t, uint64(0), includeUtxoSatoshis)
 	})
 }
@@ -1052,7 +1052,7 @@ func TestDraftTransaction_addOutputsToTx(t *testing.T) {
 		tx := trx.NewTransaction()
 		err := draft.addOutputsToTx(tx)
 		require.ErrorIs(t, err, spverrors.ErrOutputValueTooLow)
-		assert.Len(t, tx.Outputs, 0)
+		assert.Empty(t, tx.Outputs)
 	})
 
 	t.Run("normal address", func(t *testing.T) {
@@ -1211,7 +1211,7 @@ func TestDraftTransaction_SignInputs(t *testing.T) {
 			})
 
 			require.NoError(t, err)
-			assert.True(t, tx.Version > 0)
+			assert.Positive(t, tx.Version)
 			for _, input := range tx.Inputs {
 				unlocker := input.UnlockingScript.ToASM()
 				require.NoError(t, err)

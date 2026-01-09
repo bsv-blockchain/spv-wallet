@@ -23,15 +23,15 @@ func TestIsP2PK(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsP2PKH("nope"))
+		assert.False(t, IsP2PKH("nope"))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsP2PK(p2pkHex))
+		assert.True(t, IsP2PK(p2pkHex))
 	})
 
 	t.Run("no match - extra data", func(t *testing.T) {
-		assert.Equal(t, false, IsP2PKH(p2pkHex+"06"))
+		assert.False(t, IsP2PKH(p2pkHex+"06"))
 	})
 }
 
@@ -39,19 +39,19 @@ func TestIsP2PKH(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsP2PKH("nope"))
+		assert.False(t, IsP2PKH("nope"))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsP2PKH(p2pkhHex))
+		assert.True(t, IsP2PKH(p2pkhHex))
 	})
 
 	t.Run("no match - extra data", func(t *testing.T) {
-		assert.Equal(t, false, IsP2PKH(p2pkhHex+"06"))
+		assert.False(t, IsP2PKH(p2pkhHex+"06"))
 	})
 
 	t.Run("match substring", func(t *testing.T) {
-		assert.Equal(t, true, P2PKHSubstringRegexp.MatchString("somethesetstring"+p2pkhHex+"06rtdhrth"))
+		assert.True(t, P2PKHSubstringRegexp.MatchString("somethesetstring"+p2pkhHex+"06rtdhrth"))
 	})
 }
 
@@ -59,15 +59,15 @@ func TestIsP2SH(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsP2SH("nope"))
+		assert.False(t, IsP2SH("nope"))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsP2SH(p2shHex))
+		assert.True(t, IsP2SH(p2shHex))
 	})
 
 	t.Run("match substring", func(t *testing.T) {
-		assert.Equal(t, true, P2SHSubstringRegexp.MatchString("test"+p2shHex+"test"))
+		assert.True(t, P2SHSubstringRegexp.MatchString("test"+p2shHex+"test"))
 	})
 }
 
@@ -75,15 +75,15 @@ func TestIsMetanet(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsMetanet("nope"))
+		assert.False(t, IsMetanet("nope"))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsMetanet(metanetHex))
+		assert.True(t, IsMetanet(metanetHex))
 	})
 
 	t.Run("match substring", func(t *testing.T) {
-		assert.Equal(t, true, MetanetSubstringRegexp.MatchString("test"+metanetHex+"test"))
+		assert.True(t, MetanetSubstringRegexp.MatchString("test"+metanetHex+"test"))
 	})
 }
 
@@ -91,15 +91,15 @@ func TestIsOpReturn(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsOpReturn("nope"))
+		assert.False(t, IsOpReturn("nope"))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsOpReturn(opReturnHex))
+		assert.True(t, IsOpReturn(opReturnHex))
 	})
 
 	t.Run("match substring", func(t *testing.T) {
-		assert.Equal(t, true, OpReturnSubstringRegexp.MatchString("test"+opReturnHex+"test"))
+		assert.True(t, OpReturnSubstringRegexp.MatchString("test"+opReturnHex+"test"))
 	})
 }
 
@@ -107,23 +107,23 @@ func TestIsStas(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsStas("nope"))
+		assert.False(t, IsStas("nope"))
 	})
 
 	t.Run("no match - p2pkhHex", func(t *testing.T) {
-		assert.Equal(t, false, IsStas(p2pkhHex))
+		assert.False(t, IsStas(p2pkhHex))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsStas(stasHex))
+		assert.True(t, IsStas(stasHex))
 	})
 
 	t.Run("match 2", func(t *testing.T) {
-		assert.Equal(t, true, IsStas(stas2Hex))
+		assert.True(t, IsStas(stas2Hex))
 	})
 
 	t.Run("match substring", func(t *testing.T) {
-		assert.Equal(t, true, StasSubstringRegexp.MatchString("test"+stas2Hex+"test"))
+		assert.True(t, StasSubstringRegexp.MatchString("test"+stas2Hex+"test"))
 	})
 }
 
@@ -131,19 +131,19 @@ func TestIsSensible(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsSensible("nope"))
+		assert.False(t, IsSensible("nope"))
 	})
 
 	t.Run("no match - p2pkhHex", func(t *testing.T) {
-		assert.Equal(t, false, IsSensible(p2pkhHex))
+		assert.False(t, IsSensible(p2pkhHex))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsSensible(sensibleHex))
+		assert.True(t, IsSensible(sensibleHex))
 	})
 
 	t.Run("match substring", func(t *testing.T) {
-		assert.Equal(t, true, SensibleSubstringRegexp.MatchString("test"+sensibleHex+"test"))
+		assert.True(t, SensibleSubstringRegexp.MatchString("test"+sensibleHex+"test"))
 	})
 }
 
@@ -151,11 +151,11 @@ func TestIsMultiSig(t *testing.T) {
 	t.Parallel()
 
 	t.Run("no match", func(t *testing.T) {
-		assert.Equal(t, false, IsMultiSig("nope"))
+		assert.False(t, IsMultiSig("nope"))
 	})
 
 	t.Run("match", func(t *testing.T) {
-		assert.Equal(t, true, IsMultiSig(multisigHex))
+		assert.True(t, IsMultiSig(multisigHex))
 	})
 }
 
@@ -215,7 +215,7 @@ func TestGetAddressFromScript(t *testing.T) {
 	})
 
 	t.Run("unknown", func(t *testing.T) {
-		assert.Equal(t, "", GetAddressFromScript("invalid-or-unknown-script"))
+		assert.Empty(t, GetAddressFromScript("invalid-or-unknown-script"))
 	})
 }
 

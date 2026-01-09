@@ -5,9 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 const (

@@ -36,9 +36,9 @@ type User struct {
 	DataOutpoints     []string          `mapstructure:"data_outpoints" yaml:"data_outpoints"`
 	Tags              []string          `mapstructure:"tags" yaml:"tags"`
 
-	// Note holds your notes about the user
+	// Custom notes about the user.
 	// This field prevent removing your custom notes when updating a state in file.
-	// Notice the underscore in _note, this ensures that the note will be top field in the yaml file.
+	// The underscore in _note ensures that the note will be top field in the yaml file.
 	Note string `mapstructure:"_note" yaml:"_note"`
 
 	state   *State

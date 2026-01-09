@@ -58,7 +58,7 @@ func TestTransaction_newTransaction(t *testing.T) {
 		assert.Equal(t, ModelTransaction.String(), transaction.GetModelName())
 		assert.Equal(t, testTxID, transaction.ID)
 		assert.Equal(t, testTxID, transaction.GetID())
-		assert.Equal(t, true, transaction.IsNew())
+		assert.True(t, transaction.IsNew())
 	})
 
 	t.Run("New transaction model - no hex, no options", func(t *testing.T) {
@@ -66,9 +66,9 @@ func TestTransaction_newTransaction(t *testing.T) {
 		require.NotNil(t, transaction)
 		assert.IsType(t, Transaction{}, *transaction)
 		assert.Equal(t, ModelTransaction.String(), transaction.GetModelName())
-		assert.Equal(t, "", transaction.ID)
-		assert.Equal(t, "", transaction.GetID())
-		assert.Equal(t, false, transaction.IsNew())
+		assert.Empty(t, transaction.ID)
+		assert.Empty(t, transaction.GetID())
+		assert.False(t, transaction.IsNew())
 	})
 }
 
@@ -85,7 +85,7 @@ func TestTransaction_newTransactionWithDraftID(t *testing.T) {
 		assert.Equal(t, testTxID, transaction.ID)
 		assert.Equal(t, testDraftID, transaction.DraftID)
 		assert.Equal(t, testTxID, transaction.GetID())
-		assert.Equal(t, true, transaction.IsNew())
+		assert.True(t, transaction.IsNew())
 	})
 
 	t.Run("New transaction model - no hex - return error", func(t *testing.T) {
@@ -238,7 +238,7 @@ func TestTransaction_GetID(t *testing.T) {
 	t.Run("no id", func(t *testing.T) {
 		transaction := emptyTx()
 		require.NotNil(t, transaction)
-		assert.Equal(t, "", transaction.GetID())
+		assert.Empty(t, transaction.GetID())
 	})
 
 	t.Run("valid id", func(t *testing.T) {
@@ -633,13 +633,13 @@ func TestTransaction_Display(t *testing.T) {
 
 func (ts *EmbeddedDBTestSuite) TestTransaction_Save() {
 	parsedTx, errP := trx.NewTransactionFromHex(testTxHex)
-	require.NoError(ts.T(), errP)
-	require.NotNil(ts.T(), parsedTx)
+	ts.Require().NoError(errP)
+	ts.Require().NotNil(parsedTx)
 
 	var parsedInTx *trx.Transaction
 	parsedInTx, errP = trx.NewTransactionFromHex(testTx2Hex)
-	require.NoError(ts.T(), errP)
-	require.NotNil(ts.T(), parsedInTx)
+	ts.Require().NoError(errP)
+	ts.Require().NotNil(parsedInTx)
 
 	ts.T().Run("[sqlite] [in-memory] - Save transaction", func(t *testing.T) {
 		tc := ts.genericDBClient(t, datastore.SQLite, false)
@@ -723,7 +723,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_Save() {
 
 		var utxo2 *Utxo
 		utxo2, err = getUtxo(tc.ctx, transaction.ID, 1, tc.client.DefaultModelOptions()...)
-		assert.Nil(t, err)
+		assert.NoError(t, err)
 		assert.Equal(t, xPub2.GetID(), utxo2.XpubID)
 		assert.Equal(t, script.ScriptTypePubKeyHash, utxo2.Type)
 		assert.Equal(t, testTxScriptPubKey2, utxo2.ScriptPubKey)

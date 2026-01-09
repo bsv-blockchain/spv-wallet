@@ -38,7 +38,7 @@ func (m *mockNotifier) consumer(ctx context.Context) {
 }
 
 func (m *mockNotifier) assertOutput(t *testing.T, expected []string) {
-	assert.Equal(t, len(expected), len(m.output))
+	assert.Len(t, m.output, len(expected))
 	if len(expected) == len(m.output) {
 		for i := 0; i < len(expected); i++ {
 			actualEvent, err := GetEventContent[models.StringEvent](m.output[i])

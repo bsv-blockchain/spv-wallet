@@ -188,7 +188,7 @@ func (s *State) loadFromFile() error {
 	if s.configFileJustCreated {
 		err = viper.WriteConfig()
 		if err != nil {
-			return StateError.Wrap(err, "could not initialise state file")
+			return StateError.Wrap(err, "could not initialize state file")
 		}
 	}
 	return nil

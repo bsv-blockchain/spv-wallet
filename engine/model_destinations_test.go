@@ -26,8 +26,8 @@ func TestDestination_newDestination(t *testing.T) {
 		require.NotNil(t, destination)
 		assert.IsType(t, Destination{}, *destination)
 		assert.Equal(t, ModelDestination.String(), destination.GetModelName())
-		assert.Equal(t, true, destination.IsNew())
-		assert.Equal(t, "", destination.LockingScript)
+		assert.True(t, destination.IsNew())
+		assert.Empty(t, destination.LockingScript)
 		assert.Equal(t, "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", destination.GetID())
 	})
 
@@ -38,7 +38,7 @@ func TestDestination_newDestination(t *testing.T) {
 		require.NotNil(t, destination)
 		assert.IsType(t, Destination{}, *destination)
 		assert.Equal(t, ModelDestination.String(), destination.GetModelName())
-		assert.Equal(t, true, destination.IsNew())
+		assert.True(t, destination.IsNew())
 		assert.Equal(t, testScript, destination.LockingScript)
 		assert.Equal(t, xPubID, destination.XpubID)
 		assert.Equal(t, script.ScriptTypeNonStandard, destination.Type)
@@ -69,7 +69,7 @@ func TestDestination_newAddress(t *testing.T) {
 		// Default values
 		assert.IsType(t, Destination{}, *address)
 		assert.Equal(t, ModelDestination.String(), address.GetModelName())
-		assert.Equal(t, true, address.IsNew())
+		assert.True(t, address.IsNew())
 
 		// Check set address
 		assert.Equal(t, testXPubID, address.XpubID)

@@ -21,7 +21,7 @@ func TestLoadConfig(t *testing.T) {
 
 		// then
 		assert.NoError(t, err)
-		assert.Equal(t, viper.GetString(config.ConfigFilePathKey), config.DefaultConfigFilePath)
+		assert.Equal(t, config.DefaultConfigFilePath, viper.GetString(config.ConfigFilePathKey))
 		assert.Equal(t, "test", cfg.Version)
 	})
 

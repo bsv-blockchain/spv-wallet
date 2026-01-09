@@ -7,7 +7,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
-	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/bsv-blockchain/spv-wallet/config"
@@ -64,10 +63,10 @@ func (ts *TestSuite) BaseSetupTest() {
 	ts.Logger = tester.Logger(ts.T())
 
 	opts, err := initializer.ToEngineOptions(ts.AppConfig, ts.Logger)
-	require.NoError(ts.T(), err)
+	ts.Require().NoError(err)
 
 	ts.SpvWalletEngine, err = engine.NewClient(context.Background(), opts...)
-	require.NoError(ts.T(), err)
+	ts.Require().NoError(err)
 
 	logging.SetGinMode(gin.ReleaseMode)
 	ginEngine := gin.New()
@@ -76,15 +75,15 @@ func (ts *TestSuite) BaseSetupTest() {
 	ginEngine.Use(middleware.CorsMiddleware())
 
 	ts.Router = ginEngine
-	require.NotNil(ts.T(), ts.Router)
+	ts.Require().NotNil(ts.Router)
 
-	require.NoError(ts.T(), err)
+	ts.Require().NoError(err)
 }
 
 // BaseTearDownTest runs after each test
 func (ts *TestSuite) BaseTearDownTest() {
 	if ts.SpvWalletEngine != nil {
 		err := ts.SpvWalletEngine.Close(context.Background())
-		require.NoError(ts.T(), err)
+		ts.Require().NoError(err)
 	}
 }

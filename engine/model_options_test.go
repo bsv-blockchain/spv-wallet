@@ -22,7 +22,7 @@ func TestNew(t *testing.T) {
 		opt := New()
 		m := new(Model)
 		m.SetOptions(opt)
-		assert.Equal(t, true, m.IsNew())
+		assert.True(t, m.IsNew())
 	})
 }
 

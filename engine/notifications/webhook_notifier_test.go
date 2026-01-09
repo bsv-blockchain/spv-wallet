@@ -65,7 +65,7 @@ func (mc *mockClient) assertEvents(t *testing.T, expected []string) {
 	for _, batch := range mc.receivedBatches {
 		flatten = append(flatten, batch...)
 	}
-	assert.Equal(t, len(expected), len(flatten))
+	assert.Len(t, flatten, len(expected))
 	if len(expected) == len(flatten) {
 		for i := 0; i < len(expected); i++ {
 			actualEvent, err := GetEventContent[models.StringEvent](flatten[i])
@@ -289,7 +289,7 @@ func TestWebhookNotifier(t *testing.T) {
 		}
 		cancel()
 
-		assert.Equal(t, true, banHasBeenTriggered)
+		assert.True(t, banHasBeenTriggered)
 	})
 
 	t.Run("with token", func(t *testing.T) {
@@ -326,6 +326,6 @@ func TestWebhookNotifier(t *testing.T) {
 		<-waitForCall
 		cancel()
 
-		assert.Equal(t, true, allGood)
+		assert.True(t, allGood)
 	})
 }

@@ -123,7 +123,7 @@ func TestNullString_UnmarshalJSON(t *testing.T) {
 		err := nt.UnmarshalJSON([]byte("\"\""))
 		require.NoError(t, err)
 		assert.True(t, nt.Valid)
-		assert.Equal(t, "", nt.String)
+		assert.Empty(t, nt.String)
 	})
 
 	t.Run("string", func(t *testing.T) {

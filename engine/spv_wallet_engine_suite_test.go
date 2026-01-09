@@ -42,6 +42,7 @@ var dbTestCases = []dbTestCase{
 // EmbeddedDBTestSuite is for testing the entire package using real/mocked services
 type EmbeddedDBTestSuite struct {
 	suite.Suite
+
 	PostgresqlServer *embeddedPostgres.EmbeddedPostgres // In-memory Postgresql server
 }
 
@@ -50,7 +51,7 @@ func (ts *EmbeddedDBTestSuite) SetupSuite() {
 	var err error
 	// Create the Postgresql server
 	if ts.PostgresqlServer, err = tester.CreatePostgresServer(postgresqlTestPort); err != nil {
-		require.NoError(ts.T(), err)
+		ts.Require().NoError(err)
 	}
 
 	// Fail-safe! If a test completes or fails, this is triggered

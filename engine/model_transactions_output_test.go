@@ -14,28 +14,28 @@ func TestXpubOutputValue_Scan(t *testing.T) {
 		x := XpubOutputValue{}
 		err := x.Scan(nil)
 		require.NoError(t, err)
-		assert.Equal(t, 0, len(x))
+		assert.Empty(t, x)
 	})
 
 	t.Run("empty string", func(t *testing.T) {
 		x := XpubOutputValue{}
 		err := x.Scan([]byte("\"\""))
 		assert.NoError(t, err)
-		assert.Equal(t, 0, len(x))
+		assert.Empty(t, x)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		x := XpubOutputValue{}
 		err := x.Scan([]byte(""))
 		assert.NoError(t, err)
-		assert.Equal(t, 0, len(x))
+		assert.Empty(t, x)
 	})
 
 	t.Run("object", func(t *testing.T) {
 		x := XpubOutputValue{}
 		err := x.Scan([]byte("{\"xPubId\":543}"))
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(x))
+		assert.Len(t, x, 1)
 		assert.Equal(t, int64(543), x["xPubId"])
 	})
 }

@@ -18,6 +18,7 @@ import (
 // PaymailClientMock is a paymail.Client configured to use mocked endpoints.
 type PaymailClientMock struct {
 	paymail.ClientInterface
+
 	domains      []paymailDomainName
 	capabilities []*CapabilityMock
 

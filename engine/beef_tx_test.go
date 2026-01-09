@@ -182,7 +182,7 @@ func Test_ToBeef_HappyPaths(t *testing.T) {
 			result, err := ToBeef(ctx, newTx, store)
 
 			// then
-			require.NoError(t, nil, err)
+			require.NotErrorIs(t, nil, err)
 			require.Contains(t, tc.expectedBeefHex, result)
 		})
 	}
@@ -252,8 +252,8 @@ func Test_ToBeef_ErrorPaths(t *testing.T) {
 			result, err := ToBeef(ctx, newTx, store)
 
 			// then
-			require.Equal(t, "", result)
-			require.Error(t, tc.expectedError, err)
+			require.Empty(t, result)
+			require.ErrorIs(t, tc.expectedError, err)
 		})
 	}
 }

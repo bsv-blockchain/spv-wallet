@@ -17,11 +17,11 @@ func TestFactory_String(t *testing.T) {
 func TestFactory_IsEmpty(t *testing.T) {
 	t.Run("test empty factory", func(t *testing.T) {
 		f := FactoryEmpty
-		assert.Equal(t, true, f.IsEmpty())
+		assert.True(t, f.IsEmpty())
 	})
 
 	t.Run("test regular factory", func(t *testing.T) {
 		f := FactoryMemory
-		assert.Equal(t, false, f.IsEmpty())
+		assert.False(t, f.IsEmpty())
 	})
 }

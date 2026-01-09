@@ -25,6 +25,7 @@ func ToCall[R Result](f GenericCall[R]) Call {
 	}
 }
 
+//nolint:recvcheck // Mixed receivers intentional for value/pointer semantics
 type APICall struct {
 	t      testing.TB
 	state  *State
@@ -33,6 +34,7 @@ type APICall struct {
 
 type StateForCall struct {
 	*State
+
 	T testing.TB
 }
 

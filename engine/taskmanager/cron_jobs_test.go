@@ -90,7 +90,7 @@ func TestCronTasks(t *testing.T) {
 		}
 
 		// check number of executions, both jobs should run at least once
-		require.Greater(t, executions1, 0)
-		require.Greater(t, executions2, 0)
+		require.Positive(t, executions1)
+		require.Positive(t, executions2)
 	})
 }

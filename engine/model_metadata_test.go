@@ -14,28 +14,28 @@ func TestMetadata_Scan(t *testing.T) {
 		m := Metadata{}
 		err := m.Scan(nil)
 		require.NoError(t, err)
-		assert.Equal(t, 0, len(m))
+		assert.Empty(t, m)
 	})
 
 	t.Run("empty string", func(t *testing.T) {
 		m := Metadata{}
 		err := m.Scan([]byte("\"\""))
 		assert.NoError(t, err)
-		assert.Equal(t, 0, len(m))
+		assert.Empty(t, m)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		m := Metadata{}
 		err := m.Scan([]byte(""))
 		assert.NoError(t, err)
-		assert.Equal(t, 0, len(m))
+		assert.Empty(t, m)
 	})
 
 	t.Run("object", func(t *testing.T) {
 		m := Metadata{}
 		err := m.Scan([]byte("{\"test\":\"test2\"}"))
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(m))
+		assert.Len(t, m, 1)
 		assert.Equal(t, "test2", m["test"])
 	})
 }
@@ -55,7 +55,7 @@ func TestMetadata_Value(t *testing.T) {
 		m["test"] = "test2"
 		value, err := m.Value()
 		require.NoError(t, err)
-		assert.Equal(t, "{\"test\":\"test2\"}", value)
+		assert.JSONEq(t, "{\"test\":\"test2\"}", value)
 	})
 }
 
@@ -66,29 +66,29 @@ func TestXpubMetadata_Scan(t *testing.T) {
 		x := XpubMetadata{}
 		err := x.Scan(nil)
 		require.NoError(t, err)
-		assert.Equal(t, 0, len(x))
+		assert.Empty(t, x)
 	})
 
 	t.Run("empty string", func(t *testing.T) {
 		x := XpubMetadata{}
 		err := x.Scan([]byte("\"\""))
 		assert.NoError(t, err)
-		assert.Equal(t, 0, len(x))
+		assert.Empty(t, x)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		x := XpubMetadata{}
 		err := x.Scan([]byte(""))
 		assert.NoError(t, err)
-		assert.Equal(t, 0, len(x))
+		assert.Empty(t, x)
 	})
 
 	t.Run("object", func(t *testing.T) {
 		x := XpubMetadata{}
 		err := x.Scan([]byte("{\"xPubId\":{\"test\":\"test2\"}}"))
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(x))
-		assert.Equal(t, 1, len(x["xPubId"]))
+		assert.Len(t, x, 1)
+		assert.Len(t, x["xPubId"], 1)
 		assert.Equal(t, "test2", x["xPubId"]["test"])
 	})
 }
@@ -111,6 +111,6 @@ func TestXpubMetadata_Value(t *testing.T) {
 		}
 		value, err := x.Value()
 		require.NoError(t, err)
-		assert.Equal(t, "{\"xPubId\":{\"test\":\"test2\"}}", value)
+		assert.JSONEq(t, "{\"xPubId\":{\"test\":\"test2\"}}", value)
 	})
 }

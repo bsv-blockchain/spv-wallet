@@ -56,7 +56,7 @@ func Test_RevertTransaction(t *testing.T) {
 				assert.Equal(t, "deleted", utxo.SpendingTxID.String)
 			} else {
 				assert.False(t, utxo.SpendingTxID.Valid)
-				assert.Equal(t, "", utxo.SpendingTxID.String)
+				assert.Empty(t, utxo.SpendingTxID.String)
 			}
 		}
 	})

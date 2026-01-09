@@ -19,6 +19,7 @@ type txOutlineTestcase struct {
 type txOutlineSuite struct {
 	suite.Suite
 	txOutlineTestcase
+
 	initialSatoshis bsv.Satoshis
 	explicitFormat  string
 }

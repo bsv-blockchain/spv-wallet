@@ -11,6 +11,6 @@ func TestRandomTablePrefix(t *testing.T) {
 
 	t.Run("valid prefix", func(t *testing.T) {
 		prefix := RandomTablePrefix()
-		assert.Equal(t, 17, len(prefix))
+		assert.Len(t, prefix, 17)
 	})
 }

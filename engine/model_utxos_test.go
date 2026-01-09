@@ -60,13 +60,13 @@ func TestUtxo_newUtxo(t *testing.T) {
 		assert.IsType(t, Utxo{}, *utxo)
 		assert.Equal(t, testTxID, utxo.TransactionID)
 		assert.Equal(t, testXPubID, utxo.XpubID)
-		assert.Equal(t, "", utxo.ID)
+		assert.Empty(t, utxo.ID)
 		assert.Equal(t, utxoID, utxo.GetID())
 		assert.Equal(t, utxoID, utxo.ID)
 		assert.Equal(t, uint32(12), utxo.OutputIndex)
 		assert.Equal(t, uint64(1200), utxo.Satoshis)
 		assert.Equal(t, testLockingScript, utxo.ScriptPubKey)
-		assert.Equal(t, "", utxo.Type)
+		assert.Empty(t, utxo.Type)
 		assert.Equal(t, ModelUtxo.String(), utxo.GetModelName())
 	})
 }
@@ -379,7 +379,7 @@ func TestUtxo_GetSpendableUtxos(t *testing.T) {
 		queryParams = &datastore.QueryParams{Page: 4, PageSize: 2}
 		utxos, err = getSpendableUtxos(ctx, testXPubID, utils.ScriptTypePubKeyHash, queryParams, nil, opts...)
 		require.NoError(t, err)
-		assert.Len(t, utxos, 0)
+		assert.Empty(t, utxos)
 	})
 }
 

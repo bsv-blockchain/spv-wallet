@@ -281,7 +281,7 @@ func Test_getContacts(t *testing.T) {
 		// then
 		require.NoError(t, err)
 		require.NotNil(t, contacts)
-		require.Equal(t, 13, len(contacts))
+		require.Len(t, contacts, 13)
 
 		for _, c := range contacts {
 			require.Equal(t, ContactNotConfirmed, c.Status)
@@ -305,7 +305,7 @@ func Test_getContacts(t *testing.T) {
 		// then
 		require.NoError(t, err)
 		require.NotNil(t, contacts)
-		require.Equal(t, 23, len(contacts))
+		require.Len(t, contacts, 23)
 	})
 
 	t.Run("get without conditions - ensure returned only with correct xpubid", func(t *testing.T) {
@@ -325,7 +325,7 @@ func Test_getContacts(t *testing.T) {
 		// then
 		require.NoError(t, err)
 		require.NotNil(t, contacts)
-		require.Equal(t, 10, len(contacts))
+		require.Len(t, contacts, 10)
 	})
 
 	t.Run("get without conditions - ensure returned with deleted", func(t *testing.T) {
@@ -345,7 +345,7 @@ func Test_getContacts(t *testing.T) {
 		// then
 		require.NoError(t, err)
 		require.NotNil(t, contacts)
-		require.Equal(t, 23, len(contacts))
+		require.Len(t, contacts, 23)
 	})
 }
 

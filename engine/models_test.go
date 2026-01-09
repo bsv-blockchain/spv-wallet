@@ -38,8 +38,8 @@ func TestModelName_IsEmpty(t *testing.T) {
 	t.Parallel()
 
 	t.Run("empty model", func(t *testing.T) {
-		assert.Equal(t, true, ModelNameEmpty.IsEmpty())
-		assert.Equal(t, false, ModelUtxo.IsEmpty())
+		assert.True(t, ModelNameEmpty.IsEmpty())
+		assert.False(t, ModelUtxo.IsEmpty())
 	})
 }
 

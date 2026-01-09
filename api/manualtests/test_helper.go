@@ -14,7 +14,7 @@ import (
 
 func Logger() zerolog.Logger {
 	zerolog.TimestampFunc = func() time.Time {
-		return time.Now().In(time.Local)
+		return time.Now().UTC()
 	}
 	logger := zerolog.New(zerolog.NewConsoleWriter(
 		func(w *zerolog.ConsoleWriter) {

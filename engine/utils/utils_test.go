@@ -59,7 +59,7 @@ func TestRandomHex(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			output, err := RandomHex(test.input)
 			require.NoError(t, err)
-			assert.Equal(t, test.expectedLength, len(output))
+			assert.Len(t, output, test.expectedLength)
 		})
 	}
 }
@@ -104,8 +104,8 @@ func TestDeriveAddresses(t *testing.T) {
 	t.Run("nil key", func(t *testing.T) {
 		external, internal, err := DeriveAddresses(nil, 0)
 		assert.Error(t, err)
-		assert.Equal(t, "", internal)
-		assert.Equal(t, "", external)
+		assert.Empty(t, internal)
+		assert.Empty(t, external)
 	})
 }
 
@@ -253,11 +253,11 @@ func TestGetTransactionIDFromHex(t *testing.T) {
 
 	t.Run("nil / empty", func(t *testing.T) {
 		id, err := GetTransactionIDFromHex("")
-		assert.Equal(t, "", id)
+		assert.Empty(t, id)
 		assert.Error(t, err)
 
 		id, err = GetTransactionIDFromHex("test")
-		assert.Equal(t, "", id)
+		assert.Empty(t, id)
 		assert.Error(t, err)
 	})
 

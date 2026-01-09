@@ -30,12 +30,12 @@ func TestClient_defaultModelOptions(t *testing.T) {
 		require.NotNil(t, dco.cacheStore)
 		require.Nil(t, dco.cacheStore.ClientInterface)
 		require.NotNil(t, dco.cacheStore.options)
-		assert.Equal(t, 0, len(dco.cacheStore.options))
+		assert.Empty(t, dco.cacheStore.options)
 
 		require.NotNil(t, dco.dataStore)
 		require.Nil(t, dco.dataStore.ClientInterface)
 		require.NotNil(t, dco.dataStore.options)
-		assert.Equal(t, 1, len(dco.dataStore.options))
+		assert.Len(t, dco.dataStore.options, 1)
 
 		require.NotNil(t, dco.paymail)
 
@@ -65,7 +65,7 @@ func TestWithUserAgent(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.NotEqual(t, "", tc.UserAgent())
+		assert.NotEmpty(t, tc.UserAgent())
 		assert.Equal(t, defaultUserAgent, tc.UserAgent())
 	})
 
@@ -102,8 +102,8 @@ func TestWithDebugging(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, true, tc.Cachestore().IsDebug())
-		assert.Equal(t, true, tc.Datastore().IsDebug())
+		assert.True(t, tc.Cachestore().IsDebug())
+		assert.True(t, tc.Datastore().IsDebug())
 	})
 }
 
@@ -126,7 +126,7 @@ func TestWithEncryption(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, false, tc.IsEncryptionKeySet())
+		assert.False(t, tc.IsEncryptionKeySet())
 	})
 
 	t.Run("custom encryption key", func(t *testing.T) {
@@ -140,7 +140,7 @@ func TestWithEncryption(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, true, tc.IsEncryptionKeySet())
+		assert.True(t, tc.IsEncryptionKeySet())
 	})
 }
 
@@ -377,7 +377,7 @@ func TestWithIUCDisabled(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, true, tc.IsIUCEnabled())
+		assert.True(t, tc.IsIUCEnabled())
 	})
 
 	t.Run("iuc disabled", func(t *testing.T) {
@@ -390,7 +390,7 @@ func TestWithIUCDisabled(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, false, tc.IsIUCEnabled())
+		assert.False(t, tc.IsIUCEnabled())
 	})
 }
 

@@ -80,7 +80,7 @@ func TestCombinedTxGetter(t *testing.T) {
 			transactions, err := getter.GetTransactions(context.Background(), ids(test.requestedTXs...))
 
 			require.NoError(t, err)
-			require.Equal(t, len(test.expectedTXs), len(transactions))
+			require.Len(t, transactions, len(test.expectedTXs))
 			shouldAllContain(t, transactions, ids(test.expectedTXs...))
 		})
 	}

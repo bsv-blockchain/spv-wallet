@@ -37,8 +37,8 @@ func Test_GetP2P(t *testing.T) {
 
 		hasP2P, p2pDestinationURL, p2pSubmitTxURL, _ := paymailClient.GetP2P(context.Background(), testDomain)
 		assert.False(t, hasP2P)
-		assert.Equal(t, "", p2pDestinationURL)
-		assert.Equal(t, "", p2pSubmitTxURL)
+		assert.Empty(t, p2pDestinationURL)
+		assert.Empty(t, p2pSubmitTxURL)
 	})
 
 	t.Run("valid p2p capabilities", func(t *testing.T) {
@@ -214,7 +214,7 @@ func Test_StartP2PTransaction(t *testing.T) {
 		require.NoError(t, err)
 		require.NotNil(t, payload)
 		assert.Equal(t, "z0bac4ec-6f15-42de-9ef4-e60bfdabf4f7", payload.Reference)
-		assert.Equal(t, 1, len(payload.Outputs))
+		assert.Len(t, payload.Outputs, 1)
 		assert.Equal(t, "16fkwYn8feXEbK7iCTg5KMx9Rx9GzZ9HuE", payload.Outputs[0].Address)
 		assert.Equal(t, uint64(1000), payload.Outputs[0].Satoshis)
 		assert.Equal(t, "76a9143e2d1d795f8acaa7957045cc59376177eb04a3c588ac", payload.Outputs[0].Script)
@@ -287,9 +287,9 @@ func Test_GetCapabilities(t *testing.T) {
 		)
 		require.NoError(t, err)
 		require.NotNil(t, payload)
-		assert.Equal(t, true, getCmd.Called)
+		assert.True(t, getCmd.Called)
 		assert.Equal(t, paymail.DefaultBsvAliasVersion, payload.BsvAlias)
-		assert.Equal(t, 3, len(payload.Capabilities))
+		assert.Len(t, payload.Capabilities, 3)
 	})
 
 	t.Run("[mocked] - server error", func(t *testing.T) {
@@ -332,7 +332,7 @@ func Test_GetCapabilities(t *testing.T) {
 		)
 		require.Error(t, err)
 		require.Nil(t, payload)
-		assert.Equal(t, true, getCmd.Called)
+		assert.True(t, getCmd.Called)
 	})
 }
 

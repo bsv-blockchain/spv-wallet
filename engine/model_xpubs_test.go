@@ -290,7 +290,7 @@ func (ts *EmbeddedDBTestSuite) TestXpub_Save() {
 			require.NoError(t, err)
 			require.NotNil(t, xPub2)
 
-			assert.Equal(t, xPub2.ID, testXPubID)
+			assert.Equal(t, testXPubID, xPub2.ID)
 			require.NoError(t, err)
 		})
 
