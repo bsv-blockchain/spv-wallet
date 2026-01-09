@@ -2,10 +2,11 @@ package mapping
 
 import (
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
-	"github.com/bitcoin-sv/spv-wallet/lox"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
+	"github.com/bsv-blockchain/spv-wallet/lox"
 )
 
 // PaymailToAdminResponse maps a paymail to a response

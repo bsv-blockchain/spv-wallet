@@ -14,7 +14,7 @@ endif
 
 ## Not defined? Use default repo owner
 ifeq ($(REPO_OWNER),)
-	REPO_OWNER="bitcoin-sv"
+	REPO_OWNER="bsv-blockchain"
 endif
 
 

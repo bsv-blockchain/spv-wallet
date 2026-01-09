@@ -15,13 +15,14 @@ import (
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
 	"github.com/bsv-blockchain/go-sdk/util"
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // DraftTransaction is an object representing the draft BitCoin transaction prior to the final transaction
@@ -133,7 +134,7 @@ func (m *DraftTransaction) Save(ctx context.Context) (err error) {
 			err = spverrors.Wrapf(err, utxoErr.Error())
 		}
 	}
-	return
+	return err
 }
 
 // GetID will get the model ID
@@ -223,42 +224,42 @@ func (m *DraftTransaction) createTransactionHex(ctx context.Context) (err error)
 	// Process the outputs first
 	// if an error occurs in processing the outputs, we have at least not made any reservations yet
 	if err = m.processConfigOutputs(ctx); err != nil {
-		return
+		return err
 	}
 
 	inputUtxos, satoshisReserved, err := m.prepareUtxos(ctx, opts, satoshisNeeded)
 	if err != nil {
-		return
+		return err
 	}
 
 	// Start a new transaction from the reservedUtxos
 	tx := trx.NewTransaction()
 	if err = tx.AddInputsFromUTXOs(inputUtxos...); err != nil {
-		return
+		return err
 	}
 
 	// Estimate the fee for the transaction
 	err = m.calculateAndSetFee(ctx, satoshisReserved, satoshisNeeded)
 	if err != nil {
-		return
+		return err
 	}
 
 	// Add the outputs to the bt transaction
 	if err = m.addOutputsToTx(tx); err != nil {
-		return
+		return err
 	}
 
 	if err = validateOutputsInputs(m.Configuration.Inputs, m.Configuration.Outputs, m.Configuration.Fee); err != nil {
-		return
+		return err
 	}
 
 	// Create the final hex (without signatures)
 	m.Hex = tx.String()
 
-	return
+	return err
 }
 
-func (m *DraftTransaction) calculateAndSetFee(ctx context.Context, satoshisReserved uint64, satoshisNeeded uint64) error {
+func (m *DraftTransaction) calculateAndSetFee(ctx context.Context, satoshisReserved, satoshisNeeded uint64) error {
 	fee := m.estimateFee(m.Configuration.FeeUnit, 0)
 	if m.Configuration.SendAllTo != nil {
 		if m.Configuration.Outputs[0].Satoshis <= dustLimit {
@@ -330,7 +331,7 @@ func (m *DraftTransaction) prepareSeparateUtxos(ctx context.Context, opts []Mode
 
 	// Reserve and Get utxos for the transaction
 	var reservedUtxos []*Utxo
-	//TODO: Fixme in new transaction-flow
+	// TODO: Fixme in new transaction-flow
 	feePerByte := float64(m.Configuration.FeeUnit.Satoshis) / float64(m.Configuration.FeeUnit.Bytes)
 
 	reserveSatoshis := satoshisNeeded + m.estimateFee(m.Configuration.FeeUnit, 0)
@@ -526,7 +527,7 @@ func (m *DraftTransaction) addOutputsToTx(tx *trx.Transaction) (err error) {
 			if s, err = script.NewFromHex(
 				sc.Script,
 			); err != nil {
-				return
+				return err
 			}
 
 			scriptType := sc.ScriptType
@@ -565,11 +566,11 @@ func (m *DraftTransaction) addOutputsToTx(tx *trx.Transaction) (err error) {
 			}
 		}
 	}
-	return
+	return err
 }
 
 // setChangeDestination will make a new change destination
-func (m *DraftTransaction) setChangeDestination(ctx context.Context, satoshisChange uint64, fee uint64) (uint64, error) {
+func (m *DraftTransaction) setChangeDestination(ctx context.Context, satoshisChange, fee uint64) (uint64, error) {
 	m.Configuration.ChangeSatoshis = satoshisChange
 
 	useExistingOutputsForChange := make([]int, 0)
@@ -662,7 +663,7 @@ func (m *DraftTransaction) getChangeSatoshis(satoshisChange uint64) (changeSatos
 			if a, err = rand.Int(
 				rand.Reader, big.NewInt(math.MaxInt64),
 			); err != nil {
-				return
+				return changeSatoshis, err
 			}
 			randomChange := (((float64(a.Int64()) / (1 << 63)) * 50) + 75) / 100
 			changeForDestination := uint64(randomChange * float64(satoshisChange) / nDestinations)
@@ -684,7 +685,7 @@ func (m *DraftTransaction) getChangeSatoshis(satoshisChange uint64) (changeSatos
 	// handle remainder
 	changeSatoshis[lastDestination] += satoshisChange - changeUsed
 
-	return
+	return changeSatoshis, err
 }
 
 // setChangeDestinations will set the change destinations based on the number
@@ -769,7 +770,7 @@ func (m *DraftTransaction) getTotalSatoshis() (satoshis uint64) {
 	for _, output := range m.Configuration.Outputs {
 		satoshis += output.Satoshis
 	}
-	return
+	return satoshis
 }
 
 // BeforeCreating will fire before the model is being inserted into the Datastore
@@ -781,7 +782,7 @@ func (m *DraftTransaction) BeforeCreating(_ context.Context) (err error) {
 	m.Client().Logger().Debug().
 		Str("draftTxID", m.GetID()).
 		Msgf("end: %s BeforeCreating hook", m.Name())
-	return
+	return err
 }
 
 // AfterUpdated will fire after a successful update into the Datastore
@@ -830,7 +831,7 @@ func (m *DraftTransaction) SignInputsWithKey(xPrivKey string) (signedHex string,
 	// Decode the xPriv using the key
 	var xPriv *compat.ExtendedKey
 	if xPriv, err = compat.NewKeyFromString(xPrivKey); err != nil {
-		return
+		return signedHex, err
 	}
 
 	return m.SignInputs(xPriv)
@@ -841,7 +842,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 	// Start a bt draft transaction
 	var txDraft *trx.Transaction
 	if txDraft, err = trx.NewTransactionFromHex(m.Hex); err != nil {
-		return
+		return signedHex, err
 	}
 
 	// Sign the inputs
@@ -852,7 +853,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 		if ls, err = script.NewFromHex(
 			input.Destination.LockingScript,
 		); err != nil {
-			return
+			return signedHex, err
 		}
 		txDraft.Inputs[index].SetSourceTxOutput(&trx.TransactionOutput{
 			Satoshis:      input.Satoshis,
@@ -864,7 +865,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 		if chainKey, err = xPriv.Child(
 			input.Destination.Chain,
 		); err != nil {
-			return
+			return signedHex, err
 		}
 
 		// Derive the child key (num)
@@ -872,7 +873,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 		if numKey, err = chainKey.Child(
 			input.Destination.Num,
 		); err != nil {
-			return
+			return signedHex, err
 		}
 
 		// Get the private key
@@ -880,7 +881,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 		if privateKey, err = compat.GetPrivateKeyFromHDKey(
 			numKey,
 		); err != nil {
-			return
+			return signedHex, err
 		}
 
 		idx32, conversionError := conv.IntToUint32(index)
@@ -891,7 +892,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 		if s, err = utils.GetUnlockingScript(
 			txDraft, idx32, privateKey,
 		); err != nil {
-			return
+			return signedHex, err
 		}
 
 		// Insert the locking script
@@ -908,7 +909,7 @@ func (m *DraftTransaction) SignInputs(xPriv *compat.ExtendedKey) (signedHex stri
 	}
 
 	signedHex = txDraft.String()
-	return
+	return signedHex, err
 }
 
 func (m *DraftTransaction) containsOpReturn() bool {

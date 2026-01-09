@@ -1,9 +1,9 @@
-// Package spvwallet is a comprehensive non-custodial wallet for BSV digital currency.
+// Package spvwallet is a comprehensive noncustodial wallet for BSV digital currency.
 //
 // Run: go run cmd/main.go
 //
 // If you have any suggestions or comments, please feel free to open an issue on
 // this GitHub repository!
 //
-// By bitcoin-sv (https://github.com/bitcoin-sv)
+// By bsv-blockchain (https://github.com/bsv-blockchain)
 package spvwallet

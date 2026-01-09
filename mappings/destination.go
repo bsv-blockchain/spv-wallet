@@ -1,9 +1,9 @@
 package mappings
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/mappings/common"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/mappings/common"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 // MapToDestinationContract will map the spv-wallet destination model to the spv-wallet-models contract

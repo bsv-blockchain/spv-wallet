@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	embeddedPostgres "github.com/fergusstrange/embedded-postgres"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 const (
@@ -41,6 +42,7 @@ var dbTestCases = []dbTestCase{
 // EmbeddedDBTestSuite is for testing the entire package using real/mocked services
 type EmbeddedDBTestSuite struct {
 	suite.Suite
+
 	PostgresqlServer *embeddedPostgres.EmbeddedPostgres // In-memory Postgresql server
 }
 
@@ -49,7 +51,7 @@ func (ts *EmbeddedDBTestSuite) SetupSuite() {
 	var err error
 	// Create the Postgresql server
 	if ts.PostgresqlServer, err = tester.CreatePostgresServer(postgresqlTestPort); err != nil {
-		require.NoError(ts.T(), err)
+		ts.Require().NoError(err)
 	}
 
 	// Fail-safe! If a test completes or fails, this is triggered

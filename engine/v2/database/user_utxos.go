@@ -3,8 +3,9 @@ package database
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"gorm.io/datatypes"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // EstimatedInputSizeForP2PKH is the estimated size increase when adding and unlocking P2PKH input to transaction.

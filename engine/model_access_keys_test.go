@@ -7,9 +7,10 @@ import (
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 func Test_newAccessKey(t *testing.T) {
@@ -18,8 +19,8 @@ func Test_newAccessKey(t *testing.T) {
 		require.NotNil(t, key)
 		assert.Equal(t, testXPubID, key.XpubID)
 		assert.Equal(t, ModelAccessKey.String(), key.GetModelName())
-		assert.Equal(t, 64, len(key.GetID()))
-		assert.Equal(t, 64, len(key.Key))
+		assert.Len(t, key.GetID(), 64)
+		assert.Len(t, key.Key, 64)
 
 		privateKey, _ := primitives.PrivateKeyFromHex(key.Key)
 		assert.IsType(t, ec.PrivateKey{}, *privateKey)
@@ -40,7 +41,7 @@ func Test_newAccessKey(t *testing.T) {
 				"test-key": "test-value",
 			}),
 		)...)
-		assert.Equal(t, 64, len(key.Key))
+		assert.Len(t, key.Key, 64)
 		err := key.Save(ctx)
 		id := key.ID
 		require.NoError(t, err)
@@ -50,7 +51,7 @@ func Test_newAccessKey(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, id, accessKey.ID)
 		assert.Equal(t, testXPubID, accessKey.XpubID)
-		assert.Equal(t, "", accessKey.Key) // private key is lost after Save
+		assert.Empty(t, accessKey.Key) // private key is lost after Save
 		assert.Len(t, accessKey.Metadata, 1)
 		assert.Equal(t, "test-value", accessKey.Metadata["test-key"])
 	})
@@ -60,7 +61,7 @@ func Test_newAccessKey(t *testing.T) {
 		defer deferMe()
 
 		key := newAccessKey(testXPubID, append(client.DefaultModelOptions(), New())...)
-		assert.Equal(t, 64, len(key.Key))
+		assert.Len(t, key.Key, 64)
 		err := key.Save(ctx)
 		id := key.ID
 		require.NoError(t, err)
@@ -101,14 +102,14 @@ func TestAccessKey_GetAccessKey(t *testing.T) {
 		ak := newAccessKey(testXPubID, append(opts, New())...)
 		txErr := ak.Save(ctx)
 		require.NoError(t, txErr)
-		assert.NotEqual(t, "", ak.Key)
+		assert.NotEmpty(t, ak.Key)
 
 		accessKey, err := getAccessKey(ctx, ak.ID, client.DefaultModelOptions()...)
 		require.NoError(t, err)
 		assert.NotNil(t, accessKey)
 		assert.Equal(t, ak.ID, accessKey.ID)
 		assert.Equal(t, testXPubID, accessKey.XpubID)
-		assert.Equal(t, "", accessKey.Key)
+		assert.Empty(t, accessKey.Key)
 	})
 }
 
@@ -128,22 +129,22 @@ func TestAccessKey_GetAccessKeys(t *testing.T) {
 		ak := newAccessKey(testXPubID, append(opts, New())...)
 		txErr := ak.Save(ctx)
 		require.NoError(t, txErr)
-		assert.NotEqual(t, "", ak.Key)
+		assert.NotEmpty(t, ak.Key)
 
 		ak2 := newAccessKey(testXPubID, append(opts, New())...)
 		txErr = ak2.Save(ctx)
 		require.NoError(t, txErr)
-		assert.NotEqual(t, "", ak2.Key)
+		assert.NotEmpty(t, ak2.Key)
 
 		accessKeys, err := getAccessKeysByXPubID(ctx, testXPubID, nil, nil, nil, client.DefaultModelOptions()...)
 		require.NoError(t, err)
 		assert.Len(t, accessKeys, 2)
 		assert.Equal(t, ak.ID, accessKeys[0].ID)
 		assert.Equal(t, testXPubID, accessKeys[0].XpubID)
-		assert.Equal(t, "", accessKeys[0].Key)
+		assert.Empty(t, accessKeys[0].Key)
 		assert.Equal(t, ak2.ID, accessKeys[1].ID)
 		assert.Equal(t, testXPubID, accessKeys[1].XpubID)
-		assert.Equal(t, "", accessKeys[1].Key)
+		assert.Empty(t, accessKeys[1].Key)
 	})
 
 	t.Run("found txs with metadata", func(t *testing.T) {
@@ -153,12 +154,12 @@ func TestAccessKey_GetAccessKeys(t *testing.T) {
 		ak := newAccessKey(testXPubID, append(opts, New(), WithMetadata("test-key", "test-value-1"))...)
 		txErr := ak.Save(ctx)
 		require.NoError(t, txErr)
-		assert.NotEqual(t, "", ak.Key)
+		assert.NotEmpty(t, ak.Key)
 
 		ak2 := newAccessKey(testXPubID, append(opts, New(), WithMetadata("test-key", "test-value-2"))...)
 		txErr = ak2.Save(ctx)
 		require.NoError(t, txErr)
-		assert.NotEqual(t, "", ak2.Key)
+		assert.NotEmpty(t, ak2.Key)
 
 		metadata := &Metadata{"test-key": "test-value-2"}
 		accessKeys, err := getAccessKeysByXPubID(ctx, testXPubID, metadata, nil, nil, client.DefaultModelOptions()...)
@@ -166,6 +167,6 @@ func TestAccessKey_GetAccessKeys(t *testing.T) {
 		assert.Len(t, accessKeys, 1)
 		assert.Equal(t, ak2.ID, accessKeys[0].ID)
 		assert.Equal(t, testXPubID, accessKeys[0].XpubID)
-		assert.Equal(t, "", accessKeys[0].Key)
+		assert.Empty(t, accessKeys[0].Key)
 	})
 }

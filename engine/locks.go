@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/mrz1836/go-cachestore"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 const (
@@ -37,11 +38,11 @@ func newWaitWriteLock(ctx context.Context, lockKey string, cacheStore cachestore
 func getWaitWriteLockForPaymail(ctx context.Context, cs cachestore.LockService, id string) (unlock func(), err error) {
 	lockKey := fmt.Sprintf("process-paymail-%s", id)
 	unlock, err = newWaitWriteLock(ctx, lockKey, cs)
-	return
+	return unlock, err
 }
 
 func getWaitWriteLockForXpub(ctx context.Context, cs cachestore.LockService, id string) (unlock func(), err error) {
 	lockKey := fmt.Sprintf("action-xpub-id-%s", id)
 	unlock, err = newWaitWriteLock(ctx, lockKey, cs)
-	return
+	return unlock, err
 }

@@ -7,11 +7,12 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/spv"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type txFlow struct {
@@ -114,7 +115,7 @@ func (f *txFlow) processInputs() ([]txmodels.TrackedOutput, error) {
 	return trackedOutputs, nil
 }
 
-func (f *txFlow) operationOfUser(userID string, operationType string, counterparty string) *txmodels.NewOperation {
+func (f *txFlow) operationOfUser(userID, operationType, counterparty string) *txmodels.NewOperation {
 	if _, ok := f.operations[userID]; !ok {
 		f.operations[userID] = &txmodels.NewOperation{
 			UserID:       userID,

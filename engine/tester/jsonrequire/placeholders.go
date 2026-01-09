@@ -45,7 +45,7 @@ func assertJSONWithPlaceholders(t testing.TB, expected, actual string) {
 		actualJSONString = string(marshaled)
 	}
 
-	assert.Equal(t, expectedJsonString, actualJSONString)
+	assert.JSONEq(t, expectedJsonString, actualJSONString)
 }
 
 func processJSONPlaceholders(t testing.TB, template any, base map[string]any, xpath string) {

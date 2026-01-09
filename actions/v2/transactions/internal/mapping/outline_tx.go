@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/lox"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/lox"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // TransactionSpecificationRequestToOutline converts a transaction outline request model to the engine model.

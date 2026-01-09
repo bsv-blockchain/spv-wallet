@@ -1,6 +1,6 @@
 package datamodels
 
-import "github.com/bitcoin-sv/spv-wallet/models/bsv"
+import "github.com/bsv-blockchain/spv-wallet/models/bsv"
 
 // Data is a domain model for data stored in outputs (e.g. OP_RETURN).
 type Data struct {

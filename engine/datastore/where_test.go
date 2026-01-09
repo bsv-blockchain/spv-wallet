@@ -5,9 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 )
 
 func Test_whereObject(t *testing.T) {
@@ -566,7 +567,7 @@ func Test_isEmptyCondition(t *testing.T) {
 
 	t.Run("not-nil ptr to nil-slice", func(t *testing.T) {
 		var theSlice []interface{}
-		var condition = &theSlice
+		condition := &theSlice
 		assert.True(t, isEmptyCondition(condition))
 	})
 

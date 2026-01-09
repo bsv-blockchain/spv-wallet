@@ -3,7 +3,7 @@ package chainmodels
 // TXStatus is the status of the transaction
 type TXStatus string
 
-// List of statuses available here: https://github.com/bitcoin-sv/arc
+// List of statuses available here: https://github.com/bsv-blockchain/arc
 const (
 	// Unknown status means that transaction has been sent to metamorph, but no processing has taken place. This should never be the case, unless something goes wrong.
 	Unknown TXStatus = "UNKNOWN" // 0

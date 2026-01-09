@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/models"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 func TestEventParsing(t *testing.T) {

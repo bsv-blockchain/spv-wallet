@@ -3,15 +3,16 @@ package contacts
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/common"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/internal/query"
-	"github.com/bitcoin-sv/spv-wallet/mappings"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/actions/common"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/internal/query"
+	"github.com/bsv-blockchain/spv-wallet/mappings"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 )
 
 // getContacts will fetch a list of contacts
@@ -68,7 +69,6 @@ func getContacts(c *gin.Context, userContext *reqctx.UserContext) {
 		metadata,
 		conditions,
 	)
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -110,7 +110,7 @@ func getContactByPaymail(c *gin.Context, userContext *reqctx.UserContext) {
 }
 
 // searchContacts - a helper function for searching contacts
-func searchContacts(c *gin.Context, reqXPubID string, paymail string) ([]*engine.Contact, int64) {
+func searchContacts(c *gin.Context, reqXPubID, paymail string) ([]*engine.Contact, int64) {
 	logger := reqctx.Logger(c)
 	engine := reqctx.Engine(c)
 	var reqParams filter.SearchContacts

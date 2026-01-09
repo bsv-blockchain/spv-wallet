@@ -3,8 +3,9 @@ package admin
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 )
 
 // @Summary			Get status

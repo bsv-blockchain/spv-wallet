@@ -3,11 +3,12 @@ package contacts
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/internal/mapping"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/internal/mapping"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 )
 
 // AdminCreateContact creates a new contact for a user.

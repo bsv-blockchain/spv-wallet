@@ -1,12 +1,13 @@
 package admin
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/contacts"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/transactions"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/users"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/webhooks"
-	"github.com/bitcoin-sv/spv-wallet/engine"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/contacts"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/transactions"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/users"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/webhooks"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 )
 
 // APIAdmin represents server with API endpoints

@@ -5,9 +5,9 @@ import (
 	"net/url"
 	"slices"
 
-	configerrors "github.com/bitcoin-sv/spv-wallet/config/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/errdef"
+	configerrors "github.com/bsv-blockchain/spv-wallet/config/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 )
 
 // CheckDomain will check if the domain is allowed

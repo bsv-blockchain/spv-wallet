@@ -5,8 +5,9 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/chainhash"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 type beefPreparationContext struct {
@@ -19,7 +20,6 @@ type beefPreparationContext struct {
 }
 
 func prepareBEEFFactors(ctx context.Context, tx *Transaction, store TransactionGetter) ([]*trx.Transaction, error) {
-
 	processedTx, err := trx.NewTransactionFromHex(tx.Hex)
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "cannot convert processed transaction to SDK transaction from hex (tx.ID: %s)", tx.ID)

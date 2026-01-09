@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	customTypes "github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	customTypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 )
 
 var defaultPageSize = 25
@@ -67,7 +67,7 @@ type ModelName string
 func NewBaseModel(name ModelName, opts ...ModelOps) (m *Model) {
 	m = &Model{name: name}
 	m.SetOptions(opts...)
-	return
+	return m
 }
 
 // String is the string version of the name

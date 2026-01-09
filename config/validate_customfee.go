@@ -1,6 +1,6 @@
 package config
 
-import "github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+import "github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 
 // Validate validates the custom fee unit configuration
 func (cf *FeeUnitConfig) Validate() error {

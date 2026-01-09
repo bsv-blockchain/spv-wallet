@@ -1,7 +1,7 @@
 package merkleroots
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/server/handlers"
+	"github.com/bsv-blockchain/spv-wallet/server/handlers"
 )
 
 // RegisterRoutes creates the specific package routes

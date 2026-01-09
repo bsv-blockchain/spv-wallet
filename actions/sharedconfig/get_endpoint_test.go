@@ -3,8 +3,8 @@ package sharedconfig_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func TestGETConfigsShared(t *testing.T) {
@@ -54,7 +54,6 @@ func TestGETConfigsShared(t *testing.T) {
 					"pikePaymentEnabled": true
 				}
 			}`)
-
 	})
 
 	t.Run("return unauthorized for anonymous requests", func(t *testing.T) {

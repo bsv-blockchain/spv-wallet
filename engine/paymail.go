@@ -4,7 +4,8 @@ import (
 	"context"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // finalizeP2PTransaction will notify the paymail provider about the transaction

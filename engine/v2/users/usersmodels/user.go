@@ -5,7 +5,8 @@ import (
 	"time"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
 )
 
 // NewUser represents data for creating a new user

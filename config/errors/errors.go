@@ -2,8 +2,9 @@
 package errors
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/errdef"
 	"github.com/joomcode/errorx"
+
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 )
 
 var Namespace = errorx.NewNamespace("config", errdef.TraitConfig)

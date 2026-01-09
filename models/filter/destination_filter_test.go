@@ -13,7 +13,7 @@ func TestDestinationFilter(t *testing.T) {
 		filter := DestinationFilter{}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Nil(t, dbConditions["deleted_at"])
 	})
 
@@ -23,7 +23,7 @@ func TestDestinationFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with full CreatedRange", func(t *testing.T) {
@@ -37,7 +37,7 @@ func TestDestinationFilter(t *testing.T) {
 
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.NotNil(t, dbConditions["created_at"])
 	})
 
@@ -50,7 +50,7 @@ func TestDestinationFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 3, len(dbConditions))
+		assert.Len(t, dbConditions, 3)
 		assert.NotNil(t, dbConditions["locking_script"])
 		assert.NotNil(t, dbConditions["address"])
 		assert.NotNil(t, dbConditions["draft_id"])

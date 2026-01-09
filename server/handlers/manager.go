@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/server/middleware"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/server/middleware"
 )
 
 // GroupType is a type of group

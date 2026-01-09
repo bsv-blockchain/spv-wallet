@@ -10,8 +10,9 @@ import (
 	"database/sql"
 	"math"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	sqlite "github.com/mattn/go-sqlite3"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // NAME is the name of the driver registered by this package.

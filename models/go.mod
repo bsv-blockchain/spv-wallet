@@ -1,4 +1,4 @@
-module github.com/bitcoin-sv/spv-wallet/models
+module github.com/bsv-blockchain/spv-wallet/models
 
 go 1.24.0
 

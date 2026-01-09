@@ -6,14 +6,15 @@ import (
 	"os"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore/sqlite3extended"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	glogger "gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore/sqlite3extended"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // SQL related default settings
@@ -47,7 +48,7 @@ func openSQLDatabase(optionalLogger glogger.Interface, configs ...*SQLConfig) (d
 			sourceConfig.Debug, optionalLogger,
 		),
 	); err != nil {
-		return
+		return db, err
 	}
 
 	// Start the resolver (default is source and replica are the same)
@@ -104,11 +105,11 @@ func openSQLDatabase(optionalLogger glogger.Interface, configs ...*SQLConfig) (d
 
 	// Use the register
 	if err = db.Use(register); err != nil {
-		return
+		return db, err
 	}
 
 	// Return the connection
-	return
+	return db, err
 }
 
 // openSQLiteDatabase will open a SQLite database connection
@@ -126,11 +127,11 @@ func openSQLiteDatabase(optionalLogger glogger.Interface, config *SQLiteConfig) 
 			config.Debug, optionalLogger,
 		),
 	); err != nil {
-		return
+		return db, err
 	}
 	sqlDB, err := db.DB()
 	if err != nil {
-		return
+		return db, err
 	}
 	sqlDB.SetMaxIdleConns(config.MaxIdleConnections)
 	sqlDB.SetMaxOpenConns(config.MaxOpenConnections)
@@ -138,7 +139,7 @@ func openSQLiteDatabase(optionalLogger glogger.Interface, config *SQLiteConfig) 
 	sqlDB.SetConnMaxIdleTime(config.MaxConnectionIdleTime)
 
 	// Return the connection
-	return
+	return db, err
 }
 
 // getDNS will return the DNS string
@@ -154,7 +155,7 @@ func getDNS(databasePath string, shared bool) (dsn string) {
 	if shared {
 		dsn += "?cache=shared"
 	}
-	return
+	return dsn
 }
 
 // getDialector will return a new gorm.Dialector based on driver

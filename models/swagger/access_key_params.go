@@ -3,7 +3,7 @@ package swagger
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 )
 
 // CommonFilteringQueryParams is a model for common filtering query parameters.

@@ -15,7 +15,7 @@ func TestTimeRange(t *testing.T) {
 		dbConditions := filter.ToDbConditions()
 
 		assert.True(t, filter.isEmpty())
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("only _from_ field", func(t *testing.T) {
@@ -25,7 +25,7 @@ func TestTimeRange(t *testing.T) {
 		}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, timeNow, dbConditions["$gte"])
 	})
 
@@ -36,7 +36,7 @@ func TestTimeRange(t *testing.T) {
 		}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, timeNow, dbConditions["$lte"])
 	})
 }

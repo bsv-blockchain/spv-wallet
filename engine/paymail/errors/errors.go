@@ -1,6 +1,6 @@
 package pmerrors
 
-import "github.com/bitcoin-sv/spv-wallet/models"
+import "github.com/bsv-blockchain/spv-wallet/models"
 
 // ErrPaymailHostResponseError is when the paymail host is responding with errors.
 var ErrPaymailHostResponseError = models.SPVError{Message: "paymail host is responding with error", StatusCode: 500, Code: "error-paymail-host-error"}

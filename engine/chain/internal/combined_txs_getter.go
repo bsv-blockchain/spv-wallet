@@ -7,9 +7,10 @@ import (
 	"slices"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // CombineTxsGetters creates a new CombinedTxsGetter

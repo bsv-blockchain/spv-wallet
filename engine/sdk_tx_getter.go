@@ -7,7 +7,8 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // loadFromDBTimeout - within this time transactions should be loaded from the database
@@ -42,7 +43,6 @@ func (g *sdkTxGetter) GetTransactions(ctx context.Context, ids iter.Seq[string])
 		Where("id IN (?)", idsSlice).
 		Find(&hexes).
 		Error
-
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "Cannot get transactions by IDs from database")
 	}

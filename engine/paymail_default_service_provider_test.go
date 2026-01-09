@@ -13,7 +13,6 @@ func TestPaymailDefaultServiceProvider(t *testing.T) {
 	t.Run("PaymailDefaultServiceProvider.GetPaymailByAlias - multiple call", testGetPaymailByAliasMultipleRequestShouldReturnStablePubKey)
 	t.Run("PaymailDefaultServiceProvider.CreateAddressResolutionResponse - multiple call", testCreateAddressResolutionResponseShouldReturnDifferentResponses)
 	t.Run("PaymailDefaultServiceProvider.CreateP2PDestinationResponse - multiple call", testCreateP2PDestinationResponseShouldReturnDifferentResponses)
-
 }
 
 func testGetPaymailByAlias(t *testing.T) {
@@ -42,7 +41,6 @@ func testGetPaymailByAlias(t *testing.T) {
 	expectedPk, err := pm.GetPubKey()
 	require.NoError(t, err)
 	assert.Equal(t, expectedPk, res.PubKey)
-
 }
 
 func testGetPaymailByAliasMultipleRequestShouldReturnStablePubKey(t *testing.T) {
@@ -67,7 +65,6 @@ func testGetPaymailByAliasMultipleRequestShouldReturnStablePubKey(t *testing.T) 
 		// then
 		require.Equalf(t, expectedRes.PubKey, res.PubKey, "different pub key return in %d iteration")
 	}
-
 }
 
 func testCreateAddressResolutionResponseShouldReturnDifferentResponses(t *testing.T) {
@@ -129,9 +126,7 @@ func testCreateP2PDestinationResponseShouldReturnDifferentResponses(t *testing.T
 	seen := make([]*paymail.PaymentDestinationPayload, 0)
 	for _, res := range results {
 		for _, out := range res.Outputs {
-
 			for _, seenRes := range seen {
-
 				for _, seenOut := range seenRes.Outputs {
 
 					require.NotEqual(t, out.Address, seenOut.Address)

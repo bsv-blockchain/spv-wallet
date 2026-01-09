@@ -3,8 +3,8 @@ package users_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
 )
 
 func TestCreateAddress(t *testing.T) {

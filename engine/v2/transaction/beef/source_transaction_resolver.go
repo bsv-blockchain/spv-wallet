@@ -6,8 +6,9 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/spv"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 // SourceTx represents a source transaction.

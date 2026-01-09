@@ -1,13 +1,14 @@
 package chain
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal/arc"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal/bhs"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal/junglebus"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/arc"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/bhs"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/junglebus"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 type arcService = arc.Service

@@ -24,7 +24,6 @@ func compileTemplate(t testing.TB, templateFormat string, params map[string]any)
 		New("").
 		Funcs(funcsMap).
 		Parse(templateFormat)
-
 	if err != nil {
 		require.Fail(t, "Failed to parse template", err)
 	}

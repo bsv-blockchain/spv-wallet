@@ -5,7 +5,8 @@ import (
 	"fmt"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 type recordTxStrategy interface {
@@ -42,7 +43,7 @@ func recordTransaction(ctx context.Context, c ClientInterface, strategy recordTx
 	if err != nil {
 		logger.Warn().Str("strategy", strategy.Name()).Str("txID", strategy.TxID()).Err(err).Msg("Failed to execute recordTx strategy.")
 	}
-	return
+	return transaction, err
 }
 
 func getOutgoingTxRecordStrategy(xPubKey string, sdkTx *trx.Transaction, draftID string) (recordTxStrategy, error) {

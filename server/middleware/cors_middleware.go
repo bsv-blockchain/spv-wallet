@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/models"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // CorsMiddleware is a middleware that handles CORS.

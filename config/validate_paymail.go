@@ -1,9 +1,10 @@
 package config
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/mrz1836/go-sanitize"
 	"github.com/mrz1836/go-validate"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Validate checks the configuration for specific rules

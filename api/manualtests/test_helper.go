@@ -6,14 +6,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func Logger() zerolog.Logger {
 	zerolog.TimestampFunc = func() time.Time {
-		return time.Now().In(time.Local)
+		return time.Now().UTC()
 	}
 	logger := zerolog.New(zerolog.NewConsoleWriter(
 		func(w *zerolog.ConsoleWriter) {

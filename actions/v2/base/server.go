@@ -1,6 +1,6 @@
 package base
 
-import "github.com/bitcoin-sv/spv-wallet/config"
+import "github.com/bsv-blockchain/spv-wallet/config"
 
 // APIBase represents server with base API endpoints
 type APIBase struct {

@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	magic "github.com/bitcoinschema/go-map"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 var (
@@ -103,14 +104,14 @@ func TestTransactionConfig_Value(t *testing.T) {
 		transactionConfig := TransactionConfig{}
 		value, err := transactionConfig.Value()
 		require.NoError(t, err)
-		assert.Equal(t, unsetConfigJSON, value)
+		assert.JSONEq(t, unsetConfigJSON, value)
 	})
 
 	t.Run("full config", func(t *testing.T) {
 		transactionConfig := emptyConfig
 		value, err := transactionConfig.Value()
 		require.NoError(t, err)
-		assert.Equal(t, emptyConfigJSON, value)
+		assert.JSONEq(t, emptyConfigJSON, value)
 	})
 }
 
@@ -130,7 +131,7 @@ func TestTransactionConfig_processAddressOutput(t *testing.T) {
 		err := out.processAddressOutput()
 		require.NoError(t, err)
 
-		assert.Equal(t, 1, len(out.Scripts))
+		assert.Len(t, out.Scripts, 1)
 		assert.Equal(t, address, out.Scripts[0].Address)
 		assert.Equal(t, satoshis, out.Scripts[0].Satoshis)
 		assert.Equal(t, "76a9147ff514e6ae3deb46e6644caac5cdd0bf2388906588ac", out.Scripts[0].Script)
@@ -244,7 +245,7 @@ func TestTransactionConfig_processOutput(t *testing.T) {
 		require.NotNil(t, out)
 
 		err = out.processOutput(context.Background(), client, defaultSenderPaymail, true)
-		assert.Equal(t, err.Error(), "paymail provider does not support P2P")
+		assert.Equal(t, "paymail provider does not support P2P", err.Error())
 	})
 
 	t.Run("basic 1handle -> paymail address resolution - valid response", func(t *testing.T) {
@@ -299,7 +300,7 @@ func TestTransactionConfig_processOutput(t *testing.T) {
 		assert.Equal(t, defaultSenderPaymail, out.PaymailP4.FromPaymail)
 		assert.Equal(t, testAlias, out.PaymailP4.Alias)
 		assert.Equal(t, testDomain, out.PaymailP4.Domain)
-		assert.Equal(t, "", out.PaymailP4.Note)
+		assert.Empty(t, out.PaymailP4.Note)
 		assert.Equal(t, ResolutionTypeP2P, out.PaymailP4.ResolutionType)
 		assert.Equal(t, "z0bac4ec-6f15-42de-9ef4-e60bfdabf4f7", out.PaymailP4.ReferenceID)
 		assert.Equal(t, given.MockedPaymailClient().GetMockedP2PTransactionURL(testDomain), out.PaymailP4.ReceiveEndpoint)
@@ -323,9 +324,9 @@ func TestTransactionConfig_processOpReturnOutput(t *testing.T) {
 		}
 		err := output.processOpReturnOutput()
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(output.Scripts))
+		assert.Len(t, output.Scripts, 1)
 		assert.Equal(t, opReturn, output.Scripts[0].Script)
-		assert.Equal(t, "", output.Scripts[0].Address)
+		assert.Empty(t, output.Scripts[0].Address)
 		assert.Equal(t, uint64(0), output.Scripts[0].Satoshis)
 	})
 
@@ -337,9 +338,9 @@ func TestTransactionConfig_processOpReturnOutput(t *testing.T) {
 		}
 		err := output.processOpReturnOutput()
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(output.Scripts))
+		assert.Len(t, output.Scripts, 1)
 		assert.Equal(t, opReturn, output.Scripts[0].Script)
-		assert.Equal(t, "", output.Scripts[0].Address)
+		assert.Empty(t, output.Scripts[0].Address)
 		assert.Equal(t, uint64(0), output.Scripts[0].Satoshis)
 	})
 
@@ -351,9 +352,9 @@ func TestTransactionConfig_processOpReturnOutput(t *testing.T) {
 		}
 		err := output.processOpReturnOutput()
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(output.Scripts))
+		assert.Len(t, output.Scripts, 1)
 		assert.Equal(t, opReturn, output.Scripts[0].Script)
-		assert.Equal(t, "", output.Scripts[0].Address)
+		assert.Empty(t, output.Scripts[0].Address)
 		assert.Equal(t, uint64(0), output.Scripts[0].Satoshis)
 	})
 
@@ -377,11 +378,11 @@ func TestTransactionConfig_processOpReturnOutput(t *testing.T) {
 		}
 		err := output.processOpReturnOutput()
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(output.Scripts))
+		assert.Len(t, output.Scripts, 1)
 		// https://whatsonchain.com/tx/a7a1e4cf4f7e891103bebc07f6e8ae125a67aaf16775d92a07b776d8a9a55b5d
 		expected := "006a223150755161374b36324d694b43747373534c4b79316b683536575755374d74555235035345540361707008746f6e6963706f7704747970650b6f666665725f636c69636b0f6f666665725f636f6e6669675f6964023233106f666665725f73657373696f6e5f69644066353466613563303433316233373732373939316461623032636130613936633066396532653534366664373961366534303637373539336632656338646439"
 		assert.Equal(t, expected, output.Scripts[0].Script)
-		assert.Equal(t, "", output.Scripts[0].Address)
+		assert.Empty(t, output.Scripts[0].Address)
 		assert.Equal(t, uint64(0), output.Scripts[0].Satoshis)
 	})
 
@@ -401,7 +402,7 @@ func TestTransactionConfig_processOpReturnOutput(t *testing.T) {
 		}
 		err := output.processOpReturnOutput()
 		require.NoError(t, err)
-		assert.Equal(t, 1, len(output.Scripts))
+		assert.Len(t, output.Scripts, 1)
 		// https://whatsonchain.com/tx/a7a1e4cf4f7e891103bebc07f6e8ae125a67aaf16775d92a07b776d8a9a55b5d
 		expected := "006a223150755161374b36324d694b43747373534c4b79316b683536575755374d74555235035345540361707008746f6e6963706f7704747970650b6f666665725f636c69636b0f6f666665725f636f6e6669675f6964023233106f666665725f73657373696f6e5f69644066353466613563303433316233373732373939316461623032636130613936633066396532653534366664373961366534303637373539336632656338646439"
 		expected2 := "006a223150755161374b36324d694b43747373534c4b79316b683536575755374d74555235035345540361707008746f6e6963706f7704747970650b6f666665725f636c69636b106f666665725f73657373696f6e5f696440663534666135633034333162333737323739393164616230326361306139366330663965326535343666643739613665343036373735393366326563386464390f6f666665725f636f6e6669675f6964023233"
@@ -409,7 +410,7 @@ func TestTransactionConfig_processOpReturnOutput(t *testing.T) {
 		if output.Scripts[0].Script != expected && output.Scripts[0].Script != expected2 {
 			assert.Nil(t, output.Scripts[0].Script)
 		}
-		assert.Equal(t, "", output.Scripts[0].Address)
+		assert.Empty(t, output.Scripts[0].Address)
 		assert.Equal(t, uint64(0), output.Scripts[0].Satoshis)
 	})
 }

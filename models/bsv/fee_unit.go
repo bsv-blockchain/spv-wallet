@@ -3,7 +3,7 @@ package bsv
 import "fmt"
 
 // FeeUnit specifies how much satoshis will be paid per specific amount of bytes in a transaction
-// see https://github.com/bitcoin-sv-specs/brfc-misc/tree/master/feespec
+// see https://github.com/bsv-blockchain-specs/brfc-misc/tree/master/feespec
 type FeeUnit struct {
 	Satoshis Satoshis `json:"satoshis"` // Fee in satoshis of the amount of Bytes
 	Bytes    int      `json:"bytes"`    // Number of bytes that the Fee covers

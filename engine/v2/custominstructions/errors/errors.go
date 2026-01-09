@@ -1,6 +1,6 @@
 package errors
 
-import "github.com/bitcoin-sv/spv-wallet/models"
+import "github.com/bsv-blockchain/spv-wallet/models"
 
 // ErrProcessingCustomInstructions is returned when custom instructions cannot be processed
 var ErrProcessingCustomInstructions = models.SPVError{

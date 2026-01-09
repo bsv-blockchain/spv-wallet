@@ -4,14 +4,16 @@ import (
 	"context"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	bsvmodel "github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	bsvmodel "github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type evaluationContext struct {
 	context.Context
+
 	userID                string
 	log                   *zerolog.Logger
 	paymail               paymail.ServiceClient

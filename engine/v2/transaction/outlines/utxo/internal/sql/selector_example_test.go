@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/tgorm"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/tgorm"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // ExampleUTXOSelector_buildQueryForInputs_sqlite demonstrates what would be the query used to select inputs for a transaction.
@@ -60,7 +61,7 @@ func ExampleUTXOSelector_buildUpdateTouchedAtQuery_sqlite() {
 
 	query := db.ToSQL(func(db *gorm.DB) *gorm.DB {
 		query := selector.buildUpdateTouchedAtQuery(db, utxos)
-		query.UpdateColumn("touched_at", time.Date(2006, 02, 01, 15, 4, 5, 7, time.UTC))
+		query.UpdateColumn("touched_at", time.Date(2006, 0o2, 0o1, 15, 4, 5, 7, time.UTC))
 		return query
 	})
 
@@ -83,7 +84,7 @@ func ExampleUTXOSelector_buildUpdateTouchedAtQuery_postgres() {
 
 	query := db.ToSQL(func(db *gorm.DB) *gorm.DB {
 		query := selector.buildUpdateTouchedAtQuery(db, utxos)
-		query.UpdateColumn("touched_at", time.Date(2006, 02, 01, 15, 4, 5, 7, time.UTC))
+		query.UpdateColumn("touched_at", time.Date(2006, 0o2, 0o1, 15, 4, 5, 7, time.UTC))
 		return query
 	})
 

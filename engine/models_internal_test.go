@@ -11,30 +11,30 @@ func TestModelSetRecordTime(t *testing.T) {
 
 	t.Run("empty model", func(t *testing.T) {
 		m := new(Model)
-		assert.Equal(t, true, m.CreatedAt.IsZero())
-		assert.Equal(t, true, m.UpdatedAt.IsZero())
+		assert.True(t, m.CreatedAt.IsZero())
+		assert.True(t, m.UpdatedAt.IsZero())
 	})
 
 	t.Run("set created at time", func(t *testing.T) {
 		m := new(Model)
 		m.SetRecordTime(true)
-		assert.Equal(t, false, m.CreatedAt.IsZero())
-		assert.Equal(t, true, m.UpdatedAt.IsZero())
+		assert.False(t, m.CreatedAt.IsZero())
+		assert.True(t, m.UpdatedAt.IsZero())
 	})
 
 	t.Run("set updated at time", func(t *testing.T) {
 		m := new(Model)
 		m.SetRecordTime(false)
-		assert.Equal(t, true, m.CreatedAt.IsZero())
-		assert.Equal(t, false, m.UpdatedAt.IsZero())
+		assert.True(t, m.CreatedAt.IsZero())
+		assert.False(t, m.UpdatedAt.IsZero())
 	})
 
 	t.Run("set both times", func(t *testing.T) {
 		m := new(Model)
 		m.SetRecordTime(false)
 		m.SetRecordTime(true)
-		assert.Equal(t, false, m.CreatedAt.IsZero())
-		assert.Equal(t, false, m.UpdatedAt.IsZero())
+		assert.False(t, m.CreatedAt.IsZero())
+		assert.False(t, m.UpdatedAt.IsZero())
 	})
 }
 
@@ -43,13 +43,13 @@ func TestModelNew(t *testing.T) {
 
 	t.Run("New model", func(t *testing.T) {
 		m := new(Model)
-		assert.Equal(t, false, m.IsNew())
+		assert.False(t, m.IsNew())
 	})
 
 	t.Run("set New flag", func(t *testing.T) {
 		m := new(Model)
 		m.New()
-		assert.Equal(t, true, m.IsNew())
+		assert.True(t, m.IsNew())
 	})
 }
 
@@ -59,13 +59,13 @@ func TestModelGetOptions(t *testing.T) {
 	t.Run("base model", func(t *testing.T) {
 		m := new(Model)
 		opts := m.GetOptions(false)
-		assert.Equal(t, 0, len(opts))
+		assert.Empty(t, opts)
 	})
 
 	t.Run("new record model", func(t *testing.T) {
 		m := new(Model)
 		opts := m.GetOptions(true)
-		assert.Equal(t, 1, len(opts))
+		assert.Len(t, opts, 1)
 	})
 }
 
@@ -74,13 +74,13 @@ func TestModel_IsNew(t *testing.T) {
 
 	t.Run("base model", func(t *testing.T) {
 		m := new(Model)
-		assert.Equal(t, false, m.IsNew())
+		assert.False(t, m.IsNew())
 	})
 
 	t.Run("New model", func(t *testing.T) {
 		m := new(Model)
 		m.New()
-		assert.Equal(t, true, m.IsNew())
+		assert.True(t, m.IsNew())
 	})
 }
 
@@ -95,7 +95,7 @@ func TestModel_Name(t *testing.T) {
 
 	t.Run("base model", func(t *testing.T) {
 		m := new(Model)
-		assert.Equal(t, "", m.Name())
+		assert.Empty(t, m.Name())
 	})
 
 	t.Run("set model name", func(t *testing.T) {

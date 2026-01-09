@@ -5,9 +5,10 @@ import (
 	"time"
 
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 )
 
 const (
@@ -37,8 +38,8 @@ func TestModelName_IsEmpty(t *testing.T) {
 	t.Parallel()
 
 	t.Run("empty model", func(t *testing.T) {
-		assert.Equal(t, true, ModelNameEmpty.IsEmpty())
-		assert.Equal(t, false, ModelUtxo.IsEmpty())
+		assert.True(t, ModelNameEmpty.IsEmpty())
+		assert.False(t, ModelUtxo.IsEmpty())
 	})
 }
 

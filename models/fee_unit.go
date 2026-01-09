@@ -1,6 +1,6 @@
 package models
 
-import "github.com/bitcoin-sv/spv-wallet/models/bsv"
+import "github.com/bsv-blockchain/spv-wallet/models/bsv"
 
 // FeeUnit is a model that represents a fee unit (simplified version of fee unit from go-bt).
 type FeeUnit struct {

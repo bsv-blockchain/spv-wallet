@@ -4,10 +4,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 )
 
 func TestLoadConfig(t *testing.T) {
@@ -20,7 +21,7 @@ func TestLoadConfig(t *testing.T) {
 
 		// then
 		assert.NoError(t, err)
-		assert.Equal(t, viper.GetString(config.ConfigFilePathKey), config.DefaultConfigFilePath)
+		assert.Equal(t, config.DefaultConfigFilePath, viper.GetString(config.ConfigFilePathKey))
 		assert.Equal(t, "test", cfg.Version)
 	})
 

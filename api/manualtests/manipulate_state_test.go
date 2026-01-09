@@ -47,23 +47,23 @@ func TestCleanupOldUsersByTag(t *testing.T) {
 	if lo.Contains(state.CurrentUser().Tags, tag) {
 		logger := Logger()
 		logger.Warn().Msg("Current user has also the tag that should be removed. Will remove it also.")
-		userYaml, err := yaml.Marshal(state.User)
-		if err != nil {
-			logger.Err(err).Msg("Failed to marshal user state into yaml, so it want be recoverable :( ")
+		userYaml, marshalErr := yaml.Marshal(state.User)
+		if marshalErr != nil {
+			logger.Err(marshalErr).Msg("Failed to marshal user state into yaml, so it want be recoverable :( ")
 		}
 		logger.Warn().Msgf("In case it wasn't intended, put back him manually: \n%s", userYaml)
 
-		old, err := state.GetLastOldUserFromState()
-		if err == nil {
+		old, oldErr := state.GetLastOldUserFromState()
+		if oldErr == nil {
 			err = state.UseUserWithID(old.ID)
 			require.NoError(t, err)
 			logger.Warn().Msgf("Switching current user to the last old user %s with note '%s'.", old.ID, old.Note)
 			state.CleanupOldUsersByTag(tag)
-		} else if errorx.IsOfType(err, NotFound) {
+		} else if errorx.IsOfType(oldErr, NotFound) {
 			state.User = User{}
 			logger.Warn().Msg("No old user found, so the current user will be removed.")
 		} else {
-			require.NoError(t, err)
+			require.NoError(t, oldErr)
 		}
 	}
 

@@ -12,14 +12,14 @@ import (
 	"strings"
 	"time"
 
-	walletclient "github.com/bitcoin-sv/spv-wallet-go-client"
-	"github.com/bitcoin-sv/spv-wallet-go-client/commands"
-	walletclientcfg "github.com/bitcoin-sv/spv-wallet-go-client/config"
-	"github.com/bitcoin-sv/spv-wallet-go-client/walletkeys"
-
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
 	"github.com/joho/godotenv"
+
+	walletclient "github.com/bsv-blockchain/spv-wallet-go-client"
+	"github.com/bsv-blockchain/spv-wallet-go-client/commands"
+	walletclientcfg "github.com/bsv-blockchain/spv-wallet-go-client/config"
+	"github.com/bsv-blockchain/spv-wallet-go-client/walletkeys"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 const (
@@ -183,7 +183,7 @@ func checkResponse(response string) int {
 }
 
 // preparePaymail constructs a paymail address from the alias and domain.
-func preparePaymail(paymailAlias string, domain string) string {
+func preparePaymail(paymailAlias, domain string) string {
 	return paymailAlias + atSign + domain
 }
 
@@ -219,7 +219,6 @@ func createUser(paymail string, config *regressionTestConfig) (*regressionTestUs
 		Address:    user.Paymail,
 		PublicName: "Regression tests",
 	})
-
 	if err != nil {
 		if err.Error() == spverrors.ErrPaymailAlreadyExists.Error() {
 			return user, err

@@ -15,13 +15,13 @@ func TestEncrypt(t *testing.T) {
 	t.Run("empty key", func(t *testing.T) {
 		encrypted, err := Encrypt("", "")
 		require.Error(t, err)
-		assert.Equal(t, "", encrypted)
+		assert.Empty(t, encrypted)
 	})
 
 	t.Run("invalid key", func(t *testing.T) {
 		encrypted, err := Encrypt("123", "")
 		require.Error(t, err)
-		assert.Equal(t, "", encrypted)
+		assert.Empty(t, encrypted)
 	})
 
 	t.Run("valid small key, no value", func(t *testing.T) {
@@ -31,12 +31,12 @@ func TestEncrypt(t *testing.T) {
 		var encrypted string
 		encrypted, err = Encrypt(encryptionKey, "")
 		require.NoError(t, err)
-		assert.NotEqual(t, 0, len(encrypted))
+		assert.NotEmpty(t, encrypted)
 
 		var decrypted string
 		decrypted, err = Decrypt(encryptionKey, encrypted)
 		require.NoError(t, err)
-		assert.Equal(t, "", decrypted)
+		assert.Empty(t, decrypted)
 	})
 
 	t.Run("hardcoded small key with value", func(t *testing.T) {

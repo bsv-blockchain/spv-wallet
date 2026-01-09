@@ -1,17 +1,17 @@
-module github.com/bitcoin-sv/spv-wallet
+module github.com/bsv-blockchain/spv-wallet
 
 go 1.24.3
 
 // NOTE: The following replace directives are essential for maintaining the cohesion and functionality of this project.
-// We are using the packages github.com/bitcoin-sv/spv-wallet/models and github.com/bitcoin-sv/spv-wallet/engine directly
+// We are using the packages github.com/bsv-blockchain/spv-wallet/models and github.com/bsv-blockchain/spv-wallet/engine directly
 // to facilitate the seamless integration of features across various components of our application.
 // Removing these replaces could disrupt the interdependency between modules and hinder our ability to build cohesive features
 // that often require modifications across multiple packages. Please refrain from removing these directives.
-replace github.com/bitcoin-sv/spv-wallet/models => ./models
+replace github.com/bsv-blockchain/spv-wallet/models => ./models
 
 require (
 	github.com/99designs/gqlgen v0.17.85
-	github.com/bitcoin-sv/spv-wallet/models v1.0.0-beta.46
+	github.com/bsv-blockchain/spv-wallet/models v1.0.0-beta.46
 	github.com/bitcoinschema/go-map v0.2.2
 	github.com/bsv-blockchain/go-paymail v0.25.0
 	github.com/bsv-blockchain/go-sdk v1.2.14

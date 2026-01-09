@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/internal/integrationtests/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/testabilities/testmode"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/internal/integrationtests/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/testabilities/testmode"
 )
 
 const (

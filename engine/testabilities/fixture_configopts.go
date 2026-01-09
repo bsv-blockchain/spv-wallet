@@ -1,6 +1,6 @@
 package testabilities
 
-import "github.com/bitcoin-sv/spv-wallet/config"
+import "github.com/bsv-blockchain/spv-wallet/config"
 
 type ConfigOpts func(*config.AppConfig)
 

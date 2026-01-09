@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/models"
 	pkgerrors "github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 func TestUnfoldError(t *testing.T) {

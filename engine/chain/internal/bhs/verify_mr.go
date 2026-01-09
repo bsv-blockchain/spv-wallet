@@ -7,9 +7,10 @@ import (
 	"net/http"
 
 	"github.com/bsv-blockchain/go-paymail/spv"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // VerifyMerkleRoots verifies the merkle roots of the given transactions using BHS request
@@ -49,7 +50,6 @@ func (s *Service) makeVerifyMerkleRootsRequest(ctx context.Context, merkleRoots 
 		return nil, err
 	}
 	response, err := req.Post(bhsURL.String())
-
 	if err != nil {
 		var e net.Error
 		if errors.As(err, &e) {

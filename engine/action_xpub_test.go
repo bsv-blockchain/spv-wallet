@@ -3,9 +3,10 @@ package engine
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 func (ts *EmbeddedDBTestSuite) TestClient_NewXpub() {
@@ -196,9 +197,9 @@ func (ts *EmbeddedDBTestSuite) TestClient_UpdateXpubMetadata() {
 			})
 			require.NoError(t, err)
 			assert.Len(t, xPub.Metadata, 4)
-			assert.Equal(t, nil, xPub.Metadata["test-key-1"])
-			assert.Equal(t, nil, xPub.Metadata["test-key-2"])
-			assert.Equal(t, nil, xPub.Metadata["test-key-3"])
+			assert.Nil(t, xPub.Metadata["test-key-1"])
+			assert.Nil(t, xPub.Metadata["test-key-2"])
+			assert.Nil(t, xPub.Metadata["test-key-3"])
 			assert.Equal(t, "new-value-2", xPub.Metadata["test-key-new-2"])
 
 			err = xPub.Save(tc.ctx)
@@ -208,9 +209,9 @@ func (ts *EmbeddedDBTestSuite) TestClient_UpdateXpubMetadata() {
 			xPub2, err2 := tc.client.GetXpubByID(tc.ctx, xPub.ID)
 			require.NoError(t, err2)
 			assert.Len(t, xPub2.Metadata, 4)
-			assert.Equal(t, nil, xPub.Metadata["test-key-1"])
-			assert.Equal(t, nil, xPub.Metadata["test-key-2"])
-			assert.Equal(t, nil, xPub.Metadata["test-key-3"])
+			assert.Nil(t, xPub.Metadata["test-key-1"])
+			assert.Nil(t, xPub.Metadata["test-key-2"])
+			assert.Nil(t, xPub.Metadata["test-key-3"])
 			assert.Equal(t, "new-value-2", xPub2.Metadata["test-key-new-2"])
 		})
 	}

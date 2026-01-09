@@ -3,7 +3,7 @@ package txsync
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 )
 
 // TransactionsRepo is an interface for transactions repository.

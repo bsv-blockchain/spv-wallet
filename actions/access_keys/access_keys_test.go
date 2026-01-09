@@ -3,9 +3,10 @@ package accesskeys
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/server/handlers"
-	"github.com/bitcoin-sv/spv-wallet/tests"
 	"github.com/stretchr/testify/suite"
+
+	"github.com/bsv-blockchain/spv-wallet/server/handlers"
+	"github.com/bsv-blockchain/spv-wallet/tests"
 )
 
 // TestSuite is for testing the entire package using real/mocked services

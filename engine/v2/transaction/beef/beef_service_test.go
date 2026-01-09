@@ -6,10 +6,11 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/chainhash"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef/testabilities"
-	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef/testabilities"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 func TestPrepareBEEF_InvalidHexData_InSubjectTxQueryResult(t *testing.T) {
@@ -78,7 +79,6 @@ func TestPrepareBEEF_NonExistingSourceTxID_InSubjectTxInput(t *testing.T) {
 	thenTx.
 		IsEmpty(hexBEEF).
 		HasError(err, txerrors.ErrInputSourceTxIDNotFound)
-
 }
 
 func TestPrepareBEEF_MissingSourceTx_InSubjectTxInput(t *testing.T) {

@@ -3,7 +3,7 @@ package utils
 import (
 	"encoding/hex"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // ValidFees filters out invalid fees from a list of fee units

@@ -6,29 +6,32 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/testabilities/testmode"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/paymailmock"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/users/usersmodels"
-	"github.com/bitcoin-sv/spv-wallet/initializer"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/testabilities/testmode"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
+	"github.com/bsv-blockchain/spv-wallet/initializer"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
-const inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory&cache=shared"
-const fileDbConnectionString = "/tmp/spv-wallet-test.db"
+const (
+	inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory&cache=shared"
+	fileDbConnectionString     = "/tmp/spv-wallet-test.db"
+)
 
 const CallbackTestToken = "arc-test-token"
 

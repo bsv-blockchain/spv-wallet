@@ -3,9 +3,10 @@ package cluster
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/go-redis/redis/v8"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // RedisPubSub struct
@@ -67,7 +68,6 @@ func (r *RedisPubSub) Subscribe(channel Channel, callback func(data string)) (fu
 
 // Publish to a channel
 func (r *RedisPubSub) Publish(channel Channel, data string) error {
-
 	channelName := r.prefix + string(channel)
 	if r.debug {
 		r.Logger().Info().Msgf("PUBLISH: %s -> %s", channelName, data)

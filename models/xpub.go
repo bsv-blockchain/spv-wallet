@@ -1,6 +1,6 @@
 package models
 
-import "github.com/bitcoin-sv/spv-wallet/models/common"
+import "github.com/bsv-blockchain/spv-wallet/models/common"
 
 // Xpub is a model that represents a xpub.
 type Xpub struct {

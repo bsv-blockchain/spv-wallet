@@ -6,10 +6,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests"
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func TestTopUp(t *testing.T) {
@@ -322,7 +323,7 @@ func RequestTopUpToRegressionTests(multiplier int) manualtests.GenericCallWithSt
 	}
 }
 
-func RequestPaymailPaymentTransactionSplitIntoMultipleOutputsOutlineTo(recipient string, amount uint64, numberOfSplits uint64) manualtests.GenericCallWithState[*client.CreateTransactionOutlineResponse] {
+func RequestPaymailPaymentTransactionSplitIntoMultipleOutputsOutlineTo(recipient string, amount, numberOfSplits uint64) manualtests.GenericCallWithState[*client.CreateTransactionOutlineResponse] {
 	return func(state manualtests.StateForCall, c *client.ClientWithResponses) (*client.CreateTransactionOutlineResponse, error) {
 		paymailOutput := client.RequestsPaymailOutputSpecification{
 			To:       recipient,

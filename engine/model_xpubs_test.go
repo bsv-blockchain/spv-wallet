@@ -4,10 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 const (
@@ -289,7 +290,7 @@ func (ts *EmbeddedDBTestSuite) TestXpub_Save() {
 			require.NoError(t, err)
 			require.NotNil(t, xPub2)
 
-			assert.Equal(t, xPub2.ID, testXPubID)
+			assert.Equal(t, testXPubID, xPub2.ID)
 			require.NoError(t, err)
 		})
 

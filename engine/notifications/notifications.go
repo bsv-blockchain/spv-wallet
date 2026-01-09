@@ -5,8 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 const lengthOfInputChannel = 100

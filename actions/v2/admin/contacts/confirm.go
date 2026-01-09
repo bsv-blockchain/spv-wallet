@@ -3,9 +3,10 @@ package contacts
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 )
 
 // AdminConfirmContact confirms a contact between two users.
@@ -22,5 +23,4 @@ func (s *APIAdminContacts) AdminConfirmContact(c *gin.Context) {
 	}
 
 	c.Status(http.StatusOK)
-
 }

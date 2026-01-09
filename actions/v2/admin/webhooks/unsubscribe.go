@@ -4,10 +4,11 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // UnsubscribeWebhook unsubscribes from a webhook

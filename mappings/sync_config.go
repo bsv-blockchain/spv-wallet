@@ -1,8 +1,8 @@
 package mappings
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 // MapToSyncConfigContract will map the sync-config model from spv-wallet to the spv-wallet-models contract

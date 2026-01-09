@@ -5,6 +5,9 @@ import (
 	"errors"
 )
 
+// ErrInvalidDataType is returned when an invalid data type is provided
+var ErrInvalidDataType = errors.New("invalid data type")
+
 // DataType represents the type of data in the OP_RETURN output.
 type DataType int
 
@@ -31,7 +34,7 @@ func (d *DataType) UnmarshalJSON(data []byte) error {
 	case "hexes":
 		*d = DataTypeHexes
 	default:
-		return errors.New("invalid data type")
+		return ErrInvalidDataType
 	}
 	return nil
 }
@@ -47,7 +50,7 @@ func (d DataType) MarshalJSON() ([]byte, error) {
 	case DataTypeHexes:
 		dataType = "hexes"
 	default:
-		return nil, errors.New("invalid data type")
+		return nil, ErrInvalidDataType
 	}
 	return json.Marshal(dataType) //nolint:wrapcheck // MarshalJSON is run internally by json.Marshal on "DataType" object, so we don't want to wrap the error
 }

@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// ErrInvalidFilterOption is returned when an invalid filter option is provided
+var ErrInvalidFilterOption = errors.New("invalid filter option")
+
 func applyIfNotNil[T any](conditions map[string]interface{}, columnName string, value *T) {
 	if value != nil {
 		conditions[columnName] = *value
@@ -25,7 +28,7 @@ func checkStrOption(value string, options ...string) (string, error) {
 			return opt, nil
 		}
 	}
-	return "", errors.New("invalid filter option")
+	return "", ErrInvalidFilterOption
 }
 
 func checkAndApplyStrOption(conditions map[string]interface{}, columnName string, value *string, options ...string) error {

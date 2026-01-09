@@ -1,7 +1,7 @@
 package tester
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // ErrAppNameRequired is when the app name is required

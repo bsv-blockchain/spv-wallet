@@ -7,9 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/internal/query"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/internal/query"
 )
 
 func TestContextShouldGetQueryNestedMapSuccessfulParsing(t *testing.T) {
@@ -385,7 +386,6 @@ func TestContextShouldGetQueryNestedForKeyParsingError(t *testing.T) {
 		key   string
 		error string
 	}{
-
 		"searched map key is value not a map": {
 			url:   "?mapkey=value",
 			key:   "mapkey",

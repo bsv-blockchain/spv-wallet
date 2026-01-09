@@ -3,7 +3,8 @@ package utils
 import (
 	ecies "github.com/bsv-blockchain/go-sdk/compat/ecies"
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Encrypt will encrypt the value using the encryption key

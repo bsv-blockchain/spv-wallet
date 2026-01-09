@@ -4,16 +4,15 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // NewAccessKey will create a new access key for the given xpub
 //
 // opts are options and can include "metadata"
 func (c *Client) NewAccessKey(ctx context.Context, rawXpubKey string, opts ...ModelOps) (*AccessKey, error) {
-
 	// Validate that the value is an xPub
 	_, err := utils.ValidateXPub(rawXpubKey)
 	if err != nil {
@@ -47,7 +46,6 @@ func (c *Client) NewAccessKey(ctx context.Context, rawXpubKey string, opts ...Mo
 
 // GetAccessKey will get an existing access key from the Datastore
 func (c *Client) GetAccessKey(ctx context.Context, xPubID, id string) (*AccessKey, error) {
-
 	// Get the access key
 	accessKey, err := getAccessKey(
 		ctx, id,
@@ -72,7 +70,6 @@ func (c *Client) GetAccessKey(ctx context.Context, xPubID, id string) (*AccessKe
 func (c *Client) GetAccessKeys(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams, opts ...ModelOps,
 ) ([]*AccessKey, error) {
-
 	// Get the access keys
 	accessKeys, err := getAccessKeys(
 		ctx, metadataConditions, conditions, queryParams,
@@ -89,7 +86,6 @@ func (c *Client) GetAccessKeys(ctx context.Context, metadataConditions *Metadata
 func (c *Client) GetAccessKeysCount(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, opts ...ModelOps,
 ) (int64, error) {
-
 	// Get the access keys count
 	count, err := getAccessKeysCount(
 		ctx, metadataConditions, conditions,
@@ -108,7 +104,6 @@ func (c *Client) GetAccessKeysCount(ctx context.Context, metadataConditions *Met
 func (c *Client) GetAccessKeysByXPubID(ctx context.Context, xPubID string, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams, opts ...ModelOps,
 ) ([]*AccessKey, error) {
-
 	// Get the access key
 	accessKeys, err := getAccessKeysByXPubID(
 		ctx,
@@ -130,7 +125,6 @@ func (c *Client) GetAccessKeysByXPubID(ctx context.Context, xPubID string, metad
 func (c *Client) GetAccessKeysByXPubIDCount(ctx context.Context, xPubID string, metadataConditions *Metadata,
 	conditions map[string]interface{}, opts ...ModelOps,
 ) (int64, error) {
-
 	// Get the access key
 	count, err := getAccessKeysByXPubIDCount(
 		ctx,
@@ -151,7 +145,6 @@ func (c *Client) GetAccessKeysByXPubIDCount(ctx context.Context, xPubID string, 
 //
 // opts are options and can include "metadata"
 func (c *Client) RevokeAccessKey(ctx context.Context, rawXpubKey, id string, opts ...ModelOps) (*AccessKey, error) {
-
 	// Validate that the value is an xPub
 	_, err := utils.ValidateXPub(rawXpubKey)
 	if err != nil {

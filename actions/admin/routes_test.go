@@ -3,13 +3,13 @@ package admin
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func (ts *TestSuite) TestXPubRegisterRoutes() {
 	ts.T().Run("test routes", func(t *testing.T) {
-
 		testCases := []struct {
 			method string
 			url    string

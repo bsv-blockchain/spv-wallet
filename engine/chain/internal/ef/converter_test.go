@@ -5,9 +5,10 @@ import (
 	"testing"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal/ef"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/ef"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 )
 
 func givenSingleINSingleOUTTX(t *testing.T) txtestability.TransactionSpec {

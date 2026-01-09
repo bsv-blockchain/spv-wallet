@@ -3,8 +3,8 @@ package admin
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 )
 
 // CreatePaymail is the model for creating a paymail

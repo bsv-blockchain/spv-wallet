@@ -38,6 +38,7 @@ type TransactionConfig struct {
 type TransactionInput struct {
 	// Utxo is a pointer to a utxo object.
 	Utxo `json:",inline"`
+
 	// Destination is a pointer to a destination object.
 	Destination Destination `json:"destination"`
 }
@@ -90,7 +91,7 @@ type PaymailP4 struct {
 	Domain string `json:"domain,omitempty"`
 	// FromPaymail is a paymail p4 from paymail.
 	FromPaymail string `json:"fromPaymail,omitempty"`
-	// Note is a paymail p4 note.
+	// This field contains the paymail p4 message/note.
 	Note string `json:"note,omitempty"`
 	// PubKey is a paymail p4 pub key.
 	PubKey string `json:"pubKey,omitempty"`

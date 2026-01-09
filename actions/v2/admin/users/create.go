@@ -4,12 +4,13 @@ import (
 	"net/http"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/internal/mapping"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	configerrors "github.com/bitcoin-sv/spv-wallet/config/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailerrors"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/internal/mapping"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	configerrors "github.com/bsv-blockchain/spv-wallet/config/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailerrors"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 )
 
 // CreateUser creates a new user
@@ -34,7 +35,6 @@ func (s *APIAdminUsers) CreateUser(c *gin.Context) {
 	}
 
 	createdUser, err := s.engine.UsersService().Create(c, newUser)
-
 	if err != nil {
 		clienterr.Map(err).
 			IfOfType(configerrors.UnsupportedDomain).

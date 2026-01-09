@@ -3,7 +3,7 @@ package addressesmodels
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // NewAddress is a data for creating a new address.

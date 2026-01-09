@@ -1,9 +1,9 @@
 package transaction
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/transaction/bucket"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
 )
 
 // Annotations represents a transaction metadata that will be used by server to properly handle given transaction.

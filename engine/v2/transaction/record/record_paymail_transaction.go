@@ -4,8 +4,9 @@ import (
 	"context"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 // RecordPaymailTransaction will validate, broadcast and save paymail transaction

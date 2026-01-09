@@ -106,7 +106,6 @@ func CleanDatabaseSchema(t testing.TB, container *TestContainer) {
 	}(db)
 
 	_, err = db.Exec(`DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;`)
-
 	if err != nil {
 		t.Fatalf("Failed to clean database: %s", err)
 	}

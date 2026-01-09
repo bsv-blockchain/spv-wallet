@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAdminContactFilter(t *testing.T) {
@@ -34,12 +35,13 @@ func TestAdminContactFilter(t *testing.T) {
 		},
 		{
 			name: "With ContactFilter conditions",
-			filter: AdminContactFilter{ContactFilter: ContactFilter{
-				Paymail: ptrString("test@example.com"),
-				ModelFilter: ModelFilter{
-					IncludeDeleted: ptrBool(true),
+			filter: AdminContactFilter{
+				ContactFilter: ContactFilter{
+					Paymail: ptrString("test@example.com"),
+					ModelFilter: ModelFilter{
+						IncludeDeleted: ptrBool(true),
+					},
 				},
-			},
 				XPubID: ptrString("623bc25ce1c0fc510dea72b5ee27b2e70384c099f1f3dce9e73dd987198c3486"),
 			},
 			want: map[string]interface{}{
@@ -54,10 +56,10 @@ func TestAdminContactFilter(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := tt.filter.ToDbConditions()
 			if tt.wantErr {
-				assert.Error(t, err)
+				require.Error(t, err)
 				assert.Nil(t, got)
 			} else {
-				assert.NoError(t, err)
+				require.NoError(t, err)
 				assert.Equal(t, tt.want, got)
 			}
 		})

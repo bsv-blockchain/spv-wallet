@@ -8,9 +8,10 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 type mockTxsGetter struct {
@@ -79,7 +80,7 @@ func TestCombinedTxGetter(t *testing.T) {
 			transactions, err := getter.GetTransactions(context.Background(), ids(test.requestedTXs...))
 
 			require.NoError(t, err)
-			require.Equal(t, len(test.expectedTXs), len(transactions))
+			require.Len(t, transactions, len(test.expectedTXs))
 			shouldAllContain(t, transactions, ids(test.expectedTXs...))
 		})
 	}

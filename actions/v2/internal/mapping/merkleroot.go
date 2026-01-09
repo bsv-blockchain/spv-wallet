@@ -1,9 +1,10 @@
 package mapping
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/models"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // MerkleRootsPagedResponse maps a paged result of contacts to a response.

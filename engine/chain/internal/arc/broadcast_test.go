@@ -7,11 +7,12 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 )
 
 func TestBroadcastTransaction(t *testing.T) {
@@ -40,7 +41,7 @@ func TestBroadcastTransaction(t *testing.T) {
 					// first missing input source is provided by this txs getter (mocking getting from database)
 					transactions: []*sdk.Transaction{fromHex(sourceOneOfTxWithMultipleInputs)},
 				}
-				cfg.UseJunglebus = true //second missing input source is provided by junglebus (mocked)
+				cfg.UseJunglebus = true // second missing input source is provided by junglebus (mocked)
 			},
 		},
 		"Broadcast unsourced tx with junglebus which doesn't know the source tx - raw hex as fallback": {

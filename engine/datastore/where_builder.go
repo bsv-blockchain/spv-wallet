@@ -6,9 +6,10 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // whereBuilder holds a state during custom where preparation
@@ -54,7 +55,7 @@ func (builder *whereBuilder) processConditions(tx customWhereInterface, conditio
 	}
 }
 
-func (builder *whereBuilder) applyCondition(tx customWhereInterface, key string, operator string, condition interface{}) {
+func (builder *whereBuilder) applyCondition(tx customWhereInterface, key, operator string, condition interface{}) {
 	columnName := builder.getColumnNameOrPanic(key)
 
 	if condition == nil {
@@ -75,7 +76,7 @@ func (builder *whereBuilder) applyExistsCondition(tx customWhereInterface, key s
 }
 
 // applyJSONArrayContains will apply array condition on JSON Array field - client.GetArrayFields()
-func (builder *whereBuilder) applyJSONArrayContains(tx customWhereInterface, key string, condition string) {
+func (builder *whereBuilder) applyJSONArrayContains(tx customWhereInterface, key, condition string) {
 	columnName := builder.getColumnNameOrPanic(key)
 
 	engine := builder.client.Engine()

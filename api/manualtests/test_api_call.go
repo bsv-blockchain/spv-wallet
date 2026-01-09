@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 type (
@@ -24,6 +25,7 @@ func ToCall[R Result](f GenericCall[R]) Call {
 	}
 }
 
+//nolint:recvcheck // Mixed receivers intentional for value/pointer semantics
 type APICall struct {
 	t      testing.TB
 	state  *State
@@ -32,6 +34,7 @@ type APICall struct {
 
 type StateForCall struct {
 	*State
+
 	T testing.TB
 }
 

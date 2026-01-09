@@ -3,10 +3,11 @@ package transactions
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 )
 
 // broadcastCallback will handle a broadcastCallback call from the broadcast api
@@ -21,7 +22,6 @@ func broadcastCallback(c *gin.Context) {
 	}
 
 	err = reqctx.Engine(c).HandleTxCallback(c, &callbackResp)
-
 	if err != nil {
 		logger.Err(err).Any("TxInfo", callbackResp).Msgf("failed to update transaction in ARC broadcast callback handler")
 	}

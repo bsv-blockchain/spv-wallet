@@ -6,7 +6,8 @@ import (
 	"sync"
 
 	script "github.com/bsv-blockchain/go-sdk/script"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 var (
@@ -35,7 +36,6 @@ type OutputTemplate struct {
 
 // P2PKH creates a single output with the PIKE template
 func P2PKH(satoshis uint64) (*OutputTemplate, error) {
-
 	if satoshis == 0 {
 		return nil, spverrors.Newf("satoshis cannot be zero")
 	}

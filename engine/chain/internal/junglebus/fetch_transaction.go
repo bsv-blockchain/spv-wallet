@@ -7,8 +7,9 @@ import (
 	"strings"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // FetchTransaction fetches transaction from junglebus
@@ -21,7 +22,6 @@ func (s *Service) FetchTransaction(ctx context.Context, txID string) (*sdk.Trans
 		SetResult(result)
 
 	response, err := req.Get(fmt.Sprintf("https://junglebus.gorillapool.io/v1/transaction/get/%s", txID))
-
 	if err != nil {
 		return nil, spverrors.ErrInternal.Wrap(err)
 	}

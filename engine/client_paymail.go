@@ -2,7 +2,8 @@ package engine
 
 import (
 	"github.com/bsv-blockchain/go-paymail"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
+
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
 )
 
 // PaymailClient will return the Paymail if it exists

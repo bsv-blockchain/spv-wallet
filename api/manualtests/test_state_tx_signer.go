@@ -7,9 +7,10 @@ import (
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	sighash "github.com/bsv-blockchain/go-sdk/transaction/sighash"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/joomcode/errorx"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 var (
@@ -31,7 +32,7 @@ func NewTxSigner(s *State) *TxSigner {
 	}
 }
 
-func (t *TxSigner) UnlockToHex(format string, hex string) (string, error) {
+func (t *TxSigner) UnlockToHex(format, hex string) (string, error) {
 	tx, err := t.Unlock(format, hex)
 	if err != nil {
 		return "", err
@@ -50,7 +51,7 @@ func (t *TxSigner) UnlockToHex(format string, hex string) (string, error) {
 	}
 }
 
-func (t *TxSigner) Unlock(format string, hex string) (*sdk.Transaction, error) {
+func (t *TxSigner) Unlock(format, hex string) (*sdk.Transaction, error) {
 	err := t.prepareUnlockingScriptsFromAnnotations()
 	if err != nil {
 		return nil, err

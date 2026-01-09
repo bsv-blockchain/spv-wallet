@@ -7,20 +7,21 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bitcoin-sv/spv-wallet/actions"
-	"github.com/bitcoin-sv/spv-wallet/actions/paymailserver"
-	v2 "github.com/bitcoin-sv/spv-wallet/actions/v2"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/logging"
-	"github.com/bitcoin-sv/spv-wallet/metrics"
-	"github.com/bitcoin-sv/spv-wallet/server/handlers"
-	"github.com/bitcoin-sv/spv-wallet/server/middleware"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/actions"
+	"github.com/bsv-blockchain/spv-wallet/actions/paymailserver"
+	v2 "github.com/bsv-blockchain/spv-wallet/actions/v2"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/logging"
+	"github.com/bsv-blockchain/spv-wallet/metrics"
+	"github.com/bsv-blockchain/spv-wallet/server/handlers"
+	"github.com/bsv-blockchain/spv-wallet/server/middleware"
 )
 
 // Server is the configuration, services, and actual web server

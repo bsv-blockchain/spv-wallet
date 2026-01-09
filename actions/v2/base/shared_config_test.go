@@ -3,9 +3,9 @@ package base_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
 )
 
 func TestGETConfigsShared(t *testing.T) {
@@ -57,7 +57,6 @@ func TestGETConfigsShared(t *testing.T) {
 					"v2": true
  				}
  			}`)
-
 	})
 
 	t.Run("return unauthorized for anonymous requests", func(t *testing.T) {

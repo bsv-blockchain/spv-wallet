@@ -5,8 +5,9 @@ import (
 	"fmt"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/pike"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/pike"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 func Example_generateLockingScripts() {

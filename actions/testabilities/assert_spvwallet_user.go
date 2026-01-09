@@ -3,10 +3,11 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type SPVWalletAppUserAssertions interface {
@@ -137,7 +138,7 @@ func (l *lastOperationAssertions) WithTxStatus(txStatus string) LastOperationAss
 func (l *lastOperationAssertions) WithBlockHeight(blockHeight int64) LastOperationAssertions {
 	l.t.Helper()
 	l.require.NotNil(l.content.BlockHeight)
-	l.require.EqualValues(blockHeight, *l.content.BlockHeight)
+	l.require.Equal(blockHeight, *l.content.BlockHeight)
 	return l
 }
 

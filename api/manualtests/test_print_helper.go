@@ -22,6 +22,9 @@ func Print(result Result) {
 	body, fallbackBody := ExtractBody(result)
 
 	response := result.Response()
+	if response != nil {
+		defer response.Body.Close()
+	}
 
 	url := "<failed to extract>"
 	method := "<failed to extract>"

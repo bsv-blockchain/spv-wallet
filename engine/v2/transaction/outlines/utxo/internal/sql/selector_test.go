@@ -5,15 +5,15 @@ import (
 	"testing"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines/utxo/internal/sql/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/utxo/internal/sql/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 func TestInputsSelector(t *testing.T) {
-
 	t.Run("return empty list when db is empty", func(t *testing.T) {
 		// given:
 		given, then, cleanup := testabilities.New(t)
@@ -115,7 +115,6 @@ func TestInputsSelector(t *testing.T) {
 				ComparingTo(ownedInputs).AreEntries(test.expectToSelectInputs)
 
 			thenSuccess.Change(change).EqualsTo(test.expectedChange)
-
 		})
 	}
 
@@ -172,7 +171,6 @@ func TestInputsSelector(t *testing.T) {
 			// then:
 			then.WithoutError(err).SelectedInputs(utxos).
 				ComparingTo(ownedInputs).AreEntries(test.expectToSelectInputs)
-
 		})
 	}
 }

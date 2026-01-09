@@ -3,11 +3,11 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	testpaymail "github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 )
 
 type IntegrationTestFixtures interface {
@@ -23,6 +23,7 @@ type IntegrationTestFixtures interface {
 
 type fixture struct {
 	testabilities.SPVWalletApplicationFixture
+
 	t       testing.TB
 	alice   *user
 	bob     *user
@@ -59,7 +60,7 @@ func newFixture(t testing.TB, appFixture testabilities.SPVWalletApplicationFixtu
 func (f *fixture) StartedSPVWalletV2(opts ...testengine.ConfigOpts) (cleanup func()) {
 	cleanup = f.StartedSPVWalletWithConfiguration(append(opts, testengine.WithV2())...)
 	f.Paymail().ExternalPaymailHost().WillRespondWithP2PWithBEEFCapabilities()
-	return
+	return cleanup
 }
 
 func (f *fixture) Alice() *fixtures.User {

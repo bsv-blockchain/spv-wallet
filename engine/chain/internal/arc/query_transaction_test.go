@@ -5,11 +5,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 )
 
 /**
@@ -57,7 +58,7 @@ func TestQueryServiceErrorCases(t *testing.T) {
 		},
 		"QueryTransaction with wrong token": {
 			txID:      minedTxID,
-			arcToken:  "wrong-token", //if you test it on actual ARC server, this test might fail if the ARC doesn't require token
+			arcToken:  "wrong-token", // if you test it on actual ARC server, this test might fail if the ARC doesn't require token
 			arcURL:    arcURL,
 			expectErr: chainerrors.ErrARCUnauthorized,
 		},

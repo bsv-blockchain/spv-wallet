@@ -4,14 +4,17 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/errdef"
 	"github.com/gin-gonic/gin"
 	"github.com/joomcode/errorx"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 )
 
-var propProblemDetails = errorx.RegisterProperty("problem_details")
-var clientError = errorx.NewNamespace("client").NewType("error")
+var (
+	propProblemDetails = errorx.RegisterProperty("problem_details")
+	clientError        = errorx.NewNamespace("client").NewType("error")
+)
 
 // Builder is a fluent API for building client (4xx) errors.
 type Builder struct {
@@ -30,7 +33,7 @@ func (b *Builder) Wrap(cause error) *Builder {
 }
 
 // Detailed changes the error type and adds a detail message.
-func (b *Builder) Detailed(errType string, detail string, args ...any) *Builder {
+func (b *Builder) Detailed(errType, detail string, args ...any) *Builder {
 	b.problemDetails.Type = errType
 	b.problemDetails.PushDetail(fmt.Sprintf(detail, args...))
 	return b

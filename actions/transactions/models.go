@@ -1,8 +1,8 @@
 package transactions
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 // UpdateTransactionRequest is the model used for updating a transaction

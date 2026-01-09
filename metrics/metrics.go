@@ -3,9 +3,10 @@ package metrics
 import (
 	"net/http"
 
-	enginemetrics "github.com/bitcoin-sv/spv-wallet/engine/metrics"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	enginemetrics "github.com/bsv-blockchain/spv-wallet/engine/metrics"
 )
 
 // Metrics is the metrics collector

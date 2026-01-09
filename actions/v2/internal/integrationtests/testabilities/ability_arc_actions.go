@@ -3,8 +3,9 @@ package testabilities
 import (
 	"testing"
 
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/stretchr/testify/require"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 type arcActions struct {

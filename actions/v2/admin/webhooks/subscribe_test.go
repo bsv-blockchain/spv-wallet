@@ -3,9 +3,9 @@ package webhooks_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
 )
 
 const webhookAPIURL = "/api/v2/admin/webhooks"
@@ -127,7 +127,6 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
                 {"url": "http://localhost:8081", "banned": false}
             ]`)
 	})
-
 }
 
 func TestSubscribeWebhooksErrorPath(t *testing.T) {
@@ -354,5 +353,4 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 			IsOK().
 			WithJSONf(`[]`)
 	})
-
 }

@@ -5,12 +5,13 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 const (
@@ -66,7 +67,7 @@ func (r *UTXOSelector) Select(ctx context.Context, tx *sdk.Transaction, userID s
 			CustomInstructions: bsv.CustomInstructions(utxo.CustomInstructions),
 		}
 	}
-	return
+	return utxos, change, err
 }
 
 func (r *UTXOSelector) selectInputsForTransaction(ctx context.Context, userID string, outputsTotalValue bsv.Satoshis, byteSizeOfTxWithoutInputs uint64) (utxos []*selectedUTXO, err error) {

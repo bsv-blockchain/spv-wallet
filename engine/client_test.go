@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 )
 
 // todo: finish unit tests!
@@ -26,13 +27,13 @@ func TestClient_Debug(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, false, tc.IsDebug())
+		assert.False(t, tc.IsDebug())
 
 		tc.Debug(true)
 
-		assert.Equal(t, true, tc.IsDebug())
-		assert.Equal(t, true, tc.Cachestore().IsDebug())
-		assert.Equal(t, true, tc.Datastore().IsDebug())
+		assert.True(t, tc.IsDebug())
+		assert.True(t, tc.Cachestore().IsDebug())
+		assert.True(t, tc.Datastore().IsDebug())
 	})
 }
 
@@ -48,11 +49,11 @@ func TestClient_IsDebug(t *testing.T) {
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)
 
-		assert.Equal(t, false, tc.IsDebug())
+		assert.False(t, tc.IsDebug())
 
 		tc.Debug(true)
 
-		assert.Equal(t, true, tc.IsDebug())
+		assert.True(t, tc.IsDebug())
 	})
 }
 

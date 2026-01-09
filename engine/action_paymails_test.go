@@ -3,9 +3,10 @@ package engine
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 var (

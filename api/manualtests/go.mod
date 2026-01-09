@@ -1,6 +1,9 @@
-module github.com/bitcoin-sv/spv-wallet/api/manualtests
+module github.com/bsv-blockchain/spv-wallet/api/manualtests
 
 go 1.24.3
+
+//nolint:gomoddirectives // local development requires this replace directive
+replace github.com/bsv-blockchain/spv-wallet/models => ../../models
 
 require (
 	github.com/bsv-blockchain/go-sdk v1.2.14

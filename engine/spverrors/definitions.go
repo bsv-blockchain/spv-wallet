@@ -1,6 +1,6 @@
 package spverrors
 
-import "github.com/bitcoin-sv/spv-wallet/models"
+import "github.com/bsv-blockchain/spv-wallet/models"
 
 // How the Codes are generated?
 // 1. "error" - like mandatory prefix for all error codes

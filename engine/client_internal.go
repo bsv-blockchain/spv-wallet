@@ -5,14 +5,15 @@ import (
 
 	paymailclient "github.com/bsv-blockchain/go-paymail"
 	paymailserver "github.com/bsv-blockchain/go-paymail/server"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	"github.com/bitcoin-sv/spv-wallet/engine/cluster"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
-	"github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
 	"github.com/mrz1836/go-cachestore"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
+	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
 )
 
 // loadCache will load caching configuration and start the Cachestore client
@@ -21,7 +22,7 @@ func (c *Client) loadCache(ctx context.Context) (err error) {
 	if c.options.cacheStore.ClientInterface == nil {
 		c.options.cacheStore.ClientInterface, err = cachestore.NewClient(ctx, c.options.cacheStore.options...)
 	}
-	return
+	return err
 }
 
 // loadCluster will load the cluster coordinator
@@ -31,7 +32,7 @@ func (c *Client) loadCluster(ctx context.Context) (err error) {
 		c.options.cluster.ClientInterface, err = cluster.NewClient(ctx, c.options.cluster.options...)
 	}
 
-	return
+	return err
 }
 
 // loadDatastore will load the Datastore and start the Datastore client
@@ -39,7 +40,7 @@ func (c *Client) loadCluster(ctx context.Context) (err error) {
 // NOTE: this WON't run database migrations
 func (c *Client) loadDatastore() (err error) {
 	if c.options.dataStore.ClientInterface != nil {
-		return
+		return err
 	}
 
 	c.options.dataStore.options = append(
@@ -55,7 +56,7 @@ func (c *Client) loadDatastore() (err error) {
 		))
 
 	c.options.dataStore.ClientInterface, err = datastore.NewClient(c.options.dataStore.options...)
-	return
+	return err
 }
 
 func (c *Client) autoMigrate(ctx context.Context) error {
@@ -88,13 +89,13 @@ func (c *Client) autoMigrate(ctx context.Context) error {
 // loadNotificationClient will load the notifications client
 func (c *Client) loadNotificationClient(ctx context.Context) (err error) {
 	if c.options.notifications == nil || !c.options.notifications.enabled {
-		return
+		return err
 	}
 	logger := c.Logger().With().Str("subservice", "notification").Logger()
 	notificationService := notifications.NewNotifications(ctx, &logger)
 	c.options.notifications.client = notificationService
 	c.options.notifications.webhookManager = notifications.NewWebhookManager(ctx, &logger, notificationService, &WebhooksRepository{client: c})
-	return
+	return err
 }
 
 // SubscribeWebhook adds URL to the list of subscribed webhooks
@@ -146,7 +147,7 @@ func (c *Client) loadPaymailComponents() (err error) {
 	if c.options.paymail.client == nil {
 		c.options.paymail.client, err = paymailclient.NewClient()
 		if err != nil {
-			return
+			return err
 		}
 		c.options.paymail.client.WithCustomHTTPClient(c.options.httpClient)
 	}
@@ -155,7 +156,7 @@ func (c *Client) loadPaymailComponents() (err error) {
 		logger := c.Logger().With().Str("subservice", "paymail").Logger()
 		c.options.paymail.service = paymail.NewServiceClient(c.Cachestore(), c.options.paymail.client, logger)
 	}
-	return
+	return err
 }
 
 func (c *Client) loadChainService() {
@@ -174,7 +175,7 @@ func (c *Client) loadTaskmanager(ctx context.Context) (err error) {
 			ctx, c.options.taskManager.options...,
 		)
 	}
-	return
+	return err
 }
 
 func (c *Client) registerCronJobs() error {
@@ -224,8 +225,7 @@ func (c *Client) loadPaymailServer() (err error) {
 		paymailLocator,
 		c.options.paymail.serverConfig.options...,
 	)
-	return
-
+	return err
 }
 
 func (c *Client) askForFeeUnit(ctx context.Context) error {

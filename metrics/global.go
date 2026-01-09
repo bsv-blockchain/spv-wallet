@@ -1,8 +1,9 @@
 package metrics
 
 import (
-	enginemetrics "github.com/bitcoin-sv/spv-wallet/engine/metrics"
 	"github.com/gin-gonic/gin"
+
+	enginemetrics "github.com/bsv-blockchain/spv-wallet/engine/metrics"
 )
 
 var metrics *Metrics

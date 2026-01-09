@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/common"
+	"github.com/bsv-blockchain/spv-wallet/models/common"
 )
 
 // UtxoPointer is a pointer model that represents a utxo.

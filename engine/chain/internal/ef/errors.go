@@ -1,6 +1,6 @@
 package ef
 
-import "github.com/bitcoin-sv/spv-wallet/models"
+import "github.com/bsv-blockchain/spv-wallet/models"
 
 // ErrMissingSourceTXID is returned when SourceTXID field from go-sdk's TransactionInput is nil
 var ErrMissingSourceTXID = models.SPVError{Message: "missing source txid", StatusCode: 400, Code: "error-ef-converter-missing-source-txid"}

@@ -3,8 +3,9 @@ package engine
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/paymail"
 	"github.com/go-resty/resty/v2"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
 )
 
 // InternalsOverride is a function that can be used to override internal dependencies.

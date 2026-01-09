@@ -10,14 +10,15 @@ import (
 	"strings"
 	"time"
 
+	magic "github.com/bitcoinschema/go-map"
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	magic "github.com/bitcoinschema/go-map"
+
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // TransactionConfig is the configuration used to start a transaction
@@ -44,6 +45,7 @@ type TransactionConfig struct {
 // TransactionInput is an input on the transaction config
 type TransactionInput struct {
 	Utxo
+
 	Destination Destination `json:"destination" toml:"destination" yaml:"destination"`
 }
 
@@ -231,7 +233,7 @@ func (t *TransactionOutput) processPaymailOutput(ctx context.Context, paymailCli
 }
 
 // processPaymailViaP2P will process the output for P2P Paymail resolution
-func (t *TransactionOutput) processPaymailViaP2P(client paymailclient.ServiceClient, p2pDestinationURL, p2pSubmitTxURL string, fromPaymail string, format PaymailPayloadFormat) error {
+func (t *TransactionOutput) processPaymailViaP2P(client paymailclient.ServiceClient, p2pDestinationURL, p2pSubmitTxURL, fromPaymail string, format PaymailPayloadFormat) error {
 	// todo: this is a hack since paymail providers will complain if satoshis are empty (SendToAll has 0 satoshi)
 	satoshis := t.Satoshis
 	if satoshis <= 0 {
@@ -281,12 +283,12 @@ func (t *TransactionOutput) processAddressOutput() (err error) {
 	// Create the script from the Bitcoin parsedAddress
 	parsedAddress, err := script.NewAddressFromString(t.To)
 	if err != nil {
-		return
+		return err
 	}
 
 	var s *script.Script
 	if s, err = p2pkh.Lock(parsedAddress); err != nil {
-		return
+		return err
 	}
 
 	// Append the script
@@ -299,7 +301,7 @@ func (t *TransactionOutput) processAddressOutput() (err error) {
 			ScriptType: utils.ScriptTypePubKeyHash,
 		},
 	)
-	return
+	return err
 }
 
 // processScriptOutput will process a custom bitcoin script output
@@ -310,7 +312,7 @@ func (t *TransactionOutput) processScriptOutput() (err error) {
 
 	// check whether go-bt parses the script correctly
 	if _, err = script.NewFromHex(t.Script); err != nil {
-		return
+		return err
 	}
 
 	// Append the script
@@ -334,7 +336,7 @@ func (t *TransactionOutput) processOpReturnOutput() (err error) {
 		// raw op_return output in hex
 		var s *script.Script
 		if s, err = script.NewFromHex(t.OpReturn.Hex); err != nil {
-			return
+			return err
 		}
 		sc = s.String()
 	} else if len(t.OpReturn.HexParts) > 0 {
@@ -343,14 +345,14 @@ func (t *TransactionOutput) processOpReturnOutput() (err error) {
 		for _, h := range t.OpReturn.HexParts {
 			var b []byte
 			if b, err = hex.DecodeString(h); err != nil {
-				return
+				return err
 			}
 			bytesArray = append(bytesArray, b)
 		}
 		s := &script.Script{}
 		_ = s.AppendOpcodes(script.OpFALSE, script.OpRETURN)
 		if err = s.AppendPushDataArray(bytesArray); err != nil {
-			return
+			return err
 		}
 		sc = s.String()
 	} else if len(t.OpReturn.StringParts) > 0 {
@@ -362,7 +364,7 @@ func (t *TransactionOutput) processOpReturnOutput() (err error) {
 		s := &script.Script{}
 		_ = s.AppendOpcodes(script.OpFALSE, script.OpRETURN)
 		if err = s.AppendPushDataArray(bytesArray); err != nil {
-			return
+			return err
 		}
 		sc = s.String()
 	} else if t.OpReturn.Map != nil {
@@ -384,7 +386,7 @@ func (t *TransactionOutput) processOpReturnOutput() (err error) {
 		s := &script.Script{}
 		_ = s.AppendOpcodes(script.OpFALSE, script.OpRETURN)
 		if err = s.AppendPushDataArray(bytesArray); err != nil {
-			return
+			return err
 		}
 		sc = s.String()
 	} else {
@@ -400,5 +402,5 @@ func (t *TransactionOutput) processOpReturnOutput() (err error) {
 			ScriptType: utils.ScriptTypeNullData,
 		},
 	)
-	return
+	return err
 }

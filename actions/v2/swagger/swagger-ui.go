@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/config"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 // RegisterRoutes creates the specific package routes
@@ -21,7 +22,7 @@ func RegisterRoutes(engine *gin.Engine, cfg *config.AppConfig) {
 	})
 
 	api.Yaml = strings.Replace(api.Yaml, "version: main", fmt.Sprintf("version: '%s'", cfg.Version), 1)
-	api.Yaml = strings.Replace(api.Yaml, "https://github.com/bitcoin-sv/spv-wallet/blob/main", fmt.Sprintf("https://github.com/bitcoin-sv/spv-wallet/blob/%s", cfg.Version), 1)
+	api.Yaml = strings.Replace(api.Yaml, "https://github.com/bsv-blockchain/spv-wallet/blob/main", fmt.Sprintf("https://github.com/bsv-blockchain/spv-wallet/blob/%s", cfg.Version), 1)
 
 	root.GET("/api/gen.api.yaml", func(c *gin.Context) {
 		c.Header("Content-Type", "application/yaml")

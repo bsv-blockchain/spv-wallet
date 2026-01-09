@@ -1,0 +1,435 @@
+# ------------------------------------------------------------------------------------
+#  Test Matrix Execution (Reusable Workflow) (GoFortress)
+#
+#  Purpose: Execute Go tests across multiple operating systems and Go versions
+#  in a matrix strategy with native CI mode for failure detection and reporting.
+#
+#  This workflow handles:
+#    - Multi-platform test execution (ubuntu, windows, macOS)
+#    - Multiple Go version testing (primary, secondary)
+#    - Race detection and code coverage
+#    - Native CI mode for GitHub annotations and JSONL output
+#    - Cache performance tracking
+#
+#  CI Mode: magex automatically detects GitHub Actions and produces:
+#    - GitHub annotations with file:line locations
+#    - Step summary written to $GITHUB_STEP_SUMMARY
+#    - Structured output at .mage-x/ci-results.jsonl
+#
+#  Maintainer: @mrz1836
+#
+# ------------------------------------------------------------------------------------
+
+name: GoFortress (Test Matrix)
+
+on:
+  workflow_call:
+    inputs:
+      env-json:
+        description: "JSON string of environment variables"
+        required: true
+        type: string
+      test-matrix:
+        description: "Test matrix JSON"
+        required: true
+        type: string
+      primary-runner:
+        description: "Primary runner OS"
+        required: true
+        type: string
+      go-primary-version:
+        description: "Primary Go version"
+        required: true
+        type: string
+      go-secondary-version:
+        description: "Secondary Go version"
+        required: true
+        type: string
+      code-coverage-enabled:
+        description: "Whether code coverage is enabled"
+        required: true
+        type: string
+      race-detection-enabled:
+        description: "Whether race detection is enabled"
+        required: true
+        type: string
+      redis-enabled:
+        description: "Whether Redis service is enabled"
+        required: false
+        type: string
+        default: "false"
+      redis-version:
+        description: "Redis Docker image version"
+        required: false
+        type: string
+        default: "7-alpine"
+      redis-host:
+        description: "Redis host for tests"
+        required: false
+        type: string
+        default: "localhost"
+      redis-port:
+        description: "Redis port for tests"
+        required: false
+        type: string
+        default: "6379"
+      redis-health-retries:
+        description: "Redis health check retry count"
+        required: false
+        type: string
+        default: "10"
+      redis-health-interval:
+        description: "Redis health check interval in seconds"
+        required: false
+        type: string
+        default: "10"
+      redis-health-timeout:
+        description: "Redis health check timeout in seconds"
+        required: false
+        type: string
+        default: "5"
+      redis-trust-service-health:
+        description: "Trust GitHub Actions service container health checks"
+        required: false
+        type: string
+        default: "true"
+      go-sum-file:
+        description: "Path to go.sum file for dependency verification"
+        required: true
+        type: string
+
+# Security: Restrict default permissions (jobs must explicitly request what they need)
+permissions: {}
+
+jobs:
+  # ----------------------------------------------------------------------------------
+  # Testing Matrix for Go (Parallel)
+  # ----------------------------------------------------------------------------------
+  test-go:
+    name: 🧪 Test (${{ matrix.name }})
+    timeout-minutes: 30 # Prevent hung tests
+    permissions:
+      contents: read # Read repository content for testing
+    strategy:
+      fail-fast: true
+      matrix: ${{ fromJSON(inputs.test-matrix) }}
+    runs-on: ${{ matrix.os }}
+
+    # Redis service container (conditionally enabled)
+    services:
+      redis:
+        image: ${{ inputs.redis-enabled == 'true' && format('redis:{0}', inputs.redis-version) || 'busybox:latest' }}
+        options: ${{ inputs.redis-enabled == 'true' && format('--health-cmd "redis-cli ping" --health-interval {0}s --health-timeout {1}s --health-retries {2}', inputs.redis-health-interval, inputs.redis-health-timeout, inputs.redis-health-retries) || '--entrypoint sh' }}
+        ports:
+          - ${{ inputs.redis-enabled == 'true' && format('{0}:{0}', inputs.redis-port) || '9999:9999' }}
+
+    steps:
+      # --------------------------------------------------------------------
+      # Checkout code (required for local actions)
+      # --------------------------------------------------------------------
+      - name: 📥 Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      # --------------------------------------------------------------------
+      # Parse environment variables
+      # --------------------------------------------------------------------
+      - name: 🔧 Parse environment variables
+        uses: ./.github/actions/parse-env
+        with:
+          env-json: ${{ inputs.env-json }}
+
+      # --------------------------------------------------------------------
+      # Setup Go with caching and version management
+      # --------------------------------------------------------------------
+      - name: 🏗️ Setup Go with Cache
+        id: setup-go-test
+        uses: ./.github/actions/setup-go-with-cache
+        with:
+          go-version: ${{ matrix.go-version }}
+          matrix-os: ${{ matrix.os }}
+          go-primary-version: ${{ inputs.go-primary-version }}
+          go-secondary-version: ${{ inputs.go-secondary-version }}
+          go-sum-file: ${{ inputs.go-sum-file }}
+          enable-multi-module: ${{ env.ENABLE_MULTI_MODULE_TESTING }}
+
+      # --------------------------------------------------------------------
+      # Extract Go module directory from GO_SUM_FILE path
+      # --------------------------------------------------------------------
+      - name: 🔧 Extract Go module directory
+        uses: ./.github/actions/extract-module-dir
+        with:
+          go-sum-file: ${{ inputs.go-sum-file }}
+
+      # --------------------------------------------------------------------
+      # Setup MAGE-X (required for magex test commands)
+      # --------------------------------------------------------------------
+      - name: 🔧 Setup MAGE-X
+        uses: ./.github/actions/setup-magex
+        with:
+          magex-version: ${{ env.MAGE_X_VERSION }}
+          runner-os: ${{ matrix.os }}
+          use-local: ${{ env.MAGE_X_USE_LOCAL }}
+
+      # --------------------------------------------------------------------
+      # Setup benchstat (required for benchmark comparison tests)
+      # Note: benchstat requires Go 1.23+, action will skip for older versions
+      # --------------------------------------------------------------------
+      - name: 📊 Setup benchstat
+        uses: ./.github/actions/setup-benchstat
+        with:
+          benchstat-version: ${{ env.MAGE_X_BENCHSTAT_VERSION }}
+          runner-os: ${{ matrix.os }}
+          go-version: ${{ matrix.go-version }}
+
+      # --------------------------------------------------------------------
+      # Setup Redis service using composite action with caching
+      # --------------------------------------------------------------------
+      - name: 🗄️ Setup Redis Service
+        id: setup-redis
+        uses: ./.github/actions/setup-redis-service
+        with:
+          redis-enabled: ${{ inputs.redis-enabled }}
+          redis-version: ${{ inputs.redis-version }}
+          redis-host: ${{ inputs.redis-host }}
+          redis-port: ${{ inputs.redis-port }}
+          matrix-os: ${{ matrix.os }}
+          use-cache: "true"
+          trust-service-health: ${{ inputs.redis-trust-service-health }}
+
+      # --------------------------------------------------------------------
+      # Start test timer
+      # --------------------------------------------------------------------
+      - name: ⏱️ Start test timer
+        id: test-timer
+        run: |
+          TEST_START=$(date +%s)
+          echo "test-start=$TEST_START" >> $GITHUB_OUTPUT
+          echo "🕒 Test timer started at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      # --------------------------------------------------------------------
+      # Run tests with native CI mode
+      # CI mode auto-detects GitHub Actions and produces:
+      # - GitHub annotations (::error file=path,line=N::)
+      # - Step summary ($GITHUB_STEP_SUMMARY)
+      # - Structured output (.mage-x/ci-results.jsonl)
+      # --------------------------------------------------------------------
+      - name: 🧪 Run tests
+        id: run-tests
+        continue-on-error: true
+        run: |
+          # Determine test type based on inputs
+          RACE="${{ inputs.race-detection-enabled || 'false' }}"
+          COVER="${{ inputs.code-coverage-enabled || 'false' }}"
+
+          echo "🔍 Race Detection Enabled: $RACE"
+          echo "🔍 Code Coverage Enabled: $COVER"
+
+          # Build unified magex command with timeout and appropriate test type
+          if [[ "$RACE" == "true" && "$COVER" == "true" ]]; then
+            TEST_TIMEOUT="${TEST_TIMEOUT_RACE_COVER:-30m}"
+            TEST_TYPE="coverrace"
+            echo "🏁 Running tests with race detection and coverage analysis (timeout: $TEST_TIMEOUT)..."
+          elif [[ "$RACE" != "true" && "$COVER" == "true" ]]; then
+            TEST_TIMEOUT="${TEST_TIMEOUT_RACE_COVER:-30m}"
+            TEST_TYPE="cover"
+            echo "🏁 Running tests with coverage analysis (timeout: $TEST_TIMEOUT)..."
+          elif [[ "$RACE" == "true" && "$COVER" != "true" ]]; then
+            TEST_TIMEOUT="${TEST_TIMEOUT:-30m}"
+            TEST_TYPE="race"
+            echo "🏁 Running tests with race detection (timeout: $TEST_TIMEOUT)..."
+          else
+            TEST_TIMEOUT="${TEST_TIMEOUT_UNIT:-20m}"
+            TEST_TYPE="unit"
+            echo "🏁 Running tests without coverage or race detection (timeout: $TEST_TIMEOUT)..."
+          fi
+
+          # magex CI mode auto-detects GitHub Actions and produces structured output
+          MAGEX_CMD="magex test:${TEST_TYPE} -timeout $TEST_TIMEOUT"
+          echo "🔧 Running: $MAGEX_CMD"
+          echo ""
+
+          # Execute tests - CI mode automatically:
+          # - Parses test output in real-time
+          # - Emits GitHub annotations for failures
+          # - Writes step summary
+          # - Creates .mage-x/ci-results.jsonl
+          set +e
+          if [ "$ENABLE_MULTI_MODULE_TESTING" == "true" ]; then
+            echo "🔧 Multi-module testing enabled - running from repository root"
+            $MAGEX_CMD 2>&1 | tee test-output.log
+          elif [ -n "$GO_MODULE_DIR" ]; then
+            echo "🔧 Running from directory: $GO_MODULE_DIR"
+            (cd "$GO_MODULE_DIR" && $MAGEX_CMD) 2>&1 | tee test-output.log
+          else
+            echo "🔧 Running from repository root"
+            $MAGEX_CMD 2>&1 | tee test-output.log
+          fi
+          TEST_EXIT_CODE=${PIPESTATUS[0]}
+          set -e
+
+          # Set outputs
+          echo "test-exit-code=$TEST_EXIT_CODE" >> $GITHUB_OUTPUT
+          echo "🏁 Test execution completed with exit code: $TEST_EXIT_CODE"
+
+          # Calculate duration
+          TEST_END=$(date +%s)
+          TEST_DURATION=$((TEST_END - ${{ steps.test-timer.outputs.test-start }}))
+          echo "test-duration=$TEST_DURATION" >> $GITHUB_OUTPUT
+          echo "⏱️ Test duration: ${TEST_DURATION}s"
+
+      # --------------------------------------------------------------------
+      # Normalize CI results location for multi-module projects
+      # --------------------------------------------------------------------
+      - name: 🔄 Normalize CI results location
+        if: always()
+        run: |
+          # Ensure CI results are in expected location for artifact upload
+          # When running from GO_MODULE_DIR, results are created there
+          if [ -n "$GO_MODULE_DIR" ] && [ -f "$GO_MODULE_DIR/.mage-x/ci-results.jsonl" ]; then
+            mkdir -p .mage-x
+            if ! cp "$GO_MODULE_DIR/.mage-x/ci-results.jsonl" .mage-x/; then
+              echo "❌ Failed to copy CI results from $GO_MODULE_DIR/.mage-x/ci-results.jsonl to .mage-x/"
+              exit 1
+            fi
+            echo "✅ Copied CI results from module directory: $GO_MODULE_DIR"
+          elif [ -f ".mage-x/ci-results.jsonl" ]; then
+            echo "✅ CI results already in expected location"
+          else
+            echo "⚠️ No CI results file found (tests may have passed with no failures)"
+          fi
+
+      # --------------------------------------------------------------------
+      # Normalize coverage file name if coverage was generated
+      # --------------------------------------------------------------------
+      - name: 🔄 Normalize coverage file name
+        if: inputs.code-coverage-enabled == 'true' && steps.run-tests.outputs.test-exit-code == '0'
+        run: |
+          GO_MODULE_DIR="${{ env.GO_MODULE_DIR }}"
+
+          # Check module directory first
+          if [ -n "$GO_MODULE_DIR" ]; then
+            echo "📁 Looking for coverage files in module directory: $GO_MODULE_DIR"
+            for coverage_file in coverage.out coverage.txt cover.out cover.txt profile.out profile.txt; do
+              if [[ -f "$GO_MODULE_DIR/$coverage_file" ]]; then
+                echo "📁 Found coverage file: $GO_MODULE_DIR/$coverage_file"
+                echo "🔄 Moving to repository root as coverage.txt"
+                mv "$GO_MODULE_DIR/$coverage_file" coverage.txt
+                break
+              fi
+            done
+          fi
+
+          # Check root directory
+          for coverage_file in coverage.out coverage.txt cover.out cover.txt profile.out profile.txt; do
+            if [[ -f "$coverage_file" ]]; then
+              echo "📁 Found coverage file: $coverage_file"
+              if [[ "$coverage_file" != "coverage.txt" ]]; then
+                echo "🔄 Renaming to coverage.txt"
+                mv "$coverage_file" coverage.txt
+              fi
+              echo "✅ Coverage file normalized to coverage.txt"
+              break
+            fi
+          done
+
+          # Verify
+          if [[ -f coverage.txt ]] && [[ -s coverage.txt ]]; then
+            echo "✅ Coverage file verified: $(wc -l < coverage.txt) lines"
+          else
+            echo "⚠️ No coverage file found or file is empty"
+          fi
+
+      # --------------------------------------------------------------------
+      # Collect cache performance statistics
+      # --------------------------------------------------------------------
+      - name: 📊 Collect cache statistics
+        uses: ./.github/actions/collect-cache-stats
+        with:
+          workflow-name: test-${{ matrix.os }}-${{ matrix.go-version }}
+          job-name: test-go
+          os: ${{ matrix.os }}
+          go-version: ${{ matrix.go-version }}
+          cache-prefix: cache-stats
+          gomod-cache-hit: ${{ steps.setup-go-test.outputs.module-cache-hit }}
+          gobuild-cache-hit: ${{ steps.setup-go-test.outputs.build-cache-hit }}
+          redis-enabled: ${{ inputs.redis-enabled }}
+          redis-cache-hit: ${{ steps.setup-redis.outputs.cache-hit }}
+          redis-image-size: ${{ steps.setup-redis.outputs.image-size }}
+          redis-operation-time: ${{ steps.setup-redis.outputs.cache-operation-time }}
+
+      # --------------------------------------------------------------------
+      # Report Redis cache performance metrics
+      # --------------------------------------------------------------------
+      - name: 📊 Report Redis Cache Performance
+        if: inputs.redis-enabled == 'true'
+        run: |
+          echo "📊 Redis Cache Performance Report"
+          echo "================================="
+          echo "• Redis Enabled: ${{ inputs.redis-enabled }}"
+          echo "• Redis Version: ${{ inputs.redis-version }}"
+          echo "• Cache Hit: ${{ steps.setup-redis.outputs.cache-hit }}"
+          echo "• Image Size: ${{ steps.setup-redis.outputs.image-size }}MB"
+          echo "• Cache Operation Time: ${{ steps.setup-redis.outputs.cache-operation-time }}s"
+          echo "• Connection Time: ${{ steps.setup-redis.outputs.connection-time }}s"
+
+      # --------------------------------------------------------------------
+      # Upload performance cache statistics for completion report
+      # --------------------------------------------------------------------
+      - name: 📤 Upload performance cache statistics
+        uses: ./.github/actions/upload-statistics
+        with:
+          artifact-name: cache-stats-test-${{ matrix.os }}-${{ matrix.go-version }}
+          artifact-path: cache-stats-test-${{ matrix.os }}-${{ matrix.go-version }}.json
+          retention-days: "1"
+
+      # --------------------------------------------------------------------
+      # Upload CI results (native CI mode output)
+      # --------------------------------------------------------------------
+      - name: 📤 Upload CI results
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: ci-results-${{ matrix.os }}-${{ matrix.go-version }}
+          path: |
+            .mage-x/ci-results.jsonl
+            test-output.log
+          retention-days: 1
+          if-no-files-found: ignore
+
+      # --------------------------------------------------------------------
+      # Verify coverage file exists and upload for processing
+      # --------------------------------------------------------------------
+      - name: 🔍 Verify coverage file
+        if: inputs.code-coverage-enabled == 'true'
+        run: |
+          if [[ -f coverage.txt ]] && [[ -s coverage.txt ]]; then
+            echo "✅ Coverage file verified and ready for upload"
+            echo "📊 Coverage file size: $(wc -c < coverage.txt) bytes"
+            echo "📊 Coverage entries: $(wc -l < coverage.txt) lines"
+
+            # Basic validation
+            if head -1 coverage.txt | grep -q "mode:"; then
+              echo "✅ Coverage file format validation passed"
+            else
+              echo "⚠️ Coverage file may not be in expected Go coverage format"
+              head -3 coverage.txt
+            fi
+          else
+            echo "❌ Coverage file missing or empty"
+            if [[ "${{ steps.run-tests.outputs.test-exit-code }}" == "0" ]]; then
+              echo "::error::Tests passed but no coverage file generated despite coverage being enabled"
+            else
+              echo "::warning::No coverage file due to test failures"
+            fi
+          fi
+
+      # --------------------------------------------------------------------
+      # Upload coverage data for fortress-coverage workflow processing
+      # --------------------------------------------------------------------
+      - name: 📤 Upload coverage data
+        if: inputs.code-coverage-enabled == 'true' && hashFiles('coverage.txt') != '' && matrix.os == inputs.primary-runner && matrix.go-version == inputs.go-primary-version
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: coverage-data
+          path: coverage.txt
+          retention-days: 1

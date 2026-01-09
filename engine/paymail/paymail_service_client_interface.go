@@ -6,7 +6,8 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // Cache is an interface that defines the methods to interact with a cache.

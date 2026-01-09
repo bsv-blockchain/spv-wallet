@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // processP2PTransaction will process the sync transaction record, or save the failure

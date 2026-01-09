@@ -7,9 +7,10 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-paymail/spv"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 const (

@@ -38,8 +38,9 @@ func (dt *TransactionSpecification) unmarshalPartials(data []byte) (rawOutputs [
 	// We're defining it here, to not publish Alias type.
 	type Alias TransactionSpecification
 	temp := &struct {
-		Outputs []json.RawMessage `json:"outputs"`
 		*Alias
+
+		Outputs []json.RawMessage `json:"outputs"`
 	}{
 		Alias: (*Alias)(dt),
 	}
@@ -74,8 +75,9 @@ func unmarshalOutputs(outputs []json.RawMessage) ([]Output, error) {
 func (dt *TransactionSpecification) MarshalJSON() ([]byte, error) {
 	type Alias TransactionSpecification
 	temp := &struct {
-		Outputs []any `json:"outputs"`
 		*Alias
+
+		Outputs []any `json:"outputs"`
 	}{
 		Alias: (*Alias)(dt),
 	}

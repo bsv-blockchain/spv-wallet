@@ -277,16 +277,7 @@ components:
           description: Map of output annotations
           additionalProperties:
             $ref: "#/components/schemas/OutputAnnotation"
-          example: {
-            "0": {
-              "bucket": "bsv",
-              "paymail": {
-                "receiver": "bob@example.com",
-                "reference": "1234",
-                "sender": "alice@example.com",
-              }
-            }
-          }
+          example: {"0": {"bucket": "bsv", "paymail": {"receiver": "bob@example.com", "reference": "1234", "sender": "alice@example.com"}}}
 
     InputsAnnotations:
       type: object
@@ -298,16 +289,7 @@ components:
           description: Map of input annotations
           additionalProperties:
             $ref: "#/components/schemas/InputAnnotation"
-          example: {
-            "0": {
-              "customInstructions": [
-                {
-                  "type": "sign",
-                  "instruction": "P2PKH"
-                }
-              ]
-            }
-          }
+          example: {"0": {"customInstructions": [{"type": "sign", "instruction": "P2PKH"}]}}
 
     OutputAnnotation:
       allOf:

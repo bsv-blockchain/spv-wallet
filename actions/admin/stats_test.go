@@ -3,7 +3,7 @@ package admin_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 )
 
 func TestGETAdminStats(t *testing.T) {

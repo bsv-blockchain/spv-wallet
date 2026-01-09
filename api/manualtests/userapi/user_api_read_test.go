@@ -4,9 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests"
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func TestCurrentUser(t *testing.T) {

@@ -4,9 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests"
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func TestBaseAPIRead(t *testing.T) {
@@ -14,7 +15,7 @@ func TestBaseAPIRead(t *testing.T) {
 	err := state.Load()
 	require.NoError(t, err)
 
-	var calls = map[string]struct {
+	calls := map[string]struct {
 		client manualtests.ClientFactory
 		call   func(*client.ClientWithResponses) (manualtests.Result, error)
 	}{
@@ -45,7 +46,7 @@ func TestUnauthorized(t *testing.T) {
 	err := state.Load()
 	require.NoError(t, err)
 
-	var calls = map[string]struct {
+	calls := map[string]struct {
 		call func(*client.ClientWithResponses) (manualtests.Result, error)
 	}{
 		"sharedConfig": {

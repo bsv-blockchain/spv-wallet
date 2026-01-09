@@ -4,8 +4,8 @@ import (
 	"context"
 	"iter"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses/addressesmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/addresses/addressesmodels"
 )
 
 // Service for (P2PKH) addresses

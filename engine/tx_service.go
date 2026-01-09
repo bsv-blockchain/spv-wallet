@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // processUtxos will process the inputs and outputs for UTXOs
@@ -55,7 +55,7 @@ func (m *Transaction) _processInputs(ctx context.Context) (err error) {
 			m.TransactionBase.parsedTx.Inputs[index].SourceTxOutIndex,
 			opts...,
 		); err != nil {
-			return
+			return err
 		} else if utxo != nil { // Found a UTXO record
 
 			// Is Spent?
@@ -107,7 +107,7 @@ func (m *Transaction) _processInputs(ctx context.Context) (err error) {
 		// todo: what if the utxo is nil (not found)?
 	}
 
-	return
+	return err
 }
 
 // processTxOutputs will process the transaction outputs
@@ -134,7 +134,7 @@ func (m *Transaction) _processOutputs(ctx context.Context) (err error) {
 			if destination, err = m.transactionService.getDestinationByLockingScript(
 				ctx, lockingScript, opts...,
 			); err != nil {
-				return
+				return err
 			} else if destination != nil {
 				i32, err := conv.IntToUint32(i)
 				if err != nil {
@@ -172,5 +172,5 @@ func (m *Transaction) _processOutputs(ctx context.Context) (err error) {
 		}
 	}
 
-	return
+	return err
 }

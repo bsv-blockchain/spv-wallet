@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 // GetPolicy returns the current policy from the ARC server.
@@ -18,7 +18,6 @@ func (s *Service) GetPolicy(ctx context.Context) (*Policy, error) {
 		SetError(arcErr)
 
 	response, err := req.Get(fmt.Sprintf("%s/v1/policy", s.arcCfg.URL))
-
 	if err != nil {
 		return nil, s.wrapRequestError(err)
 	}

@@ -30,8 +30,7 @@ paths:
         - User
       summary: Delete current user
       description: >-
-        This endpoint will delete current user with associated paymails, addresses, operations and tracked outputs
-        You cannot delete user with balance larger than 0
+        This endpoint will delete current user with associated paymails, addresses, operations and tracked outputs You cannot delete user with balance larger than 0
       responses:
         200:
           description: Success

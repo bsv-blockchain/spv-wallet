@@ -5,10 +5,11 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/contact/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
+
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/contact/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 )
 
 func Test_ClientService_AdminCreateContact_Success(t *testing.T) {
@@ -37,13 +38,13 @@ func Test_ClientService_AdminCreateContact_Success(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			//given:
+			// given:
 			given, then := testabilities.New(t)
 
 			service, cleanup := given.Engine()
 			defer cleanup()
 
-			//when:
+			// when:
 			contact, err := service.AdminCreateContact(context.Background(),
 				tt.contactPaymail,
 				tt.creatorPaymail,
@@ -51,7 +52,7 @@ func Test_ClientService_AdminCreateContact_Success(t *testing.T) {
 				tt.metadata,
 			)
 
-			//then:
+			// then:
 			then.
 				Created(contact).
 				WithNoError(err).
@@ -65,19 +66,19 @@ func Test_ClientService_AdminCreateContact_Success(t *testing.T) {
 
 func Test_ClientService_AdminCreateContact_PKIRetrievalFail(t *testing.T) {
 	t.Run("Should fail with PKI retrieval", func(t *testing.T) {
-		//given:
+		// given:
 		given, then := testabilities.New(t)
 
 		service, cleanup := given.Engine()
 		defer cleanup()
 
-		//and:
+		// and:
 		given.
 			ExternalPaymailServer().
 			WillRespondOnCapability(paymail.BRFCPki).
 			WithInternalServerError()
 
-		//when:
+		// when:
 		contact, err := service.AdminCreateContact(context.Background(),
 			fixtures.RecipientExternal.DefaultPaymail().String(),
 			fixtures.Sender.DefaultPaymail().String(),
@@ -85,7 +86,7 @@ func Test_ClientService_AdminCreateContact_PKIRetrievalFail(t *testing.T) {
 			nil,
 		)
 
-		//then:
+		// then:
 		then.Created(contact).WithError(err).ThatIs(spverrors.ErrGettingPKIFailed)
 	})
 }
@@ -125,13 +126,13 @@ func Test_ClientService_AdminCreateContact_Fail(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			//given:
+			// given:
 			given, then := testabilities.New(t)
 
 			service, cleanup := given.Engine()
 			defer cleanup()
 
-			//when:
+			// when:
 			contact, err := service.AdminCreateContact(context.Background(),
 				tt.contactPaymail,
 				tt.creatorPaymail,
@@ -139,22 +140,21 @@ func Test_ClientService_AdminCreateContact_Fail(t *testing.T) {
 				nil,
 			)
 
-			//then:
+			// then:
 			then.Created(contact).WithError(err).ThatIs(tt.expectedError)
 		})
 	}
-
 }
 
 func Test_ClientService_AdminCreateContact_ContactAlreadyExists(t *testing.T) {
 	t.Run("Should fail the second time due to contact already exists", func(t *testing.T) {
-		//given:
+		// given:
 		given, then := testabilities.New(t)
 
 		service, cleanup := given.Engine()
 		defer cleanup()
 
-		//and:
+		// and:
 		contact, err := service.AdminCreateContact(context.Background(),
 			fixtures.RecipientExternal.DefaultPaymail().Address(),
 			fixtures.Sender.DefaultPaymail().Address(),
@@ -163,7 +163,7 @@ func Test_ClientService_AdminCreateContact_ContactAlreadyExists(t *testing.T) {
 		)
 		then.Created(contact).WithNoError(err)
 
-		//when:
+		// when:
 		contact, err = service.AdminCreateContact(context.Background(),
 			fixtures.RecipientExternal.DefaultPaymail().Address(),
 			fixtures.Sender.DefaultPaymail().Address(),
@@ -171,7 +171,7 @@ func Test_ClientService_AdminCreateContact_ContactAlreadyExists(t *testing.T) {
 			nil,
 		)
 
-		//then:
+		// then:
 		then.Created(contact).WithError(err).ThatIs(spverrors.ErrContactAlreadyExists)
 	})
 }

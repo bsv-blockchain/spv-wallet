@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 // QueryTransaction a transaction.
@@ -18,7 +18,6 @@ func (s *Service) QueryTransaction(ctx context.Context, txID string) (*chainmode
 		SetError(arcErr)
 
 	response, err := req.Get(fmt.Sprintf("%s/v1/tx/%s", s.arcCfg.URL, txID))
-
 	if err != nil {
 		return nil, s.wrapRequestError(err)
 	}

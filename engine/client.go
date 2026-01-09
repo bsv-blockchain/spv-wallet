@@ -6,22 +6,23 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/cluster"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/logging"
-	"github.com/bitcoin-sv/spv-wallet/engine/metrics"
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/engine"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/go-resty/resty/v2"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/logging"
+	"github.com/bsv-blockchain/spv-wallet/engine/metrics"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/engine"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type (
@@ -59,21 +60,24 @@ type (
 
 	// cacheStoreOptions holds the cache configuration and client
 	cacheStoreOptions struct {
-		cachestore.ClientInterface                        // Client for Cachestore
-		options                    []cachestore.ClientOps // List of options
+		cachestore.ClientInterface // Client for Cachestore
+
+		options []cachestore.ClientOps // List of options
 	}
 
 	// clusterOptions holds the cluster configuration for SPV Wallet Engine clusters
 	// at the moment we only support redis as the cluster coordinator
 	clusterOptions struct {
 		cluster.ClientInterface
+
 		options []cluster.ClientOps // List of options
 	}
 
 	// dataStoreOptions holds the data storage configuration and client
 	dataStoreOptions struct {
-		datastore.ClientInterface                       // Client for Datastore
-		options                   []datastore.ClientOps // List of options
+		datastore.ClientInterface // Client for Datastore
+
+		options []datastore.ClientOps // List of options
 	}
 
 	// notificationsOptions holds the configuration for notifications
@@ -92,17 +96,19 @@ type (
 
 	// PaymailServerOptions is the options for the Paymail server
 	PaymailServerOptions struct {
-		*server.Configuration                    // Server configuration if Paymail is enabled
-		options               []server.ConfigOps // Options for the paymail server
-		DefaultFromPaymail    string             // IE: from@domain.com
-		ExperimentalProvider  bool
+		*server.Configuration // Server configuration if Paymail is enabled
+
+		options              []server.ConfigOps // Options for the paymail server
+		DefaultFromPaymail   string             // IE: from@domain.com
+		ExperimentalProvider bool
 	}
 
 	// taskManagerOptions holds the configuration for taskmanager
 	taskManagerOptions struct {
-		taskmanager.TaskEngine                          // Client for TaskManager
-		options                []taskmanager.Options    // List of options
-		cronCustomPeriods      map[string]time.Duration // will override the default period of cronJob
+		taskmanager.TaskEngine // Client for TaskManager
+
+		options           []taskmanager.Options    // List of options
+		cronCustomPeriods map[string]time.Duration // will override the default period of cronJob
 	}
 )
 

@@ -7,11 +7,12 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	xtester "github.com/bitcoin-sv/spv-wallet/engine/tester/paymailmock"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	xtester "github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 const csXpub = "xpub661MyMwAqRbcGFL3kTp9Y2fNccswbtC6gceUtkAfo2gn6k49BQbXqxmL1zqKe1MGLrx24S2a5FmK3G8hXtyk8wQS2VRyMNBG14NuxBHhevX"

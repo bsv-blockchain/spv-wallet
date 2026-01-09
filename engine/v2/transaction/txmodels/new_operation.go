@@ -1,8 +1,8 @@
 package txmodels
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // NewOperation is a data for creating a new operation.

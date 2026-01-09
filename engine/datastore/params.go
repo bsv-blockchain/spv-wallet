@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // QueryParams object to use when limiting and sorting database query results

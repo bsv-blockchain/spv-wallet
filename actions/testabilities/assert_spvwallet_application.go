@@ -7,14 +7,15 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities/apierror"
-	testpaymail "github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/jsonrequire"
 	"github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities/apierror"
+	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/jsonrequire"
 )
 
 type SPVWalletApplicationAssertions interface {
@@ -105,7 +106,6 @@ func (a *responseAssertions) IsUnauthorized() {
 	a.t.Helper()
 	a.HasStatus(http.StatusUnauthorized).
 		WithJSONf(apierror.MissingAuthHeaderJSON)
-
 }
 
 func (a *responseAssertions) IsUnauthorizedForAdmin() {
@@ -222,5 +222,5 @@ func assertJSONEq(t testing.TB, expected, actual string) {
 		actualJSONString = string(marshaled)
 	}
 
-	assert.Equal(t, expectedJsonString, actualJSONString)
+	assert.JSONEq(t, expectedJsonString, actualJSONString)
 }

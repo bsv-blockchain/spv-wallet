@@ -6,28 +6,29 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/cluster"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/metrics"
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/data"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database/repository"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/operations"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/record"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txsync"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/users"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/metrics"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/addresses"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/data"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database/repository"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/operations"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/record"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txsync"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/users"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // AccessKeyService is the access key actions
@@ -77,7 +78,7 @@ type ContactService interface {
 
 	AdminChangeContactStatus(ctx context.Context, id string, status ContactStatus) (*Contact, error)
 	AdminCreateContact(ctx context.Context, contactPaymail, creatorPaymail, fullName string, metadata *Metadata) (*Contact, error)
-	AdminConfirmContacts(ctx context.Context, paymailA string, paymailB string) error
+	AdminConfirmContacts(ctx context.Context, paymailA, paymailB string) error
 	UpdateContact(ctx context.Context, id, fullName string, metadata *Metadata) (*Contact, error)
 	DeleteContactByID(ctx context.Context, id string) error
 	AdminUnconfirmContact(ctx context.Context, id string) error

@@ -6,10 +6,11 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	chainerrors "github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // timeForReceivingCallback indicates the time after which a broadcasted transaction should be checked (with Callback enabled)
@@ -92,7 +93,6 @@ func processSyncTransactions(ctx context.Context, client *Client) {
 		}
 
 		txInfo, err := client.Chain().QueryTransaction(ctx, txID)
-
 		if err != nil {
 			if errors.Is(err, chainerrors.ErrARCUnreachable) {
 				// checking subsequent transactions is pointless if the broadcast server (ARC) is unreachable, will try again in the next cycle

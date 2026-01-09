@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/data/datamodels"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/data/datamodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // Data is a repository for data.
@@ -24,7 +25,7 @@ func NewDataRepo(db *gorm.DB) *Data {
 }
 
 // FindForUser returns the data by outpoint for a specific user.
-func (r *Data) FindForUser(ctx context.Context, id string, userID string) (*datamodels.Data, error) {
+func (r *Data) FindForUser(ctx context.Context, id, userID string) (*datamodels.Data, error) {
 	outpoint, err := bsv.OutpointFromString(id)
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "failed to parse Data ID to outpoint")
@@ -47,5 +48,4 @@ func (r *Data) FindForUser(ctx context.Context, id string, userID string) (*data
 		UserID: row.UserID,
 		Blob:   row.Blob,
 	}, nil
-
 }

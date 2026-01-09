@@ -58,8 +58,7 @@ func gormConfig() *gorm.Config {
 	}
 }
 
-type doNothingConnectionPool struct {
-}
+type doNothingConnectionPool struct{}
 
 func (m *doNothingConnectionPool) PrepareContext(_ context.Context, _ string) (*sql.Stmt, error) {
 	return nil, nil

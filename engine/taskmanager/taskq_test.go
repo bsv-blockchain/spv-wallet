@@ -23,7 +23,7 @@ func TestNewTaskManager_Single(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	require.Equal(t, 1, len(c.Tasks()))
+	require.Len(t, c.Tasks(), 1)
 
 	// Run single task
 	err = c.RunTask(ctx, &TaskRunOptions{
@@ -60,7 +60,7 @@ func TestNewTaskManager_Multiple(t *testing.T) {
 		return nil
 	})
 	require.NoError(t, err)
-	require.Equal(t, 2, len(c.Tasks()))
+	require.Len(t, c.Tasks(), 2)
 
 	// Run tasks
 	err = c.RunTask(ctx, &TaskRunOptions{

@@ -7,11 +7,12 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/bitcoin-sv/spv-wallet/dictionary"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/go-viper/mapstructure/v2"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
+
+	"github.com/bsv-blockchain/spv-wallet/dictionary"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Added a mutex lock for a race-condition

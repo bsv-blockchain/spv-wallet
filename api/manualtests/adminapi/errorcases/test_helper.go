@@ -1,6 +1,6 @@
 package errorcases
 
-import "github.com/bitcoin-sv/spv-wallet/api/manualtests"
+import "github.com/bsv-blockchain/spv-wallet/api/manualtests"
 
 var SomeHopefullyNotRegisteredUserTemplate = manualtests.User{
 	Alias:     "badrequest",

@@ -4,9 +4,10 @@ import (
 	"context"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // TransactionBase is the same fields share between multiple transaction models
@@ -188,18 +189,18 @@ func (m *Transaction) setID() (err error) {
 	// Parse the hex (if not already parsed)
 	if m.parsedTx == nil {
 		if m.parsedTx, err = trx.NewTransactionFromHex(m.Hex); err != nil {
-			return
+			return err
 		}
 	}
 
 	// Set the true transaction ID
 	m.ID = m.TransactionBase.parsedTx.TxID().String()
 
-	return
+	return err
 }
 
 // getValue calculates the value of the transaction
-func (m *Transaction) getValues() (outputValue uint64, fee uint64) {
+func (m *Transaction) getValues() (outputValue, fee uint64) {
 	// Parse the outputs
 	for _, output := range m.parsedTx.Outputs {
 		outputValue += output.Satoshis
@@ -235,7 +236,7 @@ func (m *Transaction) getValues() (outputValue uint64, fee uint64) {
 		outputValue -= fee
 	}
 
-	return
+	return outputValue, fee
 }
 
 // SetBUMP Converts from bc.BUMP to our BUMP struct in Transaction model

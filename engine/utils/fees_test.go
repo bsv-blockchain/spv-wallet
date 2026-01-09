@@ -3,8 +3,9 @@ package utils
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 func TestGetInputSizeForType(t *testing.T) {
@@ -91,7 +92,7 @@ func TestLowestFee(t *testing.T) {
 			Satoshis: 4,
 			Bytes:    20,
 		}
-		return
+		return feeList, defaultFee
 	}
 
 	t.Run("lowest fee among feeList elements, despite defaultValue", func(t *testing.T) {

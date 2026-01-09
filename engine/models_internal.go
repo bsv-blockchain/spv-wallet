@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // AfterDeleted will fire after a successful delete in the Datastore
@@ -52,7 +52,7 @@ func (m *Model) GetOptions(isNewRecord bool) (opts []ModelOps) {
 		opts = append(opts, New())
 	}
 
-	return
+	return opts
 }
 
 // IsNew returns true if the model is (or was) a new record

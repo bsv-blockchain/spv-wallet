@@ -13,7 +13,7 @@ func TestPaymailFilter(t *testing.T) {
 		filter := AdminPaymailFilter{}
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Nil(t, dbConditions["deleted_at"])
 	})
 
@@ -23,7 +23,7 @@ func TestPaymailFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 0, len(dbConditions))
+		assert.Empty(t, dbConditions)
 	})
 
 	t.Run("with alias", func(t *testing.T) {
@@ -33,7 +33,7 @@ func TestPaymailFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, "example", dbConditions["alias"])
 	})
 
@@ -44,7 +44,7 @@ func TestPaymailFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 1, len(dbConditions))
+		assert.Len(t, dbConditions, 1)
 		assert.Equal(t, "thepubname", dbConditions["public_name"])
 	})
 
@@ -56,7 +56,7 @@ func TestPaymailFilter(t *testing.T) {
 		}`)
 		dbConditions := filter.ToDbConditions()
 
-		assert.Equal(t, 2, len(dbConditions))
+		assert.Len(t, dbConditions, 2)
 		assert.Equal(t, "thexpubid", dbConditions["xpub_id"])
 		assert.Equal(t, "thepubname", dbConditions["public_name"])
 	})

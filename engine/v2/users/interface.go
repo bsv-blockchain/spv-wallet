@@ -3,9 +3,9 @@ package users
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/users/usersmodels"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/transaction/bucket"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
 )
 
 // UserRepo is an interface for users repository.

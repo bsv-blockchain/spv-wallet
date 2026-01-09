@@ -124,7 +124,7 @@ func WithLogger(customLogger zLogger.GormLoggerInterface) ClientOps {
 }
 
 // WithCustomFields will add custom fields to the datastore
-func WithCustomFields(arrayFields []string, objectFields []string) ClientOps {
+func WithCustomFields(arrayFields, objectFields []string) ClientOps {
 	return func(c *clientOptions) {
 		if len(arrayFields) > 0 {
 			for _, field := range arrayFields {

@@ -1,11 +1,12 @@
 package mapping
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/operations/operationsmodels"
-	"github.com/bitcoin-sv/spv-wallet/lox"
-	"github.com/bitcoin-sv/spv-wallet/models"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/operations/operationsmodels"
+	"github.com/bsv-blockchain/spv-wallet/lox"
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // OperationsPagedResponse maps a paged result of operations to a response.

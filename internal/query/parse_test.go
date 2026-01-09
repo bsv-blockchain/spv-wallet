@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 )
 
 func TestParseSearchParamsSuccessfully(t *testing.T) {
@@ -99,7 +100,7 @@ func TestParseSearchParamsSuccessfully(t *testing.T) {
 
 			params, err := ParseSearchParams[ExampleConditionsForTests](c)
 			require.NoError(t, err)
-			require.EqualValues(t, test.expectedResult, *params)
+			require.Equal(t, test.expectedResult, *params)
 		})
 	}
 }
@@ -122,10 +123,11 @@ type ExampleConditionsForTests struct {
 	// ModelFilter is a struct for handling typical request parameters for search requests
 	//nolint:staticcheck // SA5008 - We want to reuse json tags also to mapstructure.
 	filter.ModelFilter `json:",inline,squash"`
-	XBoolean           *bool                            `json:"xBoolean,omitempty"`
-	XString            *string                          `json:"xString,omitempty"`
-	XInt               *int                             `json:"xInt,omitempty"`
-	Nested             *ExampleNestedConditionsForTests `json:"nested,omitempty"`
+
+	XBoolean *bool                            `json:"xBoolean,omitempty"`
+	XString  *string                          `json:"xString,omitempty"`
+	XInt     *int                             `json:"xInt,omitempty"`
+	Nested   *ExampleNestedConditionsForTests `json:"nested,omitempty"`
 }
 type ExampleNestedConditionsForTests struct {
 	IsNested *bool   `json:"isNested,omitempty"`

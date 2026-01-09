@@ -3,8 +3,8 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 )
 
 const SizeOfTransactionWithOnlyP2PKHOutput = 44
@@ -19,5 +19,5 @@ var MaxSizeWithoutFeeForSingleInput = fixtures.DefaultFeeUnit.Bytes - database.E
 func New(t testing.TB) (given InputsSelectorFixture, then InputsSelectorAssertions, cleanup func()) {
 	given, cleanup = newFixture(t)
 	then = newAssertions(t)
-	return
+	return given, then, cleanup
 }

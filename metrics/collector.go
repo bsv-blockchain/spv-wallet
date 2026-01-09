@@ -1,8 +1,9 @@
 package metrics
 
 import (
-	enginemetrics "github.com/bitcoin-sv/spv-wallet/engine/metrics"
 	"github.com/prometheus/client_golang/prometheus"
+
+	enginemetrics "github.com/bsv-blockchain/spv-wallet/engine/metrics"
 )
 
 // PrometheusCollector is a collector for Prometheus metrics. It should implement spvwalletmodels.Collector.

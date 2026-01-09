@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func TestValidateArcConfig(t *testing.T) {

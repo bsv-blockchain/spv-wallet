@@ -5,11 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // Xpub is an object representing an HD-Key or extended public key (xPub for short)
@@ -293,7 +294,7 @@ func (m *Xpub) ChildModels() (childModels []ModelInterface) {
 	for index := range m.destinations {
 		childModels = append(childModels, &m.destinations[index])
 	}
-	return
+	return childModels
 }
 
 // BeforeCreating will fire before the model is being inserted into the Datastore

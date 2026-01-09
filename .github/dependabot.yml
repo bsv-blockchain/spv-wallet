@@ -1,72 +1,182 @@
+# ────────────────────────────────────────────────────────────────
+# Dependabot Configuration
+#
+# Purpose:
+#   • Keep Go modules, GitHub Actions and DevContainer images/features
+#     base images up‑to‑date with zero‑day security patches and semantic‑version
+#     upgrades.
+#   • Reduce attack surface by limiting outdated dependencies.
+#   • Minimise PR noise via smart grouping and sane pull‑request limits.
+#
+# References:
+#   https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+#   https://docs.github.com/en/code-security/dependabot/configuration-options-for-dependency-updates
+#
+# Security Hardened Defaults:
+#   • Weekly cadence (Monday 09:00 America/New_York) – align with CVE dump cycle.
+#   • Direct dependencies only – prevents unsolicited transitive churn.
+#   • PRs labeled, assigned, and target the protected "master" branch.
+#   • PR titles prefixed with chore(scope): – conventional commits.
+#   • Force‑push and delete‑branch disabled via branch‑protection rules.
+#   • PR limit = 10 to avoid queue flooding.
+#   • All dependency PRs require passing CI + CODEOWNERS review.
+# ────────────────────────────────────────────────────────────────
+
 version: 2
+
 updates:
-  # Maintain dependencies for the codebase
+  # ──────────────────────────────────────────────────────────────
+  # 1. Go Modules (go.mod / go.sum)
+  # ──────────────────────────────────────────────────────────────
   - package-ecosystem: "gomod"
-    target-branch: "main"
-    directories:
-      - "/"
-      - "/models"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    labels:
-      - "dependencies"
-    groups:
-      go_modules:
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
-
-  # Maintain dependencies for the regression tests
-  - package-ecosystem: "gomod"
-    target-branch: "main"
-    rebase-strategy: auto
-    directories:
-      - "/regression_tests"
-    schedule:
-      interval: "daily"
-      time: "06:00"
-    labels:
-      - "dependencies"
-      - "regression-tests"
-    groups:
-      regression_tests:
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
-
-  # Maintain dependencies for GitHub Actions
-  - package-ecosystem: "github-actions"
-    target-branch: "main"
     directory: "/"
+    target-branch: "master"
     schedule:
       interval: "weekly"
       day: "monday"
-    labels:
-      - "dependencies"
+      time: "09:00"
+      timezone: "America/New_York"
+    allow:
+      - dependency-type: "direct"
     groups:
-      gh_actions:
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
+      security-deps:
+        patterns:
+          - "*crypto*"
+          - "*security*"
+          - "*auth*"
+          - "*jwt*"
+          - "*oauth*"
+        update-types: ["minor", "patch"]
+    open-pull-requests-limit: 10
+    assignees: ["mrz1836"]
+    labels: ["chore", "dependencies", "gomod"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
 
-  # Maintain dependencies for Docker
-  - package-ecosystem: "docker"
-    target-branch: "main"
-    directories:
-      - "/"
-      - "/release"
+  # ──────────────────────────────────────────────────────────────
+  # 2. GitHub Actions Workflows
+  # ──────────────────────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "master"
     schedule:
       interval: "weekly"
       day: "monday"
-    labels:
-      - "dependencies"
+      time: "09:15"
+      timezone: "America/New_York"
+    allow:
+      - dependency-type: "direct"
     groups:
-      docker:
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
+      ghactions-all:
+        patterns: ["*"]
+    open-pull-requests-limit: 10
+    assignees: ["mrz1836"]
+    labels: ["chore", "dependencies", "github-actions"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # ──────────────────────────────────────────────────────────────
+  # 3. DevContainer (devcontainer.json : base image + features)
+  # ──────────────────────────────────────────────────────────────
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    target-branch: "master"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:30"
+      timezone: "America/New_York"
+    allow:
+      - dependency-type: "direct"
+    groups:
+      devcontainer-all:
+        patterns: ["*"]
+    open-pull-requests-limit: 5
+    assignees: ["mrz1836"]
+    labels: ["chore", "dependencies", "devcontainer"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # ──────────────────────────────────────────────────────────────
+  # 4. Dockerfiles (any Dockerfile in repo root or sub‑dirs)
+  # ──────────────────────────────────────────────────────────────
+  - package-ecosystem: "docker"
+    directory: "/"
+    target-branch: "master"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:45"
+      timezone: "America/New_York"
+    allow:
+      - dependency-type: "direct"
+    groups:
+      dockerfiles-all:
+        patterns: ["*"]
+    open-pull-requests-limit: 5
+    assignees: ["mrz1836"]
+    labels: ["chore", "dependencies", "docker"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # ──────────────────────────────────────────────────────────────
+  # 5. Models
+  # ──────────────────────────────────────────────────────────────
+  - package-ecosystem: "gomod"
+    directory: "/models"
+    target-branch: "master"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    allow:
+      - dependency-type: "direct"
+    groups:
+      security-deps:
+        patterns:
+          - "*crypto*"
+          - "*security*"
+          - "*auth*"
+          - "*jwt*"
+          - "*oauth*"
+        update-types: ["minor", "patch"]
+    open-pull-requests-limit: 10
+    assignees: ["mrz1836"]
+    labels: ["chore", "dependencies", "gomod"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # ──────────────────────────────────────────────────────────────
+  # 6. Regression Tests
+  # ──────────────────────────────────────────────────────────────
+  - package-ecosystem: "gomod"
+    directory: "/regression_tests"
+    target-branch: "master"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    allow:
+      - dependency-type: "direct"
+    groups:
+      security-deps:
+        patterns:
+          - "*crypto*"
+          - "*security*"
+          - "*auth*"
+          - "*jwt*"
+          - "*oauth*"
+        update-types: ["minor", "patch"]
+    open-pull-requests-limit: 10
+    assignees: ["mrz1836"]
+    labels: ["chore", "dependencies", "gomod"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
