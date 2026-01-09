@@ -1,0 +1,239 @@
+{
+    "formatters": {
+        "enable": [
+            "gofmt",
+            "gofumpt"
+        ],
+        "exclusions": {
+            "generated": "lax",
+            "paths": [
+                ".*\\.my\\.go$",
+                "lib/bad.go",
+                ".make",
+                ".vscode",
+                "dist",
+                "third_party$",
+                "builtin$"
+            ]
+        },
+        "settings": {
+            "gci": {
+                "sections": [
+                    "standard",
+                    "default",
+                    "prefix(github.com/bsv-blockchain/spv-wallet)"
+                ]
+            },
+            "gofmt": {
+                "simplify": true
+            },
+            "gofumpt": {
+                "extra-rules": false
+            },
+            "goimports": {
+                "local-prefixes": [
+                    "github.com/bsv-blockchain/spv-wallet"
+                ]
+            }
+        }
+    },
+    "issues": {
+        "uniq-by-line": true
+    },
+    "linters": {
+        "disable": [
+            "gocritic",
+            "godot",
+            "funcorder",
+            "revive",
+            "containedctx",
+            "gochecknoglobals",
+            "gocognit",
+            "nestif",
+            "unused",
+            "gocyclo",
+            "wsl_v5"
+        ],
+        "enable": [
+            "asasalint",
+            "arangolint",
+            "asciicheck",
+            "bidichk",
+            "bodyclose",
+            "contextcheck",
+            "copyloopvar",
+            "dogsled",
+            "durationcheck",
+            "embeddedstructfieldcheck",
+            "err113",
+            "errcheck",
+            "errchkjson",
+            "errname",
+            "errorlint",
+            "exhaustive",
+            "forbidigo",
+            "gocheckcompilerdirectives",
+            "gochecknoinits",
+            "gochecksumtype",
+            "goconst",
+            "godox",
+            "goheader",
+            "gomoddirectives",
+            "gosec",
+            "gosmopolitan",
+            "govet",
+            "inamedparam",
+            "ineffassign",
+            "loggercheck",
+            "makezero",
+            "mirror",
+            "misspell",
+            "musttag",
+            "nakedret",
+            "nilerr",
+            "nilnesserr",
+            "nilnil",
+            "noctx",
+            "nolintlint",
+            "nosprintfhostport",
+            "prealloc",
+            "predeclared",
+            "protogetter",
+            "reassign",
+            "recvcheck",
+            "rowserrcheck",
+            "spancheck",
+            "sqlclosecheck",
+            "staticcheck",
+            "testifylint",
+            "unconvert",
+            "unparam",
+            "wastedassign",
+            "zerologlint"
+        ],
+        "settings": {
+            "dogsled": {
+                "max-blank-identifiers": 2
+            },
+            "dupl": {
+                "threshold": 100
+            },
+            "exhaustive": {
+                "default-signifies-exhaustive": false
+            },
+            "funcorder": {
+                "constructor-after-struct": true
+            },
+            "funlen": {
+                "lines": 60,
+                "statements": 40
+            },
+            "gocognit": {
+                "min-complexity": 10
+            },
+            "goconst": {
+                "min-len": 3,
+                "min-occurrences": 10
+            },
+            "gocyclo": {
+                "min-complexity": 10
+            },
+            "godox": {
+                "keywords": [
+                    "NOTE",
+                    "OPTIMIZE",
+                    "HACK",
+                    "ATTN",
+                    "ATTENTION"
+                ]
+            },
+            "govet": {
+                "enable": [
+                    "atomicalign",
+                    "shadow"
+                ],
+                "settings": {
+                    "printf": {
+                        "funcs": [
+                            "(github.com/golangci/golangci-lint/pkg/logutils.Log).Infof",
+                            "(github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf",
+                            "(github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf",
+                            "(github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf"
+                        ]
+                    }
+                }
+            },
+            "lll": {
+                "line-length": 120,
+                "tab-width": 1
+            },
+            "misspell": {
+                "ignore-rules": [
+                    "bsv",
+                    "bitcoin"
+                ],
+                "locale": "US"
+            },
+            "nakedret": {
+                "max-func-lines": 30
+            },
+            "nestif": {
+                "min-complexity": 4
+            },
+            "nolintlint": {
+                "allow-unused": false,
+                "require-explanation": true,
+                "require-specific": true
+            },
+            "prealloc": {
+                "for-loops": false,
+                "range-loops": true,
+                "simple": true
+            },
+            "revive": {
+                "config": ".revive.toml"
+            },
+            "unparam": {
+                "check-exported": false
+            },
+            "wsl": {
+                "allow-assign-and-call": true,
+                "allow-cuddle-declarations": true,
+                "allow-multiline-assign": true,
+                "strict-append": true
+            }
+        }
+    },
+    "output": {
+        "formats": {
+            "text": {
+                "path": "stdout",
+                "print-issued-lines": true,
+                "print-linter-name": true
+            }
+        }
+    },
+    "run": {
+        "allow-parallel-runners": true,
+        "build-tags": [
+            "mage"
+        ],
+        "concurrency": 8,
+        "issues-exit-code": 1,
+        "tests": true
+    },
+    "severity": {
+        "default": "warning",
+        "rules": [
+            {
+                "linters": [
+                    "dupl",
+                    "misspell",
+                    "makezero"
+                ],
+                "severity": "info"
+            }
+        ]
+    },
+    "version": "2"
+}
