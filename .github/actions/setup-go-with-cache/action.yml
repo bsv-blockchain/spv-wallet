@@ -1,0 +1,460 @@
+# ------------------------------------------------------------------------------------
+#  Setup Go with Cache Composite Action (GoFortress)
+#
+#  Purpose: Complete Go environment setup with intelligent caching, version validation,
+#  and toolchain management. Consolidates the common Go setup pattern used across
+#  multiple GoFortress workflows.
+#
+#  Features:
+#    - Smart cache restoration (module + build caches)
+#    - Go version requirement validation against go.mod
+#    - GOTOOLCHAIN environment management
+#    - Cross-platform cache path setup
+#    - Performance tracking outputs
+#
+#  Usage:
+#    - uses: ./.github/actions/setup-go-with-cache
+#      with:
+#        go-version: ${{ matrix.go-version }}
+#        matrix-os: ${{ matrix.os }}
+#        go-primary-version: ${{ inputs.go-primary-version }}
+#        go-secondary-version: ${{ inputs.go-secondary-version }}
+#
+#  Maintainer: @mrz1836
+#
+# ------------------------------------------------------------------------------------
+
+name: "Setup Go with Cache"
+description: "Complete Go environment setup with intelligent caching and version management"
+
+inputs:
+  go-version:
+    description: "Go version to install (e.g., 1.23.x, 1.24.0)"
+    required: true
+  matrix-os:
+    description: "Operating system for cache keys (e.g., ubuntu-latest, windows-latest)"
+    required: true
+  go-primary-version:
+    description: "Primary Go version for toolchain comparison"
+    required: true
+  go-secondary-version:
+    description: "Secondary Go version for toolchain comparison"
+    required: true
+  go-sum-file:
+    description: "Path to go.sum file for cache key generation (single module mode only; ignored when enable-multi-module is true)"
+    required: true
+  enable-multi-module:
+    description: "Enable multi-module mode - uses pattern **/go.sum to hash all go.sum files for cache keys, skips root go.sum validation"
+    required: false
+    default: "false"
+
+outputs:
+  go-version-actual:
+    description: "Actual Go version that was installed"
+    value: ${{ steps.setup-go.outputs.go-version }}
+  version-mismatch:
+    description: "Whether requested version was older than go.mod requirement"
+    value: ${{ steps.check-go-version.outputs.version_mismatch }}
+  module-cache-hit:
+    description: "Whether Go module cache was restored from cache"
+    value: ${{ steps.restore-gomod.outputs.cache-hit }}
+  build-cache-hit:
+    description: "Whether Go build cache was restored from cache"
+    value: ${{ steps.restore-gobuild.outputs.cache-hit }}
+  toolchain-mode:
+    description: "Toolchain mode that was applied (local, auto, default)"
+    value: ${{ steps.toolchain-summary.outputs.mode }}
+
+runs:
+  using: "composite"
+  steps:
+    # --------------------------------------------------------------------
+    # Set Go cache paths (cross-platform)
+    # --------------------------------------------------------------------
+    - name: 🔧 Set Go cache paths (cross-platform)
+      shell: bash
+      run: |
+        echo "🔧 Setting up Go cache paths..."
+        echo "GOCACHE=$HOME/.cache/go-build"        >> $GITHUB_ENV
+        echo "GOMODCACHE=$HOME/go/pkg/mod"          >> $GITHUB_ENV
+        echo "GOLANGCI_LINT_CACHE=$HOME/.cache/golangci-lint" >> $GITHUB_ENV
+        echo "✅ Cache paths configured successfully"
+
+    # --------------------------------------------------------------------
+    # Extract Go module directory from GO_SUM_FILE path
+    # --------------------------------------------------------------------
+    - name: 🔧 Extract Go module directory
+      id: extract-module-dir
+      shell: bash
+      run: |
+        GO_SUM_FILE="${{ inputs.go-sum-file }}"
+        GO_MODULE_DIR=$(dirname "$GO_SUM_FILE")
+
+        # Handle root directory case (dirname returns ".")
+        if [ "$GO_MODULE_DIR" = "." ]; then
+          GO_MODULE_DIR=""
+          echo "📁 Go module directory: repository root"
+        else
+          echo "📁 Go module directory: $GO_MODULE_DIR"
+        fi
+
+        # Export for subsequent steps
+        echo "GO_MODULE_DIR=$GO_MODULE_DIR" >> $GITHUB_ENV
+        echo "module-dir=$GO_MODULE_DIR" >> $GITHUB_OUTPUT
+
+    # --------------------------------------------------------------------
+    # Validate go.sum exists for cache key generation
+    # --------------------------------------------------------------------
+    - name: 🔍 Validate go.sum exists
+      if: ${{ inputs.enable-multi-module != 'true' }}
+      shell: bash
+      run: |
+        GO_SUM_FILE="${{ inputs.go-sum-file }}"
+        echo "🔍 Checking for go.sum file at: $GO_SUM_FILE"
+        if [ ! -f "$GO_SUM_FILE" ]; then
+          echo "❌ ERROR: Go sum file not found at: $GO_SUM_FILE"
+          echo "This is required for cache key generation using hashFiles('$GO_SUM_FILE')"
+          echo "Ensure that:"
+          echo "  1. The repository has been checked out properly"
+          echo "  2. The go.sum file exists at the specified location: $GO_SUM_FILE"
+          echo "  3. 'go mod tidy' or 'go mod download' has been run"
+          exit 1
+        fi
+        echo "✅ Go.sum found at $GO_SUM_FILE - cache keys will work correctly"
+
+    # --------------------------------------------------------------------
+    # DEBUG: Module cache key components
+    # --------------------------------------------------------------------
+    - name: "🔍 Debug: Module cache key components"
+      shell: bash
+      run: |
+        echo "============================================================"
+        echo "🔍 DEBUG: MODULE CACHE KEY COMPONENTS"
+        echo "============================================================"
+
+        # Show input components
+        echo "📋 Input Values:"
+        echo "  matrix-os: '${{ inputs.matrix-os }}'"
+        echo "  go-sum-file: '${{ inputs.go-sum-file }}'"
+        echo "  enable-multi-module: '${{ inputs.enable-multi-module }}'"
+
+        if [ "${{ inputs.enable-multi-module }}" == "true" ]; then
+          # Multi-module mode - show all go.sum files
+          echo ""
+          echo "📦 Multi-module mode enabled"
+          echo "🔍 Found go.sum files:"
+          find . -name "go.sum" -type f | while read file; do
+            echo "  - $file ($(wc -l < "$file") lines, $(wc -c < "$file") bytes)"
+          done
+
+          echo ""
+          echo "🔑 Expected Module Cache Key Pattern:"
+          echo "  Pattern: ${{ inputs.matrix-os }}-gomod-multi-[hash-of-all-go.sum]"
+          echo "  Actual hash: ${{ hashFiles('**/go.sum') }}"
+          echo "  Complete key: ${{ inputs.matrix-os }}-gomod-multi-${{ hashFiles('**/go.sum') }}"
+        else
+          # Single module mode - verify go.sum file
+          GO_SUM_FILE="${{ inputs.go-sum-file }}"
+          if [ -f "$GO_SUM_FILE" ]; then
+            echo ""
+            echo "📄 Go.sum File Analysis:"
+            echo "  Path: $GO_SUM_FILE"
+            echo "  Size: $(wc -c < "$GO_SUM_FILE") bytes"
+            echo "  Lines: $(wc -l < "$GO_SUM_FILE") lines"
+            echo "  SHA256: $(sha256sum "$GO_SUM_FILE" | cut -d' ' -f1)"
+            echo ""
+            echo "🔍 First 5 lines of go.sum:"
+            head -5 "$GO_SUM_FILE" | sed 's/^/    /'
+            echo ""
+            echo "🔍 Last 3 lines of go.sum:"
+            tail -3 "$GO_SUM_FILE" | sed 's/^/    /'
+          else
+            echo "❌ ERROR: go.sum file not found at: $GO_SUM_FILE"
+          fi
+
+          # Show expected cache key pattern
+          echo ""
+          echo "🔑 Expected Module Cache Key Pattern:"
+          echo "  Pattern: ${{ inputs.matrix-os }}-gomod-[hash-of-go.sum]"
+          echo "  Actual hash: ${{ hashFiles(inputs.go-sum-file) }}"
+          echo "  Complete key: ${{ inputs.matrix-os }}-gomod-${{ hashFiles(inputs.go-sum-file) }}"
+        fi
+
+        echo ""
+        echo "============================================================"
+
+    # --------------------------------------------------------------------
+    # Compute cache keys based on multi-module mode
+    # --------------------------------------------------------------------
+    - name: 🔑 Compute cache keys
+      id: cache-keys
+      shell: bash
+      run: |
+        if [ "${{ inputs.enable-multi-module }}" == "true" ]; then
+          echo "📦 Multi-module mode enabled - using hash of all go.sum files"
+          HASH="${{ hashFiles('**/go.sum') }}"
+          echo "module-key=${{ inputs.matrix-os }}-gomod-multi-${HASH}" >> $GITHUB_OUTPUT
+          echo "build-key=${{ inputs.matrix-os }}-gobuild-multi-${{ inputs.go-version }}-${HASH}" >> $GITHUB_OUTPUT
+          echo "mode=multi" >> $GITHUB_OUTPUT
+        else
+          echo "📁 Single module mode - using hash of ${{ inputs.go-sum-file }}"
+          HASH="${{ hashFiles(inputs.go-sum-file) }}"
+          echo "module-key=${{ inputs.matrix-os }}-gomod-${HASH}" >> $GITHUB_OUTPUT
+          echo "build-key=${{ inputs.matrix-os }}-gobuild-${{ inputs.go-version }}-${HASH}" >> $GITHUB_OUTPUT
+          echo "mode=single" >> $GITHUB_OUTPUT
+        fi
+        echo "🔑 Cache keys computed successfully"
+
+    # --------------------------------------------------------------------
+    # Restore Go module cache (shared across versions)
+    # --------------------------------------------------------------------
+    - name: 💾 Restore Go module cache
+      id: restore-gomod
+      uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ steps.cache-keys.outputs.module-key }}
+
+    # --------------------------------------------------------------------
+    # DEBUG: Build cache key components
+    # --------------------------------------------------------------------
+    - name: "🔍 Debug: Build cache key components"
+      shell: bash
+      run: |
+        echo "============================================================"
+        echo "🔍 DEBUG: BUILD CACHE KEY COMPONENTS"
+        echo "============================================================"
+
+        # Show input components
+        echo "📋 Input Values:"
+        echo "  matrix-os: '${{ inputs.matrix-os }}'"
+        echo "  go-version: '${{ inputs.go-version }}'"
+        echo "  go-sum-file: '${{ inputs.go-sum-file }}'"
+        echo "  enable-multi-module: '${{ inputs.enable-multi-module }}'"
+
+        if [ "${{ inputs.enable-multi-module }}" == "true" ]; then
+          # Multi-module mode - show summary of all go.sum files
+          echo ""
+          echo "📦 Multi-module mode enabled"
+          echo "🔍 Go.sum files count: $(find . -name "go.sum" -type f | wc -l)"
+          echo "🔑 Cache hash: ${{ hashFiles('**/go.sum') }}"
+        else
+          # Single module mode - verify go.sum file details
+          GO_SUM_FILE="${{ inputs.go-sum-file }}"
+          if [ -f "$GO_SUM_FILE" ]; then
+            echo ""
+            echo "📄 Go.sum File Analysis (for build cache):"
+            echo "  Path: $GO_SUM_FILE"
+            echo "  Size: $(wc -c < "$GO_SUM_FILE") bytes"
+            echo "  SHA256: $(sha256sum "$GO_SUM_FILE" | cut -d' ' -f1)"
+            echo "  Last Modified: $(stat -c %y "$GO_SUM_FILE" 2>/dev/null || stat -f %Sm "$GO_SUM_FILE" 2>/dev/null || echo 'Unknown')"
+          else
+            echo "❌ ERROR: go.sum file not found at: $GO_SUM_FILE"
+          fi
+        fi
+
+        # Show cache paths that will be used
+        echo ""
+        echo "📁 Build Cache Paths:"
+        echo "  ~/.cache/go-build"
+        echo "  ~/.cache/go-build/test"
+        echo "  Resolved paths:"
+        echo "    $(realpath ~/.cache/go-build 2>/dev/null || echo "~/.cache/go-build (will be created)")"
+        echo "    $(realpath ~/.cache/go-build/test 2>/dev/null || echo "~/.cache/go-build/test (will be created)")"
+
+        # Show expected cache key pattern
+        echo ""
+        if [ "${{ inputs.enable-multi-module }}" == "true" ]; then
+          echo "🔑 Expected Build Cache Key Pattern:"
+          echo "  Pattern: ${{ inputs.matrix-os }}-gobuild-multi-${{ inputs.go-version }}-[hash-of-all-go.sum]"
+          echo "  Actual hash: ${{ hashFiles('**/go.sum') }}"
+          echo "  Complete key: ${{ inputs.matrix-os }}-gobuild-multi-${{ inputs.go-version }}-${{ hashFiles('**/go.sum') }}"
+        else
+          echo "🔑 Expected Build Cache Key Pattern:"
+          echo "  Pattern: ${{ inputs.matrix-os }}-gobuild-${{ inputs.go-version }}-[hash-of-go.sum]"
+          echo "  Actual hash: ${{ hashFiles(inputs.go-sum-file) }}"
+          echo "  Complete key: ${{ inputs.matrix-os }}-gobuild-${{ inputs.go-version }}-${{ hashFiles(inputs.go-sum-file) }}"
+        fi
+        echo ""
+        echo "============================================================"
+
+    # --------------------------------------------------------------------
+    # Restore Go build cache (per-version)
+    # --------------------------------------------------------------------
+    - name: 💾 Restore Go build cache
+      id: restore-gobuild
+      uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/.cache/go-build/test
+        key: ${{ steps.cache-keys.outputs.build-key }}
+
+    # --------------------------------------------------------------------
+    # DEBUG: Cache restoration summary
+    # --------------------------------------------------------------------
+    - name: "📊 Debug: Cache restoration summary"
+      shell: bash
+      run: |
+        echo "============================================================"
+        echo "📊 DEBUG: CACHE RESTORATION SUMMARY"
+        echo "============================================================"
+
+        # Show cache hit/miss results
+        echo "🎯 Cache Results:"
+        echo "  Module cache hit: ${{ steps.restore-gomod.outputs.cache-hit }}"
+        echo "  Build cache hit:  ${{ steps.restore-gobuild.outputs.cache-hit }}"
+
+        # Show the actual keys that were used
+        echo ""
+        echo "🔑 Actual Cache Keys Used:"
+        if [ "${{ inputs.enable-multi-module }}" == "true" ]; then
+          MODULE_KEY="${{ inputs.matrix-os }}-gomod-multi-${{ hashFiles('**/go.sum') }}"
+          BUILD_KEY="${{ inputs.matrix-os }}-gobuild-multi-${{ inputs.go-version }}-${{ hashFiles('**/go.sum') }}"
+          echo "  Module: $MODULE_KEY"
+          echo "  Build:  $BUILD_KEY"
+          echo ""
+          echo "🔍 Key Component Analysis (Multi-module mode):"
+          echo "  OS component: '${{ inputs.matrix-os }}'"
+          echo "  Go version component: '${{ inputs.go-version }}'"
+          echo "  Go.sum hash component (all files): '${{ hashFiles('**/go.sum') }}'"
+        else
+          MODULE_KEY="${{ inputs.matrix-os }}-gomod-${{ hashFiles(inputs.go-sum-file) }}"
+          BUILD_KEY="${{ inputs.matrix-os }}-gobuild-${{ inputs.go-version }}-${{ hashFiles(inputs.go-sum-file) }}"
+          echo "  Module: $MODULE_KEY"
+          echo "  Build:  $BUILD_KEY"
+          echo ""
+          echo "🔍 Key Component Analysis (Single module mode):"
+          echo "  OS component: '${{ inputs.matrix-os }}'"
+          echo "  Go version component: '${{ inputs.go-version }}'"
+          echo "  Go.sum hash component: '${{ hashFiles(inputs.go-sum-file) }}'"
+        fi
+
+        # Cache effectiveness summary
+        echo ""
+        echo "💡 Cache Effectiveness:"
+        if [[ "${{ steps.restore-gomod.outputs.cache-hit }}" == "true" ]]; then
+          echo "  ✅ Module cache: HIT - Dependencies will load quickly"
+        else
+          echo "  ❌ Module cache: MISS - Will download dependencies fresh"
+        fi
+
+        if [[ "${{ steps.restore-gobuild.outputs.cache-hit }}" == "true" ]]; then
+          echo "  ✅ Build cache: HIT - Builds will be faster"
+        else
+          echo "  ❌ Build cache: MISS - Will rebuild everything fresh"
+        fi
+
+        # Debugging hints for cache misses
+        echo ""
+        echo "🛠️ If experiencing frequent cache misses, check:"
+        echo "  1. go.sum file changes (different dependencies)"
+        echo "  2. OS matrix differences (ubuntu-latest vs ubuntu-22.04)"
+        echo "  3. Go version changes or format differences"
+        echo "  4. Repository checkout differences affecting file paths"
+        echo ""
+        echo "============================================================"
+
+    # --------------------------------------------------------------------
+    # Check go.mod required version before setting up Go
+    # --------------------------------------------------------------------
+    - name: 🔍 Check Go version requirement
+      id: check-go-version
+      shell: bash
+      run: |
+        echo "🔍 Checking Go version requirements..."
+        GO_MODULE_DIR="${{ env.GO_MODULE_DIR }}"
+
+        # Construct the path to go.mod
+        if [ -n "$GO_MODULE_DIR" ]; then
+          GO_MOD_PATH="$GO_MODULE_DIR/go.mod"
+        else
+          GO_MOD_PATH="go.mod"
+        fi
+
+        if [ -f "$GO_MOD_PATH" ]; then
+          REQUIRED_VERSION=$(grep -E '^go\s+[0-9]+\.[0-9]+' "$GO_MOD_PATH" | awk '{print $2}')
+          if [ -n "$REQUIRED_VERSION" ]; then
+            echo "📋 go.mod at $GO_MOD_PATH requires Go version: $REQUIRED_VERSION"
+            echo "required_version=$REQUIRED_VERSION" >> $GITHUB_OUTPUT
+
+            # Extract major.minor from requested version (handle formats like 1.23.x, 1.23, 1.23.4)
+            REQUESTED_VERSION="${{ inputs.go-version }}"
+            REQUESTED_MAJOR_MINOR=$(echo "$REQUESTED_VERSION" | grep -oE '^[0-9]+\.[0-9]+')
+
+            # Compare versions
+            if [ -n "$REQUESTED_MAJOR_MINOR" ]; then
+              # Convert to comparable format (e.g., 1.23 -> 123, 1.9 -> 109)
+              REQ_COMPARABLE=$(echo "$REQUIRED_VERSION" | awk -F. '{printf "%d%02d", $1, $2}')
+              REQUESTED_COMPARABLE=$(echo "$REQUESTED_MAJOR_MINOR" | awk -F. '{printf "%d%02d", $1, $2}')
+
+              if [ "$REQUESTED_COMPARABLE" -lt "$REQ_COMPARABLE" ]; then
+                echo "⚠️ WARNING: Requested Go version (${{ inputs.go-version }}) is older than required ($REQUIRED_VERSION)"
+                echo "version_mismatch=true" >> $GITHUB_OUTPUT
+              else
+                echo "✅ Requested Go version (${{ inputs.go-version }}) meets requirement ($REQUIRED_VERSION)"
+                echo "version_mismatch=false" >> $GITHUB_OUTPUT
+              fi
+            else
+              echo "version_mismatch=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "ℹ️ No Go version requirement found in $GO_MOD_PATH"
+            echo "version_mismatch=false" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "ℹ️ No go.mod file found at $GO_MOD_PATH"
+          echo "version_mismatch=false" >> $GITHUB_OUTPUT
+        fi
+
+    # --------------------------------------------------------------------
+    # Determine Go Toolchain Mode
+    # --------------------------------------------------------------------
+    - name: 🧮 Determine Go Toolchain Mode
+      id: toolchain-mode
+      shell: bash
+      run: |
+        echo "🧮 Determining Go toolchain mode..."
+
+        # If there's a version mismatch, allow toolchain to auto-upgrade
+        if [[ "${{ steps.check-go-version.outputs.version_mismatch }}" == "true" ]]; then
+          echo "⚠️ Version mismatch detected - allowing Go toolchain to auto-upgrade"
+          echo "Not setting GOTOOLCHAIN (using default auto behavior)"
+          echo "mode=auto" >> $GITHUB_OUTPUT
+        elif [[ "${{ inputs.go-version }}" == "${{ inputs.go-secondary-version }}" && \
+              "${{ inputs.go-version }}" != "${{ inputs.go-primary-version }}" ]]; then
+          echo "🔒 Setting GOTOOLCHAIN=local for secondary version"
+          echo "GOTOOLCHAIN=local" >> $GITHUB_ENV
+          echo "mode=local" >> $GITHUB_OUTPUT
+        else
+          echo "✅ Not setting GOTOOLCHAIN (using default)"
+          echo "mode=default" >> $GITHUB_OUTPUT
+        fi
+
+    # --------------------------------------------------------------------
+    # Set up Go
+    # --------------------------------------------------------------------
+    - name: 🏗️ Set up Go
+      id: setup-go
+      uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+      with:
+        go-version: ${{ inputs.go-version }}
+        cache: false # we handle caches ourselves
+
+    # --------------------------------------------------------------------
+    # Summary and validation
+    # --------------------------------------------------------------------
+    - name: ✅ Go setup summary
+      id: toolchain-summary
+      shell: bash
+      run: |
+        ACTUAL_VERSION=$(go version | awk '{print $3}' | sed 's/go//')
+        echo "✅ Go setup completed successfully"
+        echo "📋 Requested version: ${{ inputs.go-version }}"
+        echo "📋 Actual version: $ACTUAL_VERSION"
+        echo "📋 Module cache hit: ${{ steps.restore-gomod.outputs.cache-hit }}"
+        echo "📋 Build cache hit: ${{ steps.restore-gobuild.outputs.cache-hit }}"
+        echo "📋 Toolchain mode: ${{ steps.toolchain-mode.outputs.mode }}"
+
+        # Pass toolchain mode to outputs
+        echo "mode=${{ steps.toolchain-mode.outputs.mode }}" >> $GITHUB_OUTPUT

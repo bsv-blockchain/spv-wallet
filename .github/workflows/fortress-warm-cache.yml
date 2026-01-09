@@ -1,0 +1,155 @@
+# ------------------------------------------------------------------------------------
+#  Cache Warming (Reusable Workflow) (GoFortress)
+#
+#  Purpose: Warm Go module and Redis caches across multiple Go versions and operating
+#  systems to optimize subsequent workflow performance.
+#
+#  Maintainer: @mrz1836
+#
+# ------------------------------------------------------------------------------------
+
+name: GoFortress (Cache Warming)
+
+on:
+  workflow_call:
+    inputs:
+      env-json:
+        description: "JSON string of environment variables"
+        required: true
+        type: string
+      warm-cache-matrix:
+        description: "Cache warming matrix JSON"
+        required: true
+        type: string
+      go-primary-version:
+        description: "Primary Go version"
+        required: true
+        type: string
+      go-secondary-version:
+        description: "Secondary Go version"
+        required: true
+        type: string
+      redis-enabled:
+        description: "Whether Redis service is enabled"
+        required: false
+        type: string
+        default: "false"
+      redis-version:
+        description: "Redis Docker image version"
+        required: false
+        type: string
+        default: "7-alpine"
+      redis-cache-force-pull:
+        description: "Force pull Redis image instead of using cache"
+        required: false
+        type: string
+        default: "false"
+      go-sum-file:
+        description: "Path to go.sum file for dependency verification"
+        required: true
+        type: string
+
+# Security: Restrict default permissions (jobs must explicitly request what they need)
+permissions: {}
+
+jobs:
+  # ----------------------------------------------------------------------------------
+  # Warm Cache Matrix (Parallel)
+  # ----------------------------------------------------------------------------------
+  warm-cache-matrix:
+    name: 💾 Warm Cache (${{ matrix.name }})
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: true
+      matrix: ${{ fromJSON(inputs.warm-cache-matrix) }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      # --------------------------------------------------------------------
+      # Parse environment variables
+      # --------------------------------------------------------------------
+      - name: 🔧 Parse environment variables
+        env:
+          ENV_JSON: ${{ inputs.env-json }}
+        run: |
+          echo "📋 Setting environment variables..."
+          echo "$ENV_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' | while IFS='=' read -r key value; do
+            echo "$key=$value" >> $GITHUB_ENV
+          done
+
+      # --------------------------------------------------------------------
+      # Derive go.mod path from go.sum path for sparse checkout
+      # --------------------------------------------------------------------
+      - name: 🔧 Derive module paths
+        id: module-paths
+        env:
+          GO_SUM_FILE: ${{ inputs.go-sum-file }}
+        run: |
+          # Derive go.mod path from go.sum path (same directory)
+          GO_MOD_FILE="${GO_SUM_FILE%go.sum}go.mod"
+          echo "go_mod_file=$GO_MOD_FILE" >> "$GITHUB_OUTPUT"
+          echo "📁 Go module file: $GO_MOD_FILE"
+          echo "📁 Go sum file: $GO_SUM_FILE"
+
+      # --------------------------------------------------------------------
+      # Extract configuration flags from env-json (before checkout)
+      # --------------------------------------------------------------------
+      - name: 🔁 Extract configuration flags
+        id: extract
+        run: |
+          echo "enable_verbose=$(echo '${{ inputs.env-json }}' | jq -r '.ENABLE_VERBOSE_TEST_OUTPUT')" >> "$GITHUB_OUTPUT"
+          echo "enable_multi_module=$(echo '${{ inputs.env-json }}' | jq -r '.ENABLE_MULTI_MODULE_TESTING // "false"')" >> "$GITHUB_OUTPUT"
+          echo "📋 Multi-module testing: $(echo '${{ inputs.env-json }}' | jq -r '.ENABLE_MULTI_MODULE_TESTING // "false"')"
+
+      # --------------------------------------------------------------------
+      # Checkout code - full checkout for multi-module, sparse for single
+      # Multi-module needs all source files + go.work for cross-module deps
+      # --------------------------------------------------------------------
+      - name: 📥 Checkout code (full - multi-module)
+        if: steps.extract.outputs.enable_multi_module == 'true'
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+
+      - name: 📥 Checkout code (sparse - single module)
+        if: steps.extract.outputs.enable_multi_module != 'true'
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            .github/actions/warm-cache
+            .github/actions/warm-redis-cache
+            .github/actions/cache-redis-image
+            .github/actions/setup-go-with-cache
+            .github/actions/setup-magex
+            .github/.env.base
+            ${{ steps.module-paths.outputs.go_mod_file }}
+            ${{ inputs.go-sum-file }}
+            .mage.yaml
+
+      # --------------------------------------------------------------------
+      # Disable Go workspace mode (single module only)
+      # Multi-module mode uses go.work for cross-module dependency resolution
+      # --------------------------------------------------------------------
+      - name: 🔧 Disable Go workspace mode
+        if: steps.extract.outputs.enable_multi_module != 'true'
+        run: echo "GOWORK=off" >> $GITHUB_ENV
+
+      # --------------------------------------------------------------------
+      # Warm the Go and Redis caches using local action
+      # --------------------------------------------------------------------
+      - name: 🔥 Warm Go and Redis Caches
+        uses: ./.github/actions/warm-cache
+        with:
+          go-version: ${{ matrix.go-version }}
+          matrix-os: ${{ matrix.os }}
+          matrix-name: ${{ matrix.name }}
+          enable-verbose: ${{ steps.extract.outputs.enable_verbose }}
+          go-primary-version: ${{ inputs.go-primary-version }}
+          go-secondary-version: ${{ inputs.go-secondary-version }}
+          env-json: ${{ inputs.env-json }}
+          redis-enabled: ${{ inputs.redis-enabled }}
+          redis-versions: ${{ inputs.redis-version }}
+          redis-cache-force-pull: ${{ inputs.redis-cache-force-pull }}
+          go-sum-file: ${{ inputs.go-sum-file }}
+          enable-multi-module: ${{ steps.extract.outputs.enable_multi_module }}
