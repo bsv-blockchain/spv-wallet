@@ -3,9 +3,10 @@ package config_test
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
-	"github.com/stretchr/testify/require"
 )
 
 func TestValidateDataStoreConfig(t *testing.T) {

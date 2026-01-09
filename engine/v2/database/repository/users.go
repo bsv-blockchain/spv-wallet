@@ -3,6 +3,9 @@ package repository
 import (
 	"context"
 
+	"github.com/samber/lo"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 	dberrors "github.com/bsv-blockchain/spv-wallet/engine/v2/database/errors"
@@ -10,8 +13,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
-	"github.com/samber/lo"
-	"gorm.io/gorm"
 )
 
 // Users is a repository for users.

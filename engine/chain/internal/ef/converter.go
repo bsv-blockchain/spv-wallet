@@ -4,7 +4,8 @@ import (
 	"context"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
 )

@@ -5,8 +5,9 @@ import (
 	"strings"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/jarcoal/httpmock"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 )
 
 func capabilitySenderValidation() *CapabilityMock {

@@ -1,8 +1,9 @@
 package merkleroots
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine"
 )
 
 // APIMerkleRoots represents server with API endpoints

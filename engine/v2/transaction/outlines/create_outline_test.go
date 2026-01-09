@@ -6,7 +6,7 @@ import (
 
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/models"
@@ -94,7 +94,6 @@ func TestCreateTransactionOutlineBEEFError(t *testing.T) {
 
 		// then:
 		then.Created(tx).WithError(err).ThatIs(txerrors.ErrTxOutlineInsufficientFunds)
-
 	})
 }
 
@@ -152,7 +151,6 @@ func TestCreateTransactionOutlineRAWError(t *testing.T) {
 
 		// then:
 		then.Created(tx).WithError(err).ThatIs(txerrors.ErrTxOutlineInsufficientFunds)
-
 	})
 
 	t.Run("return error when there was a technical error when selecting inputs", func(t *testing.T) {
@@ -169,6 +167,5 @@ func TestCreateTransactionOutlineRAWError(t *testing.T) {
 
 		// then:
 		then.Created(tx).WithError(err).ThatIs(spverrors.ErrInternal)
-
 	})
 }

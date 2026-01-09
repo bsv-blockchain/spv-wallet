@@ -5,6 +5,7 @@ import (
 
 	crypto "github.com/bsv-blockchain/go-sdk/primitives/hash"
 	"github.com/bsv-blockchain/go-sdk/util"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

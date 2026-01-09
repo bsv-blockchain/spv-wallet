@@ -5,10 +5,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func TestUnauthorized(t *testing.T) {
@@ -16,7 +17,7 @@ func TestUnauthorized(t *testing.T) {
 	err := state.Load()
 	require.NoError(t, err)
 
-	var calls = map[string]struct {
+	calls := map[string]struct {
 		call func(*client.ClientWithResponses) (manualtests.Result, error)
 	}{
 		"adminStatus": {

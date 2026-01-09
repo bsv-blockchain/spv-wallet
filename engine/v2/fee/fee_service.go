@@ -3,14 +3,15 @@ package fee
 import (
 	"context"
 
+	"github.com/rs/zerolog"
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/bsv-blockchain/spv-wallet/models/optional"
-	"github.com/rs/zerolog"
-	"github.com/samber/lo"
 )
 
 // Provider is an interface that provides fee units from miners.

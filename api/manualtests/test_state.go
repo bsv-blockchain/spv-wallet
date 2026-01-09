@@ -8,23 +8,28 @@ import (
 	"strings"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 	"github.com/go-viper/mapstructure/v2"
 	"github.com/joomcode/errorx"
 	"github.com/samber/lo"
 	"github.com/spf13/viper"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
-const stateFileName = "state.yaml"
-const notConfiguredPaymailDomain = "replace_me"
-const notConfiguredFaucetURL = "https://replace_me.localhost"
-const notConfiguredXprv = "xprvreplaceme"
-const notConfiguredRecipientID = "replace_me"
-const notConfiguredExternalPaymail = "replace.me@locahost"
-const notConfiguredRegressionPaymail = "regression_tests_funds@replace.me.locahost"
+const (
+	stateFileName                  = "state.yaml"
+	notConfiguredPaymailDomain     = "replace_me"
+	notConfiguredFaucetURL         = "https://replace_me.localhost"
+	notConfiguredXprv              = "xprvreplaceme"
+	notConfiguredRecipientID       = "replace_me"
+	notConfiguredExternalPaymail   = "replace.me@locahost"
+	notConfiguredRegressionPaymail = "regression_tests_funds@replace.me.locahost"
+)
 
-var StateError = errorx.NewType(errorx.CommonErrors, "state_error")
-var NotFound = errorx.NewType(errorx.CommonErrors, "not_found")
+var (
+	StateError = errorx.NewType(errorx.CommonErrors, "state_error")
+	NotFound   = errorx.NewType(errorx.CommonErrors, "not_found")
+)
 
 type State struct {
 	Domain                string `mapstructure:"domain"     yaml:"domain"`
@@ -122,7 +127,7 @@ func (s *State) SaveOnSuccess(res Result) error {
 	return s.Save()
 }
 
-func (s *State) NewUser(xpriv string, xpub string) (*User, error) {
+func (s *State) NewUser(xpriv, xpub string) (*User, error) {
 	if !s.User.IsEmpty() {
 		oldUser := s.User
 		s.OldUsers = append(s.OldUsers, &oldUser)
@@ -302,7 +307,6 @@ func (s *State) GetOldUserById(userID string) (*User, error) {
 	}
 
 	return founded, nil
-
 }
 
 func (s *State) UnlockOutlineHex(outline *client.ResponsesCreateTransactionOutlineSuccess) (string, error) {

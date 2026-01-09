@@ -5,12 +5,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/chain"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/stretchr/testify/require"
 )
 
 /**
@@ -39,7 +40,7 @@ func TestFeeUnitErrorCases(t *testing.T) {
 		expectErr error
 	}{
 		"GetFeeUnit with wrong token": {
-			arcToken:  "wrong-token", //if you test it on actual ARC server, this test might fail if the ARC doesn't require token
+			arcToken:  "wrong-token", // if you test it on actual ARC server, this test might fail if the ARC doesn't require token
 			arcURL:    arcURL,
 			expectErr: chainerrors.ErrARCUnauthorized,
 		},

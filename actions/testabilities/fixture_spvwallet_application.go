@@ -3,6 +3,9 @@ package testabilities
 import (
 	"testing"
 
+	"github.com/go-resty/resty/v2"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
@@ -11,8 +14,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 	"github.com/bsv-blockchain/spv-wallet/server"
-	"github.com/go-resty/resty/v2"
-	"github.com/rs/zerolog"
 )
 
 type SPVWalletApplicationFixture interface {

@@ -7,15 +7,18 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/mrz1836/go-cachestore"
+	"github.com/rs/zerolog"
+
 	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/mrz1836/go-cachestore"
-	"github.com/rs/zerolog"
 )
 
-const cacheKeyCapabilities = "paymail-capabilities-"
-const cacheTTLCapabilities = 2 * time.Minute
+const (
+	cacheKeyCapabilities = "paymail-capabilities-"
+	cacheTTLCapabilities = 2 * time.Minute
+)
 
 // ClientInterface is an interface for the paymail client
 type ClientInterface = paymail.ClientInterface
@@ -220,7 +223,7 @@ func (s *service) extractP2P(capabilities *paymail.CapabilitiesPayload) (success
 	if len(p2pSubmitTxURL) > 0 && len(p2pDestinationURL) > 0 {
 		success = true
 	}
-	return
+	return success, p2pDestinationURL, p2pSubmitTxURL, format
 }
 
 func (s *service) validatePaymentDestinationResponse(response *paymail.PaymentDestinationResponse, satoshis bsv.Satoshis) error {

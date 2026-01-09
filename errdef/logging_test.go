@@ -5,10 +5,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/tester/jsonrequire"
-	"github.com/bsv-blockchain/spv-wallet/logging"
 	"github.com/joomcode/errorx"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/jsonrequire"
+	"github.com/bsv-blockchain/spv-wallet/logging"
 )
 
 func TestLoggingError(t *testing.T) {

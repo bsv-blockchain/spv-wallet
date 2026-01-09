@@ -4,15 +4,16 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/jarcoal/httpmock"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // CapabilityMock is a structure that helps with mocking for a paymail capability.
 type CapabilityMock struct {
 	name     string
 	value    func(name paymailDomainName) any
-	endpoint func(name paymailDomainName, c *CapabilityMock) (method string, urlMatcher string, responder httpmock.Responder)
+	endpoint func(name paymailDomainName, c *CapabilityMock) (method, urlMatcher string, responder httpmock.Responder)
 	response httpmock.Responder
 }
 
@@ -44,7 +45,7 @@ func (c *CapabilityMock) With(resp ResponderFactory) {
 	c.response = resp.Responder()
 }
 
-func endpoint(method string, defaultResponder httpmock.Responder) func(name paymailDomainName, c *CapabilityMock) (method string, urlMatcher string, responder httpmock.Responder) {
+func endpoint(method string, defaultResponder httpmock.Responder) func(name paymailDomainName, c *CapabilityMock) (method, urlMatcher string, responder httpmock.Responder) {
 	return func(dn paymailDomainName, c *CapabilityMock) (string, string, httpmock.Responder) {
 		url, ok := c.value(dn).(string)
 		if !ok {
@@ -64,7 +65,7 @@ func dynamicResponder(c *CapabilityMock, defaultResponder httpmock.Responder) ht
 	}
 }
 
-func matchingURL(url string, domain string) string {
+func matchingURL(url, domain string) string {
 	url = strings.ReplaceAll(url, "{alias}", "\\w+")
 	url = strings.ReplaceAll(url, "{domain.tld}", domain)
 	return "=~" + url

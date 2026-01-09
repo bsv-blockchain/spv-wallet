@@ -43,7 +43,7 @@ func TestHash(t *testing.T) {
 func TestRandomHex(t *testing.T) {
 	t.Parallel()
 
-	var tests = []struct {
+	tests := []struct {
 		name           string
 		input          int
 		expectedLength int

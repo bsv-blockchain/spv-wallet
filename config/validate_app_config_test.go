@@ -3,8 +3,9 @@ package config_test
 import (
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func TestValidateAppConfigForDefaultConfig(t *testing.T) {

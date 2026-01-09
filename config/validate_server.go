@@ -1,8 +1,9 @@
 package config
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	validation "github.com/go-ozzo/ozzo-validation"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Validate checks the configuration for specific rules

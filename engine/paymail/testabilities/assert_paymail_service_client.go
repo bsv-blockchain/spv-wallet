@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/jsonrequire"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/stretchr/testify/require"
 )
 
 type PaymailExternalAssertions interface {

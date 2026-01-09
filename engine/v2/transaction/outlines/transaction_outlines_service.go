@@ -4,13 +4,14 @@ import (
 	"context"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/bsv"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
 	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 	bsvmodel "github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/rs/zerolog"
 )
 
 type service struct {

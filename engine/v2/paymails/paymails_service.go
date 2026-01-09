@@ -5,11 +5,12 @@ import (
 	"errors"
 
 	"github.com/bsv-blockchain/go-paymail"
+	"github.com/joomcode/errorx"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailerrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
-	"github.com/joomcode/errorx"
-	"gorm.io/gorm"
 )
 
 // Service for paymails
@@ -64,7 +65,7 @@ func (s *Service) Find(ctx context.Context, alias, domain string) (*paymailsmode
 }
 
 // HasPaymailAddress checks if the given address belongs to a given User.
-func (s *Service) HasPaymailAddress(ctx context.Context, userID string, address string) (bool, error) {
+func (s *Service) HasPaymailAddress(ctx context.Context, userID, address string) (bool, error) {
 	alias, domain, sanitized := paymail.SanitizePaymail(address)
 	if sanitized == "" {
 		return false, paymailerrors.InvalidPaymailAddress.New("invalid paymail address: %s", address)

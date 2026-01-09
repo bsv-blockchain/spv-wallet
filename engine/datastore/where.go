@@ -1,8 +1,9 @@
 package datastore
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // ApplyCustomWhere adds conditions to the gorm db instance
@@ -23,5 +24,5 @@ func ApplyCustomWhere(client ClientInterface, gdb *gorm.DB, conditions map[strin
 	}
 
 	builder.processConditions(tx, conditions, nil)
-	return
+	return tx, err
 }

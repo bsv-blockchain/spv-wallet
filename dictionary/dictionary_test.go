@@ -10,7 +10,7 @@ import (
 func TestErrorCode_IsValid(t *testing.T) {
 	t.Parallel()
 
-	var tests = []struct {
+	tests := []struct {
 		testCase    string
 		code        ErrorCode
 		expectValid bool
@@ -78,7 +78,7 @@ func TestErrorCode_IsValid(t *testing.T) {
 func TestGetInternalMessage(t *testing.T) {
 	t.Parallel()
 
-	var tests = []struct {
+	tests := []struct {
 		testCase        string
 		expectedMessage string
 		code            ErrorCode
@@ -146,7 +146,7 @@ func TestGetInternalMessage(t *testing.T) {
 func TestGetPublicMessage(t *testing.T) {
 	t.Parallel()
 
-	var tests = []struct {
+	tests := []struct {
 		testCase        string
 		expectedMessage string
 		code            ErrorCode
@@ -214,7 +214,7 @@ func TestGetPublicMessage(t *testing.T) {
 func TestGetStatusCode(t *testing.T) {
 	t.Parallel()
 
-	var tests = []struct {
+	tests := []struct {
 		testCase       string
 		code           ErrorCode
 		expectedStatus int
@@ -230,7 +230,6 @@ func TestGetStatusCode(t *testing.T) {
 			http.StatusBadRequest,
 		},
 		{
-
 			"ErrorInvalidEnv",
 			ErrorInvalidEnv,
 			http.StatusBadRequest,
@@ -283,7 +282,7 @@ func TestGetStatusCode(t *testing.T) {
 func TestGetError(t *testing.T) {
 	t.Parallel()
 
-	var tests = []struct {
+	tests := []struct {
 		testCase     string
 		code         ErrorCode
 		expectedCode ErrorCode

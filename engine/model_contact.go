@@ -7,10 +7,11 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Contact is a model that represents a known contacts of the user and invitations to contact.
@@ -223,11 +224,11 @@ func (m *Contact) UpdatePubKey(pk string) (updated bool) {
 		}
 
 		updated = true
-		return
+		return updated
 	}
 
 	updated = false
-	return
+	return updated
 }
 
 // GetModelName returns name of the model
@@ -257,13 +258,13 @@ func (m *Contact) BeforeCreating(_ context.Context) (err error) {
 		Msgf("starting: %s BeforeCreate hook...", m.Name())
 
 	if err = m.validate(); err != nil {
-		return
+		return err
 	}
 
 	m.Client().Logger().Debug().
 		Str("contactID", m.ID).
 		Msgf("end: %s BeforeCreate hook", m.Name())
-	return
+	return err
 }
 
 // BeforeUpdating is called before the model is updated in the DB
@@ -273,13 +274,13 @@ func (m *Contact) BeforeUpdating(_ context.Context) (err error) {
 		Msgf("starting: %s BeforeUpdate hook...", m.Name())
 
 	if err = m.validate(); err != nil {
-		return
+		return err
 	}
 
 	m.Client().Logger().Debug().
 		Str("contactID", m.ID).
 		Msgf("end: %s BeforeUpdate hook", m.Name())
-	return
+	return err
 }
 
 // PostMigrate is called after the model is migrated

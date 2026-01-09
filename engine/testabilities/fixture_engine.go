@@ -6,6 +6,12 @@ import (
 	"os"
 	"testing"
 
+	"github.com/go-resty/resty/v2"
+	"github.com/jarcoal/httpmock"
+	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
@@ -20,15 +26,12 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
 	"github.com/bsv-blockchain/spv-wallet/initializer"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/go-resty/resty/v2"
-	"github.com/jarcoal/httpmock"
-	"github.com/rs/zerolog"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
-const inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory&cache=shared"
-const fileDbConnectionString = "/tmp/spv-wallet-test.db"
+const (
+	inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory&cache=shared"
+	fileDbConnectionString     = "/tmp/spv-wallet-test.db"
+)
 
 const CallbackTestToken = "arc-test-token"
 

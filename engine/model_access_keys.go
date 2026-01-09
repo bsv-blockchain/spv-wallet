@@ -7,11 +7,12 @@ import (
 	"errors"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	customTypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
-	"gorm.io/gorm"
 )
 
 // AccessKey is an object representing an access key model

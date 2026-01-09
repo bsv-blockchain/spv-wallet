@@ -7,7 +7,6 @@ import (
 )
 
 func TestFactory_String(t *testing.T) {
-
 	t.Run("test all factories", func(t *testing.T) {
 		assert.Equal(t, "empty", FactoryEmpty.String())
 		assert.Equal(t, "memory", FactoryMemory.String())

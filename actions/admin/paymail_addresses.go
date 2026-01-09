@@ -5,6 +5,8 @@ import (
 	"slices"
 
 	"github.com/bsv-blockchain/go-paymail"
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/common"
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
@@ -13,7 +15,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/models/filter"
 	"github.com/bsv-blockchain/spv-wallet/models/response"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // paymailGetAddress will return a paymail address

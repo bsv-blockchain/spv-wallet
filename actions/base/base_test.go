@@ -3,9 +3,10 @@ package base
 import (
 	"testing"
 
+	"github.com/stretchr/testify/suite"
+
 	"github.com/bsv-blockchain/spv-wallet/server/handlers"
 	"github.com/bsv-blockchain/spv-wallet/tests"
-	"github.com/stretchr/testify/suite"
 )
 
 // TestSuite is for testing the entire package using real/mocked services

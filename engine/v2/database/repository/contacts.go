@@ -4,14 +4,15 @@ import (
 	"context"
 	"errors"
 
+	"github.com/samber/lo"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database/dbquery"
 	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/bsv-blockchain/spv-wallet/models/filter"
-	"github.com/samber/lo"
-	"gorm.io/gorm"
 )
 
 // Contacts is a repository for contacts.
@@ -110,7 +111,7 @@ func (r *Contacts) DeleteByID(ctx context.Context, contactID uint) error {
 
 // Find retrieves a contact from the database.
 func (r *Contacts) Find(ctx context.Context, userID, paymail string) (*contactsmodels.Contact, error) {
-	var row = database.UserContact{}
+	row := database.UserContact{}
 	if err := r.db.WithContext(ctx).Where("user_id = ? AND paymail = ?", userID, paymail).First(&row).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
@@ -123,7 +124,7 @@ func (r *Contacts) Find(ctx context.Context, userID, paymail string) (*contactsm
 
 // FindByID retrieves a contact from the database by id.
 func (r *Contacts) FindByID(ctx context.Context, contactID uint) (*contactsmodels.Contact, error) {
-	var row = database.UserContact{}
+	row := database.UserContact{}
 	if err := r.db.WithContext(ctx).Where("id = ?", contactID).First(&row).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
@@ -146,7 +147,6 @@ func (r *Contacts) PaginatedForUser(ctx context.Context, userID string, page fil
 		r.db,
 		scopes...,
 	)
-
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,6 @@ func (r *Contacts) PaginatedForAdmin(ctx context.Context, page filter.Page, cond
 		r.db,
 		scopes...,
 	)
-
 	if err != nil {
 		return nil, err
 	}

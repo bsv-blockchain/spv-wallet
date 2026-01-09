@@ -5,14 +5,14 @@ import (
 	"errors"
 	"time"
 
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
-	"gorm.io/gorm"
 )
 
 // GetPaymailAddress will get a paymail address model
 func (c *Client) GetPaymailAddress(ctx context.Context, address string, opts ...ModelOps) (*PaymailAddress, error) {
-
 	// Get the paymail address
 	paymailAddress, err := getPaymailAddress(ctx, address, append(opts, c.DefaultModelOptions()...)...)
 	if err != nil {
@@ -26,7 +26,6 @@ func (c *Client) GetPaymailAddress(ctx context.Context, address string, opts ...
 
 // GetPaymailAddressByID will get a paymail address model
 func (c *Client) GetPaymailAddressByID(ctx context.Context, id string, opts ...ModelOps) (*PaymailAddress, error) {
-
 	// Get the paymail address
 	paymailAddress, err := getPaymailAddressByID(ctx, id, append(opts, c.DefaultModelOptions()...)...)
 	if err != nil {
@@ -44,7 +43,6 @@ func (c *Client) GetPaymailAddressByID(ctx context.Context, id string, opts ...M
 func (c *Client) GetPaymailAddresses(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams, opts ...ModelOps,
 ) ([]*PaymailAddress, error) {
-
 	// Get the paymail address
 	paymailAddresses, err := getPaymailAddresses(
 		ctx, metadataConditions, conditions, queryParams,
@@ -61,7 +59,6 @@ func (c *Client) GetPaymailAddresses(ctx context.Context, metadataConditions *Me
 func (c *Client) GetPaymailAddressesCount(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, opts ...ModelOps,
 ) (int64, error) {
-
 	// Get the paymail address
 	count, err := getPaymailAddressesCount(
 		ctx, metadataConditions, conditions,
@@ -78,7 +75,6 @@ func (c *Client) GetPaymailAddressesCount(ctx context.Context, metadataCondition
 func (c *Client) GetPaymailAddressesByXPubID(ctx context.Context, xPubID string, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams,
 ) ([]*PaymailAddress, error) {
-
 	if conditions == nil {
 		x := make(map[string]interface{})
 		conditions = x
@@ -102,7 +98,6 @@ func (c *Client) GetPaymailAddressesByXPubID(ctx context.Context, xPubID string,
 func (c *Client) NewPaymailAddress(ctx context.Context, xPubKey, address, publicName, avatar string,
 	opts ...ModelOps,
 ) (*PaymailAddress, error) {
-
 	// Get the xPub (make sure it exists)
 	xPub, err := getXpubWithCache(ctx, c, xPubKey, "", c.DefaultModelOptions()...)
 	if err != nil {
@@ -140,7 +135,6 @@ func (c *Client) NewPaymailAddress(ctx context.Context, xPubKey, address, public
 
 // DeletePaymailAddressByID will delete a paymail address by its id
 func (c *Client) DeletePaymailAddressByID(ctx context.Context, id string, opts ...ModelOps) error {
-
 	// Get the paymail address
 	paymailAddress, err := getPaymailAddressByID(ctx, id, append(opts, c.DefaultModelOptions()...)...)
 	if err != nil {
@@ -162,7 +156,6 @@ func (c *Client) DeletePaymailAddressByID(ctx context.Context, id string, opts .
 
 // DeletePaymailAddress will delete a paymail address
 func (c *Client) DeletePaymailAddress(ctx context.Context, address string, opts ...ModelOps) error {
-
 	// Get the paymail address
 	paymailAddress, err := getPaymailAddress(ctx, address, append(opts, c.DefaultModelOptions()...)...)
 	if err != nil {

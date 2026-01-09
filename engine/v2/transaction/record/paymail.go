@@ -2,6 +2,7 @@ package record
 
 import (
 	"github.com/bsv-blockchain/go-paymail"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
 	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"

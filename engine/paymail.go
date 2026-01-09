@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/bsv-blockchain/go-paymail"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

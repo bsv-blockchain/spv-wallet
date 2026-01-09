@@ -3,9 +3,10 @@ package merkleroots
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // get will fetch merkleroots from Block Header Service (BHS) according to given query params
@@ -27,7 +28,6 @@ import (
 // @Security	x-auth-xpub
 func get(c *gin.Context, userContext *reqctx.UserContext) {
 	res, err := reqctx.Engine(c).Chain().GetMerkleRoots(c.Request.Context(), c.Request.URL.Query())
-
 	if err != nil {
 		spverrors.ErrorResponse(c, err, reqctx.Logger(c))
 		return

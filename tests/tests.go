@@ -5,6 +5,11 @@ import (
 	"context"
 	"os"
 
+	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/suite"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
@@ -12,10 +17,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/initializer"
 	"github.com/bsv-blockchain/spv-wallet/logging"
 	"github.com/bsv-blockchain/spv-wallet/server/middleware"
-	"github.com/gin-gonic/gin"
-	"github.com/rs/zerolog"
-	"github.com/stretchr/testify/require"
-	"github.com/stretchr/testify/suite"
 )
 
 // TestSuite is for testing the entire package using real/mocked services

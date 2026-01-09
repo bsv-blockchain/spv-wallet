@@ -4,10 +4,11 @@ import (
 	"context"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	bsvmodel "github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/rs/zerolog"
 )
 
 type evaluationContext struct {

@@ -12,7 +12,6 @@ import (
 func (c *Client) GetUtxos(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams, opts ...ModelOps,
 ) ([]*Utxo, error) {
-
 	// Get the utxos
 	utxos, err := getUtxos(
 		ctx, metadataConditions, conditions, queryParams,
@@ -32,7 +31,6 @@ func (c *Client) GetUtxos(ctx context.Context, metadataConditions *Metadata,
 func (c *Client) GetUtxosCount(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, opts ...ModelOps,
 ) (int64, error) {
-
 	// Get the utxos count
 	count, err := getUtxosCount(
 		ctx, metadataConditions, conditions,
@@ -49,7 +47,6 @@ func (c *Client) GetUtxosCount(ctx context.Context, metadataConditions *Metadata
 func (c *Client) GetUtxosByXpubID(ctx context.Context, xPubID string, metadata *Metadata, conditions map[string]interface{},
 	queryParams *datastore.QueryParams,
 ) ([]*Utxo, error) {
-
 	// Get the utxos
 	utxos, err := getUtxosByXpubID(
 		ctx,
@@ -73,7 +70,6 @@ func (c *Client) GetUtxosByXpubID(ctx context.Context, xPubID string, metadata *
 func (c *Client) GetUtxosByXpubIDCount(ctx context.Context, xPubID string, metadata *Metadata,
 	conditions map[string]interface{},
 ) (int64, error) {
-
 	// Get the utxos count
 	count, err := getUtxosByXpubIDCount(
 		ctx,
@@ -91,7 +87,6 @@ func (c *Client) GetUtxosByXpubIDCount(ctx context.Context, xPubID string, metad
 
 // GetUtxo will get a single utxo based on an xPub, the tx ID and the outputIndex
 func (c *Client) GetUtxo(ctx context.Context, xPubKey, txID string, outputIndex uint32) (*Utxo, error) {
-
 	// Get the utxos
 	utxo, err := getUtxo(
 		ctx, txID, outputIndex, c.DefaultModelOptions()...,
@@ -120,7 +115,6 @@ func (c *Client) GetUtxo(ctx context.Context, xPubKey, txID string, outputIndex 
 
 // GetUtxoByTransactionID will get a single utxo based on the tx ID and the outputIndex
 func (c *Client) GetUtxoByTransactionID(ctx context.Context, txID string, outputIndex uint32) (*Utxo, error) {
-
 	// Get the utxo
 	utxo, err := getUtxo(
 		ctx, txID, outputIndex, c.DefaultModelOptions()...,

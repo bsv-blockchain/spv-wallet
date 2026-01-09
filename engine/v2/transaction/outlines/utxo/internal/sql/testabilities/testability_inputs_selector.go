@@ -19,5 +19,5 @@ var MaxSizeWithoutFeeForSingleInput = fixtures.DefaultFeeUnit.Bytes - database.E
 func New(t testing.TB) (given InputsSelectorFixture, then InputsSelectorAssertions, cleanup func()) {
 	given, cleanup = newFixture(t)
 	then = newAssertions(t)
-	return
+	return given, then, cleanup
 }

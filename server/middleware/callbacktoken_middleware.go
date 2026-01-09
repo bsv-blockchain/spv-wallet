@@ -3,9 +3,10 @@ package middleware
 import (
 	"strings"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // CallbackTokenMiddleware verifies the callback token - if it's valid and matches the Bearer scheme.

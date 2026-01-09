@@ -3,11 +3,12 @@ package middleware
 import (
 	"slices"
 
+	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
-	"github.com/rs/zerolog"
 )
 
 var securedMiddlewares = []api.MiddlewareFunc{

@@ -3,9 +3,10 @@ package users
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/mappings"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // get will get an existing model

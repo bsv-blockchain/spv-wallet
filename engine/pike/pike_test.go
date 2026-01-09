@@ -5,8 +5,9 @@ import (
 	"testing"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bsv-blockchain/spv-wallet/engine/script/template"
 	assert "github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/script/template"
 )
 
 func TestGenerateLockingScriptsFromTemplates(t *testing.T) {

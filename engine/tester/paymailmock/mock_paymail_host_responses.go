@@ -5,10 +5,11 @@ import (
 	"net/http"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/jarcoal/httpmock"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // MockedP2PDestination is a mocked response for the P2P destinations endpoint

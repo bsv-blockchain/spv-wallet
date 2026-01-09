@@ -7,8 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 func Test_contact_validate_success(t *testing.T) {

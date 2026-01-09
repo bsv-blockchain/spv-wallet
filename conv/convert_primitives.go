@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/bsv-blockchain/go-sdk/util"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

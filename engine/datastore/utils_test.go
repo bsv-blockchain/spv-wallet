@@ -5,9 +5,10 @@ import (
 	"testing"
 	"time"
 
-	customtypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	customtypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 )
 
 const (

@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"slices"
 
+	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/require"
+
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/models"
-	"github.com/jarcoal/httpmock"
-	"github.com/stretchr/testify/require"
 )
 
 type BlockHeadersServiceFixture interface {

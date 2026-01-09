@@ -8,9 +8,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"
-	"github.com/rs/zerolog"
 )
 
 const (

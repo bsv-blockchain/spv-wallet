@@ -2,8 +2,9 @@
 package dberrors
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/errdef"
 	"github.com/joomcode/errorx"
+
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 )
 
 var Namespace = errorx.NewNamespace("db")

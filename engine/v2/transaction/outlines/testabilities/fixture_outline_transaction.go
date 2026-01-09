@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+
 	tpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"

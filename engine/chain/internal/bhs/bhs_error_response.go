@@ -5,10 +5,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/go-resty/resty/v2"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"
-	"github.com/go-resty/resty/v2"
 )
 
 // mapBHSErrorResponseToSpverror is a method that will check what kind of response came back from
@@ -52,5 +53,4 @@ func mapBHSErrorResponseToSpverror(res *resty.Response) models.SPVError {
 		}
 		return spverrors.ErrInternal.Wrap(spvErr)
 	}
-
 }

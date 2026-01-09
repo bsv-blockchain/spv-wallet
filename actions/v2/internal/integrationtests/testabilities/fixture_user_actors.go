@@ -59,7 +59,7 @@ func newFixture(t testing.TB, appFixture testabilities.SPVWalletApplicationFixtu
 func (f *fixture) StartedSPVWalletV2(opts ...testengine.ConfigOpts) (cleanup func()) {
 	cleanup = f.StartedSPVWalletWithConfiguration(append(opts, testengine.WithV2())...)
 	f.Paymail().ExternalPaymailHost().WillRespondWithP2PWithBEEFCapabilities()
-	return
+	return cleanup
 }
 
 func (f *fixture) Alice() *fixtures.User {

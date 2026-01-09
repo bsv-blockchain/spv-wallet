@@ -4,10 +4,11 @@ import (
 	"context"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/rs/zerolog"
+
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/rs/zerolog"
 )
 
 // Service is meant to handle the ARC callback and update the transaction status in the database.
@@ -84,7 +85,7 @@ func (s *Service) Handle(ctx context.Context, txInfo chainmodels.TXInfo) error {
 	return nil
 }
 
-func parseMerklePath(merklePath string, txID string) (*trx.MerklePath, error) {
+func parseMerklePath(merklePath, txID string) (*trx.MerklePath, error) {
 	bump, err := trx.NewMerklePathFromHex(merklePath)
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "failed to parse merkle path for transaction %s", txID)

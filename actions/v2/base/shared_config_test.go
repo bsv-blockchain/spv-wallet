@@ -57,7 +57,6 @@ func TestGETConfigsShared(t *testing.T) {
 					"v2": true
  				}
  			}`)
-
 	})
 
 	t.Run("return unauthorized for anonymous requests", func(t *testing.T) {

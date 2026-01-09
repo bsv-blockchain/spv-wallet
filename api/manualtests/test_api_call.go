@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 type (

@@ -7,11 +7,12 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/models/optional"
 	"github.com/bsv-blockchain/spv-wallet/models/request"
 	"github.com/bsv-blockchain/spv-wallet/models/request/opreturn"
 	paymailreq "github.com/bsv-blockchain/spv-wallet/models/request/paymail"
-	"github.com/stretchr/testify/require"
 )
 
 func TestTransactionSpecification_TransactionJSON(t *testing.T) {

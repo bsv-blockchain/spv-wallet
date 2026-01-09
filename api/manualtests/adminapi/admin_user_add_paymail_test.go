@@ -4,9 +4,10 @@ import (
 	"context"
 	"testing"
 
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
-	"github.com/samber/lo"
 )
 
 func TestAddPaymail(t *testing.T) {

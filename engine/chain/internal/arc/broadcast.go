@@ -7,10 +7,11 @@ import (
 	"net/http"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/go-resty/resty/v2"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Custom ARC defined http status codes
@@ -41,7 +42,6 @@ func (s *Service) Broadcast(ctx context.Context, tx *sdk.Transaction) (*chainmod
 	})
 
 	response, err := req.Post(fmt.Sprintf("%s/v1/tx", s.arcCfg.URL))
-
 	if err != nil {
 		return nil, s.wrapRequestError(err)
 	}

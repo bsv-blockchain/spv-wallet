@@ -4,10 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func TestAddPaymailBadRequest(t *testing.T) {

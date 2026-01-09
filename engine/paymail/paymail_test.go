@@ -6,6 +6,11 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-paymail"
+	"github.com/mrz1836/go-cache"
+	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
@@ -14,10 +19,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/mrz1836/go-cache"
-	"github.com/rs/zerolog"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 const (

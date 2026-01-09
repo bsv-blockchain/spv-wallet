@@ -5,8 +5,9 @@ import (
 	"net/http"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/jarcoal/httpmock"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // MockedRecordBEEFResponse is a mocked response for the record tx endpoint

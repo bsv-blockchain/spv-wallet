@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func Logger() zerolog.Logger {

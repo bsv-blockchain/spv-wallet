@@ -4,9 +4,10 @@ import (
 	"context"
 	"iter"
 
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/rs/zerolog"
 )
 
 // Service for recording transactions

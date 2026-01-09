@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-contrib/pprof"
+	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/actions"
 	"github.com/bsv-blockchain/spv-wallet/actions/paymailserver"
 	v2 "github.com/bsv-blockchain/spv-wallet/actions/v2"
@@ -18,9 +22,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/metrics"
 	"github.com/bsv-blockchain/spv-wallet/server/handlers"
 	"github.com/bsv-blockchain/spv-wallet/server/middleware"
-	"github.com/gin-contrib/pprof"
-	"github.com/gin-gonic/gin"
-	"github.com/rs/zerolog"
 )
 
 // Server is the configuration, services, and actual web server

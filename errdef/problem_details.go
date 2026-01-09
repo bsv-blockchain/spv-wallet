@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/joomcode/errorx"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
 )
 
 // ProblemDetails is a struct that represents a problem details object as defined in RFC 7807.

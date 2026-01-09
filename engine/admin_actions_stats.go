@@ -18,7 +18,6 @@ type AdminStats struct {
 
 // GetStats will get stats for the SPV Wallet Console (admin)
 func (c *Client) GetStats(ctx context.Context, opts ...ModelOps) (*AdminStats, error) {
-
 	// Set the default model options
 	defaultOpts := c.DefaultModelOptions(opts...)
 

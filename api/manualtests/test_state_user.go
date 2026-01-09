@@ -52,7 +52,7 @@ func (u *User) IsEmpty() bool {
 	return u.Xpriv == "" || u.Alias == "" || u.Domain == ""
 }
 
-func (u *User) new(xpriv string, xpub string) error {
+func (u *User) new(xpriv, xpub string) error {
 	now := time.Now()
 
 	user := &User{

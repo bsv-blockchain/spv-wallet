@@ -5,12 +5,13 @@ import (
 	"testing"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
-	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 )
 
 type TransactionOutlineAssertion interface {

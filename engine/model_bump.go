@@ -9,6 +9,7 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/chainhash"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"

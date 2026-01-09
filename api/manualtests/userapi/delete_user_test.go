@@ -4,9 +4,10 @@ import (
 	"context"
 	"testing"
 
+	"github.com/joomcode/errorx"
+
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
-	"github.com/joomcode/errorx"
 )
 
 func TestDeleteCurrentUser(t *testing.T) {

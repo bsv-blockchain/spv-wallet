@@ -7,6 +7,7 @@ import (
 	"github.com/bsv-blockchain/go-paymail"
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/addresses/addressesmodels"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef"

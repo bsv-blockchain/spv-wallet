@@ -5,8 +5,9 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-paymail/spv"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

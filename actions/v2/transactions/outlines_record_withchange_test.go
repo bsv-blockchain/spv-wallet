@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/samber/lo"
 )
 
 func TestTransactionWithChange(t *testing.T) {

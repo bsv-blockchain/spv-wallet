@@ -3,6 +3,9 @@ package internal
 import (
 	"context"
 
+	"github.com/rs/zerolog"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/engine/logging"
@@ -13,8 +16,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/utxo"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
-	"github.com/rs/zerolog"
-	"gorm.io/gorm"
 )
 
 // Storage is a struct that holds the database connection.

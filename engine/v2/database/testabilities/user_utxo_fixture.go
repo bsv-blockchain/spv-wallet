@@ -5,14 +5,15 @@ import (
 	"testing"
 	"time"
 
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
-	"gorm.io/gorm"
 )
 
-var FirstCreatedAt = time.Date(2006, 02, 01, 15, 4, 5, 7, time.UTC)
+var FirstCreatedAt = time.Date(2006, 0o2, 0o1, 15, 4, 5, 7, time.UTC)
 
 type userUtxoFixture struct {
 	db                 *gorm.DB

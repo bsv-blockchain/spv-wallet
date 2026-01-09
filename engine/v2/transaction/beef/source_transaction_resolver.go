@@ -6,6 +6,7 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/spv"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )

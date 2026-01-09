@@ -127,7 +127,6 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
                 {"url": "http://localhost:8081", "banned": false}
             ]`)
 	})
-
 }
 
 func TestSubscribeWebhooksErrorPath(t *testing.T) {
@@ -354,5 +353,4 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 			IsOK().
 			WithJSONf(`[]`)
 	})
-
 }

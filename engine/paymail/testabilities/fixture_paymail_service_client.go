@@ -4,12 +4,13 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
+	"github.com/jarcoal/httpmock"
+
 	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/jarcoal/httpmock"
 )
 
 // PaymailClientFixture is a test fixture - used for establishing environment for test.

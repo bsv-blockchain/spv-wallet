@@ -5,10 +5,11 @@ import (
 	"fmt"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/samber/lo"
 )
 
 type UTXOSelectorFixture interface {

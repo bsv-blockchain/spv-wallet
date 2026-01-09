@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 type cliFlags struct {

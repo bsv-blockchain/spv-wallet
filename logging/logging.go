@@ -7,11 +7,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/config"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/joomcode/errorx"
 	"github.com/rs/zerolog"
 	"go.elastic.co/ecszerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 const (

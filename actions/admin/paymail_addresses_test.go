@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"testing"
 
+	assert "github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
-	assert "github.com/stretchr/testify/require"
 )
 
 func TestGetPaymails(t *testing.T) {

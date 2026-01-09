@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
-	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
-	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	magic "github.com/bitcoinschema/go-map"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 var (

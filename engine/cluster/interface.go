@@ -16,10 +16,8 @@ var (
 // Channel all keys used in cluster coordinator
 type Channel string
 
-var (
-	// DestinationNew is a message sent when a new destination is created
-	DestinationNew Channel = "new-destination"
-)
+// DestinationNew is a message sent when a new destination is created
+var DestinationNew Channel = "new-destination"
 
 // ClientInterface interface for the internal pub/sub functionality for clusters
 type ClientInterface interface {

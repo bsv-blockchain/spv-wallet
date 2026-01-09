@@ -8,10 +8,11 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	paymailtester "github.com/bsv-blockchain/go-paymail/tester"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
-	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 )
 
 // PaymailClientMock is a paymail.Client configured to use mocked endpoints.
@@ -39,7 +40,6 @@ func MockClient(mockTransport *httpmock.MockTransport, domain string, moreDomain
 		paymail.WithRequestTracing(),
 		paymail.WithDNSTimeout(15*time.Second),
 	)
-
 	if err != nil {
 		panic(spverrors.Wrapf(err, "error creating mocked paymail client"))
 	}

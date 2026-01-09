@@ -3,12 +3,13 @@ package middleware
 import (
 	"strings"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // AuthMiddleware will check the request for the xPub or AccessKey header

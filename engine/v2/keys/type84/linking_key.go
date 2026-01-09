@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
@@ -68,7 +69,7 @@ func calculateLinkedPublicKey(hmacResult []byte, receiverPubKey *ec.PublicKey) (
 
 // DeriveLinkedKey derives a child public key from the source public key and link it with public key
 // with use of invoiceNumber as reference of this derivation.
-func DeriveLinkedKey(source *ec.PublicKey, linkPubKey *ec.PublicKey, invoiceNumber string) (*ec.PublicKey, error) {
+func DeriveLinkedKey(source, linkPubKey *ec.PublicKey, invoiceNumber string) (*ec.PublicKey, error) {
 	if source == nil || linkPubKey == nil {
 		return nil, spverrors.Newf("source or receiver public key is nil")
 	}

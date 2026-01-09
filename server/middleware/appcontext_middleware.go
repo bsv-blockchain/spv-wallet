@@ -1,11 +1,12 @@
 package middleware
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
-	"github.com/rs/zerolog"
 )
 
 // AppContextMiddleware is a middleware that sets the appConfig, engine and logger in the request context

@@ -2,7 +2,6 @@ package filter
 
 // UtxoFilter is a struct for handling request parameters for utxo search requests
 type UtxoFilter struct {
-
 	// ModelFilter is a struct for handling typical request parameters for search requests
 	ModelFilter `json:",inline"`
 

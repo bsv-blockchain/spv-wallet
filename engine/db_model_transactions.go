@@ -144,7 +144,7 @@ func (m *Transaction) ChildModels() (childModels []ModelInterface) {
 		childModels = append(childModels, &m.utxos[index])
 	}
 
-	return
+	return childModels
 }
 
 // PostMigrate runs right after the model is migrated

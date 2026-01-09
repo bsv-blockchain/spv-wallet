@@ -14,13 +14,14 @@ import (
 	"github.com/bsv-blockchain/go-sdk/script"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	sighash "github.com/bsv-blockchain/go-sdk/transaction/sighash"
+	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	xtester "github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/jarcoal/httpmock"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 const (

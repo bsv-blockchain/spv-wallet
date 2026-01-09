@@ -3,9 +3,10 @@ package contacts
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/v2/internal/mapping"
 	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
-	"github.com/gin-gonic/gin"
 )
 
 // AdminAcceptInvitation accepts an invitation from a contact.

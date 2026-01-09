@@ -14,6 +14,7 @@ import (
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
 	"github.com/bsv-blockchain/go-sdk/util"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
@@ -45,7 +46,7 @@ func createMetadata(serverMetaData *server.RequestMetadata, request string) (met
 			metadata["ip_address"] = serverMetaData.IPAddress
 		}
 	}
-	return
+	return metadata
 }
 
 // GetPaymailByAlias will get a paymail address and information by alias
@@ -190,9 +191,7 @@ func (p *PaymailDefaultServiceProvider) VerifyMerkleRoots(
 	}
 
 	valid, err := p.client.Chain().VerifyMerkleRoots(ctx, merkleRoots)
-
 	// NOTE: these errors goes to go-paymail and are not logged there, so we need to log them here
-
 	if err != nil {
 		p.client.Logger().Error().Err(err).Msg("Error verifying merkle roots")
 		return spverrors.ErrPaymailMerkleRootVerificationFailed.Wrap(err)
@@ -203,7 +202,7 @@ func (p *PaymailDefaultServiceProvider) VerifyMerkleRoots(
 		return spverrors.ErrPaymailInvalidMerkleRoots
 	}
 
-	return
+	return err
 }
 
 // AddContact will add a contact to the paymail address
@@ -222,15 +221,15 @@ func (p *PaymailDefaultServiceProvider) AddContact(
 
 	reqPaymail, err := getPaymailAddress(ctx, requesterPaymailAddress, p.client.DefaultModelOptions()...)
 	if err != nil {
-		return
+		return err
 	}
 	if reqPaymail == nil {
 		err = spverrors.ErrInvalidRequesterXpub
-		return
+		return err
 	}
 
 	_, err = p.client.AddContactRequest(ctx, contact.FullName, contact.Paymail, reqPaymail.XpubID)
-	return
+	return err
 }
 
 func (p *PaymailDefaultServiceProvider) getDestinationForPaymail(ctx context.Context, alias, domain string, metadata Metadata) (*Destination, error) {
@@ -286,12 +285,12 @@ func createDestination(ctx context.Context, pm *PaymailAddress, opts ...ModelOps
 func createLockingScript(ecPubKey *ec.PublicKey) (lockingScript string, err error) {
 	bsvAddress, err := script.NewAddressFromPublicKey(ecPubKey, true)
 	if err != nil {
-		return
+		return lockingScript, err
 	}
 
 	ls, err := p2pkh.Lock(bsvAddress)
 	lockingScript = ls.String()
-	return
+	return lockingScript, err
 }
 
 func buildSDKTx(p2pTx *paymail.P2PTransaction) (*trx.Transaction, error) {

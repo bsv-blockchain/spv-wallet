@@ -3,8 +3,9 @@ package contacts
 import (
 	"net/http"
 
-	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 )
 
 // AdminDeleteContact deletes a contact

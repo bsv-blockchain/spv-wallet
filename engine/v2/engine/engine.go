@@ -5,9 +5,13 @@ import (
 	"errors"
 
 	"github.com/bsv-blockchain/go-paymail/server"
+	"github.com/go-resty/resty/v2"
+	"github.com/rs/zerolog"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine/chain"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
@@ -26,9 +30,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txsync"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/users"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
-	"github.com/go-resty/resty/v2"
-	"github.com/rs/zerolog"
-	"gorm.io/gorm"
 )
 
 // V2 is the engine of the wallet, it is creating all needed services, and preparing database connection.

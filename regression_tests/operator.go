@@ -15,7 +15,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet-go-client/commands"
 	"github.com/bsv-blockchain/spv-wallet-go-client/config"
 	"github.com/bsv-blockchain/spv-wallet-go-client/walletkeys"
-
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
@@ -28,9 +27,7 @@ const (
 	defaultJSClientPath = "../../spv-wallet-js-client/src/regression_tests"
 )
 
-var (
-	ErrTimeout = errors.New("timeout reached")
-)
+var ErrTimeout = errors.New("timeout reached")
 
 func main() {
 	loadConfigFlag := flag.Bool("l", false, "Load configuration from .env.config file")
@@ -145,7 +142,6 @@ func handleCreateUserError(err error, paymailAlias string, config *regressionTes
 
 // handleExistingPaymail handles the case when the paymail already exists.
 func handleExistingPaymail(paymailAlias string, config *regressionTestConfig) (*regressionTestUser, error) {
-
 	answer, err := promptUserAndCheck("Paymail already exists. Would you like to use it (you need to have xpriv)? (y/yes or n/no): ")
 	if err != nil {
 		return nil, fmt.Errorf("failed to prompt user: %w", err)
@@ -258,11 +254,10 @@ func takeMasterUrlAndXPriv(leaderPaymail *regressionTestUser) error {
 }
 
 // sendFundsWithGoClient sends funds using the Go client.
-func sendFundsWithGoClient(instanceUrl string, istanceXPriv string, receiverPaymail string) error {
+func sendFundsWithGoClient(instanceUrl, istanceXPriv, receiverPaymail string) error {
 	client, err := walletclient.NewUserAPIWithXPriv(config.New(
 		config.WithAddr(instanceUrl),
 	), istanceXPriv)
-
 	if err != nil {
 		return fmt.Errorf("error initalizing client: %w", err)
 	}
@@ -292,7 +287,7 @@ func sendFundsWithGoClient(instanceUrl string, istanceXPriv string, receiverPaym
 }
 
 // runTests runs the regression tests, asks for type of client and path to it and executes command.
-func runTests(clientType string, defaultPath string) error {
+func runTests(clientType, defaultPath string) error {
 	var command string
 	if clientType == "go" {
 		command = "go test -tags=regression ./... -count=1"

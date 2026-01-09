@@ -4,10 +4,11 @@ import (
 	"slices"
 	"time"
 
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"gorm.io/gorm"
 )
 
 // TxInput represents a transaction input in the database.

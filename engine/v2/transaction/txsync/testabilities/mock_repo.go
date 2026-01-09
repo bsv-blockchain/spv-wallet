@@ -5,11 +5,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/samber/lo"
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/samber/lo"
-	"github.com/stretchr/testify/require"
 )
 
 func MockTx(t testing.TB) txtestability.TransactionSpec {

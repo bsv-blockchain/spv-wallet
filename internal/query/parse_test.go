@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/models/filter"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 )
 
 func TestParseSearchParamsSuccessfully(t *testing.T) {

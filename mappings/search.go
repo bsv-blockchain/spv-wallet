@@ -1,9 +1,10 @@
 package mappings
 
 import (
+	"github.com/iancoleman/strcase"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/models/filter"
-	"github.com/iancoleman/strcase"
 )
 
 const (
@@ -36,7 +37,7 @@ func DefaultDBQueryParams() *datastore.QueryParams {
 	}
 }
 
-func getNumberOrDefault(value int, defaultValue int) int {
+func getNumberOrDefault(value, defaultValue int) int {
 	if value == 0 {
 		return defaultValue
 	}
@@ -49,7 +50,7 @@ func getStringOrDefaultToSnakeCase(value, defaultValue string) string {
 	)
 }
 
-func getStringOrDefalut(value string, defaultValue string) string {
+func getStringOrDefalut(value, defaultValue string) string {
 	if value == "" {
 		return defaultValue
 	}

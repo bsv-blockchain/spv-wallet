@@ -39,7 +39,7 @@ func (tm *TaskManager) CronJobsInit(cronJobsMap CronJobs) (err error) {
 			}
 			return nil
 		}); err != nil {
-			return
+			return err
 		}
 
 		// Run the task periodically
@@ -47,8 +47,8 @@ func (tm *TaskManager) CronJobsInit(cronJobsMap CronJobs) (err error) {
 			RunEveryPeriod: taskDef.Period,
 			TaskName:       name,
 		}); err != nil {
-			return
+			return err
 		}
 	}
-	return
+	return err
 }

@@ -3,10 +3,11 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/api"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type SPVWalletAppUserAssertions interface {

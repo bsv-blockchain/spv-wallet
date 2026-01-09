@@ -4,11 +4,12 @@ import (
 	"context"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/gomodule/redigo/redis"
 	"github.com/mrz1836/go-cache"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rafaeljusto/redigomock"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // CacheStore will return a cache store for using in tests
@@ -46,7 +47,7 @@ func LoadMockRedis(
 		},
 		ScriptsLoaded: nil,
 	}
-	return
+	return client, conn
 }
 
 // LoadRealRedis will load a real redis connection
@@ -69,9 +70,9 @@ func LoadRealRedis(
 		false,
 	)
 	if err != nil {
-		return
+		return client, conn, err
 	}
 
 	conn, err = client.GetConnectionWithContext(context.Background())
-	return
+	return client, conn, err
 }

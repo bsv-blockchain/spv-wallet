@@ -4,10 +4,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/config"
-	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 )
 
 func TestLoadConfig(t *testing.T) {

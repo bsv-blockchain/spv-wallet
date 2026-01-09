@@ -7,14 +7,6 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
-	"github.com/bsv-blockchain/spv-wallet/config"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
-	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
-	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
-	"github.com/bsv-blockchain/spv-wallet/engine/logging"
-	"github.com/bsv-blockchain/spv-wallet/engine/metrics"
-	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/coocood/freecache"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-resty/resty/v2"
@@ -22,6 +14,15 @@ import (
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 	"github.com/vmihailenco/taskq/v3"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/logging"
+	"github.com/bsv-blockchain/spv-wallet/engine/metrics"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // ClientOps allow functional options to be supplied that overwrite default client options.

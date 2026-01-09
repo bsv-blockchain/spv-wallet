@@ -2,10 +2,11 @@ package outlines
 
 import (
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 // OutputsSpec are representing a client specification for outputs part of the transaction.

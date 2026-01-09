@@ -4,14 +4,15 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
 	"github.com/bsv-blockchain/spv-wallet/server/middleware"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 type txSyncService interface {
@@ -41,7 +42,6 @@ func broadcastCallbackHandler(service txSyncService) gin.HandlerFunc {
 		}
 
 		err = service.Handle(c, callbackResp)
-
 		if err != nil {
 			logger.Err(err).Ctx(c).Any("TxInfo", callbackResp).Msgf("failed to update transaction in ARC broadcast callback handler")
 		}

@@ -5,6 +5,7 @@ import (
 	"time"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
 )
 

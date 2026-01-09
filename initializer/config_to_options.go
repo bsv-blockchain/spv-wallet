@@ -6,6 +6,11 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/go-redis/redis/v8"
+	"github.com/go-resty/resty/v2"
+	"github.com/mrz1836/go-cachestore"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine"
@@ -17,10 +22,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/bsv-blockchain/spv-wallet/metrics"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/go-redis/redis/v8"
-	"github.com/go-resty/resty/v2"
-	"github.com/mrz1836/go-cachestore"
-	"github.com/rs/zerolog"
 )
 
 // ToEngineOptions converts the AppConfig to a slice of engine.ClientOps that can be used to create a new engine.Client.

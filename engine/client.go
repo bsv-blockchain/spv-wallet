@@ -6,9 +6,13 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
+	"github.com/go-resty/resty/v2"
+	"github.com/mrz1836/go-cachestore"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/bsv-blockchain/spv-wallet/engine/chain"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/engine/logging"
@@ -19,9 +23,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/engine"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/go-resty/resty/v2"
-	"github.com/mrz1836/go-cachestore"
-	"github.com/rs/zerolog"
 )
 
 type (

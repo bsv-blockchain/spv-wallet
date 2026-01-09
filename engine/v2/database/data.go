@@ -8,7 +8,7 @@ type Data struct {
 	Vout uint32 `gorm:"primaryKey"`
 
 	UserID string
-	
+
 	Blob []byte
 }
 

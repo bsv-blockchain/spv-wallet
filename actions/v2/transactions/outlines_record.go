@@ -1,12 +1,13 @@
 package transactions
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/v2/transactions/internal/mapping"
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 )
 
 // RecordTransactionOutline records transaction outline

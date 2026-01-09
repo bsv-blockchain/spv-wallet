@@ -4,11 +4,12 @@ import (
 	"strings"
 
 	bip32 "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // AuthV2Middleware will check the request for the xPub and convert it to the user context.

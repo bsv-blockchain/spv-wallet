@@ -26,7 +26,7 @@ type User struct {
 func (u *User) BeforeCreate(_ *gorm.DB) (err error) {
 	u.ID, err = u.generateID()
 	if err != nil {
-		return
+		return err
 	}
 
 	return nil

@@ -3,9 +3,10 @@ package testabilities
 import (
 	"net/http"
 
-	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/require"
+
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 type ARCFixture interface {

@@ -126,5 +126,4 @@ func TestConfirmContact(t *testing.T) {
 			HasStatus(401).
 			WithJSONf(apierror.ExpectedJSON("error-unauthorized-xpub-not-an-admin-key", "xpub provided is not an admin key"))
 	})
-
 }

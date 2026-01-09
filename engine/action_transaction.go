@@ -6,6 +6,7 @@ import (
 	"time"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
@@ -42,7 +43,6 @@ func (c *Client) RecordTransaction(ctx context.Context, xPubKey, txHex, draftID 
 func (c *Client) NewTransaction(ctx context.Context, rawXpubKey string, config *TransactionConfig,
 	opts ...ModelOps,
 ) (*DraftTransaction, error) {
-
 	// Create the lock and set the release for after the function completes
 	unlock, err := getWaitWriteLockForXpub(
 		ctx, c.Cachestore(), utils.Hash(rawXpubKey),
@@ -88,7 +88,6 @@ func (c *Client) GetTransaction(ctx context.Context, xPubID, txID string) (*Tran
 
 // GetAdminTransaction will get a transaction by its ID from the Datastore
 func (c *Client) GetAdminTransaction(ctx context.Context, txID string) (*Transaction, error) {
-
 	// Get the transaction by ID
 	transaction, err := getAdminTransactionByID(
 		ctx, txID, c.DefaultModelOptions()...,
@@ -105,7 +104,6 @@ func (c *Client) GetAdminTransaction(ctx context.Context, txID string) (*Transac
 
 // GetTransactionsByIDs returns array of transactions by their IDs from the Datastore
 func (c *Client) GetTransactionsByIDs(ctx context.Context, txIDs []string) ([]*Transaction, error) {
-
 	// Create the conditions
 	conditions := generateTxIDFilterConditions(txIDs)
 
@@ -125,7 +123,6 @@ func (c *Client) GetTransactionsByIDs(ctx context.Context, txIDs []string) ([]*T
 func (c *Client) GetTransactions(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams, opts ...ModelOps,
 ) ([]*Transaction, error) {
-
 	// Get the transactions
 	transactions, err := getTransactions(
 		ctx, metadataConditions, conditions, queryParams,
@@ -142,7 +139,6 @@ func (c *Client) GetTransactions(ctx context.Context, metadataConditions *Metada
 func (c *Client) GetTransactionsCount(ctx context.Context, metadataConditions *Metadata,
 	conditions map[string]interface{}, opts ...ModelOps,
 ) (int64, error) {
-
 	// Get the transactions count
 	count, err := getTransactionsCount(
 		ctx, metadataConditions, conditions,
@@ -164,7 +160,6 @@ func (c *Client) GetTransactionsCount(ctx context.Context, metadataConditions *M
 func (c *Client) GetTransactionsByXpubID(ctx context.Context, xPubID string, metadataConditions *Metadata,
 	conditions map[string]interface{}, queryParams *datastore.QueryParams,
 ) ([]*Transaction, error) {
-
 	// Get the transaction by ID
 	transactions, err := getTransactionsByXpubID(
 		ctx,
@@ -185,7 +180,6 @@ func (c *Client) GetTransactionsByXpubID(ctx context.Context, xPubID string, met
 func (c *Client) GetTransactionsByXpubIDCount(ctx context.Context, xPubID string, metadataConditions *Metadata,
 	conditions map[string]interface{},
 ) (int64, error) {
-
 	count, err := getTransactionsCountByXpubID(
 		ctx, xPubID, metadataConditions, conditions,
 		c.DefaultModelOptions()...,
@@ -201,7 +195,6 @@ func (c *Client) GetTransactionsByXpubIDCount(ctx context.Context, xPubID string
 func (c *Client) UpdateTransactionMetadata(ctx context.Context, xPubID, id string,
 	metadata Metadata,
 ) (*Transaction, error) {
-
 	// Get the transaction
 	transaction, err := c.GetTransaction(ctx, xPubID, id)
 	if err != nil {
@@ -340,7 +333,6 @@ func (c *Client) HandleTxCallback(ctx context.Context, callbackResp *chainmodels
 	logger.Info().Msgf("handling tx callback from ARC for TX: %v", callbackResp.TxID)
 
 	bump, err := trx.NewMerklePathFromHex(callbackResp.MerklePath)
-
 	if err != nil {
 		logger.Err(err).Msgf("failed to parse merkle path from broadcast callback - tx: %v", callbackResp)
 		return spverrors.Wrapf(err, "failed to parse merkle path from broadcast callback - tx: %v", callbackResp)

@@ -9,10 +9,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/jarcoal/httpmock"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 type mockClient struct {

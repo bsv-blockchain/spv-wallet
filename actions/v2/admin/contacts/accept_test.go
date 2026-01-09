@@ -125,6 +125,5 @@ func TestAcceptContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			WithProblemDetails(500, "error-contact-updating-status-failed", "updating contact status failed")
-
 	})
 }

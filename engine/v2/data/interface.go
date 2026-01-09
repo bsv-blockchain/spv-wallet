@@ -8,5 +8,5 @@ import (
 
 // Repo is the interface that wraps the basic operations with data.
 type Repo interface {
-	FindForUser(ctx context.Context, id string, userID string) (*datamodels.Data, error)
+	FindForUser(ctx context.Context, id, userID string) (*datamodels.Data, error)
 }

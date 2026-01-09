@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/pike"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )

@@ -4,12 +4,13 @@ import (
 	"testing"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/jsonrequire"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
-	"github.com/stretchr/testify/require"
 )
 
 type EngineAssertions interface {

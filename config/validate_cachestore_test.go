@@ -3,9 +3,10 @@ package config_test
 import (
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func TestValidateCacheStoreConfig(t *testing.T) {

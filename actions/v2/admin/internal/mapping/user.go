@@ -1,10 +1,11 @@
 package mapping
 
 import (
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
 	"github.com/bsv-blockchain/spv-wallet/lox"
-	"github.com/samber/lo"
 )
 
 // UserToResponse maps a user to a response

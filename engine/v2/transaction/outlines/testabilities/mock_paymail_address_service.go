@@ -21,7 +21,7 @@ func newPaymailAddressServiceMock(t testing.TB) *mockPaymailAddressService {
 	}
 }
 
-func (m *mockPaymailAddressService) HasPaymailAddress(_ context.Context, userID string, address string) (bool, error) {
+func (m *mockPaymailAddressService) HasPaymailAddress(_ context.Context, userID, address string) (bool, error) {
 	for _, user := range m.users {
 		if user.ID() == userID {
 			return slices.Contains(user.Paymails, fixtures.Paymail(address)), nil

@@ -54,7 +54,6 @@ func TestGETConfigsShared(t *testing.T) {
 					"pikePaymentEnabled": true
 				}
 			}`)
-
 	})
 
 	t.Run("return unauthorized for anonymous requests", func(t *testing.T) {

@@ -4,10 +4,11 @@ import (
 	"context"
 	"strings"
 
+	"github.com/samber/lo"
+
 	wallet "github.com/bsv-blockchain/spv-wallet-go-client"
 	"github.com/bsv-blockchain/spv-wallet-go-client/commands"
 	"github.com/bsv-blockchain/spv-wallet-go-client/config"
-	"github.com/samber/lo"
 )
 
 var FaucetError = StateError.NewSubtype("faucet")

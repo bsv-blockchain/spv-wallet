@@ -4,8 +4,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // TrackedOutput represents an output of a transaction.

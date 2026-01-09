@@ -4,9 +4,10 @@ import (
 	"database/sql/driver"
 	"time"
 
+	embeddedPostgres "github.com/fergusstrange/embedded-postgres"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
-	embeddedPostgres "github.com/fergusstrange/embedded-postgres"
 )
 
 // AnyTime will fill the need for any timestamp field

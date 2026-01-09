@@ -9,11 +9,12 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
-	"gorm.io/gorm"
 )
 
 // PaymailAddress is an "external model example" - this model is not part of the standard models loaded and runtime
@@ -320,7 +321,7 @@ func (m *PaymailAddress) BeforeCreating(_ context.Context) (err error) {
 		return spverrors.ErrMissingPaymailExternalXPub
 	} else if len(m.externalXpubKeyDecrypted) > 0 {
 		if _, err = utils.ValidateXPub(m.externalXpubKeyDecrypted); err != nil {
-			return
+			return err
 		}
 	}
 
@@ -331,7 +332,7 @@ func (m *PaymailAddress) BeforeCreating(_ context.Context) (err error) {
 	m.Client().Logger().Debug().
 		Str("paymailAddressID", m.ID).
 		Msgf("end: %s BeforeCreate hook", m.Name())
-	return
+	return err
 }
 
 // AfterCreated will fire after the model is created in the Datastore

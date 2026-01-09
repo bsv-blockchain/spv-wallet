@@ -5,12 +5,13 @@ import (
 	"iter"
 	"slices"
 
+	"github.com/samber/lo"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/samber/lo"
-	"gorm.io/gorm"
 )
 
 // Outputs is a repository for outputs.

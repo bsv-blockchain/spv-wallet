@@ -5,11 +5,12 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/bsv-blockchain/spv-wallet/api"
-	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 // RegisterRoutes creates the specific package routes

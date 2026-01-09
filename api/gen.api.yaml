@@ -1,2249 +1,2249 @@
 openapi: 3.0.0
 info:
-    license:
-        name: MIT
-        url: https://github.com/bsv-blockchain/spv-wallet/blob/main/LICENSE
-    title: SPV Wallet API
-    version: main
+  license:
+    name: MIT
+    url: https://github.com/bsv-blockchain/spv-wallet/blob/main/LICENSE
+  title: SPV Wallet API
+  version: main
 paths:
-    /api/v2/admin/contacts/{id}:
-        delete:
-            description: This endpoint deletes contact.
-            operationId: adminDeleteContact
-            parameters:
-                - description: Contact ID
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    format: uint
-                    type: integer
-            responses:
-                "200":
-                    description: Contact deleted
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Delete contact
-            tags:
-                - Admin endpoints
-        put:
-            description: This endpoint updates contact.
-            operationId: adminUpdateContact
-            parameters:
-                - description: Contact ID
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    format: uint
-                    type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_UpdateContact'
-                required: true
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_ContactSuccess'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Update contact
-            tags:
-                - Admin endpoints
-    /api/v2/admin/contacts/{paymail}:
-        post:
-            description: This endpoint creates contact.
-            operationId: adminCreateContact
-            parameters:
-                - description: Contact paymail
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_AdminCreateContact'
-                required: true
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_ContactSuccess'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Create contact
-            tags:
-                - Admin endpoints
-    /api/v2/admin/contacts/confirmations:
-        post:
-            description: This endpoint confirms contact.
-            operationId: adminConfirmContact
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_AdminConfirmContact'
-                required: true
-            responses:
-                "200":
-                    description: Contact confirmed
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Confirm contact
-            tags:
-                - Admin endpoints
-    /api/v2/admin/invitations/{id}:
-        delete:
-            description: This endpoint allows to reject invitation for selected ID
-            operationId: adminRejectInvitation
-            parameters:
-                - description: ID of the contact that the admin would like to reject
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    format: uint
-                    type: integer
-            responses:
-                "200":
-                    description: Invitation rejected
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Reject invitation
-            tags:
-                - Admin endpoints
-        post:
-            description: This endpoint allows to accept invitation for selected ID
-            operationId: adminAcceptInvitation
-            parameters:
-                - description: ID of the contact that the admin would like to accept
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    format: uint
-                    type: integer
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_ContactSuccess'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Accept invitation
-            tags:
-                - Admin endpoints
-    /api/v2/admin/status:
-        get:
-            description: This endpoint returns admin status. It is used to check if authorization header contain admin xpub.
-            operationId: adminStatus
-            responses:
-                "200":
-                    description: Success
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Get admin status
-            tags:
-                - Admin endpoints
-    /api/v2/admin/transactions/record:
-        post:
-            description: This endpoint allows for admin to record outline transaction for user with given id.
-            operationId: recordTransactionOutlineForUser
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_RecordTransactionOutlineForUser'
-                required: true
-            responses:
-                "201":
-                    $ref: '#/components/responses/responses_AdminRecordTransactionOutlineForUserSuccess'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Record transaction outline for user
-            tags:
-                - Admin endpoints
-    /api/v2/admin/users:
-        post:
-            description: This endpoint creates a new user.
-            operationId: createUser
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_CreateUser'
-                required: true
-            responses:
-                "201":
-                    $ref: '#/components/responses/responses_AdminCreateUserSuccess'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Create user
-            tags:
-                - Admin endpoints
-    /api/v2/admin/users/{id}:
-        get:
-            description: This endpoint gets user by id.
-            operationId: userById
-            parameters:
-                - description: User ID
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_AdminGetUser'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Get user by id
-            tags:
-                - Admin endpoints
-    /api/v2/admin/users/{id}/paymails:
-        post:
-            description: This endpoint add paymails to user with given id.
-            operationId: addPaymailToUser
-            parameters:
-                - description: User ID
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_AddPaymail'
-                required: true
-            responses:
-                "201":
-                    $ref: '#/components/responses/responses_AdminAddPaymailSuccess'
-                default:
-                    $ref: '#/components/responses/responses_ProblemDetails'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Add paymails to user
-            tags:
-                - Admin endpoints
-    /api/v2/admin/webhooks:
-        delete:
-            description: This endpoint deletes all webhooks.
-            operationId: unsubscribeWebhook
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_UnsubscribeWebhook'
-                required: true
-            responses:
-                "200":
-                    description: Webhooks deleted
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "404":
-                    $ref: '#/components/responses/responses_NotificationsDisabled'
-                "500":
-                    $ref: '#/components/responses/responses_UnsubscribeToWebhookInternalServerError'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Delete webhooks
-            tags:
-                - Admin endpoints
-        get:
-            description: This endpoint gets all webhooks.
-            operationId: webhooks
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_GetWebhooksSuccess'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "404":
-                    $ref: '#/components/responses/responses_NotificationsDisabled'
-                "500":
-                    $ref: '#/components/responses/responses_GetWebhooksInternalServerError'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Get webhooks
-            tags:
-                - Admin endpoints
-        post:
-            description: This endpoint creates a new webhook.
-            operationId: subscribeWebhook
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_SubscribeWebhook'
-                required: true
-            responses:
-                "200":
-                    description: Success
-                "400":
-                    $ref: '#/components/responses/responses_SubscribeToWebhookBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
-                "404":
-                    $ref: '#/components/responses/responses_NotificationsDisabled'
-                "500":
-                    $ref: '#/components/responses/responses_SubscribeToWebhookInternalServerError'
-            security:
-                - XPubAuth:
-                    - admin
-            summary: Create webhook
-            tags:
-                - Admin endpoints
-    /api/v2/configs/shared:
-        get:
-            description: This endpoint returns shared config. It can be obtained by both admin and user.
-            operationId: sharedConfig
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_SharedConfig'
-                "401":
-                    $ref: '#/components/responses/responses_NotAuthorized'
-            security:
-                - XPubAuth:
-                    - admin
-                    - user
-            summary: Get shared config
-            tags:
-                - Admin endpoints
-                - Configurations
-    /api/v2/contacts/{paymail}:
-        delete:
-            description: This endpoint allows to remove contact for authenticated user
-            operationId: removeContact
-            parameters:
-                - description: Paymail address of the contact that the user would like to remove
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: Success - contact removed
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "500":
-                    $ref: '#/components/responses/responses_DeleteContactInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Remove contact
-            tags:
-                - Contacts
-        get:
-            description: This endpoint allows to get contact for authenticated user
-            operationId: getContact
-            parameters:
-                - description: Paymail address of the contact that the user would like to get
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_ContactSuccess'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_ContactNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_GetContactInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Get contact
-            tags:
-                - Contacts
-        put:
-            description: Add or update contact. When adding a new contact, the system utilizes Paymail's PIKE capability to dispatch an invitation request, asking the counterparty to include the current user in their contacts.
-            operationId: upsertContact
-            parameters:
-                - description: Paymail address of the contact that the user would like to add/modify
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_UpsertContact'
-                required: true
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_ContactSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_UpsertContactBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_UpsertContactNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_ContactUpsertInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Add contact
-            tags:
-                - Contacts
-    /api/v2/contacts/{paymail}/confirmation:
-        delete:
-            description: Unconfirm contact. For contact with status "confirmed" change status to "unconfirmed"
-            operationId: unconfirmContact
-            parameters:
-                - description: Paymail address of the contact that the user would like to unconfirm
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: Success - contact removed
-                "400":
-                    $ref: '#/components/responses/responses_UpdateContactBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_ContactNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_UpdateContactInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Unconfirm contact
-            tags:
-                - Contacts
-        post:
-            description: This endpoint allows to confirm contact for authenticated user
-            operationId: confirmContact
-            parameters:
-                - description: Paymail address of the contact that the user would like to confirm
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: Success - contact confirmed
-                "400":
-                    $ref: '#/components/responses/responses_UpdateContactBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_ContactNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_UpdateContactInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Confirm contact
-            tags:
-                - Contacts
-    /api/v2/data/{id}:
-        get:
-            description: This endpoint gets data by its id for authenticated user
-            operationId: dataById
-            parameters:
-                - description: Data ID
-                  in: path
-                  name: id
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_GetDataSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_UserBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_GetDataNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_InternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Get data for user
-            tags:
-                - Data
-    /api/v2/invitations/{paymail}:
-        delete:
-            description: This endpoint allows to reject invitation for authenticated user
-            operationId: rejectInvitation
-            parameters:
-                - description: Paymail address of the contact that the user would like to reject
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: Success - invitation removed
-                "400":
-                    $ref: '#/components/responses/responses_UpdateContactBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_ContactNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_UpdateContactInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Reject invitation
-            tags:
-                - Contacts
-    /api/v2/invitations/{paymail}/contacts:
-        post:
-            description: This endpoint allows to accept invitation for authenticated user
-            operationId: acceptInvitation
-            parameters:
-                - description: Paymail address of the contact that the user would like to accept
-                  in: path
-                  name: paymail
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: Success - invitation accepted
-                "400":
-                    $ref: '#/components/responses/responses_UpdateContactBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_ContactNotFound'
-                "500":
-                    $ref: '#/components/responses/responses_UpdateContactInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Accept invitation
-            tags:
-                - Contacts
-    /api/v2/merkleroots:
-        get:
-            description: This endpoint fetches merkleroots from block header service according to the given query parameters.
-            operationId: merkleRoots
-            parameters:
-                - description: Batch size of merkleroots to be returned
-                  example: 100
-                  in: query
-                  name: batchSize
-                  schema:
-                    default: 2000
-                    minimum: 0
-                    type: integer
-                - description: Last processed merkleroot in client's database
-                  example: ac973196d58e42da6ad030dc39f5fcc343bd040e1db29b30c146e9aea9354bab
-                  in: query
-                  name: lastEvaluatedKey
-                  schema:
-                    default: ""
-                    type: string
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_GetMerklerootsSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_GetMerklerootsBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "404":
-                    $ref: '#/components/responses/responses_GetMerklerootsNotFound'
-                "409":
-                    $ref: '#/components/responses/responses_GetMerklerootsConflict'
-                "500":
-                    $ref: '#/components/responses/responses_GetMerklerootsInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Get Merkleroots
-            tags:
-                - Merkleroots
-    /api/v2/operations/search:
-        get:
-            description: This endpoint allows to search operations for authenticated user
-            operationId: searchOperations
-            parameters:
-                - $ref: '#/components/parameters/requests_PageNumber'
-                - $ref: '#/components/parameters/requests_PageSize'
-                - $ref: '#/components/parameters/requests_Sort'
-                - $ref: '#/components/parameters/requests_SortBy'
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_SearchOperationsSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_SearchBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "500":
-                    $ref: '#/components/responses/responses_InternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Get operations for user
-            tags:
-                - Operations
-    /api/v2/transactions:
-        post:
-            description: This endpoint allows to record transaction outline for authenticated user
-            operationId: recordTransactionOutline
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_TransactionOutline'
-                required: true
-            responses:
-                "201":
-                    $ref: '#/components/responses/responses_RecordTransactionSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_RecordTransactionBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "500":
-                    $ref: '#/components/responses/responses_RecordTransactionInternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Record transaction outline
-            tags:
-                - Transactions
-    /api/v2/transactions/outlines:
-        post:
-            description: This endpoint allows to create transaction outline for authenticated user
-            operationId: createTransactionOutline
-            parameters:
-                - description: Required format of transaction hex
-                  example: beef
-                  in: query
-                  name: format
-                  schema:
-                    default: beef
-                    enum:
-                        - beef
-                        - raw
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_TransactionSpecification'
-                required: true
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_CreateTransactionOutlineSuccess'
-                "400":
-                    $ref: '#/components/responses/responses_CreateTransactionOutlineBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "422":
-                    $ref: '#/components/responses/responses_CreateTransactionOutlineUnprocessable'
-                "500":
-                    $ref: '#/components/responses/responses_InternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Create transaction outline
-            tags:
-                - Transactions
-    /api/v2/users/address:
-        post:
-            operationId: createAddress
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/requests_CreatePaymailAddress'
-                required: true
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_PaymailAddress'
-                "400":
-                    $ref: '#/components/responses/responses_UserBadRequest'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "500":
-                    $ref: '#/components/responses/responses_InternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Create Paymail Address
-            tags:
-                - User
-    /api/v2/users/current:
-        delete:
-            description: This endpoint will delete current user with associated paymails, addresses, operations and tracked outputs You cannot delete user with balance larger than 0
-            operationId: deleteCurrentUser
-            responses:
-                "200":
-                    description: Success
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "500":
-                    $ref: '#/components/responses/responses_InternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Delete current user
-            tags:
-                - User
-        get:
-            description: This endpoint return balance of current authenticated user
-            operationId: currentUser
-            responses:
-                "200":
-                    $ref: '#/components/responses/responses_GetCurrentUserSuccess'
-                "401":
-                    $ref: '#/components/responses/responses_UserNotAuthorized'
-                "500":
-                    $ref: '#/components/responses/responses_InternalServerError'
-            security:
-                - XPubAuth:
-                    - user
-            summary: Get current user
-            tags:
-                - User
-components:
-    parameters:
-        requests_PageNumber:
-            description: Page number for pagination
-            example: 1
-            in: query
-            name: page
+  /api/v2/admin/contacts/{id}:
+    delete:
+      description: This endpoint deletes contact.
+      operationId: adminDeleteContact
+      parameters:
+        - description: Contact ID
+          in: path
+          name: id
+          required: true
+          schema:
+            format: uint
+            type: integer
+      responses:
+        "200":
+          description: Contact deleted
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Delete contact
+      tags:
+        - Admin endpoints
+    put:
+      description: This endpoint updates contact.
+      operationId: adminUpdateContact
+      parameters:
+        - description: Contact ID
+          in: path
+          name: id
+          required: true
+          schema:
+            format: uint
+            type: integer
+      requestBody:
+        content:
+          application/json:
             schema:
-                type: integer
-        requests_PageSize:
-            description: Number of items per page
-            example: 10
-            in: query
-            name: size
+              $ref: '#/components/schemas/requests_UpdateContact'
+        required: true
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_ContactSuccess'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Update contact
+      tags:
+        - Admin endpoints
+  /api/v2/admin/contacts/{paymail}:
+    post:
+      description: This endpoint creates contact.
+      operationId: adminCreateContact
+      parameters:
+        - description: Contact paymail
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
             schema:
-                type: integer
-        requests_Sort:
-            description: Sorting order (asc or desc)
-            example: asc
-            in: query
-            name: sort
+              $ref: '#/components/schemas/requests_AdminCreateContact'
+        required: true
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_ContactSuccess'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Create contact
+      tags:
+        - Admin endpoints
+  /api/v2/admin/contacts/confirmations:
+    post:
+      description: This endpoint confirms contact.
+      operationId: adminConfirmContact
+      requestBody:
+        content:
+          application/json:
             schema:
-                type: string
-        requests_SortBy:
-            description: Field to sort by
-            example: name
-            in: query
-            name: sortBy
+              $ref: '#/components/schemas/requests_AdminConfirmContact'
+        required: true
+      responses:
+        "200":
+          description: Contact confirmed
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Confirm contact
+      tags:
+        - Admin endpoints
+  /api/v2/admin/invitations/{id}:
+    delete:
+      description: This endpoint allows to reject invitation for selected ID
+      operationId: adminRejectInvitation
+      parameters:
+        - description: ID of the contact that the admin would like to reject
+          in: path
+          name: id
+          required: true
+          schema:
+            format: uint
+            type: integer
+      responses:
+        "200":
+          description: Invitation rejected
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Reject invitation
+      tags:
+        - Admin endpoints
+    post:
+      description: This endpoint allows to accept invitation for selected ID
+      operationId: adminAcceptInvitation
+      parameters:
+        - description: ID of the contact that the admin would like to accept
+          in: path
+          name: id
+          required: true
+          schema:
+            format: uint
+            type: integer
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_ContactSuccess'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Accept invitation
+      tags:
+        - Admin endpoints
+  /api/v2/admin/status:
+    get:
+      description: This endpoint returns admin status. It is used to check if authorization header contain admin xpub.
+      operationId: adminStatus
+      responses:
+        "200":
+          description: Success
+        "401":
+          $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Get admin status
+      tags:
+        - Admin endpoints
+  /api/v2/admin/transactions/record:
+    post:
+      description: This endpoint allows for admin to record outline transaction for user with given id.
+      operationId: recordTransactionOutlineForUser
+      requestBody:
+        content:
+          application/json:
             schema:
-                type: string
-    responses:
-        responses_AdminAddPaymailSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_Paymail'
-            description: Paymail added to user
-        responses_AdminCreateUserSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_User'
-            description: User created
-        responses_AdminGetUser:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_User'
-            description: User found
-        responses_AdminRecordTransactionOutlineForUserSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_RecordedOutline'
-            description: Transaction outline for user recorded
-        responses_ContactNotFound:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_ContactNotFound'
-            description: Not found is an error that occurs when the requested resource is not found.
-        responses_ContactSuccess:
-            content:
-                application/json:
-                    schema:
-                        allOf:
-                            - $ref: '#/components/schemas/models_Contact'
-            description: Contact success
-        responses_ContactUpsertInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_GetContact'
-                            - $ref: '#/components/schemas/errors_ContactFailedToUpdate'
-            description: Contact search internal server error
-        responses_CreateTransactionOutlineBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_TxSpecNoDefaultPaymailAddress'
-                            - $ref: '#/components/schemas/errors_TxSpecOutputsRequired'
-                            - $ref: '#/components/schemas/errors_TxSpecOpReturnDataRequired'
-                            - $ref: '#/components/schemas/errors_TxSpecFailedToDecodeHex'
-                            - $ref: '#/components/schemas/errors_TxSpecInvalidPaymailReceiver'
-                            - $ref: '#/components/schemas/errors_TxSpecInvalidPaymailSender'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_CreateTransactionOutlineSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_AnnotatedTransactionOutline'
-            description: Created transaction outline
-        responses_CreateTransactionOutlineUnprocessable:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_TxOutlineUserHasNotEnoughFunds'
-            description: Unprocessable entity is an error that occurs when the request cannot be fulfilled.
-        responses_DeleteContactInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_DeleteContact'
-            description: Delete contact internal server error
-        responses_GetContactInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_GetContact'
-            description: Get contact internal server error
-        responses_GetCurrentUserSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_UserInfo'
-            description: Balance of current authenticated user
-        responses_GetDataNotFound:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_DataNotFound'
-            description: Not found is an error that occurs when the requested resource is not found.
-        responses_GetDataSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_Data'
-            description: Data found
-        responses_GetMerklerootsBadRequest:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_InvalidBatchSize'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_GetMerklerootsConflict:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_MerkleRootNotInLongestChain'
-            description: Conflict is an error that occurs when the request conflicts with the current state of the server.
-        responses_GetMerklerootsInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_BHSUnreachable'
-                            - $ref: '#/components/schemas/errors_BHSNoSuccessResponse'
-                            - $ref: '#/components/schemas/errors_BHSUnauthorized'
-                            - $ref: '#/components/schemas/errors_BHSBadRequest'
-                            - $ref: '#/components/schemas/errors_BHSUnhealthy'
-                            - $ref: '#/components/schemas/errors_BHSBadURL'
-                            - $ref: '#/components/schemas/errors_BHSParsingResponse'
-            description: Internal server error
-        responses_GetMerklerootsNotFound:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_MerkleRootNotFound'
-            description: Not found is an error that occurs when the requested resource is not found.
-        responses_GetMerklerootsSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_GetMerkleRootResult'
-            description: Merkleroots found
-        responses_GetWebhooksInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_Internal'
-            description: Internal server error
-        responses_GetWebhooksSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_Webhooks'
-            description: Webhooks found
-        responses_InternalServerError:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_Internal'
-            description: Internal server error
-        responses_NotAuthorized:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_AnyAuthorization'
-            description: Security requirements failed
-        responses_NotAuthorizedToAdminEndpoint:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_AdminAuthorization'
-            description: Security requirements failed
-        responses_NotificationsDisabled:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_NotificationsDisabled'
-            description: Notifications disabled
-        responses_PaymailAddress:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_Paymail'
-            description: Paymail address created successfully
-        responses_ProblemDetails:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_ProblemDetails'
-            description: RFC 7807 Problem Details. For 4xx codes, you can switch by 'type' field to get more specific error.
-        responses_RecordTransactionBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_InvalidDataID'
-                            - $ref: '#/components/schemas/errors_AnnotationIndexOutOfRange'
-                            - $ref: '#/components/schemas/errors_UTXOSpent'
-                            - $ref: '#/components/schemas/errors_AnnotationIndexConversion'
-                            - $ref: '#/components/schemas/errors_NoOperations'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_RecordTransactionInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_GettingOutputs'
-                            - $ref: '#/components/schemas/errors_TxBroadcast'
-            description: Internal server error
-        responses_RecordTransactionSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_RecordedOutline'
-            description: Transaction recorded
-        responses_SearchBadRequest:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_InvalidDataID'
-            description: Error when search request is malformed and params can not be parsed
-        responses_SearchOperationsSuccess:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_OperationsSearchResult'
-            description: Operations found
-        responses_SharedConfig:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/models_SharedConfig'
-            description: Shared config
-        responses_SubscribeToWebhookBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CannotBindRequest'
-                            - $ref: '#/components/schemas/errors_WebhookUrlRequired'
-                            - $ref: '#/components/schemas/errors_WebhookUrlInvalid'
-                            - $ref: '#/components/schemas/errors_WebhookTokenHeaderRequired'
-                            - $ref: '#/components/schemas/errors_WebhookTokenValueRequired'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_SubscribeToWebhookInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_CannotBindRequest'
-            description: Internal server error
-        responses_UnsubscribeToWebhookInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_CannotBindRequest'
-            description: Internal server error
-        responses_UpdateContactBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_ContactInWrongStatus'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_UpdateContactInternalServerError:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_Internal'
-                            - $ref: '#/components/schemas/errors_UpdateContactStatus'
-            description: Update contact status internal server error
-        responses_UpsertContactBadRequest:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CannotBindRequest'
-                            - $ref: '#/components/schemas/errors_UserDoNotOwnPaymail'
-                            - $ref: '#/components/schemas/errors_ContactInvalidPaymail'
-                            - $ref: '#/components/schemas/errors_GettingPKIFailed'
-                            - $ref: '#/components/schemas/errors_SaveContact'
-                            - $ref: '#/components/schemas/errors_ContactFullNameRequired'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_UpsertContactNotFound:
-            content:
-                application/json:
-                    schema:
-                        oneOf:
-                            - $ref: '#/components/schemas/errors_CouldNotFindPaymail'
-            description: Not found is an error that occurs when the requested resource is not found.
-        responses_UserBadRequest:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_InvalidDataID'
-            description: Bad request is an error that occurs when the request is malformed.
-        responses_UserNotAuthorized:
-            content:
-                application/json:
-                    schema:
-                        $ref: '#/components/schemas/errors_UserAuthorization'
-            description: Security requirements failed
-    schemas:
-        errors_AdminAuthOnNonAdminEndpoint:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-admin-auth-on-non-admin-endpoint
-                    message:
-                        example: cannot call non-admin endpoints with admin authorization
-                  type: object
-        errors_AdminAuthorization:
-            oneOf:
-                - $ref: '#/components/schemas/errors_UserAuthOnNonUserEndpoint'
-                - $ref: '#/components/schemas/errors_AuthXPubRequired'
-        errors_AnnotationIndexConversion:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-annotation-index-conversion
-                    message:
-                        example: failed to convert annotation index
-                  type: object
-        errors_AnnotationIndexOutOfRange:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-annotation-index-out-of-range
-                    message:
-                        example: annotation index out of range
-                  type: object
-        errors_AnyAuthorization:
-            oneOf:
-                - $ref: '#/components/schemas/errors_Unauthorized'
-                - $ref: '#/components/schemas/errors_AuthXPubRequired'
-        errors_AuthXPubRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-xpub-authorization-required
-                    message:
-                        example: xpub authorization required
-                  type: object
-        errors_BHSBadRequest:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-bad-request
-                    message:
-                        example: Block Headers Service bad request
-                  type: object
-        errors_BHSBadURL:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-bad-url
-                    message:
-                        example: cannot create Block Headers Service url. Please check your configuration
-                  type: object
-        errors_BHSNoSuccessResponse:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-no-success-response
-                    message:
-                        example: Block Headers Service request did not return a success response
-                  type: object
-        errors_BHSParsingResponse:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-parse-response
-                    message:
-                        example: cannot parse Block Headers Service response
-                  type: object
-        errors_BHSUnauthorized:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-unauthorized
-                    message:
-                        example: Block Headers Service returned unauthorized
-                  type: object
-        errors_BHSUnhealthy:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-unhealthy
-                    message:
-                        example: Block Headers Service is unhealthy
-                  type: object
-        errors_BHSUnreachable:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bhs-unreachable
-                    message:
-                        example: Block Headers Service cannot be requested
-                  type: object
-        errors_CannotBindRequest:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-bind-body-invalid
-                    message:
-                        example: cannot bind request body
-                  type: object
-        errors_ContactFailedToUpdate:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-updating-contact-failed
-                    message:
-                        example: updating contact failed
-                  type: object
-        errors_ContactFullNameRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-full-name-required
-                    message:
-                        example: full name is required
-                  type: object
-        errors_ContactInWrongStatus:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-wrong-status
-                    message:
-                        example: contact is in wrong status
-                  type: object
-        errors_ContactInvalidPaymail:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contacts-invalid-paymail
-                    message:
-                        example: invalid paymail
-                  type: object
-        errors_ContactNotFound:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-not-found
-                    message:
-                        example: contact not found
-                  type: object
-        errors_CouldNotFindPaymail:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-paymail-not-found
-                    message:
-                        example: paymail not found
-                  type: object
-        errors_DataNotFound:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-data-not-found
-                    message:
-                        example: data not found
-                  type: object
-        errors_DeleteContact:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-deleting-contact-failed
-                    message:
-                        example: deleting contact failed
-                  type: object
-        errors_GetContact:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-getting-contact-failed
-                    message:
-                        example: getting contact failed
-                  type: object
-        errors_GettingOutputs:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-getting-outputs
-                    message:
-                        example: failed to get outputs
-                  type: object
-        errors_GettingPKIFailed:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-getting-pki-failed
-                    message:
-                        example: getting pki for contact failed
-                  type: object
-        errors_Internal:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-internal-server-error
-                    message:
-                        example: internal server error
-                  type: object
-        errors_InvalidBatchSize:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-invalid-batch-size
-                    message:
-                        example: batchSize must be 0 or a positive integer
-                  type: object
-        errors_InvalidDataID:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-invalid-data-id
-                    message:
-                        example: invalid data id
-                  type: object
-        errors_MerkleRootNotFound:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-merkleroot-not-found
-                    message:
-                        example: No block with provided merkleroot was found
-                  type: object
-        errors_MerkleRootNotInLongestChain:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-merkleroot-not-part-of-longest-chain
-                    message:
-                        example: Provided merkleroot is not part of the longest chain
-                  type: object
-        errors_NoOperations:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-no-operations
-                    message:
-                        example: no operations to save
-                  type: object
-        errors_NotificationsDisabled:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-notifications-disabled
-                    message:
-                        example: notifications are disabled
-                  type: object
-        errors_ProblemDetails:
-            properties:
-                detail:
-                    description: A human-readable explanation specific to this occurrence of the problem
-                    type: string
-                instance:
-                    description: A URI reference that identifies the specific occurrence of the problem
-                    type: string
-                status:
-                    description: The HTTP status code
-                    type: integer
-                title:
-                    description: A short, human-readable summary of the problem type
-                    type: string
-                type:
-                    description: A URI reference that identifies the problem type
-                    type: string
-            required:
-                - type
-                - title
-                - status
-                - detail
-                - instance
-            type: object
-        errors_SaveContact:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-adding-contact-failed
-                    message:
-                        example: adding contact failed
-                  type: object
-        errors_Schema:
-            additionalProperties: false
-            properties:
-                code:
-                    description: Error code
-                    type: string
-                message:
-                    description: Error message
-                    type: string
-            required:
-                - code
-                - message
-            type: object
-        errors_TxBroadcast:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-tx-broadcast
-                    message:
-                        example: failed to broadcast transaction
-                  type: object
-        errors_TxOutlineUserHasNotEnoughFunds:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: tx-outline-not-enough-funds
-                    message:
-                        example: not enough funds to make the transaction
-                  type: object
-        errors_TxSpecFailedToDecodeHex:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: failed-to-decode-hex
-                    message:
-                        example: failed to decode hex
-                  type: object
-        errors_TxSpecInvalidPaymailReceiver:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-paymail-address-invalid-receiver
-                    message:
-                        example: receiver paymail address is invalid
-                  type: object
-        errors_TxSpecInvalidPaymailSender:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-paymail-address-invalid-sender
-                    message:
-                        example: sender paymail address is invalid
-                  type: object
-        errors_TxSpecNoDefaultPaymailAddress:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-tx-spec-no-default-paymail-address
-                    message:
-                        example: no default paymail address
-                  type: object
-        errors_TxSpecOpReturnDataRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: tx-spec-op-return-data-required
-                    message:
-                        example: data is required for OP_RETURN output
-                  type: object
-        errors_TxSpecOutputsRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: tx-spec-output-required
-                    message:
-                        example: transaction outline requires at least one output
-                  type: object
-        errors_UTXOSpent:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        enum:
-                            - error-utxo-spent
-                        example: error-utxo-spent
-                    message:
-                        enum:
-                            - UTXO is already spent
-                        example: UTXO is already spent
-                  type: object
-        errors_Unauthorized:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-unauthorized
-                    message:
-                        example: unauthorized
-                  type: object
-        errors_UpdateContactStatus:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-contact-updating-status-failed
-                    message:
-                        example: updating contact status failed
-                  type: object
-        errors_UserAuthOnNonUserEndpoint:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-user-auth-on-non-user-endpoint
-                    message:
-                        example: cannot call non-user endpoints with user authorization
-                  type: object
-        errors_UserAuthorization:
-            oneOf:
-                - $ref: '#/components/schemas/errors_Unauthorized'
-                - $ref: '#/components/schemas/errors_AdminAuthOnNonAdminEndpoint'
-                - $ref: '#/components/schemas/errors_AuthXPubRequired'
-        errors_UserDoNotOwnPaymail:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-paymail-user-do-not-own
-                    message:
-                        example: user do not own paymail
-                  type: object
-        errors_WebhookTokenHeaderRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-webhook-token-header-required
-                    message:
-                        example: webhook token header is required
-                  type: object
-        errors_WebhookTokenValueRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-webhook-token-value-required
-                    message:
-                        example: webhook token value is required
-                  type: object
-        errors_WebhookUrlInvalid:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-webhook-url-invalid
-                    message:
-                        example: webhook url is invalid
-                  type: object
-        errors_WebhookUrlRequired:
-            allOf:
-                - $ref: '#/components/schemas/errors_Schema'
-                - properties:
-                    code:
-                        example: error-webhook-url-required
-                    message:
-                        example: webhook url is required
-                  type: object
-        models_AnnotatedTransactionOutline:
-            allOf:
-                - $ref: '#/components/schemas/models_TransactionHex'
-                - properties:
-                    annotations:
-                        $ref: '#/components/schemas/models_OutlineAnnotations'
-                  type: object
-        models_BucketAnnotation:
-            properties:
-                bucket:
-                    description: Type of bucket where this output should be stored.
-                    example: bsv
-                    type: string
-            required:
-                - bucket
-            type: object
-        models_ChangeAnnotation:
-            properties:
-                customInstructions:
-                    $ref: '#/components/schemas/models_SPVWalletCustomInstructions'
-            type: object
-        models_Contact:
-            allOf:
-                - $ref: '#/components/schemas/models_Model'
-                - properties:
-                    fullName:
-                        example: Test User
-                        type: string
-                    id:
-                        example: 1
-                        format: uint
-                        type: integer
-                    paymail:
-                        example: alice@spv-wallet.com
-                        type: string
-                    pubKey:
-                        example: xpub661MyMwAqRbcGpZVrSHU...
-                        type: string
-                    status:
-                        $ref: '#/components/schemas/models_ContactStatus'
-                  required:
-                    - id
-                    - fullName
-                    - pubKey
-                    - status
-                    - paymail
-                  type: object
-        models_ContactStatus:
+              $ref: '#/components/schemas/requests_RecordTransactionOutlineForUser'
+        required: true
+      responses:
+        "201":
+          $ref: '#/components/responses/responses_AdminRecordTransactionOutlineForUserSuccess'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Record transaction outline for user
+      tags:
+        - Admin endpoints
+  /api/v2/admin/users:
+    post:
+      description: This endpoint creates a new user.
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_CreateUser'
+        required: true
+      responses:
+        "201":
+          $ref: '#/components/responses/responses_AdminCreateUserSuccess'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Create user
+      tags:
+        - Admin endpoints
+  /api/v2/admin/users/{id}:
+    get:
+      description: This endpoint gets user by id.
+      operationId: userById
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_AdminGetUser'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Get user by id
+      tags:
+        - Admin endpoints
+  /api/v2/admin/users/{id}/paymails:
+    post:
+      description: This endpoint add paymails to user with given id.
+      operationId: addPaymailToUser
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_AddPaymail'
+        required: true
+      responses:
+        "201":
+          $ref: '#/components/responses/responses_AdminAddPaymailSuccess'
+        default:
+          $ref: '#/components/responses/responses_ProblemDetails'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Add paymails to user
+      tags:
+        - Admin endpoints
+  /api/v2/admin/webhooks:
+    delete:
+      description: This endpoint deletes all webhooks.
+      operationId: unsubscribeWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_UnsubscribeWebhook'
+        required: true
+      responses:
+        "200":
+          description: Webhooks deleted
+        "401":
+          $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
+        "404":
+          $ref: '#/components/responses/responses_NotificationsDisabled'
+        "500":
+          $ref: '#/components/responses/responses_UnsubscribeToWebhookInternalServerError'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Delete webhooks
+      tags:
+        - Admin endpoints
+    get:
+      description: This endpoint gets all webhooks.
+      operationId: webhooks
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_GetWebhooksSuccess'
+        "401":
+          $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
+        "404":
+          $ref: '#/components/responses/responses_NotificationsDisabled'
+        "500":
+          $ref: '#/components/responses/responses_GetWebhooksInternalServerError'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Get webhooks
+      tags:
+        - Admin endpoints
+    post:
+      description: This endpoint creates a new webhook.
+      operationId: subscribeWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_SubscribeWebhook'
+        required: true
+      responses:
+        "200":
+          description: Success
+        "400":
+          $ref: '#/components/responses/responses_SubscribeToWebhookBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_NotAuthorizedToAdminEndpoint'
+        "404":
+          $ref: '#/components/responses/responses_NotificationsDisabled'
+        "500":
+          $ref: '#/components/responses/responses_SubscribeToWebhookInternalServerError'
+      security:
+        - XPubAuth:
+            - admin
+      summary: Create webhook
+      tags:
+        - Admin endpoints
+  /api/v2/configs/shared:
+    get:
+      description: This endpoint returns shared config. It can be obtained by both admin and user.
+      operationId: sharedConfig
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_SharedConfig'
+        "401":
+          $ref: '#/components/responses/responses_NotAuthorized'
+      security:
+        - XPubAuth:
+            - admin
+            - user
+      summary: Get shared config
+      tags:
+        - Admin endpoints
+        - Configurations
+  /api/v2/contacts/{paymail}:
+    delete:
+      description: This endpoint allows to remove contact for authenticated user
+      operationId: removeContact
+      parameters:
+        - description: Paymail address of the contact that the user would like to remove
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success - contact removed
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "500":
+          $ref: '#/components/responses/responses_DeleteContactInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Remove contact
+      tags:
+        - Contacts
+    get:
+      description: This endpoint allows to get contact for authenticated user
+      operationId: getContact
+      parameters:
+        - description: Paymail address of the contact that the user would like to get
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_ContactSuccess'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_ContactNotFound'
+        "500":
+          $ref: '#/components/responses/responses_GetContactInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Get contact
+      tags:
+        - Contacts
+    put:
+      description: Add or update contact. When adding a new contact, the system utilizes Paymail's PIKE capability to dispatch an invitation request, asking the counterparty to include the current user in their contacts.
+      operationId: upsertContact
+      parameters:
+        - description: Paymail address of the contact that the user would like to add/modify
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_UpsertContact'
+        required: true
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_ContactSuccess'
+        "400":
+          $ref: '#/components/responses/responses_UpsertContactBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_UpsertContactNotFound'
+        "500":
+          $ref: '#/components/responses/responses_ContactUpsertInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Add contact
+      tags:
+        - Contacts
+  /api/v2/contacts/{paymail}/confirmation:
+    delete:
+      description: Unconfirm contact. For contact with status "confirmed" change status to "unconfirmed"
+      operationId: unconfirmContact
+      parameters:
+        - description: Paymail address of the contact that the user would like to unconfirm
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success - contact removed
+        "400":
+          $ref: '#/components/responses/responses_UpdateContactBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_ContactNotFound'
+        "500":
+          $ref: '#/components/responses/responses_UpdateContactInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Unconfirm contact
+      tags:
+        - Contacts
+    post:
+      description: This endpoint allows to confirm contact for authenticated user
+      operationId: confirmContact
+      parameters:
+        - description: Paymail address of the contact that the user would like to confirm
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success - contact confirmed
+        "400":
+          $ref: '#/components/responses/responses_UpdateContactBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_ContactNotFound'
+        "500":
+          $ref: '#/components/responses/responses_UpdateContactInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Confirm contact
+      tags:
+        - Contacts
+  /api/v2/data/{id}:
+    get:
+      description: This endpoint gets data by its id for authenticated user
+      operationId: dataById
+      parameters:
+        - description: Data ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_GetDataSuccess'
+        "400":
+          $ref: '#/components/responses/responses_UserBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_GetDataNotFound'
+        "500":
+          $ref: '#/components/responses/responses_InternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Get data for user
+      tags:
+        - Data
+  /api/v2/invitations/{paymail}:
+    delete:
+      description: This endpoint allows to reject invitation for authenticated user
+      operationId: rejectInvitation
+      parameters:
+        - description: Paymail address of the contact that the user would like to reject
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success - invitation removed
+        "400":
+          $ref: '#/components/responses/responses_UpdateContactBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_ContactNotFound'
+        "500":
+          $ref: '#/components/responses/responses_UpdateContactInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Reject invitation
+      tags:
+        - Contacts
+  /api/v2/invitations/{paymail}/contacts:
+    post:
+      description: This endpoint allows to accept invitation for authenticated user
+      operationId: acceptInvitation
+      parameters:
+        - description: Paymail address of the contact that the user would like to accept
+          in: path
+          name: paymail
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success - invitation accepted
+        "400":
+          $ref: '#/components/responses/responses_UpdateContactBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_ContactNotFound'
+        "500":
+          $ref: '#/components/responses/responses_UpdateContactInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Accept invitation
+      tags:
+        - Contacts
+  /api/v2/merkleroots:
+    get:
+      description: This endpoint fetches merkleroots from block header service according to the given query parameters.
+      operationId: merkleRoots
+      parameters:
+        - description: Batch size of merkleroots to be returned
+          example: 100
+          in: query
+          name: batchSize
+          schema:
+            default: 2000
+            minimum: 0
+            type: integer
+        - description: Last processed merkleroot in client's database
+          example: ac973196d58e42da6ad030dc39f5fcc343bd040e1db29b30c146e9aea9354bab
+          in: query
+          name: lastEvaluatedKey
+          schema:
+            default: ""
+            type: string
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_GetMerklerootsSuccess'
+        "400":
+          $ref: '#/components/responses/responses_GetMerklerootsBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "404":
+          $ref: '#/components/responses/responses_GetMerklerootsNotFound'
+        "409":
+          $ref: '#/components/responses/responses_GetMerklerootsConflict'
+        "500":
+          $ref: '#/components/responses/responses_GetMerklerootsInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Get Merkleroots
+      tags:
+        - Merkleroots
+  /api/v2/operations/search:
+    get:
+      description: This endpoint allows to search operations for authenticated user
+      operationId: searchOperations
+      parameters:
+        - $ref: '#/components/parameters/requests_PageNumber'
+        - $ref: '#/components/parameters/requests_PageSize'
+        - $ref: '#/components/parameters/requests_Sort'
+        - $ref: '#/components/parameters/requests_SortBy'
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_SearchOperationsSuccess'
+        "400":
+          $ref: '#/components/responses/responses_SearchBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "500":
+          $ref: '#/components/responses/responses_InternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Get operations for user
+      tags:
+        - Operations
+  /api/v2/transactions:
+    post:
+      description: This endpoint allows to record transaction outline for authenticated user
+      operationId: recordTransactionOutline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_TransactionOutline'
+        required: true
+      responses:
+        "201":
+          $ref: '#/components/responses/responses_RecordTransactionSuccess'
+        "400":
+          $ref: '#/components/responses/responses_RecordTransactionBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "500":
+          $ref: '#/components/responses/responses_RecordTransactionInternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Record transaction outline
+      tags:
+        - Transactions
+  /api/v2/transactions/outlines:
+    post:
+      description: This endpoint allows to create transaction outline for authenticated user
+      operationId: createTransactionOutline
+      parameters:
+        - description: Required format of transaction hex
+          example: beef
+          in: query
+          name: format
+          schema:
+            default: beef
             enum:
-                - unconfirmed
-                - awaiting
-                - confirmed
-                - rejected
-            example: confirmed
+              - beef
+              - raw
             type: string
-        models_CustomInstructions:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_TransactionSpecification'
+        required: true
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_CreateTransactionOutlineSuccess'
+        "400":
+          $ref: '#/components/responses/responses_CreateTransactionOutlineBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "422":
+          $ref: '#/components/responses/responses_CreateTransactionOutlineUnprocessable'
+        "500":
+          $ref: '#/components/responses/responses_InternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Create transaction outline
+      tags:
+        - Transactions
+  /api/v2/users/address:
+    post:
+      operationId: createAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requests_CreatePaymailAddress'
+        required: true
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_PaymailAddress'
+        "400":
+          $ref: '#/components/responses/responses_UserBadRequest'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "500":
+          $ref: '#/components/responses/responses_InternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Create Paymail Address
+      tags:
+        - User
+  /api/v2/users/current:
+    delete:
+      description: This endpoint will delete current user with associated paymails, addresses, operations and tracked outputs You cannot delete user with balance larger than 0
+      operationId: deleteCurrentUser
+      responses:
+        "200":
+          description: Success
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "500":
+          $ref: '#/components/responses/responses_InternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Delete current user
+      tags:
+        - User
+    get:
+      description: This endpoint return balance of current authenticated user
+      operationId: currentUser
+      responses:
+        "200":
+          $ref: '#/components/responses/responses_GetCurrentUserSuccess'
+        "401":
+          $ref: '#/components/responses/responses_UserNotAuthorized'
+        "500":
+          $ref: '#/components/responses/responses_InternalServerError'
+      security:
+        - XPubAuth:
+            - user
+      summary: Get current user
+      tags:
+        - User
+components:
+  parameters:
+    requests_PageNumber:
+      description: Page number for pagination
+      example: 1
+      in: query
+      name: page
+      schema:
+        type: integer
+    requests_PageSize:
+      description: Number of items per page
+      example: 10
+      in: query
+      name: size
+      schema:
+        type: integer
+    requests_Sort:
+      description: Sorting order (asc or desc)
+      example: asc
+      in: query
+      name: sort
+      schema:
+        type: string
+    requests_SortBy:
+      description: Field to sort by
+      example: name
+      in: query
+      name: sortBy
+      schema:
+        type: string
+  responses:
+    responses_AdminAddPaymailSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_Paymail'
+      description: Paymail added to user
+    responses_AdminCreateUserSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_User'
+      description: User created
+    responses_AdminGetUser:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_User'
+      description: User found
+    responses_AdminRecordTransactionOutlineForUserSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_RecordedOutline'
+      description: Transaction outline for user recorded
+    responses_ContactNotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_ContactNotFound'
+      description: Not found is an error that occurs when the requested resource is not found.
+    responses_ContactSuccess:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/models_Contact'
+      description: Contact success
+    responses_ContactUpsertInternalServerError:
+      content:
+        application/json:
+          schema:
             oneOf:
-                - $ref: '#/components/schemas/models_SPVWalletCustomInstructions'
-                - $ref: '#/components/schemas/models_UserDefinedCustomInstructions'
-        models_Data:
-            properties:
-                blob:
-                    description: Data blob
-                    type: string
-                id:
-                    description: User ID
-                    type: string
-            required:
-                - id
-                - blob
-            type: object
-        models_DataAnnotation:
-            properties:
-                bucket:
-                    default: data
-                    enum:
-                        - data
-                    example: data
-                    type: string
-            required:
-                - bucket
-            type: object
-        models_ExclusiveStartKeySearchPage:
-            properties:
-                lastEvaluatedKey:
-                    description: Last evaluated key
-                    example: ac973196d58e42da6ad030dc39f5fcc343bd040e1db29b30c146e9aea9354bab
-                    type: string
-                size:
-                    description: Number of items in returned data
-                    example: 50
-                    type: integer
-                totalElements:
-                    description: Total number of items
-                    example: 456
-                    type: integer
-            required:
-                - totalElements
-                - size
-                - lastEvaluatedKey
-            type: object
-        models_GetMerkleRootResult:
-            properties:
-                content:
-                    items:
-                        $ref: '#/components/schemas/models_MerkleRoot'
-                    type: array
-                page:
-                    $ref: '#/components/schemas/models_ExclusiveStartKeySearchPage'
-            required:
-                - content
-                - page
-            type: object
-        models_InputAnnotation:
-            properties:
-                customInstructions:
-                    $ref: '#/components/schemas/models_CustomInstructions'
-            required:
-                - customInstructions
-            type: object
-        models_InputsAnnotations:
-            properties:
-                inputs:
-                    additionalProperties:
-                        $ref: '#/components/schemas/models_InputAnnotation'
-                    description: Map of input annotations
-                    example:
-                        "0":
-                            customInstructions:
-                                - instruction: P2PKH
-                                  type: sign
-                    type: object
-            required:
-                - inputs
-            type: object
-        models_MerkleRoot:
-            properties:
-                blockHeight:
-                    description: Block height
-                    example: 1234
-                    type: integer
-                merkleRoot:
-                    description: Transaction ID
-                    example: bb8593f85ef8056a77026ad415f02128f3768906de53e9e8bf8749fe2d66cf50
-                    type: string
-            required:
-                - merkleRoot
-                - blockHeight
-            type: object
-        models_Model:
-            properties:
-                createdAt:
-                    example: "2025-01-01T00:00:00Z"
-                    format: date-time
-                    type: string
-                deletedAt:
-                    example: "2025-01-01T00:00:00Z"
-                    format: date-time
-                    type: string
-                updatedAt:
-                    example: "2025-01-01T00:00:00Z"
-                    format: date-time
-                    type: string
-            required:
-                - createdAt
-                - updatedAt
-            type: object
-        models_Operation:
-            properties:
-                blockHash:
-                    description: Block hash of underlying transaction
-                    example: 000000000000000000d3577fe46b2329cce684cbcad2e8ae2129bd8874764258
-                    type: string
-                blockHeight:
-                    description: Block height of underlying transaction
-                    example: 1234
-                    type: integer
-                    x-go-type: int64
-                counterparty:
-                    description: Counterparty of operation
-                    example: alice@example.com
-                    type: string
-                createdAt:
-                    description: Creation date of operation
-                    example: "2020-01-23T04:05:06Z"
-                    format: date-time
-                    type: string
-                txID:
-                    description: Transaction ID
-                    example: bb8593f85ef8056a77026ad415f02128f3768906de53e9e8bf8749fe2d66cf50
-                    type: string
-                txStatus:
-                    description: Status of transaction
-                    enum:
-                        - CREATED
-                        - BROADCASTED
-                        - MINED
-                        - REVERTED
-                        - PROBLEMATIC
-                    example: BROADCASTED
-                    type: string
-                type:
-                    description: Type of operation
-                    enum:
-                        - incoming
-                        - outgoing
-                    example: incoming
-                    type: string
-                value:
-                    description: Value of operation
-                    example: 1234
-                    format: int64
-                    type: integer
-            required:
-                - value
-                - txID
-                - type
-                - counterparty
-                - txStatus
-                - createdAt
-            type: object
-        models_OperationsSearchResult:
-            properties:
-                content:
-                    items:
-                        $ref: '#/components/schemas/models_Operation'
-                    type: array
-                page:
-                    $ref: '#/components/schemas/models_SearchPage'
-            required:
-                - content
-                - page
-            type: object
-        models_OutlineAnnotations:
-            allOf:
-                - $ref: '#/components/schemas/models_InputsAnnotations'
-                - $ref: '#/components/schemas/models_OutputsAnnotations'
-        models_OutputAnnotation:
-            allOf:
-                - $ref: '#/components/schemas/models_BucketAnnotation'
-                - $ref: '#/components/schemas/models_DataAnnotation'
-                - $ref: '#/components/schemas/models_PaymailAnnotation'
-                - $ref: '#/components/schemas/models_ChangeAnnotation'
-        models_OutputsAnnotations:
-            properties:
-                outputs:
-                    additionalProperties:
-                        $ref: '#/components/schemas/models_OutputAnnotation'
-                    description: Map of output annotations
-                    example:
-                        "0":
-                            bucket: bsv
-                            paymail:
-                                receiver: bob@example.com
-                                reference: "1234"
-                                sender: alice@example.com
-                    type: object
-            required:
-                - outputs
-            type: object
-        models_Paymail:
-            properties:
-                alias:
-                    example: test
-                    type: string
-                avatar:
-                    example: https://spv-wallet.com/avatar.png
-                    type: string
-                domain:
-                    example: spv-wallet.com
-                    type: string
-                id:
-                    example: 1234
-                    type: integer
-                    x-go-type: uint
-                paymail:
-                    example: test@spv-wallet.com
-                    type: string
-                publicName:
-                    example: Test
-                    type: string
-            required:
-                - id
-                - alias
-                - domain
-                - paymail
-                - publicName
-                - avatar
-            type: object
-        models_PaymailAnnotation:
-            allOf:
-                - properties:
-                    bucket:
-                        default: bsv
-                        enum:
-                            - bsv
-                        example: bsv
-                        type: string
-                    paymail:
-                        $ref: '#/components/schemas/models_PaymailAnnotationDetails'
-                  type: object
-        models_PaymailAnnotationDetails:
-            properties:
-                receiver:
-                    description: Paymail address of the receiver
-                    example: bob@example.com
-                    type: string
-                reference:
-                    description: Reference number used for paymail transaction
-                    type: string
-                sender:
-                    description: Paymail address of the sender
-                    example: alice@example.com
-                    type: string
-            required:
-                - receiver
-                - reference
-                - sender
-            type: object
-        models_RecordedOutline:
-            properties:
-                txID:
-                    description: ID of the transaction
-                    type: string
-            required:
-                - txID
-            type: object
-        models_SPVWalletCustomInstruction:
-            properties:
-                instruction:
-                    description: Custom instruction
-                    example: P2PKH
-                    type: string
-                type:
-                    description: Type of custom instructions
-                    example: sign
-                    type: string
-            required:
-                - type
-                - instruction
-            type: object
-        models_SPVWalletCustomInstructions:
-            items:
-                $ref: '#/components/schemas/models_SPVWalletCustomInstruction'
-            type: array
-        models_SearchPage:
-            properties:
-                number:
-                    description: Page number for pagination
-                    example: 1
-                    type: integer
-                size:
-                    description: Number of items per page
-                    example: 50
-                    type: integer
-                totalElements:
-                    description: Total number of items
-                    example: 456
-                    type: integer
-                totalPages:
-                    description: Total number of pages
-                    example: 10
-                    type: integer
-            required:
-                - number
-                - size
-                - totalElements
-                - totalPages
-            type: object
-        models_SharedConfig:
-            description: Shared config
-            properties:
-                experimentalFeatures:
-                    additionalProperties:
-                        type: boolean
-                    example:
-                        pikeEnabled: true
-                    type: object
-                paymailDomains:
-                    example:
-                        - example.com
-                    items:
-                        type: string
-                    type: array
-            required:
-                - paymailDomains
-                - experimentalFeatures
-            type: object
-        models_TransactionHex:
-            properties:
-                format:
-                    description: Transaction format
-                    enum:
-                        - BEEF
-                        - RAW
-                    example: BEEF
-                    type: string
-                hex:
-                    description: Transaction hex
-                    example: 0100beef01fe9e7e0d0008020100a141b8f978b56bf196419e919b3618ac4add5914df17d777d5728c015c44032500027d1a1bab8063f41989381290074b9d5479ef1262f607962f4c8ed18f84e453be010100460ab7b19ec220bb3de54214ce6a9c0105ed44b37d1ad96f577946c6a6f3485801010012e7fb521e97454ede308ed8999016d2d696d807c999f88538d763bbbfa558da01010031af9a4d321dd4791f7b63b13a4953acbbb9fade017b8266d20140f317a43e770101007caf53cfef98f927d53639f308e46f2f2cf29049a41f5004a159d4b83eeddccf010100784dd8ea43f9565b01c6258ed8761d719675533c3c4e7d7d149b3223eb279daf0101003b6c05d7861cc67f31da3916ad8d7e52a85c25e024083f3fa3037ee5ec4fb1c801010057b6c381218bf7f2208a0c41a65daa583d4b725ed1b8023affb69d07e287d2490101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff1a039e7e0d2f7461616c2e636f6d2f6ef8040de1bd70c6856e2000ffffffff01f283a012000000001976a914522cf9e7626d9bd8729e5a1398ece40dad1b6a2f88ac000000000100
-                    type: string
-            required:
-                - hex
-                - format
-            type: object
-        models_User:
-            properties:
-                createdAt:
-                    example: "2020-01-23T04:05:06Z"
-                    format: date-time
-                    type: string
-                id:
-                    example: "1"
-                    type: string
-                paymails:
-                    items:
-                        $ref: '#/components/schemas/models_Paymail'
-                    type: array
-                publicKey:
-                    example: 76a914e069bd2e2fe3ea702c40d5e65b491b734c01686788ac
-                    type: string
-                updatedAt:
-                    example: "2020-01-23T04:05:06Z"
-                    format: date-time
-                    type: string
-            required:
-                - id
-                - publicKey
-                - paymails
-                - createdAt
-                - updatedAt
-            type: object
-        models_UserDefinedCustomInstructions:
-            description: Instructions about how to unlock this input.
-            example: Your custom script to unlock
+              - $ref: '#/components/schemas/errors_Internal'
+              - $ref: '#/components/schemas/errors_GetContact'
+              - $ref: '#/components/schemas/errors_ContactFailedToUpdate'
+      description: Contact search internal server error
+    responses_CreateTransactionOutlineBadRequest:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_TxSpecNoDefaultPaymailAddress'
+              - $ref: '#/components/schemas/errors_TxSpecOutputsRequired'
+              - $ref: '#/components/schemas/errors_TxSpecOpReturnDataRequired'
+              - $ref: '#/components/schemas/errors_TxSpecFailedToDecodeHex'
+              - $ref: '#/components/schemas/errors_TxSpecInvalidPaymailReceiver'
+              - $ref: '#/components/schemas/errors_TxSpecInvalidPaymailSender'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_CreateTransactionOutlineSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_AnnotatedTransactionOutline'
+      description: Created transaction outline
+    responses_CreateTransactionOutlineUnprocessable:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_TxOutlineUserHasNotEnoughFunds'
+      description: Unprocessable entity is an error that occurs when the request cannot be fulfilled.
+    responses_DeleteContactInternalServerError:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_Internal'
+              - $ref: '#/components/schemas/errors_DeleteContact'
+      description: Delete contact internal server error
+    responses_GetContactInternalServerError:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_Internal'
+              - $ref: '#/components/schemas/errors_GetContact'
+      description: Get contact internal server error
+    responses_GetCurrentUserSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_UserInfo'
+      description: Balance of current authenticated user
+    responses_GetDataNotFound:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_DataNotFound'
+      description: Not found is an error that occurs when the requested resource is not found.
+    responses_GetDataSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_Data'
+      description: Data found
+    responses_GetMerklerootsBadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_InvalidBatchSize'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_GetMerklerootsConflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_MerkleRootNotInLongestChain'
+      description: Conflict is an error that occurs when the request conflicts with the current state of the server.
+    responses_GetMerklerootsInternalServerError:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_BHSUnreachable'
+              - $ref: '#/components/schemas/errors_BHSNoSuccessResponse'
+              - $ref: '#/components/schemas/errors_BHSUnauthorized'
+              - $ref: '#/components/schemas/errors_BHSBadRequest'
+              - $ref: '#/components/schemas/errors_BHSUnhealthy'
+              - $ref: '#/components/schemas/errors_BHSBadURL'
+              - $ref: '#/components/schemas/errors_BHSParsingResponse'
+      description: Internal server error
+    responses_GetMerklerootsNotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_MerkleRootNotFound'
+      description: Not found is an error that occurs when the requested resource is not found.
+    responses_GetMerklerootsSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_GetMerkleRootResult'
+      description: Merkleroots found
+    responses_GetWebhooksInternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_Internal'
+      description: Internal server error
+    responses_GetWebhooksSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_Webhooks'
+      description: Webhooks found
+    responses_InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_Internal'
+      description: Internal server error
+    responses_NotAuthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_AnyAuthorization'
+      description: Security requirements failed
+    responses_NotAuthorizedToAdminEndpoint:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_AdminAuthorization'
+      description: Security requirements failed
+    responses_NotificationsDisabled:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_NotificationsDisabled'
+      description: Notifications disabled
+    responses_PaymailAddress:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_Paymail'
+      description: Paymail address created successfully
+    responses_ProblemDetails:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_ProblemDetails'
+      description: RFC 7807 Problem Details. For 4xx codes, you can switch by 'type' field to get more specific error.
+    responses_RecordTransactionBadRequest:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_InvalidDataID'
+              - $ref: '#/components/schemas/errors_AnnotationIndexOutOfRange'
+              - $ref: '#/components/schemas/errors_UTXOSpent'
+              - $ref: '#/components/schemas/errors_AnnotationIndexConversion'
+              - $ref: '#/components/schemas/errors_NoOperations'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_RecordTransactionInternalServerError:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_Internal'
+              - $ref: '#/components/schemas/errors_GettingOutputs'
+              - $ref: '#/components/schemas/errors_TxBroadcast'
+      description: Internal server error
+    responses_RecordTransactionSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_RecordedOutline'
+      description: Transaction recorded
+    responses_SearchBadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_InvalidDataID'
+      description: Error when search request is malformed and params can not be parsed
+    responses_SearchOperationsSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_OperationsSearchResult'
+      description: Operations found
+    responses_SharedConfig:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/models_SharedConfig'
+      description: Shared config
+    responses_SubscribeToWebhookBadRequest:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_CannotBindRequest'
+              - $ref: '#/components/schemas/errors_WebhookUrlRequired'
+              - $ref: '#/components/schemas/errors_WebhookUrlInvalid'
+              - $ref: '#/components/schemas/errors_WebhookTokenHeaderRequired'
+              - $ref: '#/components/schemas/errors_WebhookTokenValueRequired'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_SubscribeToWebhookInternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_CannotBindRequest'
+      description: Internal server error
+    responses_UnsubscribeToWebhookInternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_CannotBindRequest'
+      description: Internal server error
+    responses_UpdateContactBadRequest:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_ContactInWrongStatus'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_UpdateContactInternalServerError:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_Internal'
+              - $ref: '#/components/schemas/errors_UpdateContactStatus'
+      description: Update contact status internal server error
+    responses_UpsertContactBadRequest:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_CannotBindRequest'
+              - $ref: '#/components/schemas/errors_UserDoNotOwnPaymail'
+              - $ref: '#/components/schemas/errors_ContactInvalidPaymail'
+              - $ref: '#/components/schemas/errors_GettingPKIFailed'
+              - $ref: '#/components/schemas/errors_SaveContact'
+              - $ref: '#/components/schemas/errors_ContactFullNameRequired'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_UpsertContactNotFound:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/errors_CouldNotFindPaymail'
+      description: Not found is an error that occurs when the requested resource is not found.
+    responses_UserBadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_InvalidDataID'
+      description: Bad request is an error that occurs when the request is malformed.
+    responses_UserNotAuthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errors_UserAuthorization'
+      description: Security requirements failed
+  schemas:
+    errors_AdminAuthOnNonAdminEndpoint:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-admin-auth-on-non-admin-endpoint
+            message:
+              example: cannot call non-admin endpoints with admin authorization
+          type: object
+    errors_AdminAuthorization:
+      oneOf:
+        - $ref: '#/components/schemas/errors_UserAuthOnNonUserEndpoint'
+        - $ref: '#/components/schemas/errors_AuthXPubRequired'
+    errors_AnnotationIndexConversion:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-annotation-index-conversion
+            message:
+              example: failed to convert annotation index
+          type: object
+    errors_AnnotationIndexOutOfRange:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-annotation-index-out-of-range
+            message:
+              example: annotation index out of range
+          type: object
+    errors_AnyAuthorization:
+      oneOf:
+        - $ref: '#/components/schemas/errors_Unauthorized'
+        - $ref: '#/components/schemas/errors_AuthXPubRequired'
+    errors_AuthXPubRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-xpub-authorization-required
+            message:
+              example: xpub authorization required
+          type: object
+    errors_BHSBadRequest:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-bad-request
+            message:
+              example: Block Headers Service bad request
+          type: object
+    errors_BHSBadURL:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-bad-url
+            message:
+              example: cannot create Block Headers Service url. Please check your configuration
+          type: object
+    errors_BHSNoSuccessResponse:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-no-success-response
+            message:
+              example: Block Headers Service request did not return a success response
+          type: object
+    errors_BHSParsingResponse:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-parse-response
+            message:
+              example: cannot parse Block Headers Service response
+          type: object
+    errors_BHSUnauthorized:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-unauthorized
+            message:
+              example: Block Headers Service returned unauthorized
+          type: object
+    errors_BHSUnhealthy:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-unhealthy
+            message:
+              example: Block Headers Service is unhealthy
+          type: object
+    errors_BHSUnreachable:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bhs-unreachable
+            message:
+              example: Block Headers Service cannot be requested
+          type: object
+    errors_CannotBindRequest:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-bind-body-invalid
+            message:
+              example: cannot bind request body
+          type: object
+    errors_ContactFailedToUpdate:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-updating-contact-failed
+            message:
+              example: updating contact failed
+          type: object
+    errors_ContactFullNameRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-full-name-required
+            message:
+              example: full name is required
+          type: object
+    errors_ContactInWrongStatus:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-wrong-status
+            message:
+              example: contact is in wrong status
+          type: object
+    errors_ContactInvalidPaymail:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contacts-invalid-paymail
+            message:
+              example: invalid paymail
+          type: object
+    errors_ContactNotFound:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-not-found
+            message:
+              example: contact not found
+          type: object
+    errors_CouldNotFindPaymail:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-paymail-not-found
+            message:
+              example: paymail not found
+          type: object
+    errors_DataNotFound:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-data-not-found
+            message:
+              example: data not found
+          type: object
+    errors_DeleteContact:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-deleting-contact-failed
+            message:
+              example: deleting contact failed
+          type: object
+    errors_GetContact:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-getting-contact-failed
+            message:
+              example: getting contact failed
+          type: object
+    errors_GettingOutputs:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-getting-outputs
+            message:
+              example: failed to get outputs
+          type: object
+    errors_GettingPKIFailed:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-getting-pki-failed
+            message:
+              example: getting pki for contact failed
+          type: object
+    errors_Internal:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-internal-server-error
+            message:
+              example: internal server error
+          type: object
+    errors_InvalidBatchSize:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-invalid-batch-size
+            message:
+              example: batchSize must be 0 or a positive integer
+          type: object
+    errors_InvalidDataID:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-invalid-data-id
+            message:
+              example: invalid data id
+          type: object
+    errors_MerkleRootNotFound:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-merkleroot-not-found
+            message:
+              example: No block with provided merkleroot was found
+          type: object
+    errors_MerkleRootNotInLongestChain:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-merkleroot-not-part-of-longest-chain
+            message:
+              example: Provided merkleroot is not part of the longest chain
+          type: object
+    errors_NoOperations:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-no-operations
+            message:
+              example: no operations to save
+          type: object
+    errors_NotificationsDisabled:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-notifications-disabled
+            message:
+              example: notifications are disabled
+          type: object
+    errors_ProblemDetails:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem
+          type: string
+        status:
+          description: The HTTP status code
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type
+          type: string
+        type:
+          description: A URI reference that identifies the problem type
+          type: string
+      required:
+        - type
+        - title
+        - status
+        - detail
+        - instance
+      type: object
+    errors_SaveContact:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-adding-contact-failed
+            message:
+              example: adding contact failed
+          type: object
+    errors_Schema:
+      additionalProperties: false
+      properties:
+        code:
+          description: Error code
+          type: string
+        message:
+          description: Error message
+          type: string
+      required:
+        - code
+        - message
+      type: object
+    errors_TxBroadcast:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-tx-broadcast
+            message:
+              example: failed to broadcast transaction
+          type: object
+    errors_TxOutlineUserHasNotEnoughFunds:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: tx-outline-not-enough-funds
+            message:
+              example: not enough funds to make the transaction
+          type: object
+    errors_TxSpecFailedToDecodeHex:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: failed-to-decode-hex
+            message:
+              example: failed to decode hex
+          type: object
+    errors_TxSpecInvalidPaymailReceiver:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-paymail-address-invalid-receiver
+            message:
+              example: receiver paymail address is invalid
+          type: object
+    errors_TxSpecInvalidPaymailSender:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-paymail-address-invalid-sender
+            message:
+              example: sender paymail address is invalid
+          type: object
+    errors_TxSpecNoDefaultPaymailAddress:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-tx-spec-no-default-paymail-address
+            message:
+              example: no default paymail address
+          type: object
+    errors_TxSpecOpReturnDataRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: tx-spec-op-return-data-required
+            message:
+              example: data is required for OP_RETURN output
+          type: object
+    errors_TxSpecOutputsRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: tx-spec-output-required
+            message:
+              example: transaction outline requires at least one output
+          type: object
+    errors_UTXOSpent:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              enum:
+                - error-utxo-spent
+              example: error-utxo-spent
+            message:
+              enum:
+                - UTXO is already spent
+              example: UTXO is already spent
+          type: object
+    errors_Unauthorized:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-unauthorized
+            message:
+              example: unauthorized
+          type: object
+    errors_UpdateContactStatus:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-contact-updating-status-failed
+            message:
+              example: updating contact status failed
+          type: object
+    errors_UserAuthOnNonUserEndpoint:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-user-auth-on-non-user-endpoint
+            message:
+              example: cannot call non-user endpoints with user authorization
+          type: object
+    errors_UserAuthorization:
+      oneOf:
+        - $ref: '#/components/schemas/errors_Unauthorized'
+        - $ref: '#/components/schemas/errors_AdminAuthOnNonAdminEndpoint'
+        - $ref: '#/components/schemas/errors_AuthXPubRequired'
+    errors_UserDoNotOwnPaymail:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-paymail-user-do-not-own
+            message:
+              example: user do not own paymail
+          type: object
+    errors_WebhookTokenHeaderRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-webhook-token-header-required
+            message:
+              example: webhook token header is required
+          type: object
+    errors_WebhookTokenValueRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-webhook-token-value-required
+            message:
+              example: webhook token value is required
+          type: object
+    errors_WebhookUrlInvalid:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-webhook-url-invalid
+            message:
+              example: webhook url is invalid
+          type: object
+    errors_WebhookUrlRequired:
+      allOf:
+        - $ref: '#/components/schemas/errors_Schema'
+        - properties:
+            code:
+              example: error-webhook-url-required
+            message:
+              example: webhook url is required
+          type: object
+    models_AnnotatedTransactionOutline:
+      allOf:
+        - $ref: '#/components/schemas/models_TransactionHex'
+        - properties:
+            annotations:
+              $ref: '#/components/schemas/models_OutlineAnnotations'
+          type: object
+    models_BucketAnnotation:
+      properties:
+        bucket:
+          description: Type of bucket where this output should be stored.
+          example: bsv
+          type: string
+      required:
+        - bucket
+      type: object
+    models_ChangeAnnotation:
+      properties:
+        customInstructions:
+          $ref: '#/components/schemas/models_SPVWalletCustomInstructions'
+      type: object
+    models_Contact:
+      allOf:
+        - $ref: '#/components/schemas/models_Model'
+        - properties:
+            fullName:
+              example: Test User
+              type: string
+            id:
+              example: 1
+              format: uint
+              type: integer
+            paymail:
+              example: alice@spv-wallet.com
+              type: string
+            pubKey:
+              example: xpub661MyMwAqRbcGpZVrSHU...
+              type: string
+            status:
+              $ref: '#/components/schemas/models_ContactStatus'
+          required:
+            - id
+            - fullName
+            - pubKey
+            - status
+            - paymail
+          type: object
+    models_ContactStatus:
+      enum:
+        - unconfirmed
+        - awaiting
+        - confirmed
+        - rejected
+      example: confirmed
+      type: string
+    models_CustomInstructions:
+      oneOf:
+        - $ref: '#/components/schemas/models_SPVWalletCustomInstructions'
+        - $ref: '#/components/schemas/models_UserDefinedCustomInstructions'
+    models_Data:
+      properties:
+        blob:
+          description: Data blob
+          type: string
+        id:
+          description: User ID
+          type: string
+      required:
+        - id
+        - blob
+      type: object
+    models_DataAnnotation:
+      properties:
+        bucket:
+          default: data
+          enum:
+            - data
+          example: data
+          type: string
+      required:
+        - bucket
+      type: object
+    models_ExclusiveStartKeySearchPage:
+      properties:
+        lastEvaluatedKey:
+          description: Last evaluated key
+          example: ac973196d58e42da6ad030dc39f5fcc343bd040e1db29b30c146e9aea9354bab
+          type: string
+        size:
+          description: Number of items in returned data
+          example: 50
+          type: integer
+        totalElements:
+          description: Total number of items
+          example: 456
+          type: integer
+      required:
+        - totalElements
+        - size
+        - lastEvaluatedKey
+      type: object
+    models_GetMerkleRootResult:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/models_MerkleRoot'
+          type: array
+        page:
+          $ref: '#/components/schemas/models_ExclusiveStartKeySearchPage'
+      required:
+        - content
+        - page
+      type: object
+    models_InputAnnotation:
+      properties:
+        customInstructions:
+          $ref: '#/components/schemas/models_CustomInstructions'
+      required:
+        - customInstructions
+      type: object
+    models_InputsAnnotations:
+      properties:
+        inputs:
+          additionalProperties:
+            $ref: '#/components/schemas/models_InputAnnotation'
+          description: Map of input annotations
+          example:
+            "0":
+              customInstructions:
+                - instruction: P2PKH
+                  type: sign
+          type: object
+      required:
+        - inputs
+      type: object
+    models_MerkleRoot:
+      properties:
+        blockHeight:
+          description: Block height
+          example: 1234
+          type: integer
+        merkleRoot:
+          description: Transaction ID
+          example: bb8593f85ef8056a77026ad415f02128f3768906de53e9e8bf8749fe2d66cf50
+          type: string
+      required:
+        - merkleRoot
+        - blockHeight
+      type: object
+    models_Model:
+      properties:
+        createdAt:
+          example: "2025-01-01T00:00:00Z"
+          format: date-time
+          type: string
+        deletedAt:
+          example: "2025-01-01T00:00:00Z"
+          format: date-time
+          type: string
+        updatedAt:
+          example: "2025-01-01T00:00:00Z"
+          format: date-time
+          type: string
+      required:
+        - createdAt
+        - updatedAt
+      type: object
+    models_Operation:
+      properties:
+        blockHash:
+          description: Block hash of underlying transaction
+          example: 000000000000000000d3577fe46b2329cce684cbcad2e8ae2129bd8874764258
+          type: string
+        blockHeight:
+          description: Block height of underlying transaction
+          example: 1234
+          type: integer
+          x-go-type: int64
+        counterparty:
+          description: Counterparty of operation
+          example: alice@example.com
+          type: string
+        createdAt:
+          description: Creation date of operation
+          example: "2020-01-23T04:05:06Z"
+          format: date-time
+          type: string
+        txID:
+          description: Transaction ID
+          example: bb8593f85ef8056a77026ad415f02128f3768906de53e9e8bf8749fe2d66cf50
+          type: string
+        txStatus:
+          description: Status of transaction
+          enum:
+            - CREATED
+            - BROADCASTED
+            - MINED
+            - REVERTED
+            - PROBLEMATIC
+          example: BROADCASTED
+          type: string
+        type:
+          description: Type of operation
+          enum:
+            - incoming
+            - outgoing
+          example: incoming
+          type: string
+        value:
+          description: Value of operation
+          example: 1234
+          format: int64
+          type: integer
+      required:
+        - value
+        - txID
+        - type
+        - counterparty
+        - txStatus
+        - createdAt
+      type: object
+    models_OperationsSearchResult:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/models_Operation'
+          type: array
+        page:
+          $ref: '#/components/schemas/models_SearchPage'
+      required:
+        - content
+        - page
+      type: object
+    models_OutlineAnnotations:
+      allOf:
+        - $ref: '#/components/schemas/models_InputsAnnotations'
+        - $ref: '#/components/schemas/models_OutputsAnnotations'
+    models_OutputAnnotation:
+      allOf:
+        - $ref: '#/components/schemas/models_BucketAnnotation'
+        - $ref: '#/components/schemas/models_DataAnnotation'
+        - $ref: '#/components/schemas/models_PaymailAnnotation'
+        - $ref: '#/components/schemas/models_ChangeAnnotation'
+    models_OutputsAnnotations:
+      properties:
+        outputs:
+          additionalProperties:
+            $ref: '#/components/schemas/models_OutputAnnotation'
+          description: Map of output annotations
+          example:
+            "0":
+              bucket: bsv
+              paymail:
+                receiver: bob@example.com
+                reference: "1234"
+                sender: alice@example.com
+          type: object
+      required:
+        - outputs
+      type: object
+    models_Paymail:
+      properties:
+        alias:
+          example: test
+          type: string
+        avatar:
+          example: https://spv-wallet.com/avatar.png
+          type: string
+        domain:
+          example: spv-wallet.com
+          type: string
+        id:
+          example: 1234
+          type: integer
+          x-go-type: uint
+        paymail:
+          example: test@spv-wallet.com
+          type: string
+        publicName:
+          example: Test
+          type: string
+      required:
+        - id
+        - alias
+        - domain
+        - paymail
+        - publicName
+        - avatar
+      type: object
+    models_PaymailAnnotation:
+      allOf:
+        - properties:
+            bucket:
+              default: bsv
+              enum:
+                - bsv
+              example: bsv
+              type: string
+            paymail:
+              $ref: '#/components/schemas/models_PaymailAnnotationDetails'
+          type: object
+    models_PaymailAnnotationDetails:
+      properties:
+        receiver:
+          description: Paymail address of the receiver
+          example: bob@example.com
+          type: string
+        reference:
+          description: Reference number used for paymail transaction
+          type: string
+        sender:
+          description: Paymail address of the sender
+          example: alice@example.com
+          type: string
+      required:
+        - receiver
+        - reference
+        - sender
+      type: object
+    models_RecordedOutline:
+      properties:
+        txID:
+          description: ID of the transaction
+          type: string
+      required:
+        - txID
+      type: object
+    models_SPVWalletCustomInstruction:
+      properties:
+        instruction:
+          description: Custom instruction
+          example: P2PKH
+          type: string
+        type:
+          description: Type of custom instructions
+          example: sign
+          type: string
+      required:
+        - type
+        - instruction
+      type: object
+    models_SPVWalletCustomInstructions:
+      items:
+        $ref: '#/components/schemas/models_SPVWalletCustomInstruction'
+      type: array
+    models_SearchPage:
+      properties:
+        number:
+          description: Page number for pagination
+          example: 1
+          type: integer
+        size:
+          description: Number of items per page
+          example: 50
+          type: integer
+        totalElements:
+          description: Total number of items
+          example: 456
+          type: integer
+        totalPages:
+          description: Total number of pages
+          example: 10
+          type: integer
+      required:
+        - number
+        - size
+        - totalElements
+        - totalPages
+      type: object
+    models_SharedConfig:
+      description: Shared config
+      properties:
+        experimentalFeatures:
+          additionalProperties:
+            type: boolean
+          example:
+            pikeEnabled: true
+          type: object
+        paymailDomains:
+          example:
+            - example.com
+          items:
             type: string
-        models_UserInfo:
-            properties:
-                currentBalance:
-                    description: Current balance of user
-                    type: number
-                    x-go-type: uint64
-            required:
-                - currentBalance
-            type: object
-        models_Webhook:
-            properties:
-                banned:
-                    example: true
-                    type: boolean
-                url:
-                    example: https://example.com/webhook
-                    type: string
-            required:
-                - url
-                - banned
-            type: object
-        models_Webhooks:
-            items:
-                $ref: '#/components/schemas/models_Webhook'
-            type: array
-        requests_AddPaymail:
-            properties:
-                address:
-                    example: test@spv-wallet.com
-                    type: string
-                alias:
-                    example: test
-                    type: string
-                avatarURL:
-                    example: https://spv-wallet.com/avatar.png
-                    type: string
-                domain:
-                    example: spv-wallet.com
-                    type: string
-                publicName:
-                    description: If not provided will default to the same value as alias
-                    example: Test
-                    type: string
-            required:
-                - address
-                - alias
-                - domain
-            type: object
-        requests_AdminConfirmContact:
-            properties:
-                paymailA:
-                    example: alice@spv-wallet.com
-                    type: string
-                paymailB:
-                    example: bob@spv-wallet.com
-                    type: string
-            required:
-                - paymailA
-                - paymailB
-            type: object
-        requests_AdminCreateContact:
-            properties:
-                creatorPaymail:
-                    example: example@spv-wallet.com
-                    type: string
-                fullName:
-                    example: Test name
-                    type: string
-            required:
-                - fullName
-                - creatorPaymail
-            type: object
-        requests_CreatePaymailAddress:
-            properties:
-                paymail:
-                    $ref: '#/components/schemas/requests_AddPaymail'
-            required:
-                - paymail
-            type: object
-        requests_CreateUser:
-            properties:
-                paymail:
-                    $ref: '#/components/schemas/requests_AddPaymail'
-                publicKey:
-                    example: 76a914e069bd2e2fe3ea702c40d5e65b491b734c01686788ac
-                    type: string
-            required:
-                - publicKey
-            type: object
-        requests_OpReturnHexesOutput:
-            items:
-                example: 68656c6c6f20776f726c64
-                type: string
-            type: array
-        requests_OpReturnOutputSpecification:
-            properties:
-                data:
-                    oneOf:
-                        - $ref: '#/components/schemas/requests_OpReturnHexesOutput'
-                        - $ref: '#/components/schemas/requests_OpReturnStringsOutput'
-                dataType:
-                    default: strings
-                    enum:
-                        - hexes
-                        - strings
-                    example: strings
-                    type: string
-                type:
-                    enum:
-                        - op_return
-                    example: op_return
-                    type: string
-            required:
-                - type
-                - data
-            type: object
-        requests_OpReturnStringsOutput:
-            items:
-                example: hello world
-                type: string
-            type: array
-        requests_PaymailOutputSpecification:
-            properties:
-                from:
-                    example: bob@example.com
-                    nullable: true
-                    type: string
-                satoshis:
-                    example: 1000
-                    format: uint
-                    type: integer
-                    x-go-type: uint64
-                splits:
-                    default: 1
-                    description: |
-                        The number of outputs to be created from the satoshis. <br>
-                        Warning: The satoshis must be evenly divisible by the number of splits. <br>
-                        Warning: If the recipient responds with more than one output, the number of splits must be 1.
-                    example: 1
-                    format: uint64
-                    type: integer
-                    x-go-type: uint64
-                to:
-                    example: bob@example.com
-                    type: string
-                type:
-                    enum:
-                        - paymail
-                    example: paymail
-                    type: string
-            required:
-                - type
-                - to
-                - satoshis
-            type: object
-        requests_RecordTransactionOutlineForUser:
-            allOf:
-                - $ref: '#/components/schemas/requests_TransactionOutline'
-                - properties:
-                    userID:
-                        description: User ID for which admin records transaction outline
-                        example: "1"
-                        type: string
-                  required:
-                    - userID
-                  type: object
-        requests_SubscribeWebhook:
-            properties:
-                tokenHeader:
-                    example: Authorization
-                    type: string
-                tokenValue:
-                    example: Bearer some-token
-                    type: string
-                url:
-                    example: https://example.com/example
-                    type: string
-            required:
-                - tokenHeader
-                - tokenValue
-                - url
-            type: object
-        requests_TransactionOutline:
-            allOf:
-                - $ref: '#/components/schemas/models_TransactionHex'
-                - properties:
-                    annotations:
-                        $ref: '#/components/schemas/models_OutputsAnnotations'
-                  type: object
-        requests_TransactionOutlineOutputSpecification:
-            discriminator:
-                mapping:
-                    op_return: '#/components/schemas/requests_OpReturnOutputSpecification'
-                    paymail: '#/components/schemas/requests_PaymailOutputSpecification'
-                propertyName: type
-            oneOf:
-                - $ref: '#/components/schemas/requests_OpReturnOutputSpecification'
-                - $ref: '#/components/schemas/requests_PaymailOutputSpecification'
-        requests_TransactionSpecification:
-            properties:
-                outputs:
-                    items:
-                        $ref: '#/components/schemas/requests_TransactionOutlineOutputSpecification'
-                    type: array
-            required:
-                - outputs
-            type: object
-        requests_UnsubscribeWebhook:
-            properties:
-                url:
-                    example: https://example.com/example
-                    type: string
-            required:
-                - url
-            type: object
-        requests_UpdateContact:
-            properties:
-                fullName:
-                    example: Test name
-                    type: string
-            required:
-                - fullName
-            type: object
-        requests_UpsertContact:
-            properties:
-                fullName:
-                    example: Test name
-                    type: string
-                requesterPaymail:
-                    example: test@spv-wallet.com
-                    type: string
-            required:
-                - fullName
-                - requesterPaymail
-            type: object
-    securitySchemes:
-        XPubAuth:
-            description: Authentication using x-auth-xpub header
-            in: header
-            name: x-auth-xpub
-            type: apiKey
+          type: array
+      required:
+        - paymailDomains
+        - experimentalFeatures
+      type: object
+    models_TransactionHex:
+      properties:
+        format:
+          description: Transaction format
+          enum:
+            - BEEF
+            - RAW
+          example: BEEF
+          type: string
+        hex:
+          description: Transaction hex
+          example: 0100beef01fe9e7e0d0008020100a141b8f978b56bf196419e919b3618ac4add5914df17d777d5728c015c44032500027d1a1bab8063f41989381290074b9d5479ef1262f607962f4c8ed18f84e453be010100460ab7b19ec220bb3de54214ce6a9c0105ed44b37d1ad96f577946c6a6f3485801010012e7fb521e97454ede308ed8999016d2d696d807c999f88538d763bbbfa558da01010031af9a4d321dd4791f7b63b13a4953acbbb9fade017b8266d20140f317a43e770101007caf53cfef98f927d53639f308e46f2f2cf29049a41f5004a159d4b83eeddccf010100784dd8ea43f9565b01c6258ed8761d719675533c3c4e7d7d149b3223eb279daf0101003b6c05d7861cc67f31da3916ad8d7e52a85c25e024083f3fa3037ee5ec4fb1c801010057b6c381218bf7f2208a0c41a65daa583d4b725ed1b8023affb69d07e287d2490101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff1a039e7e0d2f7461616c2e636f6d2f6ef8040de1bd70c6856e2000ffffffff01f283a012000000001976a914522cf9e7626d9bd8729e5a1398ece40dad1b6a2f88ac000000000100
+          type: string
+      required:
+        - hex
+        - format
+      type: object
+    models_User:
+      properties:
+        createdAt:
+          example: "2020-01-23T04:05:06Z"
+          format: date-time
+          type: string
+        id:
+          example: "1"
+          type: string
+        paymails:
+          items:
+            $ref: '#/components/schemas/models_Paymail'
+          type: array
+        publicKey:
+          example: 76a914e069bd2e2fe3ea702c40d5e65b491b734c01686788ac
+          type: string
+        updatedAt:
+          example: "2020-01-23T04:05:06Z"
+          format: date-time
+          type: string
+      required:
+        - id
+        - publicKey
+        - paymails
+        - createdAt
+        - updatedAt
+      type: object
+    models_UserDefinedCustomInstructions:
+      description: Instructions about how to unlock this input.
+      example: Your custom script to unlock
+      type: string
+    models_UserInfo:
+      properties:
+        currentBalance:
+          description: Current balance of user
+          type: number
+          x-go-type: uint64
+      required:
+        - currentBalance
+      type: object
+    models_Webhook:
+      properties:
+        banned:
+          example: true
+          type: boolean
+        url:
+          example: https://example.com/webhook
+          type: string
+      required:
+        - url
+        - banned
+      type: object
+    models_Webhooks:
+      items:
+        $ref: '#/components/schemas/models_Webhook'
+      type: array
+    requests_AddPaymail:
+      properties:
+        address:
+          example: test@spv-wallet.com
+          type: string
+        alias:
+          example: test
+          type: string
+        avatarURL:
+          example: https://spv-wallet.com/avatar.png
+          type: string
+        domain:
+          example: spv-wallet.com
+          type: string
+        publicName:
+          description: If not provided will default to the same value as alias
+          example: Test
+          type: string
+      required:
+        - address
+        - alias
+        - domain
+      type: object
+    requests_AdminConfirmContact:
+      properties:
+        paymailA:
+          example: alice@spv-wallet.com
+          type: string
+        paymailB:
+          example: bob@spv-wallet.com
+          type: string
+      required:
+        - paymailA
+        - paymailB
+      type: object
+    requests_AdminCreateContact:
+      properties:
+        creatorPaymail:
+          example: example@spv-wallet.com
+          type: string
+        fullName:
+          example: Test name
+          type: string
+      required:
+        - fullName
+        - creatorPaymail
+      type: object
+    requests_CreatePaymailAddress:
+      properties:
+        paymail:
+          $ref: '#/components/schemas/requests_AddPaymail'
+      required:
+        - paymail
+      type: object
+    requests_CreateUser:
+      properties:
+        paymail:
+          $ref: '#/components/schemas/requests_AddPaymail'
+        publicKey:
+          example: 76a914e069bd2e2fe3ea702c40d5e65b491b734c01686788ac
+          type: string
+      required:
+        - publicKey
+      type: object
+    requests_OpReturnHexesOutput:
+      items:
+        example: 68656c6c6f20776f726c64
+        type: string
+      type: array
+    requests_OpReturnOutputSpecification:
+      properties:
+        data:
+          oneOf:
+            - $ref: '#/components/schemas/requests_OpReturnHexesOutput'
+            - $ref: '#/components/schemas/requests_OpReturnStringsOutput'
+        dataType:
+          default: strings
+          enum:
+            - hexes
+            - strings
+          example: strings
+          type: string
+        type:
+          enum:
+            - op_return
+          example: op_return
+          type: string
+      required:
+        - type
+        - data
+      type: object
+    requests_OpReturnStringsOutput:
+      items:
+        example: hello world
+        type: string
+      type: array
+    requests_PaymailOutputSpecification:
+      properties:
+        from:
+          example: bob@example.com
+          nullable: true
+          type: string
+        satoshis:
+          example: 1000
+          format: uint
+          type: integer
+          x-go-type: uint64
+        splits:
+          default: 1
+          description: |
+            The number of outputs to be created from the satoshis. <br>
+            Warning: The satoshis must be evenly divisible by the number of splits. <br>
+            Warning: If the recipient responds with more than one output, the number of splits must be 1.
+          example: 1
+          format: uint64
+          type: integer
+          x-go-type: uint64
+        to:
+          example: bob@example.com
+          type: string
+        type:
+          enum:
+            - paymail
+          example: paymail
+          type: string
+      required:
+        - type
+        - to
+        - satoshis
+      type: object
+    requests_RecordTransactionOutlineForUser:
+      allOf:
+        - $ref: '#/components/schemas/requests_TransactionOutline'
+        - properties:
+            userID:
+              description: User ID for which admin records transaction outline
+              example: "1"
+              type: string
+          required:
+            - userID
+          type: object
+    requests_SubscribeWebhook:
+      properties:
+        tokenHeader:
+          example: Authorization
+          type: string
+        tokenValue:
+          example: Bearer some-token
+          type: string
+        url:
+          example: https://example.com/example
+          type: string
+      required:
+        - tokenHeader
+        - tokenValue
+        - url
+      type: object
+    requests_TransactionOutline:
+      allOf:
+        - $ref: '#/components/schemas/models_TransactionHex'
+        - properties:
+            annotations:
+              $ref: '#/components/schemas/models_OutputsAnnotations'
+          type: object
+    requests_TransactionOutlineOutputSpecification:
+      discriminator:
+        mapping:
+          op_return: '#/components/schemas/requests_OpReturnOutputSpecification'
+          paymail: '#/components/schemas/requests_PaymailOutputSpecification'
+        propertyName: type
+      oneOf:
+        - $ref: '#/components/schemas/requests_OpReturnOutputSpecification'
+        - $ref: '#/components/schemas/requests_PaymailOutputSpecification'
+    requests_TransactionSpecification:
+      properties:
+        outputs:
+          items:
+            $ref: '#/components/schemas/requests_TransactionOutlineOutputSpecification'
+          type: array
+      required:
+        - outputs
+      type: object
+    requests_UnsubscribeWebhook:
+      properties:
+        url:
+          example: https://example.com/example
+          type: string
+      required:
+        - url
+      type: object
+    requests_UpdateContact:
+      properties:
+        fullName:
+          example: Test name
+          type: string
+      required:
+        - fullName
+      type: object
+    requests_UpsertContact:
+      properties:
+        fullName:
+          example: Test name
+          type: string
+        requesterPaymail:
+          example: test@spv-wallet.com
+          type: string
+      required:
+        - fullName
+        - requesterPaymail
+      type: object
+  securitySchemes:
+    XPubAuth:
+      description: Authentication using x-auth-xpub header
+      in: header
+      name: x-auth-xpub
+      type: apiKey

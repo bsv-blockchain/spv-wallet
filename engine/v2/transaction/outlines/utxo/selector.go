@@ -1,10 +1,11 @@
 package utxo
 
 import (
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/utxo/internal/sql"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"gorm.io/gorm"
 )
 
 // NewSelector creates a new instance of UTXOSelector.

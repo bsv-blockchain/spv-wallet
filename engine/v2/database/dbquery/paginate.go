@@ -4,11 +4,12 @@ import (
 	"context"
 	"strings"
 
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/bsv-blockchain/spv-wallet/models/filter"
-	"gorm.io/gorm"
 )
 
 // PaginatedQuery is a generic function for getting paginated results from a database.

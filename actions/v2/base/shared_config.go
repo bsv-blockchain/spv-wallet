@@ -3,8 +3,9 @@ package base
 import (
 	"net/http"
 
-	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/spv-wallet/api"
 )
 
 // SharedConfig is the handler for SharedConfig which can be obtained by both admin and user

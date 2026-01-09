@@ -3,9 +3,10 @@ package spverrors
 import (
 	"errors"
 
-	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // ResponseMapper provides a fluent API for mapping errors to structured HTTP responses.

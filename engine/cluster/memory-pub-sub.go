@@ -19,7 +19,6 @@ type MemoryPubSub struct {
 // this is the default (mock) implementation for the internal pub/sub communications on standalone servers
 // for clusters, use another solution, like RedisPubSub
 func NewMemoryPubSub(ctx context.Context) (*MemoryPubSub, error) {
-
 	return &MemoryPubSub{
 		ctx:       ctx,
 		callbacks: make(map[string]func(data string)),
@@ -33,7 +32,6 @@ func (m *MemoryPubSub) Logger() *zerolog.Logger {
 
 // Subscribe to a channel
 func (m *MemoryPubSub) Subscribe(channel Channel, callback func(data string)) (func() error, error) {
-
 	channelName := m.prefix + string(channel)
 	m.callbacks[channelName] = callback
 
@@ -45,7 +43,6 @@ func (m *MemoryPubSub) Subscribe(channel Channel, callback func(data string)) (f
 
 // Publish to a channel
 func (m *MemoryPubSub) Publish(channel Channel, data string) error {
-
 	channelName := m.prefix + string(channel)
 	callback, ok := m.callbacks[channelName]
 	if ok {

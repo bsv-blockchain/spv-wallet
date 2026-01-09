@@ -8,9 +8,7 @@ import (
 	"go.elastic.co/ecszerolog"
 )
 
-var (
-	loggerMutex sync.Mutex
-)
+var loggerMutex sync.Mutex
 
 // GetDefaultLogger generates and returns a new default logger instance.
 // Uses a mutex to protect ecszerolog.New() which has non-thread-safe global state.

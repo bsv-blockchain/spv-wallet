@@ -5,8 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 type notifierWithCtx struct {

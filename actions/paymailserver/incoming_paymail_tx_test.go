@@ -7,11 +7,12 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/script"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
-	"github.com/stretchr/testify/require"
 )
 
 func TestIncomingPaymailRawTX(t *testing.T) {

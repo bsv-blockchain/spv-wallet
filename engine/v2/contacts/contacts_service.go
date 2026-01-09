@@ -4,13 +4,14 @@ import (
 	"context"
 
 	goPaymail "github.com/bsv-blockchain/go-paymail"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails"
 	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/bsv-blockchain/spv-wallet/models/filter"
-	"github.com/rs/zerolog"
 )
 
 // Service for contacts

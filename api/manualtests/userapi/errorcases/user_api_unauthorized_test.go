@@ -4,13 +4,14 @@ import (
 	"context"
 	"testing"
 
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
-	"github.com/samber/lo"
 )
 
 func TestUnauthorized(t *testing.T) {
-	var calls = map[string]struct {
+	calls := map[string]struct {
 		call manualtests.CallWithState
 	}{
 		"currentUser": {

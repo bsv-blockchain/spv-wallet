@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/bsv-blockchain/go-paymail"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
@@ -549,7 +550,6 @@ func (c *Client) retrieveContactsForConfirmation(ctx context.Context, paymailA, 
 		return nil, nil, spverrors.ErrContactsNotFound.Wrap(
 			spverrors.Newf("User '%s' does not have '%s' in their contacts", paymailA, paymailB),
 		)
-
 	}
 
 	contactB, err := getContact(ctx, paymailA, xpubB, c.DefaultModelOptions()...)
@@ -561,7 +561,6 @@ func (c *Client) retrieveContactsForConfirmation(ctx context.Context, paymailA, 
 		return nil, nil, spverrors.ErrContactsNotFound.Wrap(
 			spverrors.Newf("User '%s' does not have '%s' in their contacts", paymailB, paymailA),
 		)
-
 	}
 
 	return contactA, contactB, nil

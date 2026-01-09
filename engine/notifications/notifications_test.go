@@ -6,8 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 func newMockEvent(value string) *models.RawEvent {

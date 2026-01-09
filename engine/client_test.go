@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 )
 
 // todo: finish unit tests!

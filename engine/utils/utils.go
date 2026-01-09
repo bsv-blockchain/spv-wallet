@@ -14,6 +14,7 @@ import (
 	"strconv"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/conv"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
@@ -121,7 +122,7 @@ func HashAdler32(input string) (string, error) {
 }
 
 // SafeAssign - Assigns value (not pointer) the src to dest if src is not nil
-func SafeAssign[T any](dest *T, src *T) {
+func SafeAssign[T any](dest, src *T) {
 	if src != nil {
 		*dest = *src
 	}

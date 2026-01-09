@@ -1,10 +1,11 @@
 package reqctx
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/config"
-	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 )
 
 const (

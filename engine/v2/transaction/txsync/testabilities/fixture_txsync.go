@@ -6,15 +6,18 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/chainhash"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/samber/lo"
+
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txsync"
-	"github.com/samber/lo"
 )
 
-const mockBlockHash = "00000000000000000f0905597b6cac80031f0f56834e74dce1a714c682a9ed38"
-const mockBlockHeight = 885803
+const (
+	mockBlockHash   = "00000000000000000f0905597b6cac80031f0f56834e74dce1a714c682a9ed38"
+	mockBlockHeight = 885803
+)
 
 type FixtureTXsync interface {
 	Service() *txsync.Service
@@ -52,7 +55,6 @@ func (f *fixtureTXsync) Repo() RepoFixtures {
 }
 
 func TXInfo(t testing.TB, status chainmodels.TXStatus) TXInfoSpec {
-
 	return TXInfoSpec{
 		TxID:      MockTx(t).ID(),
 		Timestamp: time.Now().Add(10 * time.Minute),

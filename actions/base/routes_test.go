@@ -3,8 +3,9 @@ package base
 import (
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func (ts *TestSuite) TestBaseRegisterRoutes() {

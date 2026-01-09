@@ -6,10 +6,11 @@ import (
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-sdk/script"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+
 	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/bsv-blockchain/spv-wallet/models/optional"
 	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
@@ -89,7 +90,7 @@ func (p *Paymail) validateSatoshis() error {
 	return nil
 }
 
-func (p *Paymail) createBsvPaymailOutput(output *paymail.PaymentOutput, reference string, from string) (*annotatedOutput, error) {
+func (p *Paymail) createBsvPaymailOutput(output *paymail.PaymentOutput, reference, from string) (*annotatedOutput, error) {
 	lockingScript, err := script.NewFromHex(output.Script)
 	if err != nil {
 		return nil, pmerrors.ErrPaymailHostInvalidResponse.Wrap(err)
@@ -133,7 +134,7 @@ func (p *Paymail) validateSplits() error {
 }
 
 func (p *Paymail) validateProvidedSenderPaymail(ctx *evaluationContext) error {
-	var sender = *p.From
+	sender := *p.From
 	_, err := ctx.Paymail().GetSanitizedPaymail(sender)
 	if err != nil {
 		return txerrors.ErrSenderPaymailAddressIsInvalid.Wrap(err)

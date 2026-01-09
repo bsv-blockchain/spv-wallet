@@ -6,6 +6,7 @@ import (
 	"iter"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+
 	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )

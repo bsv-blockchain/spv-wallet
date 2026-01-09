@@ -1,8 +1,9 @@
 package data
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/engine"
 )
 
 // APIData represents server with API endpoints

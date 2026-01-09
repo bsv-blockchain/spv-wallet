@@ -3,10 +3,11 @@ package clienterr
 import (
 	"errors"
 
-	"github.com/bsv-blockchain/spv-wallet/errdef"
 	"github.com/gin-gonic/gin"
 	"github.com/joomcode/errorx"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 )
 
 // Response sends the error as a JSON response to the client.
@@ -28,7 +29,7 @@ func problemDetailsFromError(err error) (problem errdef.ProblemDetails, level ze
 		if details, ok := ex.Property(propProblemDetails); ok {
 			problem = details.(errdef.ProblemDetails)
 			level = zerolog.InfoLevel
-			return
+			return problem, level
 		}
 
 		// map internal error to problem details
@@ -38,7 +39,7 @@ func problemDetailsFromError(err error) (problem errdef.ProblemDetails, level ze
 		if errorx.HasTrait(ex, errdef.TraitUnsupported) {
 			problem.Title = "Unsupported operation"
 			problem.Status = 501
-			return
+			return problem, level
 		}
 		if errorx.HasTrait(ex, errdef.TraitShouldNeverHappen) {
 			problem.Detail = "This should never happen"
@@ -46,7 +47,7 @@ func problemDetailsFromError(err error) (problem errdef.ProblemDetails, level ze
 
 		problem.Title = "Internal Server Error"
 		problem.Status = 500
-		return
+		return problem, level
 	}
 
 	// Handle SPVError (legacy error type)
@@ -65,12 +66,12 @@ func problemDetailsFromError(err error) (problem errdef.ProblemDetails, level ze
 		if problem.Status >= 500 {
 			level = zerolog.ErrorLevel
 		}
-		return
+		return problem, level
 	}
 
 	level = zerolog.ErrorLevel
 	problem.Title = "Unknown error"
 	problem.Status = 500
 	problem.Type = "internal"
-	return
+	return problem, level
 }

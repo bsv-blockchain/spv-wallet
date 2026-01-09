@@ -2,6 +2,7 @@ package type42
 
 import (
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

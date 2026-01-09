@@ -8,7 +8,7 @@ type ClientErrorDefinition struct {
 }
 
 // Detailed is a shortcut for creating a new client error with a detailed message.
-func (c ClientErrorDefinition) Detailed(errType string, detail string, args ...any) *Builder {
+func (c ClientErrorDefinition) Detailed(errType, detail string, args ...any) *Builder {
 	return c.New().Detailed(errType, detail, args...)
 }
 

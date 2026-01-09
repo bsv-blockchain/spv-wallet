@@ -8,9 +8,10 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 type mockTxsGetter struct {

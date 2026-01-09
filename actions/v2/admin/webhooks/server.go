@@ -3,9 +3,10 @@ package webhooks
 import (
 	"context"
 
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
-	"github.com/rs/zerolog"
 )
 
 type webhooksService interface {

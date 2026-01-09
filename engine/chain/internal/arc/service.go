@@ -4,11 +4,12 @@ import (
 	"context"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/ef"
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
+
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/ef"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 // Service for arc requests.

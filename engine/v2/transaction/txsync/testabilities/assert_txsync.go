@@ -4,8 +4,9 @@ import (
 	"testing"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 )
 
 type AssertTXsync interface {

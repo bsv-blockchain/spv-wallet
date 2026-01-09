@@ -25,7 +25,7 @@ const (
 func GetMap(query map[string][]string, filteredKey string) (map[string]interface{}, error) {
 	result := make(map[string]interface{})
 	getAll := filteredKey == ""
-	var allErrors = make([]error, 0)
+	allErrors := make([]error, 0)
 	for key, value := range query {
 		kType := getType(key, filteredKey, getAll)
 		switch kType {
@@ -78,7 +78,7 @@ func GetMap(query map[string][]string, filteredKey string) (map[string]interface
 }
 
 // getType is an internal function to get the type of query key.
-func getType(key string, filteredKey string, getAll bool) queryKeyType {
+func getType(key, filteredKey string, getAll bool) queryKeyType {
 	if getAll {
 		if isMap(key) {
 			return mapType
@@ -101,7 +101,7 @@ func getType(key string, filteredKey string, getAll bool) queryKeyType {
 }
 
 // isFilteredKey is an internal function to check if k is accepted when searching for map with given key.
-func isFilteredKey(k string, filteredKey string) bool {
+func isFilteredKey(k, filteredKey string) bool {
 	return k == filteredKey || strings.HasPrefix(k, filteredKey+"[")
 }
 
@@ -165,7 +165,7 @@ func parsePath(k string) ([]string, error) {
 }
 
 // setValueOnPath is an internal function to set value a path on dicts.
-func setValueOnPath(dicts map[string]interface{}, paths []string, value []string) error {
+func setValueOnPath(dicts map[string]interface{}, paths, value []string) error {
 	nesting := len(paths)
 	previousLevel := dicts
 	currentLevel := dicts
@@ -209,6 +209,6 @@ func isArrayOnPath(p string) bool {
 }
 
 // isLast is an internal function to check if the current level is the last level.
-func isLast(i int, nesting int) bool {
+func isLast(i, nesting int) bool {
 	return i == nesting-1
 }

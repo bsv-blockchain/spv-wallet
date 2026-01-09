@@ -2,6 +2,7 @@ package mapping
 
 import (
 	"github.com/bsv-blockchain/go-paymail"
+
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
 	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"

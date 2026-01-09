@@ -4,10 +4,11 @@ import (
 	"testing"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 	"github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 )
 
 type TransactionsEndpointAssertions interface {

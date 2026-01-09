@@ -6,6 +6,10 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
+	"github.com/mrz1836/go-cachestore"
+	"github.com/rs/zerolog"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/chain"
 	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
@@ -25,9 +29,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txsync"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/users"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/mrz1836/go-cachestore"
-	"github.com/rs/zerolog"
-	"gorm.io/gorm"
 )
 
 // AccessKeyService is the access key actions
@@ -77,7 +78,7 @@ type ContactService interface {
 
 	AdminChangeContactStatus(ctx context.Context, id string, status ContactStatus) (*Contact, error)
 	AdminCreateContact(ctx context.Context, contactPaymail, creatorPaymail, fullName string, metadata *Metadata) (*Contact, error)
-	AdminConfirmContacts(ctx context.Context, paymailA string, paymailB string) error
+	AdminConfirmContacts(ctx context.Context, paymailA, paymailB string) error
 	UpdateContact(ctx context.Context, id, fullName string, metadata *Metadata) (*Contact, error)
 	DeleteContactByID(ctx context.Context, id string) error
 	AdminUnconfirmContact(ctx context.Context, id string) error

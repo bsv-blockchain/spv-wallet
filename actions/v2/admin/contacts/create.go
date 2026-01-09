@@ -3,11 +3,12 @@ package contacts
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/v2/internal/mapping"
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
 	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
-	"github.com/gin-gonic/gin"
 )
 
 // AdminCreateContact creates a new contact for a user.

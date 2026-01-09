@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/bsv-blockchain/spv-wallet/models"
-	"github.com/stretchr/testify/require"
 )
 
 const merklerootsURL = "/api/v1/merkleroots"
@@ -15,7 +16,6 @@ const merklerootsURL = "/api/v1/merkleroots"
 type jsonObject = map[string]any
 
 func TestGETMerkleRootsSuccess(t *testing.T) {
-
 	testCases := map[string]struct {
 		query            string
 		expectedResponse jsonObject
@@ -46,7 +46,6 @@ func TestGETMerkleRootsSuccess(t *testing.T) {
 
 	for name, tt := range testCases {
 		t.Run(name, func(t *testing.T) {
-
 			// given
 			expResponseJSON, err := json.Marshal(tt.expectedResponse)
 			require.NoError(t, err, "Failed to marshall expected response")
@@ -71,11 +70,9 @@ func TestGETMerkleRootsSuccess(t *testing.T) {
 			then.Response(res).IsOK().WithJSONf(string(expResponseJSON))
 		})
 	}
-
 }
 
 func TestGETMerkleRootsFailure(t *testing.T) {
-
 	testCases := map[string]struct {
 		expectErr       string
 		response        string

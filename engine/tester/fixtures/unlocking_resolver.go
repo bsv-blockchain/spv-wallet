@@ -5,8 +5,9 @@ import (
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	sighash "github.com/bsv-blockchain/go-sdk/transaction/sighash"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/keys/type42"
 	"github.com/samber/lo"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/keys/type42"
 )
 
 type UnlockingTemplateResolver struct {

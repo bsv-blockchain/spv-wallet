@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/bsv/bsverrors"
 )

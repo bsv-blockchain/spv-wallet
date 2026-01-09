@@ -6,10 +6,11 @@ import (
 	"testing"
 
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
-	"github.com/bsv-blockchain/spv-wallet/engine/utils"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 func Test_RevertTransaction(t *testing.T) {

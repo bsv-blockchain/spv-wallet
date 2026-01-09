@@ -5,8 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 const (
@@ -71,7 +72,6 @@ func TestAcceptContactHappyPath(t *testing.T) {
 }
 
 func TestAcceptContactErrorPath(t *testing.T) {
-
 	testCases := []testCase{
 		{
 			testID: 1,
@@ -186,7 +186,6 @@ func TestRejectContactHappyPath(t *testing.T) {
 }
 
 func TestRejectContactErrorPath(t *testing.T) {
-
 	testCases := []testCase{
 		{
 			testID: 1,
@@ -238,7 +237,8 @@ func TestRejectContactErrorPath(t *testing.T) {
 				deleted:       true,
 			},
 			expectedErrorMessage: spverrors.ErrContactNotFound,
-		}}
+		},
+	}
 
 	for _, tc := range testCases {
 		ctx, client, deferMe := initContactTestCase(t)
@@ -303,7 +303,7 @@ func TestConfirmContactErrorPath(t *testing.T) {
 	tcs := []struct {
 		name          string
 		expectedError error
-		getContact    func() (contact *Contact, paymail string, onwerXpubId string)
+		getContact    func() (contact *Contact, paymail, onwerXpubId string)
 	}{
 		{
 			name:          "contact doesn't exist - return not found error",
@@ -398,7 +398,7 @@ func TestUnconfirmContactErrorPath(t *testing.T) {
 	tcs := []struct {
 		name          string
 		expectedError error
-		getContact    func() (contact *Contact, paymail string, onwerXpubId string)
+		getContact    func() (contact *Contact, paymail, onwerXpubId string)
 	}{
 		{
 			name:          "contact doesn't exist - return not found error",

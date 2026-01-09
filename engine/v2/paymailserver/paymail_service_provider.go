@@ -11,6 +11,8 @@ import (
 	"github.com/bsv-blockchain/go-sdk/script"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
+	"github.com/rs/zerolog"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
 	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
@@ -18,7 +20,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/keys/type42"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/rs/zerolog"
 )
 
 // ServiceProvider is a service provider for paymail service
@@ -151,9 +152,7 @@ func (s *serviceProvider) VerifyMerkleRoots(ctx context.Context, merkleProofs []
 	// TODO include metrics for VerifyMerkleRoots (perhaps on another level - maybe ChainService)
 
 	valid, err := s.spv.VerifyMerkleRoots(ctx, merkleProofs)
-
 	// NOTE: these errors goes to go-paymail and are not logged there, so we need to log them here
-
 	if err != nil {
 		s.logger.Error().Err(err).Msg("Error verifying merkle roots")
 		return pmerrors.ErrPaymailMerkleRootVerificationFailed.Wrap(err)

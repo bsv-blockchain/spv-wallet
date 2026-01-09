@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 

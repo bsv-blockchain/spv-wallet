@@ -6,6 +6,7 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 

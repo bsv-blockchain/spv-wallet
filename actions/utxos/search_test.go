@@ -32,7 +32,6 @@ func TestUserUTXOs(t *testing.T) {
 					"totalPages": 0
 				}
 			}`)
-
 	})
 
 	t.Run("try to return UTXOs for admin", func(t *testing.T) {

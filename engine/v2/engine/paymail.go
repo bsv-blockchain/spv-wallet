@@ -3,10 +3,11 @@ package engine
 import (
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
-	"github.com/bsv-blockchain/spv-wallet/config"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
 )
 
 func setupPaymailClient(overridesToApply *overrides, httpClient *resty.Client) paymail.ClientInterface {

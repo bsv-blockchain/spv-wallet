@@ -93,7 +93,6 @@ func NewClient(opts ...ClientOps) (ClientInterface, error) {
 
 // Close will terminate (close) the datastore and any open connections
 func (c *Client) Close() error {
-
 	if err := closeSQLDatabase(c.options.db); err != nil {
 		return err
 	}

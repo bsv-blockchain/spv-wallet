@@ -3,6 +3,8 @@ package mapping
 import (
 	"fmt"
 
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/bsv"
@@ -12,7 +14,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/lox"
 	bsvmodel "github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
-	"github.com/samber/lo"
 )
 
 // RecordedOutline maps domain RecordedOutline to api.ModelsRecordedOutline.

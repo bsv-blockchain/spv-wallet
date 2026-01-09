@@ -3,10 +3,11 @@ package users
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/internal/mapping"
 	dberrors "github.com/bsv-blockchain/spv-wallet/engine/v2/database/errors"
 	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
-	"github.com/gin-gonic/gin"
 )
 
 // UserById returns a user by ID

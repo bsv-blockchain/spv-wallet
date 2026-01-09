@@ -4,10 +4,11 @@ import (
 	"context"
 	"errors"
 
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 	dberrors "github.com/bsv-blockchain/spv-wallet/engine/v2/database/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
-	"gorm.io/gorm"
 )
 
 // Paymails is a repository for paymails.

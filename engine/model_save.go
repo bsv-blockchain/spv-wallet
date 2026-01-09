@@ -72,7 +72,7 @@ func Save(ctx context.Context, model ModelInterface) (err error) {
 		if tx.CanCommit() {
 			model.Client().Logger().Debug().Msg("committing db transaction...")
 			if err = tx.Commit(); err != nil {
-				return
+				return err
 			}
 		}
 
@@ -94,7 +94,7 @@ func Save(ctx context.Context, model ModelInterface) (err error) {
 			}
 		}
 
-		return
+		return err
 	})
 }
 

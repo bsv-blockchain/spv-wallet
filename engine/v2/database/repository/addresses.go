@@ -5,13 +5,14 @@ import (
 	"iter"
 	"slices"
 
+	"github.com/samber/lo"
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/addresses/addressesmodels"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
-	"github.com/samber/lo"
-	"gorm.io/datatypes"
-	"gorm.io/gorm"
 )
 
 // Addresses is a repository for addresses.

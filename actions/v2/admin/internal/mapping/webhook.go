@@ -1,9 +1,10 @@
 package mapping
 
 import (
+	"github.com/samber/lo"
+
 	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
-	"github.com/samber/lo"
 )
 
 // MapToModelsWebhooks converts a slice of ModelWebhook to ModelsWebhooks

@@ -3,6 +3,8 @@ package admin
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/bsv-blockchain/spv-wallet/actions/common"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/internal/query"
@@ -10,7 +12,6 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/models/filter"
 	"github.com/bsv-blockchain/spv-wallet/models/response"
 	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
-	"github.com/gin-gonic/gin"
 )
 
 // utxosSearch will fetch a list of utxos filtered by metadata

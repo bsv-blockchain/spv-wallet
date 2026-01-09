@@ -5,6 +5,7 @@ import (
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
@@ -28,7 +29,7 @@ func DeriveChildKeyFromHex(hdKey *bip32.ExtendedKey, hexHash string) (*bip32.Ext
 }
 
 // DerivePublicKey will derive the internal and external address from a key
-func DerivePublicKey(hdKey *bip32.ExtendedKey, chain uint32, num uint32) (*ec.PublicKey, error) {
+func DerivePublicKey(hdKey *bip32.ExtendedKey, chain, num uint32) (*ec.PublicKey, error) {
 	if hdKey == nil {
 		return nil, ErrHDKeyNil
 	}
@@ -43,7 +44,6 @@ func DerivePublicKey(hdKey *bip32.ExtendedKey, chain uint32, num uint32) (*ec.Pu
 
 // ValidateXPub will check the xPub key for length & validation
 func ValidateXPub(rawKey string) (*bip32.ExtendedKey, error) {
-
 	// Validate the xpub (length)
 	if len(rawKey) != XpubKeyLength {
 		return nil, spverrors.ErrXpubInvalidLength
@@ -60,8 +60,7 @@ func ValidateXPub(rawKey string) (*bip32.ExtendedKey, error) {
 }
 
 // DeriveAddress will derive the given address from a key
-func DeriveAddress(hdKey *bip32.ExtendedKey, chain uint32, num uint32) (address string, err error) {
-
+func DeriveAddress(hdKey *bip32.ExtendedKey, chain, num uint32) (address string, err error) {
 	// Don't panic
 	if hdKey == nil {
 		return "", ErrHDKeyNil
@@ -89,7 +88,6 @@ func DeriveAddress(hdKey *bip32.ExtendedKey, chain uint32, num uint32) (address 
 
 // DeriveAddresses will derive the internal and external address from a key
 func DeriveAddresses(hdKey *bip32.ExtendedKey, num uint32) (external, internal string, err error) {
-
 	// Don't panic
 	if hdKey == nil {
 		return "", "", ErrHDKeyNil
@@ -100,13 +98,13 @@ func DeriveAddresses(hdKey *bip32.ExtendedKey, num uint32) (external, internal s
 	if addresses, err = compat.GetAddressesForPath(
 		hdKey, num,
 	); err != nil {
-		return
+		return external, internal, err
 	} else if len(addresses) != 2 { // Sanity check might not be needed
 		return "", "", ErrDeriveFailed
 	}
 	external = addresses[0]
 	internal = addresses[1]
-	return
+	return external, internal, err
 }
 
 // DerivePrivateKeyFromHex will derive the private key from the extended key using the hex as the derivation paths

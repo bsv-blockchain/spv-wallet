@@ -7,7 +7,7 @@ import (
 	"net"
 	"net/url"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"
 )

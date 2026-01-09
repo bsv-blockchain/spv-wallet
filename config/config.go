@@ -4,10 +4,11 @@ package config
 import (
 	"time"
 
+	"github.com/mrz1836/go-cachestore"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
-	"github.com/mrz1836/go-cachestore"
 )
 
 const (

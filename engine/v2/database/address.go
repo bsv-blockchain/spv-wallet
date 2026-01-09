@@ -3,9 +3,10 @@ package database
 import (
 	"time"
 
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // Address represents a user's (bitcoin) addresses.

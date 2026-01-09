@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
-	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
-	"github.com/bsv-blockchain/spv-wallet/engine/tester"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	embeddedPostgres "github.com/fergusstrange/embedded-postgres"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 const (

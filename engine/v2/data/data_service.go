@@ -20,7 +20,7 @@ func NewService(dataRepo Repo) *Service {
 }
 
 // FindForUser returns the data by outpoint for a specific user.
-func (s *Service) FindForUser(ctx context.Context, id string, userID string) (*datamodels.Data, error) {
+func (s *Service) FindForUser(ctx context.Context, id, userID string) (*datamodels.Data, error) {
 	item, err := s.dataRepo.FindForUser(ctx, id, userID)
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "failed to find data for user %s", userID)

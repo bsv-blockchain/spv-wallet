@@ -4,8 +4,9 @@ import (
 	"testing"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 func TestLockingScriptInterpreter(t *testing.T) {

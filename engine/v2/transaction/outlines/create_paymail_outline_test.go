@@ -7,7 +7,7 @@ import (
 	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
 	tpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/testabilities"
 	"github.com/bsv-blockchain/spv-wallet/models"
@@ -18,8 +18,8 @@ import (
 
 func TestCreatePaymailTransactionOutlineBEEF(t *testing.T) {
 	const transactionSatoshiValue = bsv.Satoshis(1)
-	var recipient = fixtures.RecipientExternal.DefaultPaymail().Address()
-	var sender = fixtures.Sender.DefaultPaymail().Address()
+	recipient := fixtures.RecipientExternal.DefaultPaymail().Address()
+	sender := fixtures.Sender.DefaultPaymail().Address()
 
 	t.Run("return transaction outline with payment to valid paymail address", func(t *testing.T) {
 		given, then := testabilities.New(t)
@@ -119,7 +119,6 @@ func TestCreatePaymailTransactionOutlineBEEF(t *testing.T) {
 			HasReceiver(recipient).
 			HasSender(sender).
 			HasReference(paymailHostResponse.Reference)
-
 	})
 
 	t.Run("return transaction outline with payment split in multiple outputs", func(t *testing.T) {
@@ -458,8 +457,8 @@ func TestCreatePaymailTransactionOutlineBEEF(t *testing.T) {
 
 func TestCreatePaymailTransactionOutlineRAW(t *testing.T) {
 	const transactionSatoshiValue = bsv.Satoshis(1)
-	var recipient = fixtures.RecipientExternal.DefaultPaymail().Address()
-	var sender = fixtures.Sender.DefaultPaymail().Address()
+	recipient := fixtures.RecipientExternal.DefaultPaymail().Address()
+	sender := fixtures.Sender.DefaultPaymail().Address()
 
 	t.Run("return transaction outline with payment to valid paymail address", func(t *testing.T) {
 		given, then := testabilities.New(t)

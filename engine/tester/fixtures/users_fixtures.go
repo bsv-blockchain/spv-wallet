@@ -8,6 +8,7 @@ import (
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+
 	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/bsv-blockchain/spv-wallet/engine/v2/custominstructions"
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
@@ -199,7 +200,6 @@ func (f *User) ID() string {
 func (f *User) P2PKHLockingScript(instructions ...bsv.CustomInstruction) *script.Script {
 	res, err := custominstructions.NewLockingScriptInterpreter().
 		Process(f.PublicKey(), instructions)
-
 	if err != nil {
 		panic("Err returned from LockingScriptInterpreter: " + err.Error())
 	}
@@ -211,7 +211,6 @@ func (f *User) P2PKHLockingScript(instructions ...bsv.CustomInstruction) *script
 func (f *User) P2PKHUnlockingScriptTemplate(instructions ...bsv.CustomInstruction) sdk.UnlockingScriptTemplate {
 	res, err := custominstructions.NewInterpreter(&UnlockingTemplateResolver{}).
 		Process(f.PrivateKey(), instructions)
-
 	if err != nil {
 		panic("Err returned from UnlockingTemplateResolver: " + err.Error())
 	}

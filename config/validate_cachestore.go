@@ -1,8 +1,9 @@
 package config
 
 import (
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/mrz1836/go-cachestore"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Validate checks the configuration for specific rules

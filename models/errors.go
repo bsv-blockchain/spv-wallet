@@ -58,12 +58,12 @@ func (e SPVError) GetStatusCode() int {
 func (e SPVError) StackTrace() (trace errors.StackTrace) {
 	err, ok := e.cause.(stackTracer)
 	if !ok {
-		return
+		return trace
 	}
 
 	trace = err.StackTrace()
 
-	return
+	return trace
 }
 
 // Unwrap returns the "cause" error

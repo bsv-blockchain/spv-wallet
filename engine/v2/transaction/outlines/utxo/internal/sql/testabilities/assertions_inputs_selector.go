@@ -3,12 +3,13 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
-	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type InputsSelectorAssertions interface {
@@ -76,7 +77,7 @@ func (a assertion) AreEntries(expectedIndexes []int) ComparingSelectedInputsAsse
 	a.t.Helper()
 	a.assert.Len(a.actual, len(expectedIndexes))
 
-	expectedSelected := lo.Map(expectedIndexes, func(item int, index int) *outlines.UTXO {
+	expectedSelected := lo.Map(expectedIndexes, func(item, index int) *outlines.UTXO {
 		return &outlines.UTXO{
 			TxID:               a.comparingSource[item].TxID,
 			Vout:               a.comparingSource[item].Vout,

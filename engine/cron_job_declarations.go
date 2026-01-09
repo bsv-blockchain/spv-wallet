@@ -31,7 +31,7 @@ func (c *Client) cronJobs() taskmanager.CronJobs {
 				}()
 			}
 			err = task(ctx, c)
-			return
+			return err
 		}
 
 		jobs[name] = taskmanager.CronJob{

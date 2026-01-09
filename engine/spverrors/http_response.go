@@ -3,9 +3,10 @@ package spverrors
 import (
 	"errors"
 
-	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // ErrorResponse is searching for error and setting it up in gin context
@@ -48,5 +49,5 @@ func mapAndLog(err error, log *zerolog.Logger) (model models.ResponseError, stat
 		}
 		logInstance.Err(err).Msgf("Error HTTP response, returning %d", statusCode)
 	}
-	return
+	return model, statusCode
 }
