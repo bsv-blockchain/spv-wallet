@@ -3,7 +3,7 @@ package ef
 import (
 	"context"
 
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )

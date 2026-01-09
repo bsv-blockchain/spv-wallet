@@ -3,7 +3,7 @@ package arc
 import (
 	"context"
 
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal/ef"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"

@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/go-paymail"
-	"github.com/bitcoin-sv/go-paymail/server"
+	"github.com/bsv-blockchain/go-paymail"
+	"github.com/bsv-blockchain/go-paymail/server"
 	"github.com/bitcoin-sv/spv-wallet/config"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"

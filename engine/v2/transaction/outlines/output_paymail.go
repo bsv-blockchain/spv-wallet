@@ -3,9 +3,9 @@ package outlines
 import (
 	"errors"
 
-	"github.com/bitcoin-sv/go-paymail"
-	"github.com/bitcoin-sv/go-sdk/script"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-paymail"
+	"github.com/bsv-blockchain/go-sdk/script"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	pmerrors "github.com/bitcoin-sv/spv-wallet/engine/paymail/errors"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"

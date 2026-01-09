@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"testing"
 
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	script "github.com/bitcoin-sv/go-sdk/script"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	script "github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

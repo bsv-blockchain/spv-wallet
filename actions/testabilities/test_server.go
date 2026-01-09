@@ -11,7 +11,7 @@ type testServer struct {
 	handlers *gin.Engine
 }
 
-func (t testServer) RoundTrip(request *http.Request) (*http.Response, error) {
+func (t *testServer) RoundTrip(request *http.Request) (*http.Response, error) {
 	r := httptest.NewRecorder()
 	t.handlers.ServeHTTP(r, request)
 	return r.Result(), nil

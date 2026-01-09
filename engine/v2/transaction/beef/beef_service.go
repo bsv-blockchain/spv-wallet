@@ -3,7 +3,7 @@ package beef
 import (
 	"context"
 
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
 )
@@ -76,7 +76,7 @@ func (s *Service) PrepareBEEF(ctx context.Context, tx *sdk.Transaction) (string,
 		return "", spverrors.Wrapf(err, "failed to initialize source transaction resolver for transaction %s", txID)
 	}
 
-	err = resolver.Resolve()
+	err = resolver.Resolve(ctx)
 	if err != nil {
 		return "", spverrors.Wrapf(err, "failed to resolve source transactions for transaction %s", txID)
 	}

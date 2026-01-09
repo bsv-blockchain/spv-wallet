@@ -1,10 +1,10 @@
 package utils
 
 import (
-	bip32 "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/go-sdk/script"
+	bip32 "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 )
 

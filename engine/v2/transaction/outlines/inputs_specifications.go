@@ -1,8 +1,8 @@
 package outlines
 
 import (
-	"github.com/bitcoin-sv/go-sdk/chainhash"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/chainhash"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
 	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"

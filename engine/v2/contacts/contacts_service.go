@@ -3,7 +3,7 @@ package contacts
 import (
 	"context"
 
-	goPaymail "github.com/bitcoin-sv/go-paymail"
+	goPaymail "github.com/bsv-blockchain/go-paymail"
 	"github.com/bitcoin-sv/spv-wallet/engine/paymail"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"

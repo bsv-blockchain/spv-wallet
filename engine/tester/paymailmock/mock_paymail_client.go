@@ -6,8 +6,8 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/bitcoin-sv/go-paymail"
-	paymailtester "github.com/bitcoin-sv/go-paymail/tester"
+	"github.com/bsv-blockchain/go-paymail"
+	paymailtester "github.com/bsv-blockchain/go-paymail/tester"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester"
 	"github.com/go-resty/resty/v2"

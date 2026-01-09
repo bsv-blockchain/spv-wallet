@@ -5,9 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	bip32 "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	bip32 "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

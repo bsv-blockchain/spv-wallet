@@ -4,7 +4,7 @@ import (
 	"context"
 	"iter"
 
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 )
 
 // TransactionsGetter is an interface for getting transactions by their IDs

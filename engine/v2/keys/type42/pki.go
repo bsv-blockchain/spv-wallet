@@ -3,7 +3,7 @@ package type42
 import (
 	"fmt"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 )
 
 const rotationSuffix = "0"

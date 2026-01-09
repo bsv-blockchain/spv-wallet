@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
-	bsm "github.com/bitcoin-sv/go-sdk/compat/bsm"
-	"github.com/bitcoin-sv/go-sdk/script"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
+	bsm "github.com/bsv-blockchain/go-sdk/compat/bsm"
+	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/bitcoin-sv/spv-wallet/models"

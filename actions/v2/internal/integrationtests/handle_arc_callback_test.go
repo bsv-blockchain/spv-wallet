@@ -1,11 +1,13 @@
+//go:build database_tests
+
 package integrationtests
 
 import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/go-sdk/chainhash"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/chainhash"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/actions/v2/internal/integrationtests/testabilities"
 	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"

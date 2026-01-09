@@ -1,18 +1,35 @@
 package logging
 
 import (
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )
 
+var (
+	ginWritersOnce sync.Once
+	ginModeOnce    sync.Once
+)
+
 // SetGinWriters sets GIN to use zerolog logger for debugPrint, recovery messages
 // and every other events when it uses fmt.Fprint(DefaultWriter/DefaultErrorWriter, ...)
 // https://github.com/gin-gonic/gin/issues/1877#issuecomment-552637900
+// This function is safe to call multiple times, but will only set the writers once.
 func SetGinWriters(log *zerolog.Logger) {
-	gin.DefaultWriter = newGinLogsWriter(log, zerolog.DebugLevel)
-	gin.DefaultErrorWriter = newGinLogsWriter(log, zerolog.ErrorLevel)
+	ginWritersOnce.Do(func() {
+		gin.DefaultWriter = newGinLogsWriter(log, zerolog.DebugLevel)
+		gin.DefaultErrorWriter = newGinLogsWriter(log, zerolog.ErrorLevel)
+	})
+}
+
+// SetGinMode sets the gin mode (debug, release, test).
+// This function is safe to call multiple times, but will only set the mode once.
+func SetGinMode(mode string) {
+	ginModeOnce.Do(func() {
+		gin.SetMode(mode)
+	})
 }
 
 // GinMiddleware returns a middleware that logs requests using zerolog.

@@ -4,15 +4,16 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/bitcoin-sv/go-paymail"
-	"github.com/bitcoin-sv/go-paymail/beef"
-	"github.com/bitcoin-sv/go-paymail/server"
-	"github.com/bitcoin-sv/go-paymail/spv"
-	"github.com/bitcoin-sv/go-sdk/chainhash"
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/go-sdk/script"
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
-	"github.com/bitcoin-sv/go-sdk/transaction/template/p2pkh"
+	"github.com/bsv-blockchain/go-paymail"
+	"github.com/bsv-blockchain/go-paymail/beef"
+	"github.com/bsv-blockchain/go-paymail/server"
+	"github.com/bsv-blockchain/go-paymail/spv"
+	"github.com/bsv-blockchain/go-sdk/chainhash"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	"github.com/bsv-blockchain/go-sdk/script"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
+	"github.com/bsv-blockchain/go-sdk/util"
 	"github.com/bitcoin-sv/spv-wallet/conv"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/utils"
@@ -321,7 +322,10 @@ func saveBEEFTxInputs(ctx context.Context, c ClientInterface, dBeef *beef.Decode
 	for _, input := range inputsToAdd {
 		var bump *trx.MerklePath
 		if input.BumpIndex != nil { // mined
-			bumpIndex, err := conv.VarIntToInt(input.BumpIndex)
+			// Convert old SDK VarInt to new SDK VarInt via underlying uint64 value
+			oldVarInt := uint64(*input.BumpIndex)
+			newVarInt := util.VarInt(oldVarInt)
+			bumpIndex, err := conv.VarIntToInt(&newVarInt)
 			if err != nil {
 				c.Logger().Error().Msgf("error in saveBEEFTxInputs: %v for beef: %v", err, dBeef)
 			}

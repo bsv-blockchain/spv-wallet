@@ -62,6 +62,7 @@ func (o *Operations) SaveAll(ctx context.Context, operations iter.Seq[*txmodels.
 
 	query := o.db.
 		WithContext(ctx).
+		Session(&gorm.Session{FullSaveAssociations: true}).
 		Clauses(clause.OnConflict{
 			UpdateAll: true,
 		})

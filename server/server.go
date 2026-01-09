@@ -87,7 +87,7 @@ func (s *Server) Shutdown(ctx context.Context) error {
 func (s *Server) Handlers() *gin.Engine {
 	httpLogger := s.Logger.With().Str("service", "http-server").Logger()
 	if httpLogger.GetLevel() > zerolog.DebugLevel {
-		gin.SetMode(gin.ReleaseMode)
+		logging.SetGinMode(gin.ReleaseMode)
 	}
 	logging.SetGinWriters(&httpLogger)
 	ginEngine := gin.New()

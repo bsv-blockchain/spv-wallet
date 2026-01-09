@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"testing"
 
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bitcoin-sv/spv-wallet/engine/script/template"
 	assert "github.com/stretchr/testify/require"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
 )
 

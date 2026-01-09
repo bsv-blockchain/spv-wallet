@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"testing"
 
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
 	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester"

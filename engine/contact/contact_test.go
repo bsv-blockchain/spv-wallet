@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/go-paymail"
+	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bitcoin-sv/spv-wallet/engine"
 	"github.com/bitcoin-sv/spv-wallet/engine/contact/testabilities"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"

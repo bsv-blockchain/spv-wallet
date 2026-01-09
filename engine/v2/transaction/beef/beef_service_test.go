@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/go-sdk/chainhash"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
+	"github.com/bsv-blockchain/go-sdk/chainhash"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef/testabilities"
 	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"

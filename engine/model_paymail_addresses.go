@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bitcoin-sv/go-paymail"
-	compat "github.com/bitcoin-sv/go-sdk/compat/bip32"
+	"github.com/bsv-blockchain/go-paymail"
+	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	"github.com/bitcoin-sv/spv-wallet/conv"
 	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"

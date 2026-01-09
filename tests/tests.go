@@ -68,7 +68,7 @@ func (ts *TestSuite) BaseSetupTest() {
 	ts.SpvWalletEngine, err = engine.NewClient(context.Background(), opts...)
 	require.NoError(ts.T(), err)
 
-	gin.SetMode(gin.ReleaseMode)
+	logging.SetGinMode(gin.ReleaseMode)
 	ginEngine := gin.New()
 	ginEngine.Use(logging.GinMiddleware(ts.Logger), gin.Recovery())
 	ginEngine.Use(middleware.AppContextMiddleware(ts.AppConfig, ts.SpvWalletEngine, ts.Logger))

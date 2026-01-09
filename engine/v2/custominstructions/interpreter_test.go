@@ -3,7 +3,7 @@ package custominstructions
 import (
 	"testing"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bitcoin-sv/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/require"
 )

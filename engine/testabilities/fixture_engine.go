@@ -27,8 +27,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory"
-const fileDbConnectionString = "file:spv-wallet-test.db"
+const inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory&cache=shared"
+const fileDbConnectionString = "/tmp/spv-wallet-test.db"
 
 const CallbackTestToken = "arc-test-token"
 
@@ -167,6 +167,11 @@ func (f *engineFixture) EngineWithConfiguration(opts ...ConfigOpts) (walletEngin
 		require.NoError(f.t, err)
 		f.externalTransport.Reset()
 		httpmock.Reset()
+
+		// Clean up file-based database if it exists
+		if f.config.Db.SQLite.DatabasePath == fileDbConnectionString {
+			_ = os.Remove(fileDbConnectionString)
+		}
 	}
 
 	return EngineWithConfig{
@@ -293,9 +298,9 @@ func (f *engineFixture) tryDevelopmentSQLite() bool {
 func (f *engineFixture) useSQLite() {
 	f.config.Db.Datastore.Engine = datastore.SQLite
 	f.config.Db.SQLite.Shared = false
-	f.config.Db.SQLite.MaxIdleConnections = 1
-	f.config.Db.SQLite.MaxOpenConnections = 1
-	f.config.Db.SQLite.DatabasePath = inMemoryDbConnectionString
+	f.config.Db.SQLite.MaxIdleConnections = 10
+	f.config.Db.SQLite.MaxOpenConnections = 10
+	f.config.Db.SQLite.DatabasePath = fileDbConnectionString
 }
 
 func (f *engineFixture) initialiseFixtures() {
@@ -384,11 +389,7 @@ func getConfigForTests() *config.AppConfig {
 
 	cfg.Notifications.Enabled = false
 
-	cfg.Db.Datastore.Engine = datastore.SQLite
-	cfg.Db.SQLite.DatabasePath = inMemoryDbConnectionString
 	cfg.Db.SQLite.TablePrefix = "xapi"
-	cfg.Db.SQLite.MaxIdleConnections = 1
-	cfg.Db.SQLite.MaxOpenConnections = 1
 
 	return cfg
 }

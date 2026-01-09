@@ -3,7 +3,7 @@ package txsync
 import (
 	"context"
 
-	trx "github.com/bitcoin-sv/go-sdk/transaction"
+	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"

@@ -1,10 +1,11 @@
 package txtestability_test
 
 import (
+	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/go-sdk/script"
-	"github.com/bitcoin-sv/go-sdk/spv"
+	"github.com/bsv-blockchain/go-sdk/script"
+	"github.com/bsv-blockchain/go-sdk/spv"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
 	"github.com/stretchr/testify/require"
 )
@@ -54,7 +55,7 @@ func TestMockTXGeneration(t *testing.T) {
 
 			// when
 			tx := spec.TX()
-			ok, err := spv.VerifyScripts(tx)
+			ok, err := spv.VerifyScripts(context.Background(), tx)
 
 			// then:
 			require.NoError(t, err)

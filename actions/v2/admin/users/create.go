@@ -3,7 +3,7 @@ package users
 import (
 	"net/http"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/internal/mapping"
 	"github.com/bitcoin-sv/spv-wallet/api"
 	configerrors "github.com/bitcoin-sv/spv-wallet/config/errors"

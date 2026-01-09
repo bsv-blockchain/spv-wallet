@@ -3,10 +3,10 @@ package manualtests
 import (
 	"strconv"
 
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
-	sdk "github.com/bitcoin-sv/go-sdk/transaction"
-	sighash "github.com/bitcoin-sv/go-sdk/transaction/sighash"
-	"github.com/bitcoin-sv/go-sdk/transaction/template/p2pkh"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
+	sdk "github.com/bsv-blockchain/go-sdk/transaction"
+	sighash "github.com/bsv-blockchain/go-sdk/transaction/sighash"
+	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
 	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
 	"github.com/joomcode/errorx"
 	"github.com/samber/lo"

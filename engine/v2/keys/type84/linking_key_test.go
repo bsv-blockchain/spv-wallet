@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	ec "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	assert "github.com/stretchr/testify/require"
 )
 

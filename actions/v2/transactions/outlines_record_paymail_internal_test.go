@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/go-sdk/script"
+	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
 	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
 	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"

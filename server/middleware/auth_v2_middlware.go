@@ -3,7 +3,7 @@ package middleware
 import (
 	"strings"
 
-	bip32 "github.com/bitcoin-sv/go-sdk/compat/bip32"
+	bip32 "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
 	"github.com/bitcoin-sv/spv-wallet/engine/utils"
 	"github.com/bitcoin-sv/spv-wallet/models"

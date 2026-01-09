@@ -1,7 +1,7 @@
 package custominstructions
 
 import (
-	primitives "github.com/bitcoin-sv/go-sdk/primitives/ec"
+	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 )
 
 // InputKeys is a union type that can be either a public or private key.

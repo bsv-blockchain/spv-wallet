@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/bitcoin-sv/go-paymail"
+	"github.com/bsv-blockchain/go-paymail"
 	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
 )
 

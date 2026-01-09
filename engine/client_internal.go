@@ -3,8 +3,8 @@ package engine
 import (
 	"context"
 
-	paymailclient "github.com/bitcoin-sv/go-paymail"
-	paymailserver "github.com/bitcoin-sv/go-paymail/server"
+	paymailclient "github.com/bsv-blockchain/go-paymail"
+	paymailserver "github.com/bsv-blockchain/go-paymail/server"
 	"github.com/bitcoin-sv/spv-wallet/engine/chain"
 	"github.com/bitcoin-sv/spv-wallet/engine/cluster"
 	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
