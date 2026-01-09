@@ -7,11 +7,11 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/script"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/require"
 )
 

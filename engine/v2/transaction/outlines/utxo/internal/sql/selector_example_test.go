@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/tgorm"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/tgorm"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"gorm.io/gorm"
 )
 

@@ -7,10 +7,10 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/stretchr/testify/require"
 )
 

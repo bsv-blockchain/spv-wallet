@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
 )
 

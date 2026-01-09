@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/jarcoal/httpmock"
 	"github.com/samber/lo"
 )

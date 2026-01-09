@@ -3,7 +3,7 @@ package database
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )

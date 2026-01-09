@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/models"
 	pkgerrors "github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 )

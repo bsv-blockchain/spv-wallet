@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/gomodule/redigo/redis"
 	"github.com/mrz1836/go-cache"
 	"github.com/mrz1836/go-cachestore"

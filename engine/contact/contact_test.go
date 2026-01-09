@@ -5,10 +5,10 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/contact/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/contact/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 )
 
 func Test_ClientService_AdminCreateContact_Success(t *testing.T) {

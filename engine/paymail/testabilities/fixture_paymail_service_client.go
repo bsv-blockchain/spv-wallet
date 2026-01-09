@@ -4,11 +4,11 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/paymailmock"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/jarcoal/httpmock"
 )
 

@@ -14,7 +14,7 @@
   - github.com/testcontainers/testcontainers-go/modules/postgres v0.35.0 → v0.40.0
   - github.com/bitcoin-sv/go-paymail v0.23.0 → github.com/bsv-blockchain/go-paymail v0.25.0
   - github.com/bitcoin-sv/go-sdk v1.1.21 → github.com/bsv-blockchain/go-sdk v1.2.14
-  - github.com/bitcoin-sv/spv-wallet-go-client v1.0.0-beta.24 → github.com/bsv-blockchain/spv-wallet-go-client v1.0.3
+  - github.com/bsv-blockchain/spv-wallet-go-client v1.0.0-beta.24 → github.com/bsv-blockchain/spv-wallet-go-client v1.0.3
   - github.com/miekg/dns v1.1.69 → v1.1.70 (transitive from go-paymail upgrade)
 - **Skipped (Pinned/Blocked)**: 7 packages
   - gorm.io/gorm v1.25.12 (PINNED - cannot upgrade)
@@ -383,7 +383,7 @@ Starting tier-based upgrade of 50 direct dependencies...
 - **Impact**:
   - ✅ **Removed old SDK v1.1.16** from api/manualtests dependency tree
   - ✅ Graduated from beta to stable release (v1.0.3)
-  - ✅ Module path changed: bitcoin-sv/spv-wallet-go-client → bsv-blockchain/spv-wallet-go-client
+  - ✅ Module path changed: bsv-blockchain/spv-wallet-go-client → bsv-blockchain/spv-wallet-go-client
 - **Test Result**: Compilation successful
 - **Notes**:
   - Repository relocated from bitcoin-sv to bsv-blockchain organization

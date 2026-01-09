@@ -2,9 +2,9 @@ package outlines
 
 import (
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
-	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 // TransactionSpec represents client provided specification for a transaction outline.

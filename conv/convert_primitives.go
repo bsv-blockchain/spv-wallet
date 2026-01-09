@@ -4,7 +4,7 @@ import (
 	"math"
 
 	"github.com/bsv-blockchain/go-sdk/util"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Int64ToUint32 will convert an int64 to a uint32, with range checks

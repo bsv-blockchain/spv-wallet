@@ -3,11 +3,11 @@ package data_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities/apierror"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities/apierror"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // NOTE: More complex and real-world test case can be found in outlines_record_test.go

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // AfterDeleted will fire after a successful delete in the Datastore

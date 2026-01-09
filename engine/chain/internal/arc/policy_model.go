@@ -3,7 +3,7 @@ package arc
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // FeeAmount indicating how many satoshis are paid for the given number of bytes in the transaction.

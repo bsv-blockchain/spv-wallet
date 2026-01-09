@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/api/manualtests/client"
+	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
 )

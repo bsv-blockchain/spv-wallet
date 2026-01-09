@@ -3,7 +3,7 @@ package base
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/api"
 	"github.com/gin-gonic/gin"
 )
 

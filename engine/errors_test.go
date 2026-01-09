@@ -1,6 +1,6 @@
 package engine
 
-import "github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+import "github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 
 // ErrDatastoreNotSupported is when a Datastore cannot be 100% tested
 var ErrDatastoreNotSupported = spverrors.Newf("this Datastore is not supported for testing at this time")

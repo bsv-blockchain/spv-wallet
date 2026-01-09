@@ -13,10 +13,10 @@ import (
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	magic "github.com/bitcoinschema/go-map"
 )
 

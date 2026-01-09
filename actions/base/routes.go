@@ -3,9 +3,9 @@ package base
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/docs"
-	"github.com/bitcoin-sv/spv-wallet/server/handlers"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/docs"
+	"github.com/bsv-blockchain/spv-wallet/server/handlers"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

@@ -1,8 +1,8 @@
 package custominstructions
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/custominstructions/errors"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/custominstructions/errors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // Interpreter is a struct that is used to interpret custom instructions.

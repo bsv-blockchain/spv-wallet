@@ -4,12 +4,12 @@ import (
 	"context"
 	"errors"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database/dbquery"
-	"github.com/bitcoin-sv/spv-wallet/models"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database/dbquery"
+	"github.com/bsv-blockchain/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 	"github.com/samber/lo"
 	"gorm.io/gorm"
 )

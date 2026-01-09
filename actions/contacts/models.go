@@ -1,8 +1,8 @@
 package contacts
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // UpsertContact is the model for creating a contact

@@ -4,11 +4,11 @@ import (
 	"iter"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/custominstructions"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/custominstructions"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 type customOutputsResolver struct {

@@ -3,14 +3,14 @@ package admin
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/common"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/internal/query"
-	"github.com/bitcoin-sv/spv-wallet/mappings"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
+	"github.com/bsv-blockchain/spv-wallet/actions/common"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/internal/query"
+	"github.com/bsv-blockchain/spv-wallet/mappings"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
 )
 

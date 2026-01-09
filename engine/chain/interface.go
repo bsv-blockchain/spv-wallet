@@ -6,9 +6,9 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail/spv"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/models"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // ARCService for querying ARC server.

@@ -14,9 +14,9 @@ import (
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
 	"github.com/bsv-blockchain/go-sdk/util"
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // PaymailDefaultServiceProvider is an interface for overriding the paymail actions in go-paymail/server

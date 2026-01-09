@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/script/template"
+	"github.com/bsv-blockchain/spv-wallet/engine/script/template"
 	assert "github.com/stretchr/testify/require"
 )
 

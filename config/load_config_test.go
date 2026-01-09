@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 )

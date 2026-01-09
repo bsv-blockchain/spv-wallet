@@ -3,8 +3,8 @@ package contacts
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
 	"github.com/rs/zerolog"
 )
 

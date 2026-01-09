@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	validation "github.com/go-ozzo/ozzo-validation"
 )
 

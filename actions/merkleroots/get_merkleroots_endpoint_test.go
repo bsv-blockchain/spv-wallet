@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/models"
 	"github.com/stretchr/testify/require"
 )
 

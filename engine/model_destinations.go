@@ -7,10 +7,10 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	"github.com/bitcoin-sv/spv-wallet/engine/cluster"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"gorm.io/gorm"
 )
 

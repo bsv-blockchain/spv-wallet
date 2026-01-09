@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/stretchr/testify/require"
 )
 

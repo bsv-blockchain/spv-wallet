@@ -6,7 +6,7 @@ import (
 	"math/big"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // calculateHMAC calculates the HMAC of the provided public shared secret using a reference string.

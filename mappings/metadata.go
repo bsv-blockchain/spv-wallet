@@ -1,7 +1,7 @@
 package mappings
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 )
 
 // MapToMetadata converts "raw" key-value map to aliased engine.Metadata

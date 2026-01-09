@@ -1,17 +1,17 @@
 package v2
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/base"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/contacts"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/data"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/merkleroots"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/operations"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/transactions"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/users"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/base"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/contacts"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/data"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/merkleroots"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/operations"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/transactions"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/users"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/rs/zerolog"
 )
 

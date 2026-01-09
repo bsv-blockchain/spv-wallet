@@ -3,10 +3,10 @@ package data
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/data/internal/mapping"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/data/internal/mapping"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
 )
 

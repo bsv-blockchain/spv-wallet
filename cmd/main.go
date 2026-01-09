@@ -9,12 +9,12 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	_ "github.com/bitcoin-sv/spv-wallet/docs"
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/initializer"
-	"github.com/bitcoin-sv/spv-wallet/logging"
-	"github.com/bitcoin-sv/spv-wallet/server"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	_ "github.com/bsv-blockchain/spv-wallet/docs"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/initializer"
+	"github.com/bsv-blockchain/spv-wallet/logging"
+	"github.com/bsv-blockchain/spv-wallet/server"
 )
 
 // version of the application that can be overridden with ldflags during build

@@ -7,9 +7,9 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	pmerrors "github.com/bitcoin-sv/spv-wallet/engine/paymail/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 )

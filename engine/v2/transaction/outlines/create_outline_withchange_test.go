@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/transaction/bucket"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
 )
 
 func TestOutlineWithChange(t *testing.T) {

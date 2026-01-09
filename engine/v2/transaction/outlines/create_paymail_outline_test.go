@@ -4,16 +4,16 @@ import (
 	"context"
 	"testing"
 
-	pmerrors "github.com/bitcoin-sv/spv-wallet/engine/paymail/errors"
-	tpaymail "github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/models"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/optional"
-	"github.com/bitcoin-sv/spv-wallet/models/transaction/bucket"
+	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
+	tpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/optional"
+	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
 )
 
 func TestCreatePaymailTransactionOutlineBEEF(t *testing.T) {

@@ -1,6 +1,6 @@
 package database
 
-import "github.com/bitcoin-sv/spv-wallet/models/bsv"
+import "github.com/bsv-blockchain/spv-wallet/models/bsv"
 
 // Data holds the data stored in outputs.
 type Data struct {

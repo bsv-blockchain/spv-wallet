@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/tgorm"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/tgorm"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 )

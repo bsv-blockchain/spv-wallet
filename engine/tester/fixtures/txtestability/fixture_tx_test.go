@@ -6,7 +6,7 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bsv-blockchain/go-sdk/spv"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 	"github.com/stretchr/testify/require"
 )
 

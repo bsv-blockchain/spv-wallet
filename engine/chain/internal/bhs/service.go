@@ -1,7 +1,7 @@
 package bhs
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
 )

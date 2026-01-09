@@ -3,8 +3,8 @@ package common
 import (
 	"math"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 // GetPageDescriptionFromSearchParams - returns a PageDescription based on the provided SearchParams

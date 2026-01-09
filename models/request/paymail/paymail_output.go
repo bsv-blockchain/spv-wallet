@@ -1,8 +1,8 @@
 package paymail
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/optional"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/optional"
 )
 
 // Output represents a paymail output.

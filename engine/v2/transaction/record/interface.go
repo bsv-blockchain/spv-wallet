@@ -7,11 +7,11 @@ import (
 	"github.com/bsv-blockchain/go-paymail"
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses/addressesmodels"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/addresses/addressesmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // AddressesService is an interface for addresses service.

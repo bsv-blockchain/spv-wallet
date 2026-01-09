@@ -3,15 +3,15 @@
 # SPV Wallet
 
 
-[![Release](https://img.shields.io/github/release-pre/bitcoin-sv/spv-wallet.svg?logo=github&style=flat&v=3)](https://github.com/bitcoin-sv/spv-wallet/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/bitcoin-sv/spv-wallet/run-tests.yml?branch=main&v=3)](https://github.com/bitcoin-sv/spv-wallet/actions)
-[![Report](https://goreportcard.com/badge/github.com/bitcoin-sv/spv-wallet?style=flat&v=3)](https://goreportcard.com/report/github.com/bitcoin-sv/spv-wallet)
-[![codecov](https://codecov.io/gh/bitcoin-sv/spv-wallet/branch/main/graph/badge.svg?v=3)](https://codecov.io/gh/bitcoin-sv/spv-wallet)
-[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/bitcoin-sv/spv-wallet&style=flat&v=3)](https://mergify.io)
+[![Release](https://img.shields.io/github/release-pre/bsv-blockchain/spv-wallet.svg?logo=github&style=flat&v=3)](https://github.com/bsv-blockchain/spv-wallet/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/bsv-blockchain/spv-wallet/run-tests.yml?branch=main&v=3)](https://github.com/bsv-blockchain/spv-wallet/actions)
+[![Report](https://goreportcard.com/badge/github.com/bsv-blockchain/spv-wallet?style=flat&v=3)](https://goreportcard.com/report/github.com/bsv-blockchain/spv-wallet)
+[![codecov](https://codecov.io/gh/bsv-blockchain/spv-wallet/branch/main/graph/badge.svg?v=3)](https://codecov.io/gh/bsv-blockchain/spv-wallet)
+[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/bsv-blockchain/spv-wallet&style=flat&v=3)](https://mergify.io)
 <br>
 
-[![Go](https://img.shields.io/github/go-mod/go-version/bitcoin-sv/spv-wallet?v=3)](https://golang.org/)
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod&v=3)](https://gitpod.io/#https://github.com/bitcoin-sv/spv-wallet)
+[![Go](https://img.shields.io/github/go-mod/go-version/bsv-blockchain/spv-wallet?v=3)](https://golang.org/)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod&v=3)](https://gitpod.io/#https://github.com/bsv-blockchain/spv-wallet)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat&v=3)](https://github.com/RichardLitt/standard-readme)
 [![Makefile Included](https://img.shields.io/badge/Makefile-Supported%20-brightgreen?=flat&logo=probot&v=3)](Makefile)
 <br/>
@@ -57,7 +57,7 @@ More in-depth information and guidance about SPV Wallet Toolbox you can find [he
 **spv-wallet** requires a [supported release of Go](https://golang.org/doc/devel/release.html#policy).
 
 ```shell script
-go get -u github.com/bitcoin-sv/spv-wallet
+go get -u github.com/bsv-blockchain/spv-wallet
 ```
 
 #### build
@@ -75,12 +75,12 @@ go build -o spv-wallet cmd/*
 
 ## Documentation
 
-View the generated [documentation](https://pkg.go.dev/github.com/bitcoin-sv/spv-wallet)
+View the generated [documentation](https://pkg.go.dev/github.com/bsv-blockchain/spv-wallet)
 
-[![GoDoc](https://godoc.org/github.com/bitcoin-sv/spv-wallet?status.svg&style=flat&v=3)](https://pkg.go.dev/github.com/bitcoin-sv/spv-wallet)
-View the generated [documentation](https://pkg.go.dev/github.com/bitcoin-sv/spv-wallet)
+[![GoDoc](https://godoc.org/github.com/bsv-blockchain/spv-wallet?status.svg&style=flat&v=3)](https://pkg.go.dev/github.com/bsv-blockchain/spv-wallet)
+View the generated [documentation](https://pkg.go.dev/github.com/bsv-blockchain/spv-wallet)
 
-[![GoDoc](https://godoc.org/github.com/bitcoin-sv/spv-wallet?status.svg&style=flat&v=3)](https://pkg.go.dev/github.com/bitcoin-sv/spv-wallet)
+[![GoDoc](https://godoc.org/github.com/bsv-blockchain/spv-wallet?status.svg&style=flat&v=3)](https://pkg.go.dev/github.com/bsv-blockchain/spv-wallet)
 
 <br/>
 
@@ -120,7 +120,7 @@ This repository was created using [MrZ's `go-template`](https://github.com/mrz18
 <br/>
 
 -   [BitcoinSchema/go-bitcoin](https://github.com/BitcoinSchema/go-bitcoin)
--   [bitcoin-sv/spv-wallet](https://github.com/bitcoin-sv/spv-wallet)
+-   [bsv-blockchain/spv-wallet](https://github.com/bsv-blockchain/spv-wallet)
 -   [mrz1836/go-api-router](https://github.com/mrz1836/go-api-router)
 -   [mrz1836/go-sanitize](https://github.com/mrz1836/go-sanitize)
 -   [stretchr/testify](https://github.com/stretchr/testify)
@@ -279,8 +279,8 @@ To use your API key put key in ``token`` field in ```config.example.yaml```
 
 ### Examples & Tests
 
-All unit tests run via [GitHub Actions](https://github.com/bitcoin-sv/spv-wallet/actions) and
-All unit tests run via [GitHub Actions](https://github.com/bitcoin-sv/spv-wallet/actions) and
+All unit tests run via [GitHub Actions](https://github.com/bsv-blockchain/spv-wallet/actions) and
+All unit tests run via [GitHub Actions](https://github.com/bsv-blockchain/spv-wallet/actions) and
 uses [Go version 1.19.x](https://golang.org/doc/go1.19). View the [configuration file](.github/workflows/run-tests.yml).
 
 <br/>
@@ -364,4 +364,4 @@ View the [contributing guidelines](.github/CODE_STANDARDS.md#3-contributing) and
 
 ## License
 
-[![License](https://img.shields.io/github/license/bitcoin-sv/spv-wallet.svg?style=flat&v=3)](LICENSE)
+[![License](https://img.shields.io/github/license/bsv-blockchain/spv-wallet.svg?style=flat&v=3)](LICENSE)

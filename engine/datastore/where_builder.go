@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"gorm.io/gorm"
 )
 

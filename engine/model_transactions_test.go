@@ -7,10 +7,10 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/script"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	customTypes "github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	customTypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

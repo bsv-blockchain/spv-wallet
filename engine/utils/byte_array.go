@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // ToByteArray converts string or []byte to byte array or returns an error

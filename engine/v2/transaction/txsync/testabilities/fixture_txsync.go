@@ -6,10 +6,10 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/chainhash"
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txsync"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txsync"
 	"github.com/samber/lo"
 )
 

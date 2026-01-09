@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailerrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailerrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
 	"github.com/joomcode/errorx"
 	"gorm.io/gorm"
 )

@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-paymail/spv"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 var pastMerkleRoot = []*spv.MerkleRootConfirmationRequestItem{{

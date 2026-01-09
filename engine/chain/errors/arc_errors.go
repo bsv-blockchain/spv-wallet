@@ -1,6 +1,6 @@
 package chainerrors
 
-import "github.com/bitcoin-sv/spv-wallet/models"
+import "github.com/bsv-blockchain/spv-wallet/models"
 
 // ErrARCUnreachable is when ARC cannot be requested
 var ErrARCUnreachable = models.SPVError{Message: "ARC cannot be requested", StatusCode: 500, Code: "error-arc-unreachable"}

@@ -4,9 +4,9 @@ import (
 	"context"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // TransactionBase is the same fields share between multiple transaction models

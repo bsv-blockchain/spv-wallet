@@ -1,7 +1,7 @@
 package metrics
 
 import (
-	enginemetrics "github.com/bitcoin-sv/spv-wallet/engine/metrics"
+	enginemetrics "github.com/bsv-blockchain/spv-wallet/engine/metrics"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

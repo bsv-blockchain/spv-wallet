@@ -7,7 +7,7 @@ import (
 	"time"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // loadFromDBTimeout - within this time transactions should be loaded from the database

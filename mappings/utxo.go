@@ -1,10 +1,10 @@
 package mappings
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	customtypes "github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
-	"github.com/bitcoin-sv/spv-wallet/mappings/common"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	customtypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/mappings/common"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 // MapToUtxoPointer will map the utxo-pointer model from spv-wallet to the spv-wallet-models contract

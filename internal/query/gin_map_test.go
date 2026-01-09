@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/internal/query"
+	"github.com/bsv-blockchain/spv-wallet/internal/query"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
 )

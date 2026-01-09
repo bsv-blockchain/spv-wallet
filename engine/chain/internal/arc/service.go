@@ -4,9 +4,9 @@ import (
 	"context"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/internal/ef"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/internal/ef"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
 )

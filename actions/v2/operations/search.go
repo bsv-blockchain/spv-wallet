@@ -3,11 +3,11 @@ package operations
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/operations/internal/mapping"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/operations/internal/mapping"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
 )
 

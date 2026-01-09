@@ -3,8 +3,8 @@ package config_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/stretchr/testify/require"
 )
 

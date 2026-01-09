@@ -3,7 +3,7 @@ package utils
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/assert"
 )
 

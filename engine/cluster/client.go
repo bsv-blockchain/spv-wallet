@@ -3,7 +3,7 @@ package cluster
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/logging"
+	"github.com/bsv-blockchain/spv-wallet/engine/logging"
 	"github.com/go-redis/redis/v8"
 	"github.com/rs/zerolog"
 )

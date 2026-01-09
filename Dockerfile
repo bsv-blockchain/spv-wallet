@@ -2,7 +2,7 @@
 FROM golang:1.24.1 as builder
 
 # Set the working directory
-WORKDIR /go/src/github.com/bitcoin-sv/spv-wallet
+WORKDIR /go/src/github.com/bsv-blockchain/spv-wallet
 
 COPY . ./
 
@@ -19,7 +19,7 @@ LABEL version="1.0" name="SPVWallet"
 WORKDIR /
 
 # Copy binary to runner
-COPY --from=builder /go/src/github.com/bitcoin-sv/spv-wallet/engine .
+COPY --from=builder /go/src/github.com/bsv-blockchain/spv-wallet/engine .
 
 # Set entrypoint
 ENTRYPOINT ["/spvwallet"]

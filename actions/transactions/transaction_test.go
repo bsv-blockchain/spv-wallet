@@ -3,8 +3,8 @@ package transactions
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/server/handlers"
-	"github.com/bitcoin-sv/spv-wallet/tests"
+	"github.com/bsv-blockchain/spv-wallet/server/handlers"
+	"github.com/bsv-blockchain/spv-wallet/tests"
 	"github.com/stretchr/testify/suite"
 )
 

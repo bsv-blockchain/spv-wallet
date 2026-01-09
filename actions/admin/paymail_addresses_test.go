@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	assert "github.com/stretchr/testify/require"
 )
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
 )
 
 // GetPolicy returns the current policy from the ARC server.

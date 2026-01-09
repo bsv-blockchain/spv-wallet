@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )

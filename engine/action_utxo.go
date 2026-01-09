@@ -3,9 +3,9 @@ package engine
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // GetUtxos will get all the utxos from the Datastore

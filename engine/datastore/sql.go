@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore/sqlite3extended"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore/sqlite3extended"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

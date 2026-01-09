@@ -4,9 +4,9 @@ import (
 	"maps"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/paymailmock"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
 )
 
 // ExpectedCustomInstructions represents json array with custom instructions of UTXO created with Faucet().TopUp() method

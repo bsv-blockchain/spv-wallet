@@ -5,7 +5,7 @@ import (
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // DeriveChildKeyFromHex derive the child extended key from the hex string

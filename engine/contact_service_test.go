@@ -7,9 +7,9 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	xtester "github.com/bitcoin-sv/spv-wallet/engine/tester/paymailmock"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	xtester "github.com/bsv-blockchain/spv-wallet/engine/tester/paymailmock"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/require"
 )

@@ -3,9 +3,9 @@ package transactions
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 	"github.com/rs/zerolog"
 )
 

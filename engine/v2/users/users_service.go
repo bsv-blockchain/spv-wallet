@@ -4,12 +4,12 @@ import (
 	"context"
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/users/usererrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/users/usersmodels"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/transaction/bucket"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usererrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
 	"github.com/joomcode/errorx"
 )
 

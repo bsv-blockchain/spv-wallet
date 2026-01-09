@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/bsv/bsverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/bsv/bsverrors"
 )
 
 // TxHexFormat is the format type of the transaction hex.

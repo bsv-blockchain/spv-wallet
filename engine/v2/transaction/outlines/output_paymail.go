@@ -6,13 +6,13 @@ import (
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-sdk/script"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	pmerrors "github.com/bitcoin-sv/spv-wallet/engine/paymail/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
-	"github.com/bitcoin-sv/spv-wallet/models/optional"
-	"github.com/bitcoin-sv/spv-wallet/models/transaction/bucket"
+	pmerrors "github.com/bsv-blockchain/spv-wallet/engine/paymail/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/models/optional"
+	"github.com/bsv-blockchain/spv-wallet/models/transaction/bucket"
 )
 
 // Paymail represents a paymail output

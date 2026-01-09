@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // FetchTransaction fetches transaction from junglebus

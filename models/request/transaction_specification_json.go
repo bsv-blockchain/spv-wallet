@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/bitcoin-sv/spv-wallet/models/request/opreturn"
-	paymailreq "github.com/bitcoin-sv/spv-wallet/models/request/paymail"
+	"github.com/bsv-blockchain/spv-wallet/models/request/opreturn"
+	paymailreq "github.com/bsv-blockchain/spv-wallet/models/request/paymail"
 )
 
 // unmarshalOutput used by TransactionSpecification unmarshalling to get Output object by type

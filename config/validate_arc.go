@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // explicitHTTPURLRegex is a regex pattern to check the callback URL (host)

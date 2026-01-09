@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
 )
 
 // Cron job names to be used in WithCronCustomPeriod

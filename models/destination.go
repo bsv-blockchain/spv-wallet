@@ -1,6 +1,6 @@
 package models
 
-import "github.com/bitcoin-sv/spv-wallet/models/common"
+import "github.com/bsv-blockchain/spv-wallet/models/common"
 
 // Destination is a model that represents a destination - registered in a spv-wallet with xpub.
 type Destination struct {

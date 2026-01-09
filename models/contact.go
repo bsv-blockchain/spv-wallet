@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/models/common"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/models/common"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 )
 
 // CreateContactResponse is a model for response on contact creation.

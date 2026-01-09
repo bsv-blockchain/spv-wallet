@@ -1,6 +1,8 @@
-module github.com/bitcoin-sv/spv-wallet/api/manualtests
+module github.com/bsv-blockchain/spv-wallet/api/manualtests
 
 go 1.24.3
+
+replace github.com/bsv-blockchain/spv-wallet/models => ../../models
 
 require (
 	github.com/bsv-blockchain/go-sdk v1.2.14

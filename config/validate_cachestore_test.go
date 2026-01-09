@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/config"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/stretchr/testify/require"
 )

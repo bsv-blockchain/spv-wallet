@@ -3,8 +3,8 @@ package contacts
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 )
 

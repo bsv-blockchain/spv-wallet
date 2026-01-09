@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine/logging"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/utils/must"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine/logging"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/utils/must"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 )

@@ -4,9 +4,9 @@ import (
 	"context"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 	"github.com/rs/zerolog"
 )
 

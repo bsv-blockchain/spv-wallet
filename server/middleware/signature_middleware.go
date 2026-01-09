@@ -12,10 +12,10 @@ import (
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	bsm "github.com/bsv-blockchain/go-sdk/compat/bsm"
 	"github.com/bsv-blockchain/go-sdk/script"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
-	"github.com/bitcoin-sv/spv-wallet/models"
-	"github.com/bitcoin-sv/spv-wallet/server/reqctx"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/server/reqctx"
 	"github.com/gin-gonic/gin"
 )
 

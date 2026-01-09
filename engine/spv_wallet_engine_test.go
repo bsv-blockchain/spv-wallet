@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/mrz1836/go-cache"
 	"github.com/rafaeljusto/redigomock"
 	"github.com/rs/zerolog"

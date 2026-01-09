@@ -3,8 +3,8 @@ package chain
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // GetFeeUnit returns the current fee unit from the ARC policy.

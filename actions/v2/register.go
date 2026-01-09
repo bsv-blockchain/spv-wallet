@@ -1,11 +1,11 @@
 package v2
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/actions/paymailserver"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/callback"
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/swagger"
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/actions/paymailserver"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/callback"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/swagger"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/gin-gonic/gin"
 )
 

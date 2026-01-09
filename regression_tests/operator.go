@@ -11,12 +11,12 @@ import (
 	"strings"
 	"time"
 
-	walletclient "github.com/bitcoin-sv/spv-wallet-go-client"
-	"github.com/bitcoin-sv/spv-wallet-go-client/commands"
-	"github.com/bitcoin-sv/spv-wallet-go-client/config"
-	"github.com/bitcoin-sv/spv-wallet-go-client/walletkeys"
+	walletclient "github.com/bsv-blockchain/spv-wallet-go-client"
+	"github.com/bsv-blockchain/spv-wallet-go-client/commands"
+	"github.com/bsv-blockchain/spv-wallet-go-client/config"
+	"github.com/bsv-blockchain/spv-wallet-go-client/walletkeys"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 const (

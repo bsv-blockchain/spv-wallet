@@ -3,8 +3,8 @@ package webhooks
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
 	"github.com/rs/zerolog"
 )
 

@@ -3,11 +3,11 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	testpaymail "github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
 )
 
 type IntegrationTestFixtures interface {

@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

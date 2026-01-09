@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/samber/lo"
 )
 

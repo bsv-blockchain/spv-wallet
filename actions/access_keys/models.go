@@ -1,7 +1,7 @@
 package accesskeys
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 )
 
 // CreateAccessKey is the model for creating an access key

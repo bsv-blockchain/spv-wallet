@@ -1,8 +1,8 @@
 package mappings
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
-	"github.com/bitcoin-sv/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // MapToWebhookContract will map the webhook model from spv-wallet engine to the spv-wallet-models contract

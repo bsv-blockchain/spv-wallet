@@ -4,7 +4,7 @@ Package tester is a generic testing package with helpful methods for all package
 package tester
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // RandomTablePrefix will make a random prefix (avoid same tables for parallel tests)

@@ -3,9 +3,9 @@ package users
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/internal/mapping"
-	dberrors "github.com/bitcoin-sv/spv-wallet/engine/v2/database/errors"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/internal/mapping"
+	dberrors "github.com/bsv-blockchain/spv-wallet/engine/v2/database/errors"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 )
 

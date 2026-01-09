@@ -8,9 +8,9 @@ import (
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/custominstructions"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/custominstructions"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // User is a fixture that is representing a user of the system.

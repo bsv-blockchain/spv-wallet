@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities/apierror"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities/apierror"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
 )
 
 func TestCreateContact(t *testing.T) {

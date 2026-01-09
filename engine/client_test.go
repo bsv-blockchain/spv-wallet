@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/mrz1836/go-cachestore"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"

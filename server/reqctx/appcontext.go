@@ -1,8 +1,8 @@
 package reqctx
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/config"
-	"github.com/bitcoin-sv/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	"github.com/bsv-blockchain/spv-wallet/engine"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )

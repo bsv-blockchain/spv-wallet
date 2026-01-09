@@ -1,9 +1,9 @@
 package utxo
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines/utxo/internal/sql"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines/utxo/internal/sql"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"gorm.io/gorm"
 )
 

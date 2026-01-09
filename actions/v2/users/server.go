@@ -3,8 +3,8 @@ package users
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/rs/zerolog"
 )
 

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

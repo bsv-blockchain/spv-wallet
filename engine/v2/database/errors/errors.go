@@ -2,7 +2,7 @@
 package dberrors
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/errdef"
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 	"github.com/joomcode/errorx"
 )
 

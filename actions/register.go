@@ -1,17 +1,17 @@
 package actions
 
 import (
-	accesskeys "github.com/bitcoin-sv/spv-wallet/actions/access_keys"
-	"github.com/bitcoin-sv/spv-wallet/actions/admin"
-	"github.com/bitcoin-sv/spv-wallet/actions/base"
-	"github.com/bitcoin-sv/spv-wallet/actions/contacts"
-	"github.com/bitcoin-sv/spv-wallet/actions/merkleroots"
-	"github.com/bitcoin-sv/spv-wallet/actions/paymails"
-	"github.com/bitcoin-sv/spv-wallet/actions/sharedconfig"
-	"github.com/bitcoin-sv/spv-wallet/actions/transactions"
-	"github.com/bitcoin-sv/spv-wallet/actions/users"
-	"github.com/bitcoin-sv/spv-wallet/actions/utxos"
-	"github.com/bitcoin-sv/spv-wallet/server/handlers"
+	accesskeys "github.com/bsv-blockchain/spv-wallet/actions/access_keys"
+	"github.com/bsv-blockchain/spv-wallet/actions/admin"
+	"github.com/bsv-blockchain/spv-wallet/actions/base"
+	"github.com/bsv-blockchain/spv-wallet/actions/contacts"
+	"github.com/bsv-blockchain/spv-wallet/actions/merkleroots"
+	"github.com/bsv-blockchain/spv-wallet/actions/paymails"
+	"github.com/bsv-blockchain/spv-wallet/actions/sharedconfig"
+	"github.com/bsv-blockchain/spv-wallet/actions/transactions"
+	"github.com/bsv-blockchain/spv-wallet/actions/users"
+	"github.com/bsv-blockchain/spv-wallet/actions/utxos"
+	"github.com/bsv-blockchain/spv-wallet/server/handlers"
 )
 
 // Register collects all the action's routes and registers them using the handlersManager

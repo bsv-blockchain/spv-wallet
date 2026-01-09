@@ -59,7 +59,7 @@ linters-settings:
     sections:
       - standard  # Standard section: captures all standard packages.
       - default  # Default section: contains all imports that could not be matched to another section type.
-      - prefix(bitcoin-sv/spv-wallet)  # Custom section: groups all imports with the specified Prefix.
+      - prefix(bsv-blockchain/spv-wallet)  # Custom section: groups all imports with the specified Prefix.
   misspell:
     # Correct spellings using locale preferences for US or UK.
     # Default is to use a neutral variety of English.

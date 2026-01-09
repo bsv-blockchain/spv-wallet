@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redis/redis_rate/v9"
 	"github.com/vmihailenco/taskq/v3"

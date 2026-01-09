@@ -1,8 +1,8 @@
 package mapping
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
 	"github.com/samber/lo"
 )
 

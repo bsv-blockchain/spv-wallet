@@ -6,9 +6,9 @@ import (
 
 	"github.com/bsv-blockchain/go-sdk/script"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 // DataType represents the type of data in the OP_RETURN output.

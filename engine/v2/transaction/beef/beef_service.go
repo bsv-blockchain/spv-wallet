@@ -4,8 +4,8 @@ import (
 	"context"
 
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	txerrors "github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	txerrors "github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/errors"
 )
 
 // TxQueryResult represents the result of a transaction query.

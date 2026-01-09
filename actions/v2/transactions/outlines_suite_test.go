@@ -1,10 +1,10 @@
 package transactions_test
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/transactions/internal/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/transactions/internal/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/suite"
 )
 

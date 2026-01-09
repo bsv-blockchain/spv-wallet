@@ -1,9 +1,9 @@
 package transactions
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/internal/mapping"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/internal/mapping"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )

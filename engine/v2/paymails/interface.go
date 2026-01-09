@@ -3,7 +3,7 @@ package paymails
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailsmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailsmodels"
 )
 
 // PaymailRepo is a paymail repository

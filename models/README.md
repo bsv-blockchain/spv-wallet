@@ -2,13 +2,13 @@
 
 # SPV Wallet: Models
 
-[![Release](https://img.shields.io/github/release-pre/bitcoin-sv/spv-wallet-models.svg?logo=github&style=flat&v=1)](https://github.com/bitcoin-sv/spv-wallet/models/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/bitcoin-sv/spv-wallet/models/run-tests.yml?branch=master&logo=github&v=1)](https://github.com/bitcoin-sv/spv-wallet/models/actions)
-[![Report](https://goreportcard.com/badge/github.com/bitcoin-sv/spv-wallet-models?style=flat&v=1)](https://goreportcard.com/report/github.com/bitcoin-sv/spv-wallet-models)
-[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/bitcoin-sv/spv-wallet-models&style=flat&v=1)](https://mergify.io)
+[![Release](https://img.shields.io/github/release-pre/bsv-blockchain/spv-wallet-models.svg?logo=github&style=flat&v=1)](https://github.com/bsv-blockchain/spv-wallet/models/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/bsv-blockchain/spv-wallet/models/run-tests.yml?branch=master&logo=github&v=1)](https://github.com/bsv-blockchain/spv-wallet/models/actions)
+[![Report](https://goreportcard.com/badge/github.com/bsv-blockchain/spv-wallet-models?style=flat&v=1)](https://goreportcard.com/report/github.com/bsv-blockchain/spv-wallet-models)
+[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/bsv-blockchain/spv-wallet-models&style=flat&v=1)](https://mergify.io)
 <br>
 
-[![Go](https://img.shields.io/github/go-mod/go-version/bitcoin-sv/spv-wallet-models?v=1)](https://golang.org/)
+[![Go](https://img.shields.io/github/go-mod/go-version/bsv-blockchain/spv-wallet-models?v=1)](https://golang.org/)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat&v=1)](https://github.com/RichardLitt/standard-readme)
 [![Makefile Included](https://img.shields.io/badge/Makefile-Supported%20-brightgreen?=flat&logo=probot&v=1)](Makefile)
 
@@ -37,15 +37,15 @@ SPV Wallet internal models & structs
 
 **go-template** requires a [supported release of Go](https://golang.org/doc/devel/release.html#policy).
 ```shell script
-go get -u github.com/bitcoin-sv/spv-wallet-models
+go get -u github.com/bsv-blockchain/spv-wallet-models
 ```
 
 <br/>
 
 ## Documentation
-View the generated [documentation](https://pkg.go.dev/github.com/bitcoin-sv/spv-wallet-models)
+View the generated [documentation](https://pkg.go.dev/github.com/bsv-blockchain/spv-wallet-models)
 
-[![GoDoc](https://godoc.org/github.com/bitcoin-sv/spv-wallet-models?status.svg&style=flat&v=1)](https://pkg.go.dev/github.com/bitcoin-sv/spv-wallet-models)
+[![GoDoc](https://godoc.org/github.com/bsv-blockchain/spv-wallet-models?status.svg&style=flat&v=1)](https://pkg.go.dev/github.com/bsv-blockchain/spv-wallet-models)
 
 <br/>
 
@@ -168,7 +168,7 @@ vet                           Run the Go vet application
 ## Usage
 
 ### Examples & Tests
-All unit tests run via [GitHub Actions](https://github.com/bitcoin-sv/spv-wallet/models/actions) and
+All unit tests run via [GitHub Actions](https://github.com/bsv-blockchain/spv-wallet/models/actions) and
 uses [Go version 1.18.x](https://golang.org/doc/go1.18). View the [configuration file](.github/workflows/run-tests.yml).
 
 <br/>
@@ -211,4 +211,4 @@ View the [contributing guidelines](.github/CODE_STANDARDS.md#3-contributing) and
 
 ## License
 
-[![License](https://img.shields.io/github/license/bitcoin-sv/spv-wallet-models.svg?style=flat&v=1)](LICENSE)
+[![License](https://img.shields.io/github/license/bsv-blockchain/spv-wallet-models.svg?style=flat&v=1)](LICENSE)

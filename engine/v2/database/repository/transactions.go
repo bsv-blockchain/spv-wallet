@@ -5,10 +5,10 @@ import (
 	"maps"
 	"slices"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/database"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/database"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
 	"gorm.io/gorm"
 )
 

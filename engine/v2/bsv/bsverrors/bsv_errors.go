@@ -1,7 +1,7 @@
 package bsverrors
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
 // ErrUnknownTransactionFormat is returned when an unknown transaction format is provided

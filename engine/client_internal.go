@@ -5,13 +5,13 @@ import (
 
 	paymailclient "github.com/bsv-blockchain/go-paymail"
 	paymailserver "github.com/bsv-blockchain/go-paymail/server"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain"
-	"github.com/bitcoin-sv/spv-wallet/engine/cluster"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/notifications"
-	"github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/taskmanager"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain"
+	"github.com/bsv-blockchain/spv-wallet/engine/cluster"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/notifications"
+	"github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/taskmanager"
 	"github.com/mrz1836/go-cachestore"
 )
 

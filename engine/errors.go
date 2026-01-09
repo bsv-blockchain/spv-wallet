@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // ErrMissingFieldHex is an error when missing the hex field of a transaction

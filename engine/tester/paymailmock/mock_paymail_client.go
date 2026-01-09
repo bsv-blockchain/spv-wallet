@@ -8,8 +8,8 @@ import (
 
 	"github.com/bsv-blockchain/go-paymail"
 	paymailtester "github.com/bsv-blockchain/go-paymail/tester"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
 )

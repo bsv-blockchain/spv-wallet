@@ -4,8 +4,8 @@ import (
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	script "github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bsv-blockchain/go-sdk/script/interpreter"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // Evaluate processes a given Bitcoin script by parsing it, replacing certain opcodes

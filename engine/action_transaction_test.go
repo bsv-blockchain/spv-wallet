@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

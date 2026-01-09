@@ -3,7 +3,7 @@ package cluster
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/go-redis/redis/v8"
 	"github.com/rs/zerolog"
 )

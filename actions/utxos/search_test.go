@@ -3,8 +3,8 @@ package utxos_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 )
 
 func TestUserUTXOs(t *testing.T) {

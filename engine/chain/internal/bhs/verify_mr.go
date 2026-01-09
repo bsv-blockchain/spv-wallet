@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/bsv-blockchain/go-paymail/spv"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // VerifyMerkleRoots verifies the merkle roots of the given transactions using BHS request

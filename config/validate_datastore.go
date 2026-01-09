@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // Validate checks the configuration for specific rules

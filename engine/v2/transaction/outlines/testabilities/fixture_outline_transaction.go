@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	tpaymail "github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/outlines"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	tpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/outlines"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
 // TransactionOutlineFixture is a test fixture - used for establishing environment for test.

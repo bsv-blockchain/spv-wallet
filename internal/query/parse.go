@@ -3,8 +3,8 @@ package query
 import (
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 	"github.com/gin-gonic/gin"
 	"github.com/go-viper/mapstructure/v2"
 )

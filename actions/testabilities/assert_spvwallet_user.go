@@ -3,8 +3,8 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
 )

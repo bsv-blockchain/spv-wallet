@@ -4,9 +4,9 @@ import (
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/custominstructions/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/keys/type42"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/custominstructions/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/keys/type42"
 )
 
 // NewAddressInterpreter creates a new custom instructions interpreter that resolves a public key to an address.

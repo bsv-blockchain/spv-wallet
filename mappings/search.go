@@ -1,8 +1,8 @@
 package mappings
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 	"github.com/iancoleman/strcase"
 )
 

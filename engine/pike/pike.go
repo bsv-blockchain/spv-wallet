@@ -19,9 +19,9 @@ import (
 
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
-	"github.com/bitcoin-sv/spv-wallet/engine/script/template"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/keys/type84"
+	"github.com/bsv-blockchain/spv-wallet/engine/script/template"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/keys/type84"
 )
 
 // GenerateOutputsTemplate creates a Pike output template

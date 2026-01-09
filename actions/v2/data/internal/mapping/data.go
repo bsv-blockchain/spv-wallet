@@ -1,8 +1,8 @@
 package mapping
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/data/datamodels"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/data/datamodels"
 )
 
 // DataResponse maps a domain data model to a response model

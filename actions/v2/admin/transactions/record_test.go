@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	"github.com/bsv-blockchain/go-sdk/script"
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/models/bsv"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/require"
 )

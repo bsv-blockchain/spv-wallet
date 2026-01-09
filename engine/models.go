@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	customTypes "github.com/bitcoin-sv/spv-wallet/engine/datastore/customtypes"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	customTypes "github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
 )
 
 var defaultPageSize = 25

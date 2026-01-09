@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bitcoin-sv/spv-wallet/errdef"
+	"github.com/bsv-blockchain/spv-wallet/errdef"
 	"github.com/gin-gonic/gin"
 	"github.com/joomcode/errorx"
 	"github.com/rs/zerolog"

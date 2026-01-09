@@ -3,9 +3,9 @@ package webhooks_test
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/actions/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
 )
 
 const webhookAPIURL = "/api/v2/admin/webhooks"

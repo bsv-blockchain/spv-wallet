@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/bsv-blockchain/go-sdk/transaction"
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	chainerrors "github.com/bitcoin-sv/spv-wallet/engine/chain/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	chainerrors "github.com/bsv-blockchain/spv-wallet/engine/chain/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/rs/zerolog"
 )
 

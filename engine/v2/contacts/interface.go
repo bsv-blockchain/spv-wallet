@@ -3,9 +3,9 @@ package contacts
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/contacts/contactsmodels"
-	"github.com/bitcoin-sv/spv-wallet/models"
-	"github.com/bitcoin-sv/spv-wallet/models/filter"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/contacts/contactsmodels"
+	"github.com/bsv-blockchain/spv-wallet/models"
+	"github.com/bsv-blockchain/spv-wallet/models/filter"
 )
 
 // ContactRepo is a contacts repository

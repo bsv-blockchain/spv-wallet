@@ -3,8 +3,8 @@ package data
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/data/datamodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/data/datamodels"
 )
 
 // Service is the domain service for data.

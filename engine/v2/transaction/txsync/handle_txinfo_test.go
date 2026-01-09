@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txmodels"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/txsync/testabilities"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/txsync/testabilities"
 )
 
 func TestUpdateOnMinedTx(t *testing.T) {

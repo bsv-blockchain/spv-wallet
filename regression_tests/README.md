@@ -68,4 +68,4 @@ go run . -l
 
 ## License
 
-[![License](https://img.shields.io/github/license/bitcoin-sv/spv-wallet.svg?style=flat&v=3)](LICENSE)
+[![License](https://img.shields.io/github/license/bsv-blockchain/spv-wallet.svg?style=flat&v=3)](LICENSE)

@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	script "github.com/bsv-blockchain/go-sdk/script"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 var (

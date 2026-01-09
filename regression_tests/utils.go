@@ -12,13 +12,13 @@ import (
 	"strings"
 	"time"
 
-	walletclient "github.com/bitcoin-sv/spv-wallet-go-client"
-	"github.com/bitcoin-sv/spv-wallet-go-client/commands"
-	walletclientcfg "github.com/bitcoin-sv/spv-wallet-go-client/config"
-	"github.com/bitcoin-sv/spv-wallet-go-client/walletkeys"
+	walletclient "github.com/bsv-blockchain/spv-wallet-go-client"
+	"github.com/bsv-blockchain/spv-wallet-go-client/commands"
+	walletclientcfg "github.com/bsv-blockchain/spv-wallet-go-client/config"
+	"github.com/bsv-blockchain/spv-wallet-go-client/walletkeys"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/models/response"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/models/response"
 	"github.com/joho/godotenv"
 )
 

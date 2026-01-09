@@ -3,8 +3,8 @@ package engine
 import (
 	"database/sql/driver"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // ContactStatus represents statuses of contact model.

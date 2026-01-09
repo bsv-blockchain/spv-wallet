@@ -5,8 +5,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailerrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailerrors"
 )
 
 type mockPaymailAddressService struct {

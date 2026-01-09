@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/data/datamodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/data/datamodels"
 )
 
 // Repo is the interface that wraps the basic operations with data.

@@ -9,7 +9,7 @@ import (
 	"github.com/bsv-blockchain/go-sdk/spv"
 	sdk "github.com/bsv-blockchain/go-sdk/transaction"
 	"github.com/bsv-blockchain/go-sdk/transaction/template/p2pkh"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/transaction/beef"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/transaction/beef"
 	"github.com/stretchr/testify/require"
 )
 

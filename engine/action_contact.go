@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/datastore"
-	paymailclient "github.com/bitcoin-sv/spv-wallet/engine/paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/datastore"
+	paymailclient "github.com/bsv-blockchain/spv-wallet/engine/paymail"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 // UpsertContact adds a new contact if not exists or updates the existing one.

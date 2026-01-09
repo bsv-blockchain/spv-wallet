@@ -4,7 +4,7 @@ import (
 	"context"
 	"iter"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/addresses/addressesmodels"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/addresses/addressesmodels"
 )
 
 // AddressRepo is an interface for addresses repository.

@@ -3,11 +3,11 @@ package users
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/spv-wallet/actions/v2/admin/internal/mapping"
-	"github.com/bitcoin-sv/spv-wallet/api"
-	configerrors "github.com/bitcoin-sv/spv-wallet/config/errors"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/paymails/paymailerrors"
-	"github.com/bitcoin-sv/spv-wallet/errdef/clienterr"
+	"github.com/bsv-blockchain/spv-wallet/actions/v2/admin/internal/mapping"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	configerrors "github.com/bsv-blockchain/spv-wallet/config/errors"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/paymails/paymailerrors"
+	"github.com/bsv-blockchain/spv-wallet/errdef/clienterr"
 	"github.com/gin-gonic/gin"
 )
 

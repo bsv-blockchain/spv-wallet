@@ -1,9 +1,9 @@
 package mapping
 
 import (
-	"github.com/bitcoin-sv/spv-wallet/api"
-	"github.com/bitcoin-sv/spv-wallet/engine/v2/users/usersmodels"
-	"github.com/bitcoin-sv/spv-wallet/lox"
+	"github.com/bsv-blockchain/spv-wallet/api"
+	"github.com/bsv-blockchain/spv-wallet/engine/v2/users/usersmodels"
+	"github.com/bsv-blockchain/spv-wallet/lox"
 	"github.com/samber/lo"
 )
 

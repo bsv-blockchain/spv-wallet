@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/rs/zerolog"
 )
 

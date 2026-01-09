@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/bsv-blockchain/go-paymail"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
 	"github.com/jarcoal/httpmock"
 )
 

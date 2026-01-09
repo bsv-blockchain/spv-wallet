@@ -1,6 +1,6 @@
 package fixtures
 
-import "github.com/bitcoin-sv/spv-wallet/models"
+import "github.com/bsv-blockchain/spv-wallet/models"
 
 // MockedBHSMerkleRootsData is mocked  merkle roots data on Block Header Service (BHS) side
 var MockedBHSMerkleRootsData = []models.MerkleRoot{

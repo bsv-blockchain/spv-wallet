@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )

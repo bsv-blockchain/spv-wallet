@@ -3,14 +3,14 @@ package testabilities
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/spv-wallet/config"
-	chainmodels "github.com/bitcoin-sv/spv-wallet/engine/chain/models"
-	testpaymail "github.com/bitcoin-sv/spv-wallet/engine/paymail/testabilities"
-	testengine "github.com/bitcoin-sv/spv-wallet/engine/testabilities"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures"
-	"github.com/bitcoin-sv/spv-wallet/engine/tester/fixtures/txtestability"
-	"github.com/bitcoin-sv/spv-wallet/server"
+	"github.com/bsv-blockchain/spv-wallet/config"
+	chainmodels "github.com/bsv-blockchain/spv-wallet/engine/chain/models"
+	testpaymail "github.com/bsv-blockchain/spv-wallet/engine/paymail/testabilities"
+	testengine "github.com/bsv-blockchain/spv-wallet/engine/testabilities"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures"
+	"github.com/bsv-blockchain/spv-wallet/engine/tester/fixtures/txtestability"
+	"github.com/bsv-blockchain/spv-wallet/server"
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
 )

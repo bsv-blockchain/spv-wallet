@@ -7,11 +7,11 @@ import (
 	"github.com/bsv-blockchain/go-paymail"
 	"github.com/bsv-blockchain/go-paymail/server"
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
-	"github.com/bitcoin-sv/spv-wallet/conv"
-	"github.com/bitcoin-sv/spv-wallet/engine/pike"
-	"github.com/bitcoin-sv/spv-wallet/engine/script/template"
-	"github.com/bitcoin-sv/spv-wallet/engine/spverrors"
-	"github.com/bitcoin-sv/spv-wallet/engine/utils"
+	"github.com/bsv-blockchain/spv-wallet/conv"
+	"github.com/bsv-blockchain/spv-wallet/engine/pike"
+	"github.com/bsv-blockchain/spv-wallet/engine/script/template"
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
+	"github.com/bsv-blockchain/spv-wallet/engine/utils"
 )
 
 // PikeContactServiceProvider is an interface for handling the pike contact actions in go-paymail/server
