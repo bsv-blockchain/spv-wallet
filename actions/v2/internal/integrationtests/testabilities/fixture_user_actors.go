@@ -23,6 +23,7 @@ type IntegrationTestFixtures interface {
 
 type fixture struct {
 	testabilities.SPVWalletApplicationFixture
+
 	t       testing.TB
 	alice   *user
 	bob     *user

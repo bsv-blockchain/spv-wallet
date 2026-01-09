@@ -85,6 +85,7 @@ func (a *actions) Charlie() ActorsActions {
 
 type user struct {
 	fixtures.User
+
 	txFixture      txtestability.TransactionsFixtures
 	app            testabilities.SPVWalletApplicationFixture
 	t              testing.TB

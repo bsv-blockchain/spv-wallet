@@ -44,6 +44,7 @@ func (a *transactionEndpointAssertions) Response(response *resty.Response) Trans
 
 type transactionResponseAssertions struct {
 	testabilities.SPVWalletResponseAssertions
+
 	t        testing.TB
 	response *resty.Response
 	require  *require.Assertions

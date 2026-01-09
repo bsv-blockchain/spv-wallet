@@ -34,6 +34,7 @@ type SatoshisAndSizeProvider interface {
 
 type inputsSelectorFixture struct {
 	testabilities.DatabaseFixture
+
 	t           testing.TB
 	db          *gorm.DB
 	transaction txtestability.TransactionsFixtures

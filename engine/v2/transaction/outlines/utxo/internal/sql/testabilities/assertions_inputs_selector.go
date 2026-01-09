@@ -105,5 +105,5 @@ func (a assertion) Change(change bsv.Satoshis) ChangeAssertions {
 
 func (a changeAssertion) EqualsTo(change uint) {
 	a.t.Helper()
-	a.assert.EqualValues(change, a.comparingChange)
+	a.assert.Equal(change, a.comparingChange)
 }

@@ -222,5 +222,5 @@ func assertJSONEq(t testing.TB, expected, actual string) {
 		actualJSONString = string(marshaled)
 	}
 
-	assert.Equal(t, expectedJsonString, actualJSONString)
+	assert.JSONEq(t, expectedJsonString, actualJSONString)
 }

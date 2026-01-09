@@ -58,7 +58,7 @@ func (a *assertion) IsEmpty(beefHex string) BEEFTransactionAssertion {
 // WithNoError verifies that no error was returned during the transaction preparation.
 func (a *assertion) WithNoError(err error) BEEFTransactionAssertion {
 	a.t.Helper()
-	a.require.Nil(err, "PrepareBEEF has finished with error")
+	a.require.NoError(err, "PrepareBEEF has finished with error")
 	return a
 }
 
@@ -73,7 +73,7 @@ func (a *assertion) HasError(err, target error) BEEFTransactionAssertion {
 func (a *assertion) WithParseableBEEFHEX() BEEFTransactionAssertion {
 	a.t.Helper()
 	tx, err := sdk.NewTransactionFromBEEFHex(a.beefHex)
-	a.require.Nil(err, "Failed to create BEEF transaction from the given hex")
+	a.require.NoError(err, "Failed to create BEEF transaction from the given hex")
 	a.require.NotNil(tx, "Build transaction from BEEF hex should not be nil")
 	a.assert.NotZero(tx.Version, "tx version is 0 which is not acceptable by nodes")
 	a.tx = tx

@@ -138,7 +138,7 @@ func (l *lastOperationAssertions) WithTxStatus(txStatus string) LastOperationAss
 func (l *lastOperationAssertions) WithBlockHeight(blockHeight int64) LastOperationAssertions {
 	l.t.Helper()
 	l.require.NotNil(l.content.BlockHeight)
-	l.require.EqualValues(blockHeight, *l.content.BlockHeight)
+	l.require.Equal(blockHeight, *l.content.BlockHeight)
 	return l
 }
 
