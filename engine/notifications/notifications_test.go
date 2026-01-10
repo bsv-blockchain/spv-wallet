@@ -235,7 +235,7 @@ func TestNotifications(t *testing.T) {
 
 		// Should return nil even on timeout to allow cleanup to continue
 		require.NoError(t, err)
-		assert.GreaterOrEqual(t, duration, 500*time.Millisecond)
+		assert.GreaterOrEqual(t, duration, 200*time.Millisecond)
 		assert.Less(t, duration, 1*time.Second, "Should timeout at ~500ms")
 	})
 }

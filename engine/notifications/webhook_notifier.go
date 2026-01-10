@@ -177,7 +177,7 @@ func (w *WebhookNotifier) Stop() {
 	select {
 	case <-done:
 		return
-	case <-time.After(500 * time.Millisecond):
+	case <-time.After(200 * time.Millisecond):
 		// Reduced timeout - if context is canceled properly, should exit within 500ms
 		return
 	}

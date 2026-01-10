@@ -89,7 +89,7 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 			select {
 			case <-cronCtx.Done():
 				// Cron stopped cleanly, all jobs completed
-			case <-time.After(500 * time.Millisecond):
+			case <-time.After(200 * time.Millisecond):
 				// Timeout waiting for cron jobs, proceed with cleanup
 				tm.options.logger.Warn().Msg("timeout waiting for cron jobs to complete")
 			case <-ctx.Done():
@@ -110,7 +110,7 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 				if err != nil {
 					return spverrors.Wrapf(err, "failed to stop taskq consumer")
 				}
-			case <-time.After(500 * time.Millisecond):
+			case <-time.After(200 * time.Millisecond):
 				// Log warning but don't return error - allow cleanup to continue
 				tm.options.logger.Warn().Msg("timeout waiting for taskq consumer to stop")
 			}
@@ -134,7 +134,7 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 				if err != nil {
 					return spverrors.Wrapf(err, "failed to close taskq queue")
 				}
-			case <-time.After(500 * time.Millisecond):
+			case <-time.After(200 * time.Millisecond):
 				// Log warning but don't return error - allow cleanup to continue
 				tm.options.logger.Warn().Msg("timeout waiting for taskq queue to close")
 			}

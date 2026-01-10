@@ -97,7 +97,7 @@ func (n *Notifications) Close() error {
 	select {
 	case <-done:
 		return nil
-	case <-time.After(500 * time.Millisecond):
+	case <-time.After(200 * time.Millisecond):
 		// Log warning but don't return error - allow cleanup to continue
 		n.burstLogger.Warn().Msg("timeout waiting for notification goroutines to finish")
 		return nil

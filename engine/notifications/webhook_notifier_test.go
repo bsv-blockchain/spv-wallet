@@ -396,7 +396,7 @@ func TestWebhookNotifier_StopTimeout(t *testing.T) {
 		notifier.Stop()
 		duration := time.Since(start)
 
-		assert.GreaterOrEqual(t, duration, 500*time.Millisecond)
+		assert.GreaterOrEqual(t, duration, 200*time.Millisecond)
 		assert.Less(t, duration, 1*time.Second, "Should timeout at ~500ms")
 	})
 }
