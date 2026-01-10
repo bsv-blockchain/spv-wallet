@@ -98,45 +98,23 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 		}
 
 		// Stop the consumer before closing the queue (Redis only)
+		// Use StopTimeout to avoid the default 30 second timeout
 		if tm.options.taskq.consumer != nil {
-			// Try to stop gracefully with timeout
-			done := make(chan error, 1)
-			go func() {
-				done <- tm.options.taskq.consumer.Stop()
-			}()
-
-			select {
-			case err := <-done:
-				if err != nil {
-					return spverrors.Wrapf(err, "failed to stop taskq consumer")
-				}
-			case <-time.After(200 * time.Millisecond):
-				// Log warning but don't return error - allow cleanup to continue
-				tm.options.logger.Warn().Msg("timeout waiting for taskq consumer to stop")
+			if err := tm.options.taskq.consumer.StopTimeout(200 * time.Millisecond); err != nil {
+				tm.options.logger.Warn().Err(err).Msg("error stopping taskq consumer")
 			}
 		}
 
-		// Close the taskq queue with timeout (protected by mutex to prevent race with Add operations)
+		// Close the taskq queue with short timeout (protected by mutex to prevent race with Add operations)
+		// Use CloseTimeout to avoid the default 30 second timeout
 		tm.options.taskq.queueMu.Lock()
 		if tm.options.taskq.queue != nil {
 			queue := tm.options.taskq.queue
 			tm.options.taskq.queue = nil
 			tm.options.taskq.queueMu.Unlock()
 
-			// Close queue with timeout to prevent hanging
-			closeErr := make(chan error, 1)
-			go func() {
-				closeErr <- queue.Close()
-			}()
-
-			select {
-			case err := <-closeErr:
-				if err != nil {
-					return spverrors.Wrapf(err, "failed to close taskq queue")
-				}
-			case <-time.After(200 * time.Millisecond):
-				// Log warning but don't return error - allow cleanup to continue
-				tm.options.logger.Warn().Msg("timeout waiting for taskq queue to close")
+			if err := queue.CloseTimeout(200 * time.Millisecond); err != nil {
+				tm.options.logger.Warn().Err(err).Msg("error closing taskq queue")
 			}
 		} else {
 			tm.options.taskq.queueMu.Unlock()
