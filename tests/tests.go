@@ -4,6 +4,7 @@ package tests
 import (
 	"context"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
@@ -88,13 +89,18 @@ func (ts *TestSuite) BaseSetupTest() {
 
 // BaseTearDownTest runs after each test
 func (ts *TestSuite) BaseTearDownTest() {
-	// Cancel context to signal goroutines to stop
-	if ts.cancelCtx != nil {
-		ts.cancelCtx()
+	// Close engine first with a timeout context
+	if ts.SpvWalletEngine != nil {
+		// Create a fresh context with timeout for cleanup
+		closeCtx, closeCancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer closeCancel()
+
+		err := ts.SpvWalletEngine.Close(closeCtx)
+		ts.Require().NoError(err)
 	}
 
-	if ts.SpvWalletEngine != nil {
-		err := ts.SpvWalletEngine.Close(context.Background())
-		ts.Require().NoError(err)
+	// Cancel the engine's context after Close() completes
+	if ts.cancelCtx != nil {
+		ts.cancelCtx()
 	}
 }
