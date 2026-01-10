@@ -253,6 +253,14 @@ func (c *Client) Close(ctx context.Context) error {
 		}
 		c.options.taskManager.TaskEngine = nil
 	}
+
+	// Close Cachestore
+	cs := c.Cachestore()
+	if cs != nil {
+		cs.Close(ctx)
+		c.options.cacheStore.ClientInterface = nil
+	}
+
 	return nil
 }
 

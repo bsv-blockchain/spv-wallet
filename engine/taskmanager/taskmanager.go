@@ -74,13 +74,26 @@ func NewTaskManager(ctx context.Context, opts ...Options) (TaskEngine, error) {
 func (tm *TaskManager) Close(ctx context.Context) error {
 	if tm != nil && tm.options != nil {
 
-		// Stop the cron scheduler (protected by mutex to prevent race conditions)
+		// Stop the cron scheduler and wait for running jobs to complete
+		// cron.Stop() returns a context that signals when all jobs are done
 		tm.options.cronMu.Lock()
+		var cronCtx context.Context
 		if tm.options.cronService != nil {
-			tm.options.cronService.Stop()
+			cronCtx = tm.options.cronService.Stop()
 			tm.options.cronService = nil
 		}
 		tm.options.cronMu.Unlock()
+
+		// Wait for cron jobs to complete (if any were running)
+		if cronCtx != nil {
+			select {
+			case <-cronCtx.Done():
+				// Cron stopped cleanly, all jobs completed
+			case <-ctx.Done():
+				// Parent context canceled, proceed with cleanup
+				// This prevents hanging if a cron job is stuck
+			}
+		}
 
 		// Stop the consumer before closing the queue (Redis only)
 		if tm.options.taskq.consumer != nil {
@@ -106,15 +119,19 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 
 		// Close the taskq queue (protected by mutex to prevent race with Add operations)
 		tm.options.taskq.queueMu.Lock()
-		err := tm.options.taskq.queue.Close()
-		tm.options.taskq.queueMu.Unlock()
-		if err != nil {
-			return spverrors.Wrapf(err, "failed to close taskq queue")
+		if tm.options.taskq.queue != nil {
+			err := tm.options.taskq.queue.Close()
+			tm.options.taskq.queue = nil
+			tm.options.taskq.queueMu.Unlock()
+			if err != nil {
+				return spverrors.Wrapf(err, "failed to close taskq queue")
+			}
+		} else {
+			tm.options.taskq.queueMu.Unlock()
 		}
 
 		// Empty all values and reset
 		tm.options.taskq.config = nil
-		tm.options.taskq.queue = nil
 	}
 
 	return nil
