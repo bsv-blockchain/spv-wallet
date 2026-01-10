@@ -26,6 +26,7 @@ type TestSuite struct {
 	Router          *gin.Engine            // Gin router with handlers
 	Logger          zerolog.Logger         // Logger
 	SpvWalletEngine engine.ClientInterface // SPV Wallet Engine
+	cancelCtx       context.CancelFunc     // Context cancel function for cleanup
 }
 
 // BaseSetupSuite runs at the start of the suite
@@ -66,7 +67,11 @@ func (ts *TestSuite) BaseSetupTest() {
 	opts, err := initializer.ToEngineOptions(ts.AppConfig, ts.Logger)
 	ts.Require().NoError(err)
 
-	ts.SpvWalletEngine, err = engine.NewClient(context.Background(), opts...)
+	// Create cancellable context for proper cleanup
+	ctx, cancel := context.WithCancel(context.Background())
+	ts.cancelCtx = cancel
+
+	ts.SpvWalletEngine, err = engine.NewClient(ctx, opts...)
 	ts.Require().NoError(err)
 
 	logging.SetGinMode(gin.ReleaseMode)
@@ -83,6 +88,11 @@ func (ts *TestSuite) BaseSetupTest() {
 
 // BaseTearDownTest runs after each test
 func (ts *TestSuite) BaseTearDownTest() {
+	// Cancel context to signal goroutines to stop
+	if ts.cancelCtx != nil {
+		ts.cancelCtx()
+	}
+
 	if ts.SpvWalletEngine != nil {
 		err := ts.SpvWalletEngine.Close(context.Background())
 		ts.Require().NoError(err)
