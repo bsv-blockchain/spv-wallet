@@ -36,7 +36,7 @@ func (strategy *outgoingTx) Execute(ctx context.Context, c ClientInterface, opts
 	}
 
 	if err = transaction.Save(ctx); err != nil {
-		return nil, spverrors.ErrDuringSaveTx
+		return nil, spverrors.ErrDuringSaveTx.Wrap(err)
 	}
 
 	if _shouldNotifyP2P(transaction) {
