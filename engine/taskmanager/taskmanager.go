@@ -13,7 +13,6 @@ import (
 	"github.com/vmihailenco/taskq/v3"
 
 	"github.com/bsv-blockchain/spv-wallet/engine/logging"
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 )
 
 type (
