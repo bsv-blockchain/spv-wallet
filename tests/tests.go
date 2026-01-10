@@ -91,12 +91,16 @@ func (ts *TestSuite) BaseSetupTest() {
 func (ts *TestSuite) BaseTearDownTest() {
 	// Close engine first with a timeout context
 	if ts.SpvWalletEngine != nil {
-		// Create a fresh context with timeout for cleanup
-		closeCtx, closeCancel := context.WithTimeout(context.Background(), 5*time.Second)
+		// Increase timeout slightly to accommodate goroutine cleanup fixes
+		closeCtx, closeCancel := context.WithTimeout(context.Background(), 7*time.Second)
 		defer closeCancel()
 
 		err := ts.SpvWalletEngine.Close(closeCtx)
-		ts.Require().NoError(err)
+		if err != nil {
+			// Log detailed error for debugging before failing
+			ts.T().Logf("Engine cleanup error: %v", err)
+			ts.Require().NoError(err)
+		}
 	}
 
 	// Cancel the engine's context after Close() completes

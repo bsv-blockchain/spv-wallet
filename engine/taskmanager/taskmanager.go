@@ -6,6 +6,7 @@ package taskmanager
 import (
 	"context"
 	"sync"
+	"time"
 
 	"github.com/robfig/cron/v3"
 	"github.com/rs/zerolog"
@@ -83,8 +84,23 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 
 		// Stop the consumer before closing the queue (Redis only)
 		if tm.options.taskq.consumer != nil {
-			if err := tm.options.taskq.consumer.Stop(); err != nil {
-				return spverrors.Wrapf(err, "failed to stop taskq consumer")
+			// Create a stop timeout context (don't exceed parent context)
+			stopCtx, stopCancel := context.WithTimeout(ctx, 3*time.Second)
+			defer stopCancel()
+
+			// Try to stop gracefully with timeout
+			done := make(chan error, 1)
+			go func() {
+				done <- tm.options.taskq.consumer.Stop()
+			}()
+
+			select {
+			case err := <-done:
+				if err != nil {
+					return spverrors.Wrapf(err, "failed to stop taskq consumer")
+				}
+			case <-stopCtx.Done():
+				return spverrors.Newf("timeout waiting for taskq consumer to stop")
 			}
 		}
 
