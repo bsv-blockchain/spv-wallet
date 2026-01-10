@@ -84,14 +84,16 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 		}
 		tm.options.cronMu.Unlock()
 
-		// Wait for cron jobs to complete (if any were running)
+		// Wait for cron jobs to complete (if any were running) with timeout
 		if cronCtx != nil {
 			select {
 			case <-cronCtx.Done():
 				// Cron stopped cleanly, all jobs completed
+			case <-time.After(500 * time.Millisecond):
+				// Timeout waiting for cron jobs, proceed with cleanup
+				tm.options.logger.Warn().Msg("timeout waiting for cron jobs to complete")
 			case <-ctx.Done():
 				// Parent context canceled, proceed with cleanup
-				// This prevents hanging if a cron job is stuck
 			}
 		}
 
