@@ -117,14 +117,27 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 			}
 		}
 
-		// Close the taskq queue (protected by mutex to prevent race with Add operations)
+		// Close the taskq queue with timeout (protected by mutex to prevent race with Add operations)
 		tm.options.taskq.queueMu.Lock()
 		if tm.options.taskq.queue != nil {
-			err := tm.options.taskq.queue.Close()
+			queue := tm.options.taskq.queue
 			tm.options.taskq.queue = nil
 			tm.options.taskq.queueMu.Unlock()
-			if err != nil {
-				return spverrors.Wrapf(err, "failed to close taskq queue")
+
+			// Close queue with timeout to prevent hanging
+			closeErr := make(chan error, 1)
+			go func() {
+				closeErr <- queue.Close()
+			}()
+
+			select {
+			case err := <-closeErr:
+				if err != nil {
+					return spverrors.Wrapf(err, "failed to close taskq queue")
+				}
+			case <-time.After(500 * time.Millisecond):
+				// Log warning but don't return error - allow cleanup to continue
+				tm.options.logger.Warn().Msg("timeout waiting for taskq queue to close")
 			}
 		} else {
 			tm.options.taskq.queueMu.Unlock()
