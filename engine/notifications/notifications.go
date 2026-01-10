@@ -7,6 +7,7 @@ import (
 
 	"github.com/rs/zerolog"
 
+	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
@@ -86,9 +87,19 @@ func (n *Notifications) Close() error {
 	}
 	n.mu.Unlock()
 
-	// Wait for the exchange goroutine to finish
-	n.wg.Wait()
-	return nil
+	// Wait for the exchange goroutine to finish with timeout
+	done := make(chan struct{})
+	go func() {
+		n.wg.Wait()
+		close(done)
+	}()
+
+	select {
+	case <-done:
+		return nil
+	case <-time.After(3 * time.Second):
+		return spverrors.Newf("timeout waiting for notification goroutines to finish")
+	}
 }
 
 // NewNotifications - creates a new instance of Notifications

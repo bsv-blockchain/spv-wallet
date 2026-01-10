@@ -197,4 +197,45 @@ func TestNotifications(t *testing.T) {
 		notifier1.assertOutput(t, expected)
 		notifier2.assertOutput(t, expected)
 	})
+
+	t.Run("close with timeout - success", func(t *testing.T) {
+		ctx, cancel := context.WithCancel(context.Background())
+		n := NewNotifications(ctx, &nopLogger)
+		notifier := newMockNotifier(ctx, 10)
+		n.AddNotifier("test", notifier.channel)
+
+		// Send a few events
+		for i := 0; i < 5; i++ {
+			n.Notify(newMockEvent(fmt.Sprintf("msg-%d", i)))
+		}
+
+		time.Sleep(50 * time.Millisecond)
+		cancel()
+
+		// Close should complete quickly (well under 3 second timeout)
+		start := time.Now()
+		err := n.Close()
+		duration := time.Since(start)
+
+		require.NoError(t, err)
+		assert.Less(t, duration, 1*time.Second, "Close should complete quickly")
+	})
+
+	t.Run("close with slow goroutine - timeout", func(t *testing.T) {
+		ctx := context.Background()
+		n := NewNotifications(ctx, &nopLogger)
+
+		// Manually increment wg to simulate a goroutine that won't finish
+		n.wg.Add(1)
+
+		// Close should timeout after 3 seconds
+		start := time.Now()
+		err := n.Close()
+		duration := time.Since(start)
+
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), "timeout waiting for notification goroutines")
+		assert.GreaterOrEqual(t, duration, 3*time.Second)
+		assert.Less(t, duration, 4*time.Second, "Should timeout at ~3 seconds")
+	})
 }
