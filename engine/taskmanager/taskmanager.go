@@ -24,17 +24,19 @@ type (
 
 	options struct {
 		cronService *cron.Cron      // Internal cron job client
+		cronMu      sync.Mutex      // Mutex for cronService operations to prevent race conditions
 		logger      *zerolog.Logger // Internal logging
 		taskq       *taskqOptions   // All configuration and options for using TaskQ
 	}
 
 	// taskqOptions holds all the configuration for the TaskQ engine
 	taskqOptions struct {
-		config  *taskq.QueueOptions    // Configuration for the TaskQ engine
-		queue   taskq.Queue            // Queue for TaskQ
-		tasks   map[string]*taskq.Task // Registered tasks
-		queueMu sync.Mutex             // Mutex for queue operations to prevent race conditions
-		tasksMu sync.RWMutex           // Mutex for tasks map operations
+		config   *taskq.QueueOptions    // Configuration for the TaskQ engine
+		queue    taskq.Queue            // Queue for TaskQ
+		consumer taskq.QueueConsumer    // Consumer for TaskQ (Redis only)
+		tasks    map[string]*taskq.Task // Registered tasks
+		queueMu  sync.Mutex             // Mutex for queue operations to prevent race conditions
+		tasksMu  sync.RWMutex           // Mutex for tasks map operations
 	}
 )
 
@@ -71,14 +73,26 @@ func NewTaskManager(ctx context.Context, opts ...Options) (TaskEngine, error) {
 func (tm *TaskManager) Close(ctx context.Context) error {
 	if tm != nil && tm.options != nil {
 
-		// Stop the cron scheduler
+		// Stop the cron scheduler (protected by mutex to prevent race conditions)
+		tm.options.cronMu.Lock()
 		if tm.options.cronService != nil {
 			tm.options.cronService.Stop()
 			tm.options.cronService = nil
 		}
+		tm.options.cronMu.Unlock()
 
-		// Close the taskq queue
-		if err := tm.options.taskq.queue.Close(); err != nil {
+		// Stop the consumer before closing the queue (Redis only)
+		if tm.options.taskq.consumer != nil {
+			if err := tm.options.taskq.consumer.Stop(); err != nil {
+				return spverrors.Wrapf(err, "failed to stop taskq consumer")
+			}
+		}
+
+		// Close the taskq queue (protected by mutex to prevent race with Add operations)
+		tm.options.taskq.queueMu.Lock()
+		err := tm.options.taskq.queue.Close()
+		tm.options.taskq.queueMu.Unlock()
+		if err != nil {
 			return spverrors.Wrapf(err, "failed to close taskq queue")
 		}
 
@@ -92,6 +106,8 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 
 // ResetCron will reset the cron scheduler and all loaded tasks
 func (tm *TaskManager) ResetCron() {
+	tm.options.cronMu.Lock()
+	defer tm.options.cronMu.Unlock()
 	if tm.options.cronService != nil {
 		tm.options.cronService.Stop()
 	}
