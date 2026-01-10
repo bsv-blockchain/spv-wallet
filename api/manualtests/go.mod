@@ -2,12 +2,11 @@ module github.com/bsv-blockchain/spv-wallet/api/manualtests
 
 go 1.24.3
 
-//nolint:gomoddirectives // local development requires this replace directive
-replace github.com/bsv-blockchain/spv-wallet/models => ../../models
+replace github.com/bsv-blockchain/spv-wallet/models => ../../models //nolint:gomoddirectives // local development
 
 require (
 	github.com/bsv-blockchain/go-sdk v1.2.14
-	github.com/bsv-blockchain/spv-wallet-go-client v1.0.3
+	github.com/bsv-blockchain/spv-wallet-go-client v1.1.0
 	github.com/go-viper/mapstructure/v2 v2.4.0
 	github.com/joomcode/errorx v1.2.0
 	github.com/oapi-codegen/runtime v1.1.1
@@ -20,8 +19,8 @@ require (
 
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
-	github.com/bitcoin-sv/spv-wallet/models v1.0.0-beta.46 // indirect
 	github.com/boombuler/barcode v1.1.0 // indirect
+	github.com/bsv-blockchain/spv-wallet/models v1.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-resty/resty/v2 v2.17.1 // indirect

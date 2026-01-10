@@ -10,6 +10,6 @@
     1. The config/state file [state.yaml](state.yaml) will be created at the first run
     2. At the first start you will get error about missing config options with the link to config/state file
 3. I strongly encourage you to create a user at least twice to have sender and recipient
-4. After creating user you can play arround with outher tests 
+4. After creating user you can play arround with outher tests
    1. for example, you can try to receive and make some transactions [handle_transactions_test.go](userapi/handle_transactions_test.go)
    2. Receiving and making paymail transactions requires spv-wallet to be exposed on domain.
