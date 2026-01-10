@@ -17,6 +17,8 @@ type Notifications struct {
 	inputChannel   chan *models.RawEvent
 	outputChannels *sync.Map //[string, chan *Event]
 	burstLogger    *zerolog.Logger
+	mu             sync.RWMutex
+	closed         bool
 }
 
 // AddNotifier - add notifier by key
@@ -31,6 +33,11 @@ func (n *Notifications) RemoveNotifier(key string) {
 
 // Notify - send event to all notifiers
 func (n *Notifications) Notify(event *models.RawEvent) {
+	n.mu.RLock()
+	defer n.mu.RUnlock()
+	if n.closed {
+		return
+	}
 	n.inputChannel <- event
 }
 
@@ -38,7 +45,11 @@ func (n *Notifications) Notify(event *models.RawEvent) {
 func (n *Notifications) exchange(ctx context.Context) {
 	for {
 		select {
-		case event := <-n.inputChannel:
+		case event, ok := <-n.inputChannel:
+			if !ok {
+				// Channel closed, exit goroutine
+				return
+			}
 			n.outputChannels.Range(func(_, value any) bool {
 				ch := value.(chan *models.RawEvent)
 				n.sendEventToChannel(ch, event)
@@ -58,6 +69,20 @@ func (n *Notifications) sendEventToChannel(ch chan *models.RawEvent, event *mode
 	default:
 		n.burstLogger.Warn().Msg("Failed to send event to channel")
 	}
+}
+
+// Close - stops the notification service and cleans up resources
+func (n *Notifications) Close() error {
+	n.mu.Lock()
+	defer n.mu.Unlock()
+	if n.closed {
+		return nil
+	}
+	n.closed = true
+	if n.inputChannel != nil {
+		close(n.inputChannel)
+	}
+	return nil
 }
 
 // NewNotifications - creates a new instance of Notifications
