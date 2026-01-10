@@ -89,10 +89,15 @@ func (ts *TestSuite) BaseSetupTest() {
 
 // BaseTearDownTest runs after each test
 func (ts *TestSuite) BaseTearDownTest() {
-	// Close engine first with a timeout context
+	// Cancel the engine's context FIRST to signal goroutines to stop
+	// This allows goroutines listening on ctx.Done() to exit promptly
+	if ts.cancelCtx != nil {
+		ts.cancelCtx()
+	}
+
+	// Then close engine with a timeout context
 	if ts.SpvWalletEngine != nil {
-		// Increase timeout slightly to accommodate goroutine cleanup fixes
-		closeCtx, closeCancel := context.WithTimeout(context.Background(), 7*time.Second)
+		closeCtx, closeCancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer closeCancel()
 
 		err := ts.SpvWalletEngine.Close(closeCtx)
@@ -101,10 +106,5 @@ func (ts *TestSuite) BaseTearDownTest() {
 			ts.T().Logf("Engine cleanup error: %v", err)
 			ts.Require().NoError(err)
 		}
-	}
-
-	// Cancel the engine's context after Close() completes
-	if ts.cancelCtx != nil {
-		ts.cancelCtx()
 	}
 }

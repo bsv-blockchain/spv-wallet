@@ -97,10 +97,6 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 
 		// Stop the consumer before closing the queue (Redis only)
 		if tm.options.taskq.consumer != nil {
-			// Create a stop timeout context (don't exceed parent context)
-			stopCtx, stopCancel := context.WithTimeout(ctx, 3*time.Second)
-			defer stopCancel()
-
 			// Try to stop gracefully with timeout
 			done := make(chan error, 1)
 			go func() {
@@ -112,8 +108,9 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 				if err != nil {
 					return spverrors.Wrapf(err, "failed to stop taskq consumer")
 				}
-			case <-stopCtx.Done():
-				return spverrors.Newf("timeout waiting for taskq consumer to stop")
+			case <-time.After(500 * time.Millisecond):
+				// Log warning but don't return error - allow cleanup to continue
+				tm.options.logger.Warn().Msg("timeout waiting for taskq consumer to stop")
 			}
 		}
 
