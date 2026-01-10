@@ -4,6 +4,7 @@ package tests
 import (
 	"context"
 	"os"
+	"runtime"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -89,10 +90,15 @@ func (ts *TestSuite) BaseSetupTest() {
 
 // BaseTearDownTest runs after each test
 func (ts *TestSuite) BaseTearDownTest() {
+	teardownStart := time.Now()
+	goroutinesBefore := runtime.NumGoroutine()
+	ts.T().Logf("[TEARDOWN] Start - goroutines: %d", goroutinesBefore)
+
 	// Cancel the engine's context FIRST to signal goroutines to stop
 	// This allows goroutines listening on ctx.Done() to exit promptly
 	if ts.cancelCtx != nil {
 		ts.cancelCtx()
+		ts.T().Logf("[TEARDOWN] Context cancelled after %v - goroutines: %d", time.Since(teardownStart), runtime.NumGoroutine())
 	}
 
 	// Then close engine with a timeout context
@@ -100,11 +106,15 @@ func (ts *TestSuite) BaseTearDownTest() {
 		closeCtx, closeCancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer closeCancel()
 
+		closeStart := time.Now()
 		err := ts.SpvWalletEngine.Close(closeCtx)
+		ts.T().Logf("[TEARDOWN] Engine.Close completed after %v - goroutines: %d", time.Since(closeStart), runtime.NumGoroutine())
 		if err != nil {
 			// Log detailed error for debugging before failing
 			ts.T().Logf("Engine cleanup error: %v", err)
 			ts.Require().NoError(err)
 		}
 	}
+
+	ts.T().Logf("[TEARDOWN] Complete after %v - goroutines: %d", time.Since(teardownStart), runtime.NumGoroutine())
 }
