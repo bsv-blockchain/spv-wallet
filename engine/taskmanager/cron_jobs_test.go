@@ -22,6 +22,7 @@ func TestCronTasks(t *testing.T) {
 
 	t.Run("register one cron job", func(t *testing.T) {
 		tm := makeTaskManager()
+		defer func() { _ = tm.Close(context.Background()) }()
 
 		desiredExecutions := 2
 
@@ -55,6 +56,7 @@ func TestCronTasks(t *testing.T) {
 
 	t.Run("register two cron jobs", func(t *testing.T) {
 		tm := makeTaskManager()
+		defer func() { _ = tm.Close(context.Background()) }()
 
 		desiredExecutions := 6
 
