@@ -391,12 +391,12 @@ func TestWebhookNotifier_StopTimeout(t *testing.T) {
 		// Manually increment wg to simulate a goroutine that won't finish
 		notifier.wg.Add(1)
 
-		// Stop should timeout after 2 seconds
+		// Stop should timeout after 500ms
 		start := time.Now()
 		notifier.Stop()
 		duration := time.Since(start)
 
-		assert.GreaterOrEqual(t, duration, 2*time.Second)
-		assert.Less(t, duration, 3*time.Second, "Should timeout at ~2 seconds")
+		assert.GreaterOrEqual(t, duration, 500*time.Millisecond)
+		assert.Less(t, duration, 1*time.Second, "Should timeout at ~500ms")
 	})
 }

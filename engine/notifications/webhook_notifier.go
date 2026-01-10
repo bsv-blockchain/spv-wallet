@@ -73,7 +73,11 @@ func (w *WebhookNotifier) consumer(ctx context.Context) {
 	defer w.wg.Done()
 	for {
 		select {
-		case event := <-w.Channel:
+		case event, ok := <-w.Channel:
+			if !ok {
+				// Channel closed, exit goroutine
+				return
+			}
 			events, done := w.accumulateEvents(ctx, event)
 			if done {
 				return
@@ -107,7 +111,11 @@ func (w *WebhookNotifier) accumulateEvents(ctx context.Context, event *models.Ra
 loop:
 	for i := 0; i < maxBatchSize; i++ {
 		select {
-		case event := <-w.Channel:
+		case event, ok := <-w.Channel:
+			if !ok {
+				// Channel closed, signal done
+				return nil, true
+			}
 			events = append(events, event)
 		case <-ctx.Done():
 			return nil, true
@@ -154,9 +162,12 @@ func (w *WebhookNotifier) sendEventsToWebhook(ctx context.Context, events []*mod
 	return nil
 }
 
-// Stop - stops the webhook notifier and waits for the consumer goroutine to finish
+// Stop - stops the webhook notifier and waits for the consumer goroutine to finish.
+// IMPORTANT: Callers should remove this notifier from Notifications before calling Stop,
+// and should cancel the context before calling Stop to ensure prompt shutdown.
 func (w *WebhookNotifier) Stop() {
 	// Wait for consumer goroutine with timeout
+	// Context should already be canceled by caller, so consumer should exit promptly
 	done := make(chan struct{})
 	go func() {
 		w.wg.Wait()
@@ -166,8 +177,8 @@ func (w *WebhookNotifier) Stop() {
 	select {
 	case <-done:
 		return
-	case <-time.After(2 * time.Second):
-		// Log warning but don't error - parent will handle timeout
+	case <-time.After(500 * time.Millisecond):
+		// Reduced timeout - if context is canceled properly, should exit within 500ms
 		return
 	}
 }
