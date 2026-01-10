@@ -90,7 +90,9 @@ func (c *TaskManager) loadTaskQ(ctx context.Context) error {
 	q := factory.RegisterQueue(c.options.taskq.config)
 	c.options.taskq.queue = q
 	if factoryType == FactoryRedis {
-		if err := q.Consumer().Start(ctx); err != nil {
+		consumer := q.Consumer()
+		c.options.taskq.consumer = consumer
+		if err := consumer.Start(ctx); err != nil {
 			return spverrors.Wrapf(err, "failed to start consuming tasks from redis: %v")
 		}
 	}
