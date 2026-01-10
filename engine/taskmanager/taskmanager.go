@@ -98,21 +98,23 @@ func (tm *TaskManager) Close(ctx context.Context) error {
 
 		// Stop the consumer before closing the queue (Redis only)
 		// Use StopTimeout to avoid the default 30 second timeout
+		// Use 1s timeout to allow internal goroutines to complete cleanly
 		if tm.options.taskq.consumer != nil {
-			if err := tm.options.taskq.consumer.StopTimeout(200 * time.Millisecond); err != nil {
+			if err := tm.options.taskq.consumer.StopTimeout(1 * time.Second); err != nil {
 				tm.options.logger.Warn().Err(err).Msg("error stopping taskq consumer")
 			}
 		}
 
 		// Close the taskq queue with short timeout (protected by mutex to prevent race with Add operations)
 		// Use CloseTimeout to avoid the default 30 second timeout
+		// Use 1s timeout to allow internal goroutines to complete cleanly
 		tm.options.taskq.queueMu.Lock()
 		if tm.options.taskq.queue != nil {
 			queue := tm.options.taskq.queue
 			tm.options.taskq.queue = nil
 			tm.options.taskq.queueMu.Unlock()
 
-			if err := queue.CloseTimeout(200 * time.Millisecond); err != nil {
+			if err := queue.CloseTimeout(1 * time.Second); err != nil {
 				tm.options.logger.Warn().Err(err).Msg("error closing taskq queue")
 			}
 		} else {
