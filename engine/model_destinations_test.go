@@ -95,6 +95,9 @@ func TestDestination_GetModelName(t *testing.T) {
 }
 
 func TestDestination_GetID(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 
 	t.Run("valid id - address", func(t *testing.T) {
