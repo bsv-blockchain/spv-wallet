@@ -29,9 +29,10 @@ type (
 
 	// Client is the SPV Wallet Engine client & options
 	Client struct {
-		options *clientOptions
 		// TEMPORARY: to limit the changes in the codebase
 		V2Interface
+
+		options *clientOptions
 	}
 
 	// clientOptions holds all the configuration for the client
@@ -156,6 +157,7 @@ func NewClient(ctx context.Context, opts ...ClientOps) (ClientInterface, error) 
 	}
 
 	if client.options.config != nil && client.options.config.ExperimentalFeatures.V2 {
+		//nolint:contextcheck // NewEngine creates its own internal context for cache initialization
 		client.V2Interface = engine.NewEngine(
 			client.options.config,
 			*client.options.logger,

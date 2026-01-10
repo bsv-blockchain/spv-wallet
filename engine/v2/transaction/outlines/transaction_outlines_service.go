@@ -102,6 +102,7 @@ func (s *service) evaluateSpec(ctx context.Context, spec *TransactionSpec) (*sdk
 
 	evaluationCtx := s.createEvaluationContext(ctx, spec.UserID)
 
+	//nolint:contextcheck // evaluationCtx wraps ctx internally
 	tx, annotations, err := spec.evaluate(evaluationCtx)
 	if err != nil {
 		return nil, transaction.Annotations{}, err

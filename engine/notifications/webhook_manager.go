@@ -46,7 +46,7 @@ func NewWebhookManager(ctx context.Context, logger *zerolog.Logger, notification
 		endMsg:           make(chan bool, 1),
 	}
 
-	go manager.checkForUpdates()
+	go manager.checkForUpdates() //nolint:contextcheck // goroutine uses internal context management
 
 	return &manager
 }

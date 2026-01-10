@@ -20,14 +20,14 @@ func TestXpubOutputValue_Scan(t *testing.T) {
 	t.Run("empty string", func(t *testing.T) {
 		x := XpubOutputValue{}
 		err := x.Scan([]byte("\"\""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Empty(t, x)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		x := XpubOutputValue{}
 		err := x.Scan([]byte(""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Empty(t, x)
 	})
 

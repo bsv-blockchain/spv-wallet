@@ -96,7 +96,7 @@ func addUserAgentOpts(c *config.AppConfig, options []engine.ClientOps) []engine.
 	return append(options, engine.WithUserAgent(c.GetUserAgent()))
 }
 
-func addLoggerOpts(c *config.AppConfig, logger zerolog.Logger, options []engine.ClientOps) []engine.ClientOps {
+func addLoggerOpts(_ *config.AppConfig, logger zerolog.Logger, options []engine.ClientOps) []engine.ClientOps {
 	serviceLogger := logger.With().Str("service", "spv-wallet").Logger()
 	return append(options, engine.WithLogger(&serviceLogger))
 }

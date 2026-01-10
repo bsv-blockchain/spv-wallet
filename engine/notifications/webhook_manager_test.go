@@ -3,6 +3,7 @@ package notifications
 import (
 	"context"
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 
@@ -11,15 +12,20 @@ import (
 
 type mockRepository struct {
 	webhooks []ModelWebhook
+	mu       sync.Mutex
 }
 
 func (r *mockRepository) Create(_ context.Context, url, tokenHeader, tokenValue string) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
 	model := newMockWebhookModel(url, tokenHeader, tokenValue)
 	r.webhooks = append(r.webhooks, model)
 	return nil
 }
 
 func (r *mockRepository) Save(_ context.Context, model ModelWebhook) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
 	for i, w := range r.webhooks {
 		if w.GetURL() == model.GetURL() {
 			r.webhooks[i] = model
@@ -31,6 +37,8 @@ func (r *mockRepository) Save(_ context.Context, model ModelWebhook) error {
 }
 
 func (r *mockRepository) Delete(_ context.Context, model ModelWebhook) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
 	for i, w := range r.webhooks {
 		if w.GetURL() == model.GetURL() {
 			webhook := r.webhooks[i].(*mockModelWebhook)
@@ -43,10 +51,16 @@ func (r *mockRepository) Delete(_ context.Context, model ModelWebhook) error {
 }
 
 func (r *mockRepository) GetAll(_ context.Context) ([]ModelWebhook, error) {
-	return r.webhooks, nil
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	result := make([]ModelWebhook, len(r.webhooks))
+	copy(result, r.webhooks)
+	return result, nil
 }
 
 func (r *mockRepository) GetByURL(_ context.Context, url string) (ModelWebhook, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
 	for _, w := range r.webhooks {
 		if w.GetURL() == url {
 			return w, nil
@@ -102,7 +116,7 @@ func TestWebhookManager(t *testing.T) {
 		time.Sleep(100 * time.Millisecond)
 		defer manager.Stop()
 
-		manager.Subscribe(ctx, client.url, "", "")
+		_ = manager.Subscribe(ctx, client.url, "", "")
 		time.Sleep(100 * time.Millisecond) // wait for manager to update notifiers
 
 		expected := []string{}

@@ -50,16 +50,16 @@ func (p *Paymail) evaluate(ctx *evaluationContext) (annotatedOutputs, error) {
 	}
 
 	if p.wantToSplit() {
-		result, err := p.mapToSplitOutputs(destinations, sender)
-		if err != nil {
-			return nil, err
+		splitResult, splitErr := p.mapToSplitOutputs(destinations, sender)
+		if splitErr != nil {
+			return nil, splitErr
 		}
-		return result, nil
+		return splitResult, nil
 	}
 
-	result, err := p.mapToAnnotatedOutputs(destinations, sender)
-	if err != nil {
-		return nil, err
+	result, mapErr := p.mapToAnnotatedOutputs(destinations, sender)
+	if mapErr != nil {
+		return nil, mapErr
 	}
 	return result, nil
 }

@@ -78,14 +78,14 @@ func TestTransactionConfig_Scan(t *testing.T) {
 	t.Run("empty string", func(t *testing.T) {
 		transactionConfig := TransactionConfig{}
 		err := transactionConfig.Scan([]byte("\"\""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assertEmptyTransactionConfig(t, transactionConfig)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		transactionConfig := TransactionConfig{}
 		err := transactionConfig.Scan([]byte(""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assertEmptyTransactionConfig(t, transactionConfig)
 	})
 
@@ -104,14 +104,14 @@ func TestTransactionConfig_Value(t *testing.T) {
 		transactionConfig := TransactionConfig{}
 		value, err := transactionConfig.Value()
 		require.NoError(t, err)
-		assert.JSONEq(t, unsetConfigJSON, value)
+		assert.JSONEq(t, unsetConfigJSON, value.(string))
 	})
 
 	t.Run("full config", func(t *testing.T) {
 		transactionConfig := emptyConfig
 		value, err := transactionConfig.Value()
 		require.NoError(t, err)
-		assert.JSONEq(t, emptyConfigJSON, value)
+		assert.JSONEq(t, emptyConfigJSON, value.(string))
 	})
 }
 

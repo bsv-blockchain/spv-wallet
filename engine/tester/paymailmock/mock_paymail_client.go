@@ -31,7 +31,8 @@ type PaymailClientMock struct {
 
 // MockClient will return a client for testing purposes
 func MockClient(mockTransport *httpmock.MockTransport, domain string, moreDomainNames ...string) *PaymailClientMock {
-	domainNames := []paymailDomainName{paymailDomainName(domain)}
+	domainNames := make([]paymailDomainName, 0, 1+len(moreDomainNames))
+	domainNames = append(domainNames, paymailDomainName(domain))
 	for _, dn := range moreDomainNames {
 		domainNames = append(domainNames, paymailDomainName(dn))
 	}

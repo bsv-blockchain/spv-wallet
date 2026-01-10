@@ -166,7 +166,7 @@ func getPublicKey(pubKeyHex string) (*ec.PublicKey, error) {
 }
 
 func convertToPaymailOutputTemplates(outputTemplates []*template.OutputTemplate) []*paymail.OutputTemplate {
-	outputs := make([]*paymail.OutputTemplate, 0)
+	outputs := make([]*paymail.OutputTemplate, 0, len(outputTemplates))
 	for _, output := range outputTemplates {
 		outputs = append(outputs, &paymail.OutputTemplate{
 			Script:   output.Script,

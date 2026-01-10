@@ -94,21 +94,31 @@ func isSPVWalletRunning(url string) bool {
 		Timeout: timeoutDuration,
 	}
 	url = addPrefixIfNeeded(url)
-	resp, err := client.Get(url)
+	ctx, cancel := context.WithTimeout(context.Background(), timeoutDuration)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return false
+	}
+
+	resp, err := client.Do(req)
 	if err != nil || resp.StatusCode != http.StatusOK {
 		return false
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("error reading response body:", err)
+		fmt.Println("error reading response body:", err) //nolint:forbidigo // diagnostic output
 		return false
 	}
 
 	var walletResp WalletResponse
 	if err := json.Unmarshal(body, &walletResp); err != nil {
-		fmt.Println("error parsing response JSON:", err)
+		fmt.Println("error parsing response JSON:", err) //nolint:forbidigo // diagnostic output
 		return false
 	}
 	return walletResp.Message == spvWalletIndexResponse
@@ -134,7 +144,7 @@ func getSharedConfig(ctx context.Context) (*response.SharedConfig, error) {
 		return nil, err
 	}
 	if len(sharedConfig.PaymailDomains) != 1 {
-		return nil, fmt.Errorf("expected 1 paymail domain, got %d", len(sharedConfig.PaymailDomains))
+		return nil, fmt.Errorf("%w, got %d", ErrExpectedOnePaymailDomain, len(sharedConfig.PaymailDomains))
 	}
 	return sharedConfig, nil
 }
@@ -146,7 +156,7 @@ func promptUserAndCheck(question string) (int, error) {
 	defer close(input)
 
 	for {
-		fmt.Println(question)
+		fmt.Println(question) //nolint:forbidigo // interactive prompt
 		input := make(chan string, 1)
 		go getInput(input)
 
@@ -156,7 +166,7 @@ func promptUserAndCheck(question string) (int, error) {
 			if checkResult != wrongInput {
 				return checkResult, nil
 			}
-			fmt.Println("Invalid response. Please answer y/yes or n/no.")
+			fmt.Println("Invalid response. Please answer y/yes or n/no.") //nolint:forbidigo // interactive operator tool
 		case <-time.After(timeoutDuration):
 			os.Exit(1)
 		}
@@ -210,7 +220,7 @@ func createUser(paymail string, config *regressionTestConfig) (*regressionTestUs
 		XPub:     user.XPub,
 	})
 	if err != nil {
-		fmt.Println("adminNewXpub failed with status code:", err)
+		fmt.Println("adminNewXpub failed with status code:", err) //nolint:forbidigo // diagnostic output
 		return nil, err
 	}
 
@@ -226,7 +236,7 @@ func createUser(paymail string, config *regressionTestConfig) (*regressionTestUs
 		return nil, err
 	}
 
-	fmt.Println(keys.XPriv())
+	fmt.Println(keys.XPriv()) //nolint:forbidigo // diagnostic output for regression test setup
 	user.Paymail = preparePaymail(createPaymailRes.Alias, createPaymailRes.Domain)
 	return user, nil
 }
@@ -273,14 +283,14 @@ func getValidXPriv() string {
 		if strings.HasPrefix(xpriv, "xprv") {
 			return xpriv
 		}
-		fmt.Println("Invalid xpriv. Please enter a valid xpriv")
+		fmt.Println("Invalid xpriv. Please enter a valid xpriv") //nolint:forbidigo // interactive operator tool
 	}
 }
 
 // promptUser prompts the user with a question and returns the response.
 func promptUser(question string) string {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println(question)
+	fmt.Println(question) //nolint:forbidigo // interactive operator tool
 	response, _ := reader.ReadString('\n')
 	return strings.TrimSpace(response)
 }
@@ -292,7 +302,7 @@ func getValidURL() string {
 		if isValidURL(url) {
 			return url
 		}
-		fmt.Println("Invalid URL. Please enter a valid URL with http/https prefix")
+		fmt.Println("Invalid URL. Please enter a valid URL with http/https prefix") //nolint:forbidigo // interactive operator tool
 	}
 }
 
@@ -313,7 +323,7 @@ func checkBalance(domain, xpriv string) (int, error) {
 	if err != nil {
 		return wrongInput, fmt.Errorf("error getting xpub info: %w", err)
 	}
-	return int(xpubInfo.CurrentBalance), nil
+	return int(xpubInfo.CurrentBalance), nil //nolint:gosec // balance values are within safe int range for satoshis
 }
 
 // setConfigClientsUrls sets the environment domains ulrs variables in the config.
@@ -330,8 +340,8 @@ func setConfigLeaderXPriv(config *regressionTestConfig, xPriv string) {
 
 // setEnvVariables sets the environment variables.
 func setEnvVariables(config *regressionTestConfig) {
-	os.Setenv(ClientOneURLEnvVar, config.ClientOneURL)
-	os.Setenv(ClientTwoURLEnvVar, config.ClientTwoURL)
-	os.Setenv(ClientOneLeaderXPrivEnvVar, config.ClientOneLeaderXPriv)
-	os.Setenv(ClientTwoLeaderXPrivEnvVar, config.ClientTwoLeaderXPriv)
+	_ = os.Setenv(ClientOneURLEnvVar, config.ClientOneURL)
+	_ = os.Setenv(ClientTwoURLEnvVar, config.ClientTwoURL)
+	_ = os.Setenv(ClientOneLeaderXPrivEnvVar, config.ClientOneLeaderXPriv)
+	_ = os.Setenv(ClientTwoLeaderXPrivEnvVar, config.ClientTwoLeaderXPriv)
 }

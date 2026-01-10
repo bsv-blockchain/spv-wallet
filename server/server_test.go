@@ -8,8 +8,6 @@ import (
 	"testing"
 
 	"github.com/rs/zerolog"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/bsv-blockchain/spv-wallet/config"
@@ -54,139 +52,139 @@ func TestTestSuite(t *testing.T) {
 }
 
 func (ts *TestSuite) TestAdminAuthentication() {
-	ts.T().Run("no value", func(t *testing.T) {
+	ts.Run("no value", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/api/"+config.APIVersion+"/admin/status", nil)
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusUnauthorized, w.Code)
+		ts.Equal(http.StatusUnauthorized, w.Code)
 	})
 
-	ts.T().Run("false value", func(t *testing.T) {
+	ts.Run("false value", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/api/"+config.APIVersion+"/admin/status", nil)
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		req.Header.Set(models.AuthHeader, testXpubAuth)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusUnauthorized, w.Code)
+		ts.Equal(http.StatusUnauthorized, w.Code)
 	})
 
-	ts.T().Run("admin key", func(t *testing.T) {
+	ts.Run("admin key", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/api/"+config.APIVersion+"/admin/status", bytes.NewReader([]byte("test")))
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		req.Header.Set(models.AuthHeader, ts.AppConfig.Authentication.AdminKey)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusOK, w.Code)
+		ts.Equal(http.StatusOK, w.Code)
 	})
 }
 
 func (ts *TestSuite) TestApiAuthentication() {
-	ts.T().Run("no value", func(t *testing.T) {
+	ts.Run("no value", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/api/"+config.APIVersion+"/transactions", nil)
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusUnauthorized, w.Code)
+		ts.Equal(http.StatusUnauthorized, w.Code)
 	})
 
-	ts.T().Run("false value", func(t *testing.T) {
+	ts.Run("false value", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/api/"+config.APIVersion+"/transactions", nil)
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		req.Header.Set(models.AuthHeader, testXpubAuth)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusUnauthorized, w.Code)
+		ts.Equal(http.StatusUnauthorized, w.Code)
 	})
 
-	ts.T().Run("valid value", func(t *testing.T) {
+	ts.Run("valid value", func() {
 		w := httptest.NewRecorder()
 
 		xpub, err := ts.SpvWalletEngine.NewXpub(context.Background(), testXpubAuth)
-		require.NoError(t, err)
-		require.NotNil(t, xpub)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(xpub)
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/api/"+config.APIVersion+"/transactions", bytes.NewReader([]byte("test")))
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		req.Header.Set(models.AuthHeader, xpub.RawXpub())
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusOK, w.Code)
+		ts.Equal(http.StatusOK, w.Code)
 	})
 }
 
 func (ts *TestSuite) TestBasicAuthentication() {
-	ts.T().Run("no value", func(t *testing.T) {
+	ts.Run("no value", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/", nil)
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusOK, w.Code)
+		ts.Equal(http.StatusOK, w.Code)
 	})
 
-	ts.T().Run("non existing xpub", func(t *testing.T) {
+	ts.Run("non existing xpub", func() {
 		w := httptest.NewRecorder()
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/", nil)
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		req.Header.Set(models.AuthHeader, testXpubAuth)
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusOK, w.Code)
+		ts.Equal(http.StatusOK, w.Code)
 	})
 
-	ts.T().Run("valid value", func(t *testing.T) {
+	ts.Run("valid value", func() {
 		w := httptest.NewRecorder()
 
 		xpub, err := ts.SpvWalletEngine.NewXpub(context.Background(), testXpubAuth)
-		require.NoError(t, err)
-		require.NotNil(t, xpub)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(xpub)
 
 		key, err := ts.SpvWalletEngine.NewAccessKey(context.Background(), xpub.RawXpub())
-		require.NoError(t, err)
-		require.NotNil(t, key)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(key)
 
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/", bytes.NewReader([]byte("test")))
-		require.NoError(t, err)
-		require.NotNil(t, req)
+		ts.Require().NoError(err)
+		ts.Require().NotNil(req)
 
 		req.Header.Set(models.AuthHeader, xpub.RawXpub())
 
 		ts.Router.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusOK, w.Code)
+		ts.Equal(http.StatusOK, w.Code)
 	})
 }

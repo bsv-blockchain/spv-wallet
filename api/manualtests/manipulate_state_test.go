@@ -13,9 +13,8 @@ func TestRefreshState_SoItWillAddNewFieldsIfAdded_SoYouCanJustSetupThoseMissingV
 	t.Skip("Don't run it yet")
 
 	state := NewState()
-	err := state.Load()
-	require.NoError(t, err)
-	err = state.Save()
+	state.LoadOrSkip(t)
+	err := state.Save()
 	require.NoError(t, err)
 }
 
@@ -23,10 +22,9 @@ func TestSwitchCurrentUserInState_ToUserWithID(t *testing.T) {
 	t.Skip("Don't run it yet")
 
 	state := NewState()
-	err := state.Load()
-	require.NoError(t, err)
+	state.LoadOrSkip(t)
 
-	err = state.UseUserWithID("174DcxCYRWySRtUWSPcKkV7wtzTENjDFzf")
+	err := state.UseUserWithID("174DcxCYRWySRtUWSPcKkV7wtzTENjDFzf")
 	require.NoError(t, err)
 
 	err = state.Save()
@@ -39,8 +37,7 @@ func TestCleanupOldUsersByTag(t *testing.T) {
 	tag := "deleted"
 
 	state := NewState()
-	err := state.Load()
-	require.NoError(t, err)
+	state.LoadOrSkip(t)
 
 	state.CleanupOldUsersByTag(tag)
 
@@ -55,7 +52,7 @@ func TestCleanupOldUsersByTag(t *testing.T) {
 
 		old, oldErr := state.GetLastOldUserFromState()
 		if oldErr == nil {
-			err = state.UseUserWithID(old.ID)
+			err := state.UseUserWithID(old.ID)
 			require.NoError(t, err)
 			logger.Warn().Msgf("Switching current user to the last old user %s with note '%s'.", old.ID, old.Note)
 			state.CleanupOldUsersByTag(tag)
@@ -67,6 +64,6 @@ func TestCleanupOldUsersByTag(t *testing.T) {
 		}
 	}
 
-	err = state.Save()
+	err := state.Save()
 	require.NoError(t, err)
 }

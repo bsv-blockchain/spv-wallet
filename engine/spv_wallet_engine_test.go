@@ -54,13 +54,11 @@ func DefaultClientOpts() []ClientOps {
 	tqc.MaxNumWorker = 2
 	tqc.MaxNumFetcher = 2
 
-	opts := make([]ClientOps, 0)
-	opts = append(
-		opts,
+	opts := []ClientOps{
 		WithTaskqConfig(tqc),
 		WithSQLite(tester.SQLiteTestConfig()),
 		WithCustomFeeUnit(mockFeeUnit),
-	)
+	}
 
 	return opts
 }

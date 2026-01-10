@@ -71,7 +71,7 @@ func (f *userUtxoFixture) Stored() *database.UserUTXO {
 		Satoshis:           uint64(f.satoshis),
 		EstimatedInputSize: f.estimatedInputSize,
 		Bucket:             string(bucket.BSV),
-		CreatedAt:          FirstCreatedAt.Add(time.Duration(f.index) * time.Second),
+		CreatedAt:          FirstCreatedAt.Add(time.Duration(f.index) * time.Second), //nolint:gosec // G115 test code with small values
 		TouchedAt:          FirstCreatedAt.Add(time.Duration(24) * time.Hour),
 	}
 

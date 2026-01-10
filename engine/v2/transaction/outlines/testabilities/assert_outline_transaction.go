@@ -153,7 +153,7 @@ func (a *assertion) HasOutputs(count int) WithParseableBEEFTransactionOutlineAss
 
 func (a *assertion) Output(index uint32) OutputAssertion {
 	a.t.Helper()
-	a.require.Greater(uint32(len(a.tx.Outputs)), index, "Transaction Outputs doesn't have output %d", index)
+	a.require.Greater(uint32(len(a.tx.Outputs)), index, "Transaction Outputs doesn't have output %d", index) //nolint:gosec // G115 test code - output count fits in uint32
 
 	return &txOutputAssertion{
 		parent:     a,

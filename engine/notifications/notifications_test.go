@@ -3,10 +3,12 @@ package notifications
 import (
 	"context"
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/bsv-blockchain/spv-wallet/models"
 )
@@ -21,13 +23,16 @@ type mockNotifier struct {
 	delay   *time.Duration
 	channel chan *models.RawEvent
 	output  []*models.RawEvent
+	mu      sync.Mutex
 }
 
 func (m *mockNotifier) consumer(ctx context.Context) {
 	for {
 		select {
 		case event := <-m.channel:
+			m.mu.Lock()
 			m.output = append(m.output, event)
+			m.mu.Unlock()
 			if m.delay != nil {
 				sleepWithContext(ctx, *m.delay)
 			}
@@ -38,11 +43,14 @@ func (m *mockNotifier) consumer(ctx context.Context) {
 }
 
 func (m *mockNotifier) assertOutput(t *testing.T, expected []string) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
 	assert.Len(t, m.output, len(expected))
 	if len(expected) == len(m.output) {
 		for i := 0; i < len(expected); i++ {
 			actualEvent, err := GetEventContent[models.StringEvent](m.output[i])
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, expected[i], actualEvent.Value)
 		}
 	}

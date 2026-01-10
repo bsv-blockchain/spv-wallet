@@ -63,9 +63,9 @@ func (s *Service) UpsertContact(ctx context.Context, newContact contactsmodels.N
 
 	if contact != nil {
 		newContact.Status = contact.Status
-		c, err := s.contactsRepo.Update(ctx, newContact)
-		if err != nil {
-			return nil, spverrors.ErrUpdateContact.WithTrace(err)
+		c, updateErr := s.contactsRepo.Update(ctx, newContact)
+		if updateErr != nil {
+			return nil, spverrors.ErrUpdateContact.WithTrace(updateErr)
 		}
 
 		return c, nil

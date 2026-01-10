@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 
 	"github.com/bsv-blockchain/spv-wallet/engine/datastore/customtypes"
@@ -25,7 +26,7 @@ func Test_whereObject(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -38,7 +39,7 @@ func Test_whereObject(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -61,7 +62,7 @@ func Test_whereSlice(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 		// produced SQL:
@@ -77,7 +78,7 @@ func Test_whereSlice(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 		// produced SQL:
@@ -111,7 +112,7 @@ func Test_processConditions(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -125,7 +126,7 @@ func Test_processConditions(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -145,7 +146,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -162,7 +163,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -183,7 +184,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -206,7 +207,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -225,7 +226,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -242,7 +243,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -260,7 +261,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -279,7 +280,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -306,7 +307,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -335,7 +336,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -355,7 +356,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -379,7 +380,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -407,7 +408,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -453,7 +454,7 @@ func TestCustomWhere(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 
@@ -478,7 +479,7 @@ func Test_sqlInjectionSafety(t *testing.T) {
 
 		gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.Error(t, err)
+			require.Error(t, err)
 			return tx.First(&mockObject{})
 		})
 	})
@@ -494,7 +495,7 @@ func Test_sqlInjectionSafety(t *testing.T) {
 
 		gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.Error(t, err)
+			require.Error(t, err)
 			return tx.First(&mockObject{})
 		})
 	})
@@ -509,7 +510,7 @@ func Test_sqlInjectionSafety(t *testing.T) {
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			return tx.First(&mockObject{})
 		})
 

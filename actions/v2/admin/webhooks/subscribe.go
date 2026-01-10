@@ -25,7 +25,7 @@ func (s *APIAdminWebhooks) SubscribeWebhook(c *gin.Context) {
 	}
 
 	if _, err := url.Parse(bodyReq.Url); err != nil {
-		spverrors.ErrorResponse(c, spverrors.WebhookUrlInvalid, s.logger)
+		spverrors.ErrorResponse(c, spverrors.ErrWebhookUrlInvalid, s.logger)
 		return
 	}
 

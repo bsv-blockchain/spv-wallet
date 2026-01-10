@@ -39,7 +39,7 @@ func TestXpub_getXpub(t *testing.T) {
 		defer deferMe()
 
 		xPub, err := getXpub(ctx, testXPub, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Nil(t, xPub)
 	})
 
@@ -49,10 +49,10 @@ func TestXpub_getXpub(t *testing.T) {
 
 		xPub := newXpub(testXPub, client.DefaultModelOptions()...)
 		err := xPub.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		gXPub, gErr := getXpub(ctx, testXPub, client.DefaultModelOptions()...)
-		assert.NoError(t, gErr)
+		require.NoError(t, gErr)
 		assert.IsType(t, Xpub{}, *gXPub)
 	})
 }
@@ -77,7 +77,7 @@ func TestXpub_getNewDestination(t *testing.T) {
 		defer deferMe()
 		xPub := newXpub("test", client.DefaultModelOptions()...)
 		err := xPub.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		metaData := map[string]interface{}{
 			"test-key": "test-value",
@@ -91,14 +91,14 @@ func TestXpub_getNewDestination(t *testing.T) {
 		defer deferMe()
 		xPub := newXpub(testXPub, client.DefaultModelOptions()...)
 		err := xPub.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		metaData := map[string]interface{}{
 			"test-key": "test-value",
 		}
 		var destination *Destination
 		destination, err = xPub.getNewDestination(ctx, utils.ChainInternal, utils.ScriptTypePubKeyHash, append(client.DefaultModelOptions(), WithMetadatas(metaData))...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, "ac18a89055c9269622d9a00ce89047b10aab03cae39feb32cde1be1f1b9bc222", destination.ID)
 		assert.Equal(t, xPub.ID, destination.XpubID)
 		assert.Equal(t, "76a914296e4f4c6bf609b62b44f2d7c7c4bd5794235ead88ac", destination.LockingScript)
@@ -114,14 +114,14 @@ func TestXpub_getNewDestination(t *testing.T) {
 		defer deferMe()
 		xPub := newXpub(testXPub, client.DefaultModelOptions()...)
 		err := xPub.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		metaData := map[string]interface{}{
 			"test-key": "test-value",
 		}
 		var destination *Destination
 		destination, err = xPub.getNewDestination(ctx, utils.ChainExternal, utils.ScriptTypePubKeyHash, append(client.DefaultModelOptions(), WithMetadatas(metaData))...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, "fc1e635d98151c6008f29908ee2928c60c745266f9853e945c917b1baa05973e", destination.ID)
 		assert.Equal(t, xPub.ID, destination.XpubID)
 		assert.Equal(t, "76a9147ff514e6ae3deb46e6644caac5cdd0bf2388906588ac", destination.LockingScript)
@@ -139,10 +139,10 @@ func TestXpub_childModels(t *testing.T) {
 		defer deferMe()
 		xPub := newXpub(testXPub, client.DefaultModelOptions()...)
 		err := xPub.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		_, err = xPub.getNewDestination(ctx, utils.ChainExternal, utils.ScriptTypePubKeyHash, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		childModels := xPub.ChildModels()
 		assert.Len(t, childModels, 1)
@@ -154,12 +154,12 @@ func TestXpub_childModels(t *testing.T) {
 		defer deferMe()
 		xPub := newXpub(testXPub, client.DefaultModelOptions()...)
 		err := xPub.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		_, err = xPub.getNewDestination(ctx, utils.ChainExternal, utils.ScriptTypePubKeyHash, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		_, err = xPub.getNewDestination(ctx, utils.ChainExternal, utils.ScriptTypePubKeyHash, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		childModels := xPub.ChildModels()
 		assert.Len(t, childModels, 2)
@@ -204,7 +204,7 @@ func TestXpub_BeforeCreating(t *testing.T) {
 		xPub.client = client
 
 		err := xPub.BeforeCreating(context.Background())
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.EqualError(t, err, "xpub is an invalid length")
 	})
 }
@@ -275,7 +275,7 @@ func TestXpub_RemovePrivateData(t *testing.T) {
 
 func (ts *EmbeddedDBTestSuite) TestXpub_Save() {
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - valid Save (basic)", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid Save (basic)", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -294,7 +294,7 @@ func (ts *EmbeddedDBTestSuite) TestXpub_Save() {
 			require.NoError(t, err)
 		})
 
-		ts.T().Run(testCase.name+" - dynamic xPub creation", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - dynamic xPub creation", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -306,7 +306,7 @@ func (ts *EmbeddedDBTestSuite) TestXpub_Save() {
 			assert.Equal(t, xPub2.ID, xPub.ID)
 		})
 
-		ts.T().Run(testCase.name+" - error invalid xPub", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - error invalid xPub", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 

@@ -17,10 +17,9 @@ func TestTopUp(t *testing.T) {
 	t.Skip("don't run yet")
 
 	state := manualtests.NewState()
-	err := state.Load()
-	require.NoError(t, err)
+	state.LoadOrSkip(t)
 
-	err = state.Faucet.TopUp()
+	err := state.Faucet.TopUp()
 	require.NoError(t, err)
 
 	TestCurrentUser(t)

@@ -65,7 +65,7 @@ func Benchmark_DeriveAddresses(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _, _ = DeriveAddresses(xPub, uint32(i))
+		_, _, _ = DeriveAddresses(xPub, uint32(i)) //nolint:gosec // G115 benchmark code with small values
 	}
 }
 
@@ -78,6 +78,6 @@ func Benchmark_DeriveAddress(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = DeriveAddress(xPub, ChainInternal, uint32(i))
+		_, _ = DeriveAddress(xPub, ChainInternal, uint32(i)) //nolint:gosec // G115 benchmark code with small values
 	}
 }

@@ -74,9 +74,9 @@ func (r *UTXOSelector) selectInputsForTransaction(ctx context.Context, userID st
 	err = r.db.WithContext(ctx).Transaction(func(db *gorm.DB) error {
 		inputsQuery := r.buildQueryForInputs(db, userID, outputsTotalValue, byteSizeOfTxWithoutInputs)
 
-		if err := inputsQuery.Find(&utxos).Error; err != nil {
+		if findErr := inputsQuery.Find(&utxos).Error; findErr != nil {
 			utxos = nil
-			return spverrors.Wrapf(err, "failed to select utxos for transaction")
+			return spverrors.Wrapf(findErr, "failed to select utxos for transaction")
 		}
 
 		if len(utxos) == 0 {
@@ -85,9 +85,9 @@ func (r *UTXOSelector) selectInputsForTransaction(ctx context.Context, userID st
 
 		updateQuery := r.buildUpdateTouchedAtQuery(db, utxos)
 
-		if err := updateQuery.Update("touched_at", time.Now()).Error; err != nil {
+		if updateErr := updateQuery.Update("touched_at", time.Now()).Error; updateErr != nil {
 			utxos = nil
-			return spverrors.Wrapf(err, "failed to update touched_at for selected inputs")
+			return spverrors.Wrapf(updateErr, "failed to update touched_at for selected inputs")
 		}
 
 		return nil
