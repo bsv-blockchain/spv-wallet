@@ -88,6 +88,7 @@ func (n *Notifications) Close() error {
 	n.mu.Unlock()
 
 	// Wait for the exchange goroutine to finish with timeout
+	// Channel is closed, so goroutine should exit quickly
 	done := make(chan struct{})
 	go func() {
 		n.wg.Wait()
@@ -97,7 +98,7 @@ func (n *Notifications) Close() error {
 	select {
 	case <-done:
 		return nil
-	case <-time.After(3 * time.Second):
+	case <-time.After(500 * time.Millisecond):
 		return spverrors.Newf("timeout waiting for notification goroutines to finish")
 	}
 }
