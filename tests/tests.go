@@ -98,7 +98,7 @@ func (ts *TestSuite) BaseTearDownTest() {
 	// This allows goroutines listening on ctx.Done() to exit promptly
 	if ts.cancelCtx != nil {
 		ts.cancelCtx()
-		ts.T().Logf("[TEARDOWN] Context cancelled after %v - goroutines: %d", time.Since(teardownStart), runtime.NumGoroutine())
+		ts.T().Logf("[TEARDOWN] Context canceled after %v - goroutines: %d", time.Since(teardownStart), runtime.NumGoroutine())
 	}
 
 	// Then close engine with a timeout context
