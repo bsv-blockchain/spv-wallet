@@ -48,7 +48,7 @@ func DefaultTaskQConfig(name string, opts ...TasqOps) *taskq.QueueOptions {
 		ReservationSize:      10,                      // Number of messages reserved by a fetcher in the queue in one request.
 		ReservationTimeout:   60 * time.Second,        // Time after which the reserved message is returned to the queue.
 		Storage:              taskq.NewLocalStorage(), // Optional storage interface. The default is to use Redis.
-		WaitTimeout:          3 * time.Second,         // Time that a long polling receive call waits for a message to become available before returning an empty response.
+		WaitTimeout:          500 * time.Millisecond,  // Time that a long polling receive call waits for a message to become available before returning an empty response.
 		WorkerLimit:          0,                       // Global limit of concurrently running workers across all servers. Overrides MaxNumWorker.
 	}
 
