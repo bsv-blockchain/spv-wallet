@@ -34,3 +34,6 @@ engine/utils/encrypt_test.go:generic-api-key:67
 # Test fixtures - private key hashes for utility tests
 engine/utils/utils_test.go:generic-api-key:24
 engine/utils/utils_test.go:generic-api-key:25
+
+# Documentation example - admin_key config example in README
+d46599558ae215fc9c78ec55879928502729b3fd:README.md:generic-api-key:362
