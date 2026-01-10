@@ -57,6 +57,14 @@ func (w *WebhookManager) Stop() {
 	w.cancelAllFunc()
 
 	<-w.endMsg
+
+	// Wait for all webhook notifiers to finish
+	w.webhookNotifiers.Range(func(key, value any) bool {
+		item := value.(*notifierWithCtx)
+		item.notifier.Stop()
+		return true
+	})
+
 	w.logger.Info().Msg("WebhookManager stopped")
 }
 
@@ -191,6 +199,7 @@ func (w *WebhookManager) removeNotifier(url string) {
 		w.logger.Info().Msgf("Remove a webhook notifier. URL: %s", url)
 		item := item.(*notifierWithCtx)
 		item.cancelFunc()
+		item.notifier.Stop() // Wait for the consumer goroutine to finish
 		w.webhookNotifiers.Delete(url)
 		w.notifications.RemoveNotifier(url)
 	}

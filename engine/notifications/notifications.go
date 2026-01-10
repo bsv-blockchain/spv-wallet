@@ -19,6 +19,7 @@ type Notifications struct {
 	burstLogger    *zerolog.Logger
 	mu             sync.RWMutex
 	closed         bool
+	wg             sync.WaitGroup
 }
 
 // AddNotifier - add notifier by key
@@ -43,6 +44,7 @@ func (n *Notifications) Notify(event *models.RawEvent) {
 
 // exchange - exchange events between input and output channels, uses fan-out pattern
 func (n *Notifications) exchange(ctx context.Context) {
+	defer n.wg.Done()
 	for {
 		select {
 		case event, ok := <-n.inputChannel:
@@ -74,14 +76,18 @@ func (n *Notifications) sendEventToChannel(ch chan *models.RawEvent, event *mode
 // Close - stops the notification service and cleans up resources
 func (n *Notifications) Close() error {
 	n.mu.Lock()
-	defer n.mu.Unlock()
 	if n.closed {
+		n.mu.Unlock()
 		return nil
 	}
 	n.closed = true
 	if n.inputChannel != nil {
 		close(n.inputChannel)
 	}
+	n.mu.Unlock()
+
+	// Wait for the exchange goroutine to finish
+	n.wg.Wait()
 	return nil
 }
 
@@ -97,6 +103,7 @@ func NewNotifications(ctx context.Context, parentLogger *zerolog.Logger) *Notifi
 		burstLogger:    &burstLogger,
 	}
 
+	n.wg.Add(1)
 	go n.exchange(ctx)
 
 	return n

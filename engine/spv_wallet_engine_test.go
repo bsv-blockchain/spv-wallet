@@ -116,7 +116,12 @@ func CreateBenchmarkSQLiteClient(b *testing.B, debug, shared bool, clientOpts ..
 
 // CloseClient is function used in the "defer()" function
 func CloseClient(ctx context.Context, t *testing.T, client ClientInterface) {
-	require.NoError(t, client.Close(ctx))
+	// Create a cancellable context for cleanup
+	closeCtx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Close the client
+	require.NoError(t, client.Close(closeCtx))
 }
 
 // CreateNewXPub will create a new xPub and return all the information to use the xPub

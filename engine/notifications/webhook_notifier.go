@@ -30,6 +30,7 @@ type WebhookNotifier struct {
 	definition    ModelWebhook
 	definitionMtx sync.Mutex
 	logger        *zerolog.Logger
+	wg            sync.WaitGroup
 }
 
 // NewWebhookNotifier - creates a new instance of WebhookNotifier
@@ -43,6 +44,7 @@ func NewWebhookNotifier(ctx context.Context, logger *zerolog.Logger, model Model
 		logger:     &log,
 	}
 
+	notifier.wg.Add(1)
 	go notifier.consumer(ctx)
 
 	return notifier
@@ -68,6 +70,7 @@ func (w *WebhookNotifier) currentDefinition() ModelWebhook {
 // If sending fails, it retries several times
 // If sending fails after several retries, it bans notifier for some time
 func (w *WebhookNotifier) consumer(ctx context.Context) {
+	defer w.wg.Done()
 	for {
 		select {
 		case event := <-w.Channel:
@@ -149,4 +152,9 @@ func (w *WebhookNotifier) sendEventsToWebhook(ctx context.Context, events []*mod
 	}()
 
 	return nil
+}
+
+// Stop - stops the webhook notifier and waits for the consumer goroutine to finish
+func (w *WebhookNotifier) Stop() {
+	w.wg.Wait()
 }
