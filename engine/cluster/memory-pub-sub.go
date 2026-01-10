@@ -51,8 +51,8 @@ func (m *MemoryPubSub) Subscribe(channel Channel, callback func(data string)) (f
 func (m *MemoryPubSub) Publish(channel Channel, data string) error {
 	channelName := m.prefix + string(channel)
 	m.mu.RLock()
+	defer m.mu.RUnlock()
 	callback, ok := m.callbacks[channelName]
-	m.mu.RUnlock()
 
 	if ok {
 		callback(data)
