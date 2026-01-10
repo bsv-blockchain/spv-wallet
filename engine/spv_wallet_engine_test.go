@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"testing"
+	"time"
 
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	"github.com/mrz1836/go-cache"
@@ -116,12 +117,13 @@ func CreateBenchmarkSQLiteClient(b *testing.B, debug, shared bool, clientOpts ..
 
 // CloseClient is function used in the "defer()" function
 func CloseClient(ctx context.Context, t *testing.T, client ClientInterface) {
-	// Create a cancellable context for cleanup
-	closeCtx, cancel := context.WithCancel(ctx)
+	// Always use a fresh context with timeout for cleanup
+	// Don't inherit from ctx which may already be canceled
+	closeCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	// Close the client
-	require.NoError(t, client.Close(closeCtx))
+	require.NoError(t, client.Close(closeCtx)) //nolint:contextcheck // Intentionally using fresh context for cleanup
 }
 
 // CreateNewXPub will create a new xPub and return all the information to use the xPub
