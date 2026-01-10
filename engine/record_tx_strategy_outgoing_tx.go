@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"slices"
+	"time"
 
 	trx "github.com/bsv-blockchain/go-sdk/transaction"
 
@@ -40,7 +41,10 @@ func (strategy *outgoingTx) Execute(ctx context.Context, c ClientInterface, opts
 	}
 
 	if _shouldNotifyP2P(transaction) {
-		if err = processP2PTransaction(ctx, transaction); err != nil {
+		// Create a context with timeout for P2P transaction to prevent hanging on unresponsive endpoints
+		ctxP2P, cancelP2P := context.WithTimeout(ctx, 10*time.Second)
+		defer cancelP2P()
+		if err = processP2PTransaction(ctxP2P, transaction); err != nil {
 			return nil, _handleNotifyP2PError(ctx, c, transaction, err)
 		}
 	}
@@ -56,7 +60,10 @@ func (strategy *outgoingTx) Execute(ctx context.Context, c ClientInterface, opts
 		return transaction, nil
 	}
 
-	if err = broadcastTransaction(ctx, transaction); err != nil {
+	// Create a context with timeout for broadcast to prevent hanging on unresponsive blockchain nodes
+	ctxBroadcast, cancelBroadcast := context.WithTimeout(ctx, 30*time.Second)
+	defer cancelBroadcast()
+	if err = broadcastTransaction(ctxBroadcast, transaction); err != nil {
 		logger.Warn().Str("txID", transaction.ID).Msgf("broadcasting failed in outgoingTx strategy")
 		// ignore error, transaction most likely is successfully broadcasted by payment receiver
 		// TODO: return a Warning to a client
