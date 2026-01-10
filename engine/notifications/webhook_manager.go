@@ -59,9 +59,11 @@ func (w *WebhookManager) Stop() {
 	<-w.endMsg
 
 	// Wait for all webhook notifiers to finish
+	// Cancel all notifier contexts BEFORE stopping them to ensure prompt shutdown
 	w.webhookNotifiers.Range(func(key, value any) bool {
 		item := value.(*notifierWithCtx)
-		item.notifier.Stop()
+		item.cancelFunc()    // Cancel context first
+		item.notifier.Stop() // Then wait for goroutine
 		return true
 	})
 

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/assert"
 )
 
 type mockRepository struct {
@@ -131,5 +132,39 @@ func TestWebhookManager(t *testing.T) {
 
 		client.assertEvents(t, expected)
 		client.assertEventsWereSentInBatches(t, true)
+	})
+}
+
+func TestWebhookManager_StopCancelsContexts(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	t.Run("stop cancels all notifier contexts before stopping", func(t *testing.T) {
+		client := newMockClient("http://example.com")
+
+		ctx := context.Background()
+		n := NewNotifications(ctx, &nopLogger)
+		repo := &mockRepository{webhooks: []ModelWebhook{newMockWebhookModel(client.url, "", "")}}
+
+		manager := NewWebhookManager(ctx, &nopLogger, n, repo)
+		time.Sleep(100 * time.Millisecond)
+
+		// Subscribe to create a notifier
+		_ = manager.Subscribe(ctx, client.url, "", "")
+		time.Sleep(100 * time.Millisecond)
+
+		// Send some events
+		for i := 0; i < 5; i++ {
+			n.Notify(newMockEvent(fmt.Sprintf("msg-%d", i)))
+		}
+
+		time.Sleep(100 * time.Millisecond)
+
+		// Stop should complete quickly (contexts are canceled before waiting)
+		start := time.Now()
+		manager.Stop()
+		duration := time.Since(start)
+
+		assert.Less(t, duration, 1*time.Second, "Stop should complete quickly with context cancellation")
 	})
 }
