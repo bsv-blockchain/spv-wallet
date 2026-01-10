@@ -224,9 +224,16 @@ func (c *Client) Close(ctx context.Context) error {
 		return nil
 	}
 
-	// Close WebhookManager
-	if c.options.notifications != nil && c.options.notifications.webhookManager != nil {
-		c.options.notifications.webhookManager.Stop()
+	// Close WebhookManager and Notifications
+	if c.options.notifications != nil {
+		if c.options.notifications.client != nil {
+			if err := c.options.notifications.client.Close(); err != nil {
+				return spverrors.Wrapf(err, "failed to close notifications")
+			}
+		}
+		if c.options.notifications.webhookManager != nil {
+			c.options.notifications.webhookManager.Stop()
+		}
 	}
 
 	// Close Datastore
