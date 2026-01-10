@@ -7,7 +7,6 @@ import (
 
 	"github.com/rs/zerolog"
 
-	"github.com/bsv-blockchain/spv-wallet/engine/spverrors"
 	"github.com/bsv-blockchain/spv-wallet/models"
 )
 
@@ -99,7 +98,9 @@ func (n *Notifications) Close() error {
 	case <-done:
 		return nil
 	case <-time.After(500 * time.Millisecond):
-		return spverrors.Newf("timeout waiting for notification goroutines to finish")
+		// Log warning but don't return error - allow cleanup to continue
+		n.burstLogger.Warn().Msg("timeout waiting for notification goroutines to finish")
+		return nil
 	}
 }
 

@@ -228,13 +228,13 @@ func TestNotifications(t *testing.T) {
 		// Manually increment wg to simulate a goroutine that won't finish
 		n.wg.Add(1)
 
-		// Close should timeout after 500ms
+		// Close should timeout after 500ms but not return error to allow cleanup to continue
 		start := time.Now()
 		err := n.Close()
 		duration := time.Since(start)
 
-		require.Error(t, err)
-		assert.Contains(t, err.Error(), "timeout waiting for notification goroutines")
+		// Should return nil even on timeout to allow cleanup to continue
+		require.NoError(t, err)
 		assert.GreaterOrEqual(t, duration, 500*time.Millisecond)
 		assert.Less(t, duration, 1*time.Second, "Should timeout at ~500ms")
 	})
