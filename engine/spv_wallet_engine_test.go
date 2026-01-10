@@ -117,7 +117,7 @@ func CreateBenchmarkSQLiteClient(b *testing.B, debug, shared bool, clientOpts ..
 // CloseClient is function used in the "defer()" function
 func CloseClient(ctx context.Context, t *testing.T, client ClientInterface) {
 	// Create a cancellable context for cleanup
-	closeCtx, cancel := context.WithCancel(context.Background())
+	closeCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
 	// Close the client
