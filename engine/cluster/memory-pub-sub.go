@@ -2,6 +2,7 @@ package cluster
 
 import (
 	"context"
+	"sync"
 
 	"github.com/rs/zerolog"
 )
@@ -10,6 +11,7 @@ import (
 type MemoryPubSub struct {
 	ctx       context.Context
 	callbacks map[string]func(data string)
+	mu        sync.RWMutex
 	debug     bool
 	logger    *zerolog.Logger
 	prefix    string
@@ -33,10 +35,14 @@ func (m *MemoryPubSub) Logger() *zerolog.Logger {
 // Subscribe to a channel
 func (m *MemoryPubSub) Subscribe(channel Channel, callback func(data string)) (func() error, error) {
 	channelName := m.prefix + string(channel)
+	m.mu.Lock()
 	m.callbacks[channelName] = callback
+	m.mu.Unlock()
 
 	return func() error {
+		m.mu.Lock()
 		delete(m.callbacks, channelName)
+		m.mu.Unlock()
 		return nil
 	}, nil
 }
@@ -44,7 +50,10 @@ func (m *MemoryPubSub) Subscribe(channel Channel, callback func(data string)) (f
 // Publish to a channel
 func (m *MemoryPubSub) Publish(channel Channel, data string) error {
 	channelName := m.prefix + string(channel)
+	m.mu.RLock()
 	callback, ok := m.callbacks[channelName]
+	m.mu.RUnlock()
+
 	if ok {
 		callback(data)
 	}

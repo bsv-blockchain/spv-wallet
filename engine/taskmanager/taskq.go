@@ -114,6 +114,9 @@ func (c *TaskManager) RegisterTask(name string, handler interface{}) (err error)
 	mutex.Lock()
 	defer mutex.Unlock()
 
+	c.options.taskq.tasksMu.Lock()
+	defer c.options.taskq.tasksMu.Unlock()
+
 	if t := taskq.Tasks.Get(name); t != nil {
 		// if already registered - register the task locally
 		c.options.taskq.tasks[name] = t
@@ -135,7 +138,10 @@ func (c *TaskManager) RunTask(ctx context.Context, options *TaskRunOptions) erro
 	c.options.logger.Info().Msgf("executing task: %s", options.TaskName)
 
 	// Try to get the task
+	c.options.taskq.tasksMu.RLock()
 	task, ok := c.options.taskq.tasks[options.TaskName]
+	c.options.taskq.tasksMu.RUnlock()
+
 	if !ok {
 		return spverrors.Newf("task %s not registered", options.TaskName)
 	}
@@ -144,7 +150,9 @@ func (c *TaskManager) RunTask(ctx context.Context, options *TaskRunOptions) erro
 	taskMessage := task.WithArgs(ctx, options.Arguments...)
 
 	if options.runImmediately() {
+		c.options.taskq.queueMu.Lock()
 		err := c.options.taskq.queue.Add(taskMessage)
+		c.options.taskq.queueMu.Unlock()
 		return spverrors.Wrapf(err, "failed to add task to queue")
 	}
 	// Note: The first scheduled run will be after the period has passed
@@ -178,7 +186,9 @@ func (c *TaskManager) scheduleTaskWithCron(ctx context.Context, task *taskq.Task
 		if tryLock != nil && !tryLock() {
 			return
 		}
+		c.options.taskq.queueMu.Lock()
 		_ = c.options.taskq.queue.Add(taskMessage)
+		c.options.taskq.queueMu.Unlock()
 	}
 	_, err := c.options.cronService.AddFunc(
 		fmt.Sprintf("@every %ds", int(runEveryPeriod.Seconds())),

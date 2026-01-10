@@ -5,6 +5,7 @@ package taskmanager
 
 import (
 	"context"
+	"sync"
 
 	"github.com/robfig/cron/v3"
 	"github.com/rs/zerolog"
@@ -29,9 +30,11 @@ type (
 
 	// taskqOptions holds all the configuration for the TaskQ engine
 	taskqOptions struct {
-		config *taskq.QueueOptions    // Configuration for the TaskQ engine
-		queue  taskq.Queue            // Queue for TaskQ
-		tasks  map[string]*taskq.Task // Registered tasks
+		config  *taskq.QueueOptions    // Configuration for the TaskQ engine
+		queue   taskq.Queue            // Queue for TaskQ
+		tasks   map[string]*taskq.Task // Registered tasks
+		queueMu sync.Mutex             // Mutex for queue operations to prevent race conditions
+		tasksMu sync.RWMutex           // Mutex for tasks map operations
 	}
 )
 
@@ -98,7 +101,14 @@ func (tm *TaskManager) ResetCron() {
 
 // Tasks will return the list of tasks
 func (tm *TaskManager) Tasks() map[string]*taskq.Task {
-	return tm.options.taskq.tasks
+	tm.options.taskq.tasksMu.RLock()
+	defer tm.options.taskq.tasksMu.RUnlock()
+	// Return a copy to prevent external modification
+	tasks := make(map[string]*taskq.Task, len(tm.options.taskq.tasks))
+	for k, v := range tm.options.taskq.tasks {
+		tasks[k] = v
+	}
+	return tasks
 }
 
 // Factory will return the factory that is set
