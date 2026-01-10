@@ -189,6 +189,9 @@ func TestWithRedisConnection(t *testing.T) {
 }
 
 func TestWithFreeCache(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 
 	t.Run("check type", func(t *testing.T) {
@@ -216,6 +219,9 @@ func TestWithFreeCache(t *testing.T) {
 }
 
 func TestWithFreeCacheConnection(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
