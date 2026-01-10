@@ -153,13 +153,13 @@ func (t *TransactionConfig) Scan(value interface{}) error {
 		return nil
 	}
 
-	err = json.Unmarshal(byteValue, &t)
+	err = json.Unmarshal(byteValue, &t) //nolint:musttag // TransactionConfig has json tags
 	return spverrors.Wrapf(err, "failed to parse TransactionConfig from JSON")
 }
 
 // Value return json value, implement driver.Valuer interface
 func (t TransactionConfig) Value() (driver.Value, error) {
-	marshal, err := json.Marshal(t)
+	marshal, err := json.Marshal(t) //nolint:musttag // TransactionConfig has json tags
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "failed to convert TransactionConfig to JSON")
 	}

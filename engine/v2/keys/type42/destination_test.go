@@ -5,6 +5,7 @@ import (
 
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestDestination(t *testing.T) {
@@ -16,7 +17,7 @@ func TestDestination(t *testing.T) {
 		dst, err := NewDestinationWithRandomReference(pubKey)
 
 		// then:
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.Nil(t, dst.PubKey)
 		assert.Contains(t, dst.DerivationKey, "1-destination-")
 		assert.NotEmpty(t, dst.ReferenceID)
@@ -29,7 +30,7 @@ func TestDestination(t *testing.T) {
 		dst, err := NewDestinationWithRandomReference(pubKey)
 
 		// then:
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotEmpty(t, dst.PubKey.ToDERHex())
 		assert.Contains(t, dst.DerivationKey, "1-destination-")
 		assert.NotEmpty(t, dst.ReferenceID)

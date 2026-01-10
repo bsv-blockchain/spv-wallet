@@ -177,11 +177,11 @@ func (u *user) SignsAndRecord() string {
 
 	inputs, ok := annotations["inputs"]
 	if ok {
-		inputsJSON, err := json.Marshal(inputs)
-		require.NoError(u.t, err)
+		inputsJSON, marshalErr := json.Marshal(inputs)
+		require.NoError(u.t, marshalErr)
 
-		err = json.Unmarshal(inputsJSON, &inputAnnotations)
-		require.NoError(u.t, err)
+		unmarshalErr := json.Unmarshal(inputsJSON, &inputAnnotations)
+		require.NoError(u.t, unmarshalErr)
 	}
 
 	for i, input := range tx.Inputs {

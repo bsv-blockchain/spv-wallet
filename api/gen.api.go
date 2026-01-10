@@ -116,7 +116,6 @@ type MiddlewareFunc func(c *gin.Context)
 
 // AdminConfirmContact operation middleware
 func (siw *ServerInterfaceWrapper) AdminConfirmContact(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -131,7 +130,6 @@ func (siw *ServerInterfaceWrapper) AdminConfirmContact(c *gin.Context) {
 
 // AdminDeleteContact operation middleware
 func (siw *ServerInterfaceWrapper) AdminDeleteContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -157,7 +155,6 @@ func (siw *ServerInterfaceWrapper) AdminDeleteContact(c *gin.Context) {
 
 // AdminUpdateContact operation middleware
 func (siw *ServerInterfaceWrapper) AdminUpdateContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -183,7 +180,6 @@ func (siw *ServerInterfaceWrapper) AdminUpdateContact(c *gin.Context) {
 
 // AdminCreateContact operation middleware
 func (siw *ServerInterfaceWrapper) AdminCreateContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -209,7 +205,6 @@ func (siw *ServerInterfaceWrapper) AdminCreateContact(c *gin.Context) {
 
 // AdminRejectInvitation operation middleware
 func (siw *ServerInterfaceWrapper) AdminRejectInvitation(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -235,7 +230,6 @@ func (siw *ServerInterfaceWrapper) AdminRejectInvitation(c *gin.Context) {
 
 // AdminAcceptInvitation operation middleware
 func (siw *ServerInterfaceWrapper) AdminAcceptInvitation(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -261,7 +255,6 @@ func (siw *ServerInterfaceWrapper) AdminAcceptInvitation(c *gin.Context) {
 
 // AdminStatus operation middleware
 func (siw *ServerInterfaceWrapper) AdminStatus(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -276,7 +269,6 @@ func (siw *ServerInterfaceWrapper) AdminStatus(c *gin.Context) {
 
 // RecordTransactionOutlineForUser operation middleware
 func (siw *ServerInterfaceWrapper) RecordTransactionOutlineForUser(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -291,7 +283,6 @@ func (siw *ServerInterfaceWrapper) RecordTransactionOutlineForUser(c *gin.Contex
 
 // CreateUser operation middleware
 func (siw *ServerInterfaceWrapper) CreateUser(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -306,7 +297,6 @@ func (siw *ServerInterfaceWrapper) CreateUser(c *gin.Context) {
 
 // UserById operation middleware
 func (siw *ServerInterfaceWrapper) UserById(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -332,7 +322,6 @@ func (siw *ServerInterfaceWrapper) UserById(c *gin.Context) {
 
 // AddPaymailToUser operation middleware
 func (siw *ServerInterfaceWrapper) AddPaymailToUser(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -358,7 +347,6 @@ func (siw *ServerInterfaceWrapper) AddPaymailToUser(c *gin.Context) {
 
 // UnsubscribeWebhook operation middleware
 func (siw *ServerInterfaceWrapper) UnsubscribeWebhook(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -373,7 +361,6 @@ func (siw *ServerInterfaceWrapper) UnsubscribeWebhook(c *gin.Context) {
 
 // Webhooks operation middleware
 func (siw *ServerInterfaceWrapper) Webhooks(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -388,7 +375,6 @@ func (siw *ServerInterfaceWrapper) Webhooks(c *gin.Context) {
 
 // SubscribeWebhook operation middleware
 func (siw *ServerInterfaceWrapper) SubscribeWebhook(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -403,7 +389,6 @@ func (siw *ServerInterfaceWrapper) SubscribeWebhook(c *gin.Context) {
 
 // SharedConfig operation middleware
 func (siw *ServerInterfaceWrapper) SharedConfig(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"admin", "user"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -418,7 +403,6 @@ func (siw *ServerInterfaceWrapper) SharedConfig(c *gin.Context) {
 
 // RemoveContact operation middleware
 func (siw *ServerInterfaceWrapper) RemoveContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -444,7 +428,6 @@ func (siw *ServerInterfaceWrapper) RemoveContact(c *gin.Context) {
 
 // GetContact operation middleware
 func (siw *ServerInterfaceWrapper) GetContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -470,7 +453,6 @@ func (siw *ServerInterfaceWrapper) GetContact(c *gin.Context) {
 
 // UpsertContact operation middleware
 func (siw *ServerInterfaceWrapper) UpsertContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -496,7 +478,6 @@ func (siw *ServerInterfaceWrapper) UpsertContact(c *gin.Context) {
 
 // UnconfirmContact operation middleware
 func (siw *ServerInterfaceWrapper) UnconfirmContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -522,7 +503,6 @@ func (siw *ServerInterfaceWrapper) UnconfirmContact(c *gin.Context) {
 
 // ConfirmContact operation middleware
 func (siw *ServerInterfaceWrapper) ConfirmContact(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -548,7 +528,6 @@ func (siw *ServerInterfaceWrapper) ConfirmContact(c *gin.Context) {
 
 // DataById operation middleware
 func (siw *ServerInterfaceWrapper) DataById(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "id" -------------
@@ -574,7 +553,6 @@ func (siw *ServerInterfaceWrapper) DataById(c *gin.Context) {
 
 // RejectInvitation operation middleware
 func (siw *ServerInterfaceWrapper) RejectInvitation(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -600,7 +578,6 @@ func (siw *ServerInterfaceWrapper) RejectInvitation(c *gin.Context) {
 
 // AcceptInvitation operation middleware
 func (siw *ServerInterfaceWrapper) AcceptInvitation(c *gin.Context) {
-
 	var err error
 
 	// ------------- Path parameter "paymail" -------------
@@ -626,7 +603,6 @@ func (siw *ServerInterfaceWrapper) AcceptInvitation(c *gin.Context) {
 
 // MerkleRoots operation middleware
 func (siw *ServerInterfaceWrapper) MerkleRoots(c *gin.Context) {
-
 	var err error
 
 	c.Set(XPubAuthScopes, []string{"user"})
@@ -662,7 +638,6 @@ func (siw *ServerInterfaceWrapper) MerkleRoots(c *gin.Context) {
 
 // SearchOperations operation middleware
 func (siw *ServerInterfaceWrapper) SearchOperations(c *gin.Context) {
-
 	var err error
 
 	c.Set(XPubAuthScopes, []string{"user"})
@@ -714,7 +689,6 @@ func (siw *ServerInterfaceWrapper) SearchOperations(c *gin.Context) {
 
 // RecordTransactionOutline operation middleware
 func (siw *ServerInterfaceWrapper) RecordTransactionOutline(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"user"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -729,7 +703,6 @@ func (siw *ServerInterfaceWrapper) RecordTransactionOutline(c *gin.Context) {
 
 // CreateTransactionOutline operation middleware
 func (siw *ServerInterfaceWrapper) CreateTransactionOutline(c *gin.Context) {
-
 	var err error
 
 	c.Set(XPubAuthScopes, []string{"user"})
@@ -757,7 +730,6 @@ func (siw *ServerInterfaceWrapper) CreateTransactionOutline(c *gin.Context) {
 
 // CreateAddress operation middleware
 func (siw *ServerInterfaceWrapper) CreateAddress(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"user"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -772,7 +744,6 @@ func (siw *ServerInterfaceWrapper) CreateAddress(c *gin.Context) {
 
 // DeleteCurrentUser operation middleware
 func (siw *ServerInterfaceWrapper) DeleteCurrentUser(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"user"})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -787,7 +758,6 @@ func (siw *ServerInterfaceWrapper) DeleteCurrentUser(c *gin.Context) {
 
 // CurrentUser operation middleware
 func (siw *ServerInterfaceWrapper) CurrentUser(c *gin.Context) {
-
 	c.Set(XPubAuthScopes, []string{"user"})
 
 	for _, middleware := range siw.HandlerMiddlewares {

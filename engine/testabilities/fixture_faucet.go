@@ -63,7 +63,7 @@ func (f *faucetFixture) TopUp(satoshis bsv.Satoshis) txtestability.TransactionSp
 		UserID: f.user.ID(),
 
 		Type:  "incoming",
-		Value: int64(satoshis),
+		Value: int64(satoshis), //nolint:gosec // G115 test code with controlled values
 
 		Transaction: transaction,
 	}
@@ -71,11 +71,11 @@ func (f *faucetFixture) TopUp(satoshis bsv.Satoshis) txtestability.TransactionSp
 	err = f.engine.Repositories().Operations.SaveAll(context.Background(), func(yield func(*txmodels.NewOperation) bool) {
 		yield(&operation)
 	})
-	f.assert.NoError(err)
+	f.require.NoError(err)
 
 	// Additional check - assertion if the top-up operation was saved correctly
 	balance, err := f.engine.Repositories().Users.GetBalance(context.Background(), f.user.ID(), bucket.BSV)
-	f.assert.NoError(err)
+	f.require.NoError(err)
 	f.assert.GreaterOrEqual(balance, satoshis)
 
 	return txSpec
@@ -113,7 +113,7 @@ func (f *faucetFixture) StoreData(data string) (txtestability.TransactionSpec, s
 	err := f.engine.Repositories().Operations.SaveAll(context.Background(), func(yield func(*txmodels.NewOperation) bool) {
 		yield(&operation)
 	})
-	f.assert.NoError(err)
+	f.require.NoError(err)
 
 	return txSpec, outpoint.String()
 }

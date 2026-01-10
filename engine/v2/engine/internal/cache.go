@@ -37,7 +37,7 @@ func NewCache(cfg *config.AppConfig, logger zerolog.Logger) Cache {
 	return cache
 }
 
-func (o *cacheOptions) configureLogger(cfg *config.AppConfig, logger zerolog.Logger) *cacheOptions {
+func (o *cacheOptions) configureLogger(_ *config.AppConfig, logger zerolog.Logger) *cacheOptions {
 	cachestoreLogger := logging.CreateGormLoggerAdapter(&logger, "cachestore")
 	o.opts = append(o.opts, cachestore.WithLogger(cachestoreLogger))
 	if logger.GetLevel() == zerolog.DebugLevel || logger.GetLevel() == zerolog.TraceLevel {

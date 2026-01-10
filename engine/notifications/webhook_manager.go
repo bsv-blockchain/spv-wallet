@@ -46,7 +46,7 @@ func NewWebhookManager(ctx context.Context, logger *zerolog.Logger, notification
 		endMsg:           make(chan bool, 1),
 	}
 
-	go manager.checkForUpdates()
+	go manager.checkForUpdates() //nolint:contextcheck // goroutine uses internal context management
 
 	return &manager
 }
@@ -57,6 +57,26 @@ func (w *WebhookManager) Stop() {
 	w.cancelAllFunc()
 
 	<-w.endMsg
+
+	// Cleanup all webhook notifiers:
+	// 1. Cancel all contexts first to signal goroutines to stop
+	// 2. Remove from Notifications to prevent sends to closed channels
+	// 3. Wait for goroutines to finish
+	w.webhookNotifiers.Range(func(key, value any) bool {
+		item := value.(*notifierWithCtx)
+		item.cancelFunc() // Cancel context first
+		return true
+	})
+
+	// Now remove from notifications and wait for goroutines
+	w.webhookNotifiers.Range(func(key, value any) bool {
+		url := key.(string)
+		item := value.(*notifierWithCtx)
+		w.notifications.RemoveNotifier(url) // Remove before stopping to prevent race
+		item.notifier.Stop()                // Wait for goroutine
+		return true
+	})
+
 	w.logger.Info().Msg("WebhookManager stopped")
 }
 
@@ -191,6 +211,7 @@ func (w *WebhookManager) removeNotifier(url string) {
 		w.logger.Info().Msgf("Remove a webhook notifier. URL: %s", url)
 		item := item.(*notifierWithCtx)
 		item.cancelFunc()
+		item.notifier.Stop() // Wait for the consumer goroutine to finish
 		w.webhookNotifiers.Delete(url)
 		w.notifications.RemoveNotifier(url)
 	}

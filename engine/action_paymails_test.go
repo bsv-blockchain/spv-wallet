@@ -18,7 +18,7 @@ var (
 
 func (ts *EmbeddedDBTestSuite) TestClient_NewPaymailAddress() {
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - empty address", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - empty address", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -33,7 +33,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_NewPaymailAddress() {
 			require.Nil(t, paymailAddress)
 		})
 
-		ts.T().Run(testCase.name+" - new paymail address", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - new paymail address", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -74,7 +74,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_NewPaymailAddress() {
 func (ts *EmbeddedDBTestSuite) Test_DeletePaymailAddress() {
 	for _, testCase := range dbTestCases {
 
-		ts.T().Run(testCase.name+" - empty", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - empty", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -83,7 +83,7 @@ func (ts *EmbeddedDBTestSuite) Test_DeletePaymailAddress() {
 			require.ErrorIs(t, err, spverrors.ErrCouldNotFindPaymail)
 		})
 
-		ts.T().Run(testCase.name+" - delete unknown paymail address", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - delete unknown paymail address", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -91,7 +91,7 @@ func (ts *EmbeddedDBTestSuite) Test_DeletePaymailAddress() {
 			require.ErrorIs(t, err, spverrors.ErrCouldNotFindPaymail)
 		})
 
-		ts.T().Run(testCase.name+" - delete paymail address", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - delete paymail address", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 			opts := tc.client.DefaultModelOptions()

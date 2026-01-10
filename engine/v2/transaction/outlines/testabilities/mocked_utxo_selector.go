@@ -60,7 +60,7 @@ func (m *mockedUTXOSelector) Select(ctx context.Context, tx *sdk.Transaction, us
 	}
 
 	return lo.Map(distribution, func(satoshis bsv.Satoshis, index int) *outlines.UTXO {
-		outpoint := templatedOutpoint(uint(index))
+		outpoint := templatedOutpoint(uint(index)) //nolint:gosec // G115 test code with controlled values
 		return &outlines.UTXO{
 			TxID:               outpoint.TxID,
 			Vout:               outpoint.Vout,

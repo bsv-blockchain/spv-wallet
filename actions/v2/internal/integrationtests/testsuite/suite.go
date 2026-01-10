@@ -22,6 +22,9 @@ const (
 // RunOnAllDBMS runs the given test function on all database management systems
 func RunOnAllDBMS(t *testing.T, testFunc func(t *testing.T, dbms string)) {
 	t.Run("PostgreSQL", func(t *testing.T) {
+		if !testmode.IsDockerAvailable() {
+			t.Skip("Skipping PostgreSQL test: Docker is not available")
+		}
 		testFunc(t, DbmsPostgres)
 	})
 

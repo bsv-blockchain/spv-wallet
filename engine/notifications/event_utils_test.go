@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/bsv-blockchain/spv-wallet/models"
 )
@@ -21,7 +22,7 @@ func TestEventParsing(t *testing.T) {
 		assert.Equal(t, source.Type, target.Type)
 
 		actualEvent, err := GetEventContent[models.StringEvent](&target)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, "1", actualEvent.Value)
 	})
 

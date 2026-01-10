@@ -383,6 +383,11 @@ func initBenchmarkData(b *testing.B) (context.Context, ClientInterface, *Xpub, *
 	if err != nil {
 		b.Fail()
 	}
+	// Set the initial balance to match the sum of UTXOs (4 * 122500 = 490000)
+	xPub.CurrentBalance = 490000
+	if err = xPub.Save(ctx); err != nil {
+		b.Fail()
+	}
 	destination := newDestination(xPub.GetID(), testLockingScript, opts...)
 	if err = destination.Save(ctx); err != nil {
 		b.Fail()

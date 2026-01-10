@@ -178,7 +178,7 @@ type V2Interface interface {
 	PaymailServerConfiguration() *server.Configuration
 	ContactService() *contacts.Service
 	TxSyncService() *txsync.Service
-	Close(context.Context) error
+	Close(ctx context.Context) error
 }
 
 // ClientInterface is the client (spv wallet engine) interface comprised of all services/actions

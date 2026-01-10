@@ -35,8 +35,9 @@ type PaymailHostFixture interface {
 }
 
 type paymailServiceClientAbility struct {
-	t *testing.T
 	*paymailmock.PaymailClientMock
+
+	t *testing.T
 }
 
 // Given creates a new test fixture.

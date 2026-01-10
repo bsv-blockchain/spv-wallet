@@ -159,7 +159,7 @@ func TestDestination_getDestinationByID(t *testing.T) {
 		defer deferMe()
 
 		xPub, err := getDestinationByID(ctx, testDestinationID, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Nil(t, xPub)
 	})
 
@@ -169,10 +169,10 @@ func TestDestination_getDestinationByID(t *testing.T) {
 
 		destination := newDestination(testXPubID, testLockingScript, client.DefaultModelOptions()...)
 		err := destination.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		gDestination, gErr := getDestinationByID(ctx, destination.ID, client.DefaultModelOptions()...)
-		assert.NoError(t, gErr)
+		require.NoError(t, gErr)
 		assert.IsType(t, Destination{}, *gDestination)
 		assert.Equal(t, testXPubID, gDestination.XpubID)
 		assert.Equal(t, testLockingScript, gDestination.LockingScript)
@@ -189,7 +189,7 @@ func TestDestination_getDestinationByAddress(t *testing.T) {
 		defer deferMe()
 
 		xPub, err := getDestinationByAddress(ctx, testExternalAddress, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Nil(t, xPub)
 	})
 
@@ -199,10 +199,10 @@ func TestDestination_getDestinationByAddress(t *testing.T) {
 
 		destination := newDestination(testXPubID, testLockingScript, client.DefaultModelOptions()...)
 		err := destination.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		gDestination, gErr := getDestinationByAddress(ctx, testExternalAddress, client.DefaultModelOptions()...)
-		assert.NoError(t, gErr)
+		require.NoError(t, gErr)
 		assert.IsType(t, Destination{}, *gDestination)
 		assert.Equal(t, testXPubID, gDestination.XpubID)
 		assert.Equal(t, testLockingScript, gDestination.LockingScript)
@@ -219,7 +219,7 @@ func TestDestination_getDestinationByLockingScript(t *testing.T) {
 		defer deferMe()
 
 		xPub, err := getDestinationByLockingScript(ctx, testLockingScript, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Nil(t, xPub)
 	})
 
@@ -229,10 +229,10 @@ func TestDestination_getDestinationByLockingScript(t *testing.T) {
 
 		destination := newDestination(testXPubID, testLockingScript, client.DefaultModelOptions()...)
 		err := destination.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 
 		gDestination, gErr := getDestinationByLockingScript(ctx, testLockingScript, client.DefaultModelOptions()...)
-		assert.NoError(t, gErr)
+		require.NoError(t, gErr)
 		assert.IsType(t, Destination{}, *gDestination)
 		assert.Equal(t, testXPubID, gDestination.XpubID)
 		assert.Equal(t, testLockingScript, gDestination.LockingScript)

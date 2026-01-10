@@ -200,8 +200,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.WebhookUrlInvalid.Code,
-				"message": spverrors.WebhookUrlInvalid.Message,
+				"code":    spverrors.ErrWebhookUrlInvalid.Code,
+				"message": spverrors.ErrWebhookUrlInvalid.Message,
 			})
 	})
 }

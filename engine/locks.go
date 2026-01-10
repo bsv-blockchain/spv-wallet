@@ -20,6 +20,7 @@ const (
 // newWriteLock will take care of creating a lock and defer
 func newWriteLock(ctx context.Context, lockKey string, cacheStore cachestore.LockService) (func(), error) {
 	secret, err := cacheStore.WriteLock(ctx, lockKey, defaultCacheLockTTL)
+	//nolint:contextcheck // using background context intentionally - unlock should never be stopped even if request is canceled
 	return func() {
 		// context is not set, since the req could be canceled, but unlocking should never be stopped
 		_, _ = cacheStore.ReleaseLock(context.Background(), lockKey, secret)
@@ -29,6 +30,7 @@ func newWriteLock(ctx context.Context, lockKey string, cacheStore cachestore.Loc
 // newWaitWriteLock will take care of creating a lock and defer
 func newWaitWriteLock(ctx context.Context, lockKey string, cacheStore cachestore.LockService) (func(), error) {
 	secret, err := cacheStore.WaitWriteLock(ctx, lockKey, defaultCacheLockTTL, defaultCacheLockTTW)
+	//nolint:contextcheck // using background context intentionally - unlock should never be stopped even if request is canceled
 	return func() {
 		// context is not set, since the req could be canceled, but unlocking should never be stopped
 		_, _ = cacheStore.ReleaseLock(context.Background(), lockKey, secret)

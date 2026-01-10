@@ -23,7 +23,9 @@ func Print(result Result) {
 
 	response := result.Response()
 	if response != nil {
-		defer response.Body.Close()
+		defer func() {
+			_ = response.Body.Close()
+		}()
 	}
 
 	url := "<failed to extract>"

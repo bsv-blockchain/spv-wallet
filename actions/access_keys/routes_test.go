@@ -1,15 +1,11 @@
 package accesskeys
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
-
 	"github.com/bsv-blockchain/spv-wallet/config"
 )
 
 func (ts *TestSuite) TestRegisterRoutes() {
-	ts.T().Run("test routes", func(t *testing.T) {
+	ts.Run("test routes", func() {
 		testCases := []struct {
 			method string
 			url    string
@@ -26,12 +22,12 @@ func (ts *TestSuite) TestRegisterRoutes() {
 			found := false
 			for _, routeInfo := range ts.Router.Routes() {
 				if testCase.url == routeInfo.Path && testCase.method == routeInfo.Method {
-					assert.NotNil(t, routeInfo.HandlerFunc)
+					ts.NotNil(routeInfo.HandlerFunc)
 					found = true
 					break
 				}
 			}
-			assert.True(t, found)
+			ts.True(found)
 		}
 	})
 }

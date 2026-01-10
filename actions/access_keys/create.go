@@ -32,7 +32,7 @@ func create(c *gin.Context, userContext *reqctx.UserContext) {
 
 	logger := reqctx.Logger(c)
 	var requestBody CreateAccessKey
-	if err := c.Bind(&requestBody); err != nil {
+	if bindErr := c.Bind(&requestBody); bindErr != nil {
 		spverrors.ErrorResponse(c, spverrors.ErrCannotBindRequest, logger)
 		return
 	}

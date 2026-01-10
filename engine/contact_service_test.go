@@ -3,6 +3,7 @@ package engine
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"net/http"
 	"testing"
 
@@ -308,11 +309,12 @@ type paymailTestMock struct {
 	mockTransport *httpmock.MockTransport
 }
 
+//nolint:unparam // domain is test constant, kept as parameter for test flexibility
 func (p *paymailTestMock) setup(domain string, supportPike bool) {
 	p.mockTransport = httpmock.NewMockTransport()
 	serverURL := "https://" + domain + "/api/v1/" + paymail.DefaultServiceName
 
-	wellKnownURL := fmt.Sprintf("https://%s:443/.well-known/%s", domain, paymail.DefaultServiceName)
+	wellKnownURL := "https://" + net.JoinHostPort(domain, "443") + "/.well-known/" + paymail.DefaultServiceName
 	wellKnownBody := paymail.CapabilitiesPayload{
 		BsvAlias:     paymail.DefaultBsvAliasVersion,
 		Capabilities: map[string]interface{}{paymail.BRFCPki: fmt.Sprintf("%s/id/{alias}@{domain.tld}", serverURL)},
@@ -325,7 +327,7 @@ func (p *paymailTestMock) setup(domain string, supportPike bool) {
 		}
 	}
 
-	wellKnownResponse, _ := json.Marshal(wellKnownBody)
+	wellKnownResponse, _ := json.Marshal(wellKnownBody) //nolint:errchkjson // test code - wellKnownBody is a known safe type
 	wellKnownResponder := httpmock.NewStringResponder(http.StatusOK, string(wellKnownResponse))
 	p.mockTransport.RegisterResponder(http.MethodGet, wellKnownURL, wellKnownResponder)
 

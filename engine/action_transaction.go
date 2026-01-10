@@ -53,6 +53,7 @@ func (c *Client) NewTransaction(ctx context.Context, rawXpubKey string, config *
 	}
 
 	// Create the draft tx model
+	//nolint:contextcheck // context is used in Save() call below, newDraftTransaction is for initialization only
 	draftTransaction, err := newDraftTransaction(
 		rawXpubKey, config,
 		c.DefaultModelOptions(append(opts, New())...)...,

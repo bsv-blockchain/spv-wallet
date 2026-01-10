@@ -11,7 +11,7 @@ import (
 
 func (ts *EmbeddedDBTestSuite) TestClient_NewXpub() {
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - valid", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -24,7 +24,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_NewXpub() {
 			assert.Equal(t, testXPubID, xPub2.ID)
 		})
 
-		ts.T().Run(testCase.name+" - valid with metadata (key->val)", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid with metadata (key->val)", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -41,7 +41,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_NewXpub() {
 			assert.Equal(t, Metadata{testMetadataKey: testMetadataValue}, xPub2.Metadata)
 		})
 
-		ts.T().Run(testCase.name+" - valid with metadatas", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid with metadatas", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -63,18 +63,18 @@ func (ts *EmbeddedDBTestSuite) TestClient_NewXpub() {
 			assert.Equal(t, Metadata{testMetadataKey: testMetadataValue}, xPub2.Metadata)
 		})
 
-		ts.T().Run(testCase.name+" - errors", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - errors", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
 			_, err := tc.client.NewXpub(tc.ctx, "test", tc.client.DefaultModelOptions()...)
-			assert.ErrorIs(t, err, spverrors.ErrXpubInvalidLength)
+			require.ErrorIs(t, err, spverrors.ErrXpubInvalidLength)
 
 			_, err = tc.client.NewXpub(tc.ctx, "", tc.client.DefaultModelOptions()...)
 			assert.ErrorIs(t, err, spverrors.ErrMissingFieldXpubID)
 		})
 
-		ts.T().Run(testCase.name+" - duplicate xPub", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - duplicate xPub", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -90,7 +90,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_NewXpub() {
 
 func (ts *EmbeddedDBTestSuite) TestClient_GetXpub() {
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - valid", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -107,7 +107,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_GetXpub() {
 			assert.Equal(t, testXPubID, xPub3.ID)
 		})
 
-		ts.T().Run(testCase.name+" - error - invalid xpub", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - error - invalid xpub", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -117,7 +117,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_GetXpub() {
 			assert.ErrorIs(t, err, spverrors.ErrCouldNotFindXpub)
 		})
 
-		ts.T().Run(testCase.name+" - error - missing xpub", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - error - missing xpub", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -131,7 +131,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_GetXpub() {
 
 func (ts *EmbeddedDBTestSuite) TestClient_GetXpubByID() {
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - valid", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -144,7 +144,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_GetXpubByID() {
 			assert.Equal(t, testXPubID, xPub2.ID)
 		})
 
-		ts.T().Run(testCase.name+" - error - invalid xpub", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - error - invalid xpub", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -153,7 +153,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_GetXpubByID() {
 			require.Nil(t, xPub)
 		})
 
-		ts.T().Run(testCase.name+" - error - missing xpub", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - error - missing xpub", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 
@@ -167,7 +167,7 @@ func (ts *EmbeddedDBTestSuite) TestClient_GetXpubByID() {
 
 func (ts *EmbeddedDBTestSuite) TestClient_UpdateXpubMetadata() {
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - valid", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - valid", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 

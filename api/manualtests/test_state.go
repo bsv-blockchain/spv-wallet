@@ -105,6 +105,17 @@ func (s *State) Load() error {
 	return nil
 }
 
+// LoadOrSkip loads state configuration and skips the test if configuration is not ready.
+// Use this for manual tests that require a running spv-wallet instance.
+func (s *State) LoadOrSkip(t interface {
+	Skipf(format string, args ...any)
+},
+) {
+	if err := s.Load(); err != nil {
+		t.Skipf("Skipping manual test - configuration not ready: %v", err)
+	}
+}
+
 func (s *State) Save() error {
 	err := s.updateViperState()
 	if err != nil {

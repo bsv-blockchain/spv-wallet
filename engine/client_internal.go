@@ -87,6 +87,8 @@ func (c *Client) autoMigrate(ctx context.Context) error {
 }
 
 // loadNotificationClient will load the notifications client
+//
+//nolint:unparam // err is always nil by design, kept for future error handling
 func (c *Client) loadNotificationClient(ctx context.Context) (err error) {
 	if c.options.notifications == nil || !c.options.notifications.enabled {
 		return err

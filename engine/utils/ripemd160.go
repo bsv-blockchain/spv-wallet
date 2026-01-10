@@ -3,8 +3,7 @@ package utils
 import (
 	"crypto/sha256"
 
-	//nolint:gosec // RIPEMD160 is necessary for Bitcoin compatibility
-	"golang.org/x/crypto/ripemd160"
+	"golang.org/x/crypto/ripemd160" //nolint:staticcheck,gosec // RIPEMD160 is necessary for Bitcoin compatibility
 )
 
 // NOTE: Temporary implementation - needs to be tracked in GO-SDK SPV-1035

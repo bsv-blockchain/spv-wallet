@@ -122,12 +122,11 @@ func (p *PaymailDefaultServiceProvider) CreateP2PDestinationResponse(
 	}
 
 	// Append the output(s)
-	var outputs []*paymail.PaymentOutput
-	outputs = append(outputs, &paymail.PaymentOutput{
+	outputs := []*paymail.PaymentOutput{{
 		Address:  dst.Address,
 		Satoshis: satoshis,
 		Script:   dst.LockingScript,
-	})
+	}}
 
 	return &paymail.PaymentDestinationPayload{
 		Outputs:   outputs,
@@ -155,8 +154,8 @@ func (p *PaymailDefaultServiceProvider) RecordTransaction(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if err := rts.Validate(); err != nil {
-		return nil, err //nolint:wrapcheck // returns our internal errors
+	if validateErr := rts.Validate(); validateErr != nil {
+		return nil, validateErr //nolint:wrapcheck // returns our internal errors
 	}
 
 	transaction, err := recordTransaction(ctx, p.client, rts, WithMetadatas(metadata))
@@ -312,6 +311,7 @@ func buildSDKTx(p2pTx *paymail.P2PTransaction) (*trx.Transaction, error) {
 	return tx, nil
 }
 
+//nolint:contextcheck // getInputsWhichAreNotInDb doesn't need context for its current implementation
 func saveBEEFTxInputs(ctx context.Context, c ClientInterface, dBeef *beef.DecodedBEEF) {
 	inputsToAdd, err := getInputsWhichAreNotInDb(c, dBeef)
 	if err != nil {
@@ -324,13 +324,14 @@ func saveBEEFTxInputs(ctx context.Context, c ClientInterface, dBeef *beef.Decode
 			// Convert old SDK VarInt to new SDK VarInt via underlying uint64 value
 			oldVarInt := uint64(*input.BumpIndex)
 			newVarInt := util.VarInt(oldVarInt)
-			bumpIndex, err := conv.VarIntToInt(&newVarInt)
-			if err != nil {
-				c.Logger().Error().Msgf("error in saveBEEFTxInputs: %v for beef: %v", err, dBeef)
+			bumpIndex, convErr := conv.VarIntToInt(&newVarInt)
+			if convErr != nil {
+				c.Logger().Error().Msgf("error in saveBEEFTxInputs: %v for beef: %v", convErr, dBeef)
 			}
-			bump, err = getBump(bumpIndex, dBeef.BUMPs)
-			if err != nil {
-				c.Logger().Error().Msgf("error in saveBEEFTxInputs: %v for beef: %v", err, dBeef)
+			var bumpErr error
+			bump, bumpErr = getBump(bumpIndex, dBeef.BUMPs)
+			if bumpErr != nil {
+				c.Logger().Error().Msgf("error in saveBEEFTxInputs: %v for beef: %v", bumpErr, dBeef)
 			}
 
 		}

@@ -24,7 +24,7 @@ type InputsSelectorFixture interface {
 }
 
 type InputsSelectorTransactionFixture interface {
-	ForSatoshisAndSize(SatoshisAndSizeProvider) *sdk.Transaction
+	ForSatoshisAndSize(provider SatoshisAndSizeProvider) *sdk.Transaction
 }
 
 type SatoshisAndSizeProvider interface {

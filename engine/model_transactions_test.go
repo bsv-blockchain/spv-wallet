@@ -213,13 +213,13 @@ func TestTransaction_BeforeCreating(t *testing.T) {
 		transaction.client = client
 
 		err := transaction.BeforeCreating(context.Background())
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.ErrorIs(t, ErrMissingFieldHex, err)
 	})
 }
 
 func (ts *EmbeddedDBTestSuite) TestTransaction_BeforeCreating() {
-	ts.T().Run("[sqlite] [in-memory] - valid transaction", func(t *testing.T) {
+	ts.T().Run("[sqlite] [in-memory] - valid transaction", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, true)
 		defer tc.Close(tc.ctx)
 
@@ -260,7 +260,7 @@ func TestTransaction_GetModelName(t *testing.T) {
 }
 
 func (ts *EmbeddedDBTestSuite) TestTransaction_processOutputs() {
-	ts.T().Run("no outputs", func(t *testing.T) {
+	ts.T().Run("no outputs", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, true)
 		defer tc.Close(tc.ctx)
 
@@ -277,7 +277,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_processOutputs() {
 		assert.Nil(t, transaction.XpubOutIDs)
 	})
 
-	ts.T().Run("no outputs", func(t *testing.T) {
+	ts.T().Run("no outputs", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, true)
 		defer tc.Close(tc.ctx)
 
@@ -308,7 +308,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_processOutputs() {
 		assert.Equal(t, "utxo", childModels[0].Name())
 	})
 
-	ts.T().Run("STAS token", func(t *testing.T) {
+	ts.T().Run("STAS token", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, true)
 		defer tc.Close(tc.ctx)
 
@@ -641,7 +641,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_Save() {
 	ts.Require().NoError(errP)
 	ts.Require().NotNil(parsedInTx)
 
-	ts.T().Run("[sqlite] [in-memory] - Save transaction", func(t *testing.T) {
+	ts.T().Run("[sqlite] [in-memory] - Save transaction", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, false)
 		defer tc.Close(tc.ctx)
 
@@ -665,7 +665,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_Save() {
 		assert.Nil(t, utxo)
 	})
 
-	ts.T().Run("[sqlite] [in-memory] - Save transaction - with utxos & outputs", func(t *testing.T) {
+	ts.T().Run("[sqlite] [in-memory] - Save transaction - with utxos & outputs", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, false)
 		defer tc.Close(tc.ctx)
 
@@ -723,7 +723,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_Save() {
 
 		var utxo2 *Utxo
 		utxo2, err = getUtxo(tc.ctx, transaction.ID, 1, tc.client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Equal(t, xPub2.GetID(), utxo2.XpubID)
 		assert.Equal(t, script.ScriptTypePubKeyHash, utxo2.Type)
 		assert.Equal(t, testTxScriptPubKey2, utxo2.ScriptPubKey)
@@ -731,7 +731,7 @@ func (ts *EmbeddedDBTestSuite) TestTransaction_Save() {
 		assert.Empty(t, utxo2.SpendingTxID)
 	})
 
-	ts.T().Run("[sqlite] [in-memory] - Save transaction - with inputs", func(t *testing.T) {
+	ts.T().Run("[sqlite] [in-memory] - Save transaction - with inputs", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 		tc := ts.genericDBClient(t, datastore.SQLite, false)
 		defer tc.Close(tc.ctx)
 

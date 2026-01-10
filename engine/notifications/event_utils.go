@@ -40,7 +40,7 @@ func GetEventContent[EventType models.Events](raw *models.RawEvent) (*EventType,
 
 // NewRawEvent creates a new raw event from actual event object.
 func NewRawEvent[EventType models.Events](namedEvent *EventType) *models.RawEvent {
-	asJSON, _ := json.Marshal(namedEvent)
+	asJSON, _ := json.Marshal(namedEvent) //nolint:errchkjson // Events type is constrained by generic and guaranteed to be JSON-serializable
 	return &models.RawEvent{
 		Type:    GetEventName(namedEvent),
 		Content: asJSON,

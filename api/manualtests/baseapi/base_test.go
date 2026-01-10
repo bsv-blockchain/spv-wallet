@@ -4,16 +4,13 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests"
 	"github.com/bsv-blockchain/spv-wallet/api/manualtests/client"
 )
 
 func TestBaseAPIRead(t *testing.T) {
 	state := manualtests.NewState()
-	err := state.Load()
-	require.NoError(t, err)
+	state.LoadOrSkip(t)
 
 	calls := map[string]struct {
 		client manualtests.ClientFactory
@@ -43,8 +40,7 @@ func TestBaseAPIRead(t *testing.T) {
 
 func TestUnauthorized(t *testing.T) {
 	state := manualtests.NewState()
-	err := state.Load()
-	require.NoError(t, err)
+	state.LoadOrSkip(t)
 
 	calls := map[string]struct {
 		call func(*client.ClientWithResponses) (manualtests.Result, error)

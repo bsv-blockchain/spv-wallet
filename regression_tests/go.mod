@@ -2,19 +2,18 @@ module github.com/bsv-blockchain/spv-wallet/regression-tests
 
 go 1.24.3
 
-replace github.com/bsv-blockchain/spv-wallet => ../
+replace github.com/bsv-blockchain/spv-wallet => ../ //nolint:gomoddirectives // local development
 
-replace github.com/bsv-blockchain/spv-wallet/models => ../models
+replace github.com/bsv-blockchain/spv-wallet/models => ../models //nolint:gomoddirectives // local development
 
 require (
 	github.com/bsv-blockchain/spv-wallet v1.0.0-beta.46
-	github.com/bsv-blockchain/spv-wallet-go-client v1.0.3
-	github.com/bsv-blockchain/spv-wallet/models v1.0.0-beta.46
+	github.com/bsv-blockchain/spv-wallet-go-client v1.1.0
+	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/joho/godotenv v1.5.1
 )
 
 require (
-	github.com/bitcoin-sv/spv-wallet/models v1.0.0-beta.46 // indirect
 	github.com/boombuler/barcode v1.1.0 // indirect
 	github.com/bsv-blockchain/go-sdk v1.2.14 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect

@@ -27,7 +27,12 @@ const (
 	defaultJSClientPath = "../../spv-wallet-js-client/src/regression_tests"
 )
 
-var ErrTimeout = errors.New("timeout reached")
+var (
+	ErrTimeout                  = errors.New("timeout reached")
+	ErrUserShouldBeRecreated    = errors.New("user should be recreated or xpriv should be provided")
+	ErrBalanceTooLow            = errors.New("balance too low")
+	ErrExpectedOnePaymailDomain = errors.New("expected 1 paymail domain")
+)
 
 func main() {
 	loadConfigFlag := flag.Bool("l", false, "Load configuration from .env.config file")
@@ -35,23 +40,22 @@ func main() {
 	ctx := context.Background()
 
 	config := &regressionTestConfig{}
-	user := &regressionTestUser{}
 	var err error
 
 	config, err = getConfig(*loadConfigFlag, config)
 	if err != nil {
-		fmt.Println("error getting config:", err)
+		fmt.Println("error getting config:", err) //nolint:forbidigo // interactive operator tool
 		return
 	}
 
 	if !isSPVWalletRunning(domainLocalHost) {
-		fmt.Println("spv-wallet is not running. Run spv-wallet and try again")
+		fmt.Println("spv-wallet is not running. Run spv-wallet and try again") //nolint:forbidigo // interactive operator tool
 		return
 	}
 
 	sharedConfig, err := getSharedConfig(ctx)
 	if err != nil {
-		fmt.Println("error getting shared config:", err)
+		fmt.Println("error getting shared config:", err) //nolint:forbidigo // interactive operator tool
 		return
 	}
 
@@ -59,20 +63,20 @@ func main() {
 
 	paymail := sharedConfig.PaymailDomains[0]
 	if !isSPVWalletRunning(paymail) {
-		fmt.Println("can't connect to spv-wallet at", paymail, "\nEnable tunneling from localhost")
+		fmt.Println("can't connect to spv-wallet at", paymail, "\nEnable tunneling from localhost") //nolint:forbidigo // interactive operator tool
 		return
 	}
 
-	user, err = handleUserCreation(paymail, config)
+	user, err := handleUserCreation(paymail, config)
 	if err != nil {
-		fmt.Println("error handling user creation:", err)
+		fmt.Println("error handling user creation:", err) //nolint:forbidigo // interactive operator tool
 		return
 	}
 
 	setConfigLeaderXPriv(config, user.XPriv)
 
-	if err := handleFundsTransfer(user, config); err != nil {
-		fmt.Println("error handling transactions:", err)
+	if fundsErr := handleFundsTransfer(user, config); fundsErr != nil {
+		fmt.Println("error handling transactions:", fundsErr) //nolint:forbidigo // interactive operator tool
 		return
 	}
 
@@ -90,13 +94,13 @@ func main() {
 	}
 	err = saveConfig(config)
 	if err != nil {
-		fmt.Println("error saving config:", err)
+		fmt.Println("error saving config:", err) //nolint:forbidigo // interactive operator tool
 		return
 	}
 	setEnvVariables(config)
 
 	if err := runTests(clientType, defaultPath); err != nil {
-		fmt.Println("error running tests:", err)
+		fmt.Println("error running tests:", err) //nolint:forbidigo // interactive operator tool
 	}
 }
 
@@ -157,7 +161,7 @@ func handleExistingPaymail(paymailAlias string, config *regressionTestConfig) (*
 	if answer == yes {
 		return recreateUser(paymailAlias, config)
 	}
-	return nil, fmt.Errorf("user should be recreated or xpriv should be provided")
+	return nil, ErrUserShouldBeRecreated
 }
 
 // recreateUser deletes paymail and recreates it with new set of keys.
@@ -200,7 +204,7 @@ func handleFundsTransfer(user *regressionTestUser, config *regressionTestConfig)
 		return fmt.Errorf("failed to prompt user: %w", err)
 	}
 	if response == no {
-		fmt.Printf("Please send %d Sato for full regression tests:\n%s\n", minimalBalance, user.Paymail)
+		fmt.Printf("Please send %d Sato for full regression tests:\n%s\n", minimalBalance, user.Paymail) //nolint:forbidigo // interactive operator tool
 		isSent := wrongInput
 		for isSent < no {
 			isSent, err = promptUserAndCheck("Did you make the transaction? (y/yes or n/no): ")
@@ -208,30 +212,30 @@ func handleFundsTransfer(user *regressionTestUser, config *regressionTestConfig)
 				return fmt.Errorf("failed to prompt user: %w", err)
 			}
 			if isSent == no {
-				fmt.Println("Checking balance")
+				fmt.Println("Checking balance") //nolint:forbidigo // interactive operator tool
 			}
 		}
-	} else if err := takeMasterUrlAndXPriv(user); err != nil {
-		return fmt.Errorf("error handling funds transfer: %w", err)
+	} else if promptErr := takeMasterUrlAndXPriv(user); promptErr != nil {
+		return fmt.Errorf("error handling funds transfer: %w", promptErr)
 	}
 
 	leaderBalance, err := checkBalance(config.ClientOneURL, config.ClientOneLeaderXPriv)
 	if err != nil {
 		return fmt.Errorf("error checking balance: %w", err)
 	}
-	fmt.Println("Leader balance:", leaderBalance)
+	fmt.Println("Leader balance:", leaderBalance) //nolint:forbidigo // interactive operator tool
 	timeout := time.After(2 * timeoutDuration)
 	for leaderBalance < minimalBalance {
 		select {
 		case <-timeout:
 			return ErrTimeout
 		default:
-			fmt.Print("Waiting for funds")
+			fmt.Print("Waiting for funds") //nolint:forbidigo // interactive operator tool
 			for i := 0; i < 3; i++ {
-				fmt.Print(".")
+				fmt.Print(".") //nolint:forbidigo // interactive operator tool
 				time.Sleep(1 * time.Second)
 			}
-			fmt.Println()
+			fmt.Println() //nolint:forbidigo // interactive operator tool
 			leaderBalance, err = checkBalance(config.ClientOneURL, config.ClientOneLeaderXPriv)
 			if err != nil {
 				return fmt.Errorf("error checking balance: %w", err)
@@ -259,7 +263,7 @@ func sendFundsWithGoClient(instanceUrl, istanceXPriv, receiverPaymail string) er
 		config.WithAddr(instanceUrl),
 	), istanceXPriv)
 	if err != nil {
-		return fmt.Errorf("error initalizing client: %w", err)
+		return fmt.Errorf("error initializing client: %w", err)
 	}
 	ctx := context.Background()
 
@@ -268,7 +272,7 @@ func sendFundsWithGoClient(instanceUrl, istanceXPriv, receiverPaymail string) er
 		return fmt.Errorf("error checking balance: %w", err)
 	}
 	if balance <= minimalBalance {
-		return fmt.Errorf("balance too low: %d", balance)
+		return fmt.Errorf("%w: %d", ErrBalanceTooLow, balance)
 	}
 
 	_, err = client.SendToRecipients(ctx, &commands.SendToRecipients{
@@ -304,16 +308,17 @@ func runTests(clientType, defaultPath string) error {
 		}
 
 		if _, err := os.Stat(path); os.IsNotExist(err) {
-			fmt.Printf("Path %s does not exist. Please enter a valid path.\n", path)
+			fmt.Printf("Path %s does not exist. Please enter a valid path.\n", path) //nolint:forbidigo // interactive operator tool
 		} else {
 			break
 		}
 	}
 
+	ctx := context.Background()
 	if runtime.GOOS == "windows" {
-		cmd = exec.Command("cmd", "/c", fmt.Sprintf("cd %s && %s", path, command))
+		cmd = exec.CommandContext(ctx, "cmd", "/c", fmt.Sprintf("cd %s && %s", path, command)) //nolint:gosec // user input is intentional for test runner
 	} else {
-		cmd = exec.Command("sh", "-c", fmt.Sprintf("cd %s && %s", path, command))
+		cmd = exec.CommandContext(ctx, "sh", "-c", fmt.Sprintf("cd %s && %s", path, command)) //nolint:gosec // user input is intentional for test runner
 	}
 
 	cmd.Stdout = os.Stdout

@@ -8,20 +8,23 @@ import (
 	"go.elastic.co/ecszerolog"
 )
 
-var loggerMutex sync.Mutex
+var (
+	defaultLogger     *zerolog.Logger
+	defaultLoggerOnce sync.Once
+)
 
-// GetDefaultLogger generates and returns a new default logger instance.
-// Uses a mutex to protect ecszerolog.New() which has non-thread-safe global state.
+// GetDefaultLogger returns a singleton default logger instance.
+// Uses sync.Once to ensure the logger is only created once, avoiding race conditions
+// with ecszerolog.New() which modifies global zerolog state.
 func GetDefaultLogger() *zerolog.Logger {
-	loggerMutex.Lock()
-	defer loggerMutex.Unlock()
-
-	logger := ecszerolog.New(os.Stdout, ecszerolog.Level(zerolog.InfoLevel)).
-		With().
-		Timestamp().
-		Caller().
-		Str("application", "spv-wallet-default").
-		Logger()
-
-	return &logger
+	defaultLoggerOnce.Do(func() {
+		logger := ecszerolog.New(os.Stdout, ecszerolog.Level(zerolog.InfoLevel)).
+			With().
+			Timestamp().
+			Caller().
+			Str("application", "spv-wallet-default").
+			Logger()
+		defaultLogger = &logger
+	})
+	return defaultLogger
 }

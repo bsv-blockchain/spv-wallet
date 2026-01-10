@@ -5,7 +5,6 @@ import (
 	"testing"
 	"time"
 
-	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	primitives "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -23,9 +22,9 @@ func Test_newAccessKey(t *testing.T) {
 		assert.Len(t, key.Key, 64)
 
 		privateKey, _ := primitives.PrivateKeyFromHex(key.Key)
-		assert.IsType(t, ec.PrivateKey{}, *privateKey)
+		assert.IsType(t, primitives.PrivateKey{}, *privateKey)
 		publicKey := privateKey.PubKey()
-		assert.IsType(t, ec.PublicKey{}, *publicKey)
+		assert.IsType(t, primitives.PublicKey{}, *publicKey)
 		id := utils.Hash(hex.EncodeToString(publicKey.Compressed()))
 		assert.Equal(t, id, key.ID)
 	})

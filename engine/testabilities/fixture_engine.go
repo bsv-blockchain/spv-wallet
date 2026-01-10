@@ -3,7 +3,10 @@ package testabilities
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
+	"sync"
+	"sync/atomic"
 	"testing"
 
 	"github.com/go-resty/resty/v2"
@@ -28,15 +31,18 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/models/bsv"
 )
 
-const (
-	inMemoryDbConnectionString = "file:spv-wallet-test.db?mode=memory&cache=shared"
-	fileDbConnectionString     = "/tmp/spv-wallet-test.db"
-)
+const fileDbConnectionString = "/tmp/spv-wallet-test.db"
 
 const CallbackTestToken = "arc-test-token"
 
 // singleton container for the shared PostgreSQL container
-var sharedContainer *testmode.TestContainer
+var (
+	sharedContainer   *testmode.TestContainer
+	sharedContainerMu sync.Mutex
+)
+
+// dbCounter generates unique database names for test isolation
+var dbCounter uint64
 
 type EngineFixture interface {
 	Engine() (walletEngine EngineWithConfig, cleanup func())
@@ -130,10 +136,15 @@ func (f *engineFixture) Engine() (walletEngine EngineWithConfig, cleanup func())
 }
 
 func (f *engineFixture) GetPostgresContainer() *testmode.TestContainer {
+	sharedContainerMu.Lock()
+	defer sharedContainerMu.Unlock()
+
 	if sharedContainer == nil {
 		sharedContainer = testmode.StartPostgresContainer(f.t)
 
 		f.t.Cleanup(func() {
+			sharedContainerMu.Lock()
+			defer sharedContainerMu.Unlock()
 			if sharedContainer != nil {
 				ctx := context.Background()
 				if err := sharedContainer.Container.Terminate(ctx); err != nil {
@@ -299,11 +310,17 @@ func (f *engineFixture) tryDevelopmentSQLite() bool {
 }
 
 func (f *engineFixture) useSQLite() {
+	// Generate a unique database name for this test to ensure isolation
+	// Uses named in-memory database with cache=shared so data persists within a single test
+	// but different tests are isolated from each other
+	dbID := atomic.AddUint64(&dbCounter, 1)
+	dbPath := fmt.Sprintf("file:testdb_%d?mode=memory&cache=shared", dbID)
+
 	f.config.Db.Datastore.Engine = datastore.SQLite
-	f.config.Db.SQLite.Shared = false
-	f.config.Db.SQLite.MaxIdleConnections = 10
-	f.config.Db.SQLite.MaxOpenConnections = 10
-	f.config.Db.SQLite.DatabasePath = fileDbConnectionString
+	f.config.Db.SQLite.Shared = false // We handle cache=shared in the path
+	f.config.Db.SQLite.MaxIdleConnections = 1
+	f.config.Db.SQLite.MaxOpenConnections = 1
+	f.config.Db.SQLite.DatabasePath = dbPath
 }
 
 func (f *engineFixture) initialiseFixtures() {
@@ -347,7 +364,7 @@ func (f *engineFixture) createV1User(user fixtures.User, opts []engine.ModelOps)
 	}
 }
 
-func (f *engineFixture) createV2User(user fixtures.User, opts []engine.ModelOps) {
+func (f *engineFixture) createV2User(user fixtures.User, _ []engine.ModelOps) {
 	exists, err := f.engine.UsersService().Exists(context.Background(), user.ID())
 	require.NoError(f.t, err)
 	if exists {

@@ -88,7 +88,7 @@ func TestUtxo_getUtxo(t *testing.T) {
 		ctx, client, deferMe := CreateTestSQLiteClient(t, false, false, withTaskManagerMockup())
 		defer deferMe()
 		utxo, err := getUtxo(ctx, testTxID, 12, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Nil(t, utxo)
 	})
 
@@ -99,7 +99,7 @@ func TestUtxo_getUtxo(t *testing.T) {
 		_ = _utxo.Save(ctx)
 
 		utxo, err := getUtxo(ctx, testTxID, 12, client.DefaultModelOptions()...)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		checkUtxoValues(t, utxo, uint32(12), uint64(1225))
 	})
 }
@@ -116,7 +116,7 @@ func TestUtxo_getUtxosByXpubID(t *testing.T) {
 			nil,
 			client.DefaultModelOptions()...,
 		)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Nil(t, utxos)
 	})
 
@@ -134,7 +134,7 @@ func TestUtxo_getUtxosByXpubID(t *testing.T) {
 			nil,
 			client.DefaultModelOptions()...,
 		)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Len(t, utxos, 5)
 	})
 }
@@ -401,7 +401,7 @@ func TestUtxo_Save(t *testing.T) {
 		satoshis := uint64(1225)
 		utxo := newUtxo(testXPubID, testTxID, testLockingScript, index, satoshis, append(client.DefaultModelOptions(), New())...)
 		err := utxo.Save(ctx)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		checkUtxoValues(t, utxo, index, satoshis)
 	})
 }

@@ -2,7 +2,6 @@ package utils
 
 import (
 	bip32 "github.com/bsv-blockchain/go-sdk/compat/bip32"
-	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/bsv-blockchain/go-sdk/script"
 
@@ -34,7 +33,7 @@ func DerivePublicKey(hdKey *bip32.ExtendedKey, chain, num uint32) (*ec.PublicKey
 		return nil, ErrHDKeyNil
 	}
 
-	pubKeys, err := compat.GetPublicKeysForPath(hdKey, num)
+	pubKeys, err := bip32.GetPublicKeysForPath(hdKey, num)
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "failed to derive public key")
 	}
@@ -50,7 +49,7 @@ func ValidateXPub(rawKey string) (*bip32.ExtendedKey, error) {
 	}
 
 	// Parse the xPub into an HD key
-	hdKey, err := compat.GetHDKeyFromExtendedPublicKey(rawKey)
+	hdKey, err := bip32.GetHDKeyFromExtendedPublicKey(rawKey)
 	if err != nil {
 		return nil, spverrors.Wrapf(err, "failed to parse xpub")
 	} else if hdKey.String() != rawKey { // Sanity check (might not be needed)
@@ -67,7 +66,7 @@ func DeriveAddress(hdKey *bip32.ExtendedKey, chain, num uint32) (address string,
 	}
 
 	var child *bip32.ExtendedKey
-	if child, err = compat.GetHDKeyByPath(hdKey, chain, num); err != nil {
+	if child, err = bip32.GetHDKeyByPath(hdKey, chain, num); err != nil {
 		return "", spverrors.Wrapf(err, "failed to derive child key")
 	}
 
@@ -95,7 +94,7 @@ func DeriveAddresses(hdKey *bip32.ExtendedKey, num uint32) (external, internal s
 
 	// Derive the address
 	var addresses []string
-	if addresses, err = compat.GetAddressesForPath(
+	if addresses, err = bip32.GetAddressesForPath(
 		hdKey, num,
 	); err != nil {
 		return external, internal, err

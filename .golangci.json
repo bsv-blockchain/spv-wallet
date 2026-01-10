@@ -38,6 +38,14 @@
         }
     },
     "issues": {
+        "exclude-rules": [
+            {
+                "linters": [
+                    "gomoddirectives"
+                ],
+                "text": "local replacement"
+            }
+        ],
         "uniq-by-line": true
     },
     "linters": {
@@ -45,13 +53,22 @@
             "gocritic",
             "godot",
             "funcorder",
+            "gomoddirectives",
             "revive",
             "containedctx",
             "gochecknoglobals",
             "gocognit",
+            "godox",
+            "nilnil",
+            "err113",
             "nestif",
+            "forbidigo",
             "unused",
+            "gochecknoinits",
+            "exhaustive",
+            "nilerr",
             "gocyclo",
+            "recvcheck",
             "wsl_v5"
         ],
         "enable": [
@@ -65,20 +82,14 @@
             "dogsled",
             "durationcheck",
             "embeddedstructfieldcheck",
-            "err113",
             "errcheck",
             "errchkjson",
             "errname",
             "errorlint",
-            "exhaustive",
-            "forbidigo",
             "gocheckcompilerdirectives",
-            "gochecknoinits",
             "gochecksumtype",
             "goconst",
-            "godox",
             "goheader",
-            "gomoddirectives",
             "gosec",
             "gosmopolitan",
             "govet",
@@ -90,9 +101,7 @@
             "misspell",
             "musttag",
             "nakedret",
-            "nilerr",
             "nilnesserr",
-            "nilnil",
             "noctx",
             "nolintlint",
             "nosprintfhostport",
@@ -100,7 +109,6 @@
             "predeclared",
             "protogetter",
             "reassign",
-            "recvcheck",
             "rowserrcheck",
             "spancheck",
             "sqlclosecheck",

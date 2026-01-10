@@ -80,8 +80,8 @@ func processSyncTransactions(ctx context.Context, client *Client) {
 			continue
 		}
 		saveTx := func() {
-			if err := tx.Save(ctx); err != nil {
-				logger.Error().Err(err).Str("txID", txID).Msg("Cannot update transaction")
+			if saveErr := tx.Save(ctx); saveErr != nil {
+				logger.Error().Err(saveErr).Str("txID", txID).Msg("Cannot update transaction")
 			}
 		}
 		updateStatus := func(newStatus TxStatus) {

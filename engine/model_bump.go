@@ -57,6 +57,7 @@ func (b *BUMP) toMerklePath() (*trx.MerklePath, error) {
 	return mp, nil
 }
 
+//nolint:unparam // error is always nil by design, kept for interface consistency
 func fromMerklePath(mp *trx.MerklePath) (*BUMP, error) {
 	b := &BUMP{
 		BlockHeight: uint64(mp.BlockHeight),

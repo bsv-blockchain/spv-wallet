@@ -13,7 +13,7 @@ import (
 )
 
 type InputsSelectorAssertions interface {
-	WithoutError(error) SuccessfullySelectedInputsAssertions
+	WithoutError(err error) SuccessfullySelectedInputsAssertions
 }
 
 type SuccessfullySelectedInputsAssertions interface {

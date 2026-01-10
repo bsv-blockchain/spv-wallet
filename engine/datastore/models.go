@@ -30,6 +30,7 @@ func (c *Client) SaveModel(
 	}
 
 	// Capture any panics
+	//nolint:contextcheck // using background context in defer for panic recovery logging
 	defer func() {
 		if r := recover(); r != nil {
 			c.DebugLog(context.Background(), fmt.Sprintf("panic recovered: %v", r))

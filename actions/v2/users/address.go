@@ -21,8 +21,8 @@ func (s *APIUsers) CreateAddress(c *gin.Context) {
 	}
 
 	var req api.RequestsCreatePaymailAddress
-	if err := c.ShouldBindJSON(&req); err != nil {
-		spverrors.ErrorResponse(c, err, reqctx.Logger(c))
+	if bindErr := c.ShouldBindJSON(&req); bindErr != nil {
+		spverrors.ErrorResponse(c, bindErr, reqctx.Logger(c))
 		return
 	}
 

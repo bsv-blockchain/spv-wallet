@@ -9,6 +9,10 @@ import (
 )
 
 func TestCronTasks(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
+
 	makeTaskManager := func() *TaskManager {
 		client, _ := NewTaskManager(
 			context.Background(),

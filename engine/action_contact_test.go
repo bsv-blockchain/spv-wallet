@@ -317,7 +317,7 @@ func TestConfirmContactErrorPath(t *testing.T) {
 			expectedError: spverrors.ErrContactIncorrectStatus,
 			getContact: func() (*Contact, string, string) {
 				cc := newContact("Paul Altreides", "paul@altreides.diune", "pki", "xpub", ContactNotConfirmed)
-				cc.Confirm()
+				_ = cc.Confirm()
 
 				return cc, cc.Paymail, cc.OwnerXpubID
 			},
@@ -336,7 +336,7 @@ func TestConfirmContactErrorPath(t *testing.T) {
 			expectedError: spverrors.ErrContactNotFound,
 			getContact: func() (*Contact, string, string) {
 				cc := newContact("Alia Altreides", "alia@altreides.diune", "pki", "xpub", ContactAwaitAccept)
-				cc.Reject()
+				_ = cc.Reject()
 
 				return cc, cc.Paymail, cc.OwnerXpubID
 			},
@@ -430,7 +430,7 @@ func TestUnconfirmContactErrorPath(t *testing.T) {
 			expectedError: spverrors.ErrContactNotFound,
 			getContact: func() (*Contact, string, string) {
 				cc := newContact("Alia Altreides", "alia@altreides.diune", "pki", "xpub", ContactAwaitAccept)
-				cc.Reject()
+				_ = cc.Reject()
 
 				return cc, cc.Paymail, cc.OwnerXpubID
 			},

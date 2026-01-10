@@ -300,10 +300,10 @@ func TestNewPaymail(t *testing.T) {
 }
 
 func randDerivationNum() uint32 {
-	rnd := rand.Int63n(int64(compat.HardenedKeyStart))
+	rnd := rand.Int63n(int64(compat.HardenedKeyStart)) //nolint:gosec // G404 acceptable for test code
 	if rnd < 0 {
 		rnd = rnd * -1
 	}
 
-	return uint32(rnd)
+	return uint32(rnd) //nolint:gosec // G115 safe - rnd is bounded by HardenedKeyStart which fits in uint32
 }

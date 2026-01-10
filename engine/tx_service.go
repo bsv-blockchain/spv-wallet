@@ -87,9 +87,9 @@ func (m *Transaction) _processInputs(ctx context.Context) (err error) {
 			if utxo.Satoshis > math.MaxInt64 {
 				return fmt.Errorf("utxo.Satoshis exceeds the maximum value for int64: %d", utxo.Satoshis)
 			}
-			satoshis, err := conv.Uint64ToInt64(utxo.Satoshis)
-			if err != nil {
-				return spverrors.Wrapf(err, "failed to convert uint64 to int64")
+			satoshis, convErr := conv.Uint64ToInt64(utxo.Satoshis)
+			if convErr != nil {
+				return spverrors.Wrapf(convErr, "failed to convert uint64 to int64")
 			}
 			m.XpubOutputValue[utxo.XpubID] -= satoshis
 
@@ -136,9 +136,9 @@ func (m *Transaction) _processOutputs(ctx context.Context) (err error) {
 			); err != nil {
 				return err
 			} else if destination != nil {
-				i32, err := conv.IntToUint32(i)
-				if err != nil {
-					return spverrors.Wrapf(err, "failed to convert int to uint32")
+				i32, convErr := conv.IntToUint32(i)
+				if convErr != nil {
+					return spverrors.Wrapf(convErr, "failed to convert int to uint32")
 				}
 				outputIndex := i32
 
@@ -146,9 +146,9 @@ func (m *Transaction) _processOutputs(ctx context.Context) (err error) {
 				if _, ok := m.XpubOutputValue[destination.XpubID]; !ok {
 					m.XpubOutputValue[destination.XpubID] = 0
 				}
-				amountInt64, err := conv.Uint64ToInt64(amount)
-				if err != nil {
-					return spverrors.Wrapf(err, "failed to convert uint64 to int64")
+				amountInt64, amountErr := conv.Uint64ToInt64(amount)
+				if amountErr != nil {
+					return spverrors.Wrapf(amountErr, "failed to convert uint64 to int64")
 				}
 				m.XpubOutputValue[destination.XpubID] += amountInt64
 

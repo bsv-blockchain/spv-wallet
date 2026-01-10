@@ -20,14 +20,14 @@ func TestMetadata_Scan(t *testing.T) {
 	t.Run("empty string", func(t *testing.T) {
 		m := Metadata{}
 		err := m.Scan([]byte("\"\""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Empty(t, m)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		m := Metadata{}
 		err := m.Scan([]byte(""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Empty(t, m)
 	})
 
@@ -55,7 +55,7 @@ func TestMetadata_Value(t *testing.T) {
 		m["test"] = "test2"
 		value, err := m.Value()
 		require.NoError(t, err)
-		assert.JSONEq(t, "{\"test\":\"test2\"}", value)
+		assert.JSONEq(t, "{\"test\":\"test2\"}", value.(string))
 	})
 }
 
@@ -72,14 +72,14 @@ func TestXpubMetadata_Scan(t *testing.T) {
 	t.Run("empty string", func(t *testing.T) {
 		x := XpubMetadata{}
 		err := x.Scan([]byte("\"\""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Empty(t, x)
 	})
 
 	t.Run("empty string - incorrectly coded", func(t *testing.T) {
 		x := XpubMetadata{}
 		err := x.Scan([]byte(""))
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.Empty(t, x)
 	})
 
@@ -111,6 +111,6 @@ func TestXpubMetadata_Value(t *testing.T) {
 		}
 		value, err := x.Value()
 		require.NoError(t, err)
-		assert.JSONEq(t, "{\"xPubId\":{\"test\":\"test2\"}}", value)
+		assert.JSONEq(t, "{\"xPubId\":{\"test\":\"test2\"}}", value.(string))
 	})
 }

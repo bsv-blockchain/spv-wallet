@@ -10,8 +10,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"net"
 	"os"
+	"runtime"
 	"testing"
+	"time"
 
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
@@ -99,13 +102,13 @@ func CleanDatabaseSchema(t testing.TB, container *TestContainer) {
 		t.Fatalf("Failed to connect to database: %s", err)
 	}
 	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-			t.Fatalf("Failed to close database connection: %s", err)
+		closeErr := db.Close()
+		if closeErr != nil {
+			t.Fatalf("Failed to close database connection: %s", closeErr)
 		}
 	}(db)
 
-	_, err = db.Exec(`DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;`)
+	_, err = db.ExecContext(context.Background(), `DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;`)
 	if err != nil {
 		t.Fatalf("Failed to clean database: %s", err)
 	}
@@ -152,4 +155,36 @@ func CheckFileSQLiteMode() bool {
 // CheckPostgresContainerMode checks if the test mode is set to use PostgreSQL container
 func CheckPostgresContainerMode() bool {
 	return os.Getenv(EnvDBMode) == PostgresContainerMode
+}
+
+// IsDockerAvailable checks if Docker daemon is running and accessible
+func IsDockerAvailable() bool {
+	var socketPath string
+	if runtime.GOOS == "windows" {
+		// On Windows, try to connect to Docker's named pipe
+		// This is a simplified check - just verify the daemon responds
+		socketPath = "//./pipe/docker_engine"
+	} else {
+		// On Unix-like systems, check the Docker socket
+		socketPath = "/var/run/docker.sock"
+		// Also check common alternative locations
+		if _, err := os.Stat(socketPath); os.IsNotExist(err) {
+			// Try user-specific Docker Desktop socket on macOS
+			if home := os.Getenv("HOME"); home != "" {
+				altSocket := home + "/.docker/run/docker.sock"
+				if _, err := os.Stat(altSocket); err == nil {
+					socketPath = altSocket
+				}
+			}
+		}
+	}
+
+	// Try to connect to the Docker socket
+	dialer := &net.Dialer{Timeout: 2 * time.Second}
+	conn, err := dialer.DialContext(context.Background(), "unix", socketPath)
+	if err != nil {
+		return false
+	}
+	_ = conn.Close()
+	return true
 }
