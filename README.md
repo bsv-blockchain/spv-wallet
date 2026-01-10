@@ -359,7 +359,7 @@ Override any config variable using the `SPVWALLET_` prefix with the mapstructure
 
 ```yaml
 auth:
-    admin_key: xpub661MyMwAqRbcFgfmd......
+    admin_key: xpub...
     require_signing: false
     scheme: xpub
 ```
