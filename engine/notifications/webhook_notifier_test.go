@@ -357,3 +357,46 @@ func TestWebhookNotifier(t *testing.T) {
 		assert.True(t, allGood)
 	})
 }
+
+func TestWebhookNotifier_StopTimeout(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	t.Run("stop completes quickly", func(t *testing.T) {
+		client := newMockClient("http://example.com")
+
+		ctx, cancel := context.WithCancel(context.Background())
+		notifier := NewWebhookNotifier(ctx, &nopLogger, newMockWebhookModel(client.url, "", ""), make(chan string))
+
+		// Send a few events
+		for i := 0; i < 5; i++ {
+			notifier.Channel <- newMockEvent(fmt.Sprintf("msg-%d", i))
+		}
+
+		time.Sleep(100 * time.Millisecond)
+		cancel()
+
+		// Stop should complete quickly (well under 2 second timeout)
+		start := time.Now()
+		notifier.Stop()
+		duration := time.Since(start)
+
+		assert.Less(t, duration, 1*time.Second, "Stop should complete quickly")
+	})
+
+	t.Run("stop with timeout", func(t *testing.T) {
+		ctx := context.Background()
+		notifier := NewWebhookNotifier(ctx, &nopLogger, newMockWebhookModel("http://example.com", "", ""), make(chan string))
+
+		// Manually increment wg to simulate a goroutine that won't finish
+		notifier.wg.Add(1)
+
+		// Stop should timeout after 2 seconds
+		start := time.Now()
+		notifier.Stop()
+		duration := time.Since(start)
+
+		assert.GreaterOrEqual(t, duration, 2*time.Second)
+		assert.Less(t, duration, 3*time.Second, "Should timeout at ~2 seconds")
+	})
+}

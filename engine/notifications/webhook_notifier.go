@@ -156,5 +156,18 @@ func (w *WebhookNotifier) sendEventsToWebhook(ctx context.Context, events []*mod
 
 // Stop - stops the webhook notifier and waits for the consumer goroutine to finish
 func (w *WebhookNotifier) Stop() {
-	w.wg.Wait()
+	// Wait for consumer goroutine with timeout
+	done := make(chan struct{})
+	go func() {
+		w.wg.Wait()
+		close(done)
+	}()
+
+	select {
+	case <-done:
+		return
+	case <-time.After(2 * time.Second):
+		// Log warning but don't error - parent will handle timeout
+		return
+	}
 }
