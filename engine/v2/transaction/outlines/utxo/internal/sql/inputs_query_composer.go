@@ -36,7 +36,7 @@ func (c *inputsQueryComposer) build(db *gorm.DB) *gorm.DB {
 		"ux."+voutColumn,
 		"ux."+customInstructionsColumn,
 		"sel."+minChange+" as change",
-	).InnerJoins("ux join (?) sel ON sel.tx_id = ux.tx_id AND sel.vout = ux.vout", selectedOutpoints)
+	).InnerJoins("ux join (?) sel ON sel.tx_id = ux.tx_id AND sel.vout = ux.vout", selectedOutpoints.Session(&gorm.Session{}))
 	return res
 }
 
@@ -56,12 +56,12 @@ func (c *inputsQueryComposer) addChangeValueCalculation(db, utxoTab *gorm.DB) *g
 	return db.Select(txIdColumn, voutColumn,
 		"case when remaining_value - fee_no_change_output <= 0 then remaining_value - fee_no_change_output else remaining_value - fee_with_change_output end as change",
 	).
-		Table("(?) as utxo", utxoTab)
+		Table("(?) as utxo", utxoTab.Session(&gorm.Session{}))
 }
 
 func (c *inputsQueryComposer) chooseInputsToCoverOutputsAndFeesAndHaveMinimalChange(db, utxoWithMinChange *gorm.DB) *gorm.DB {
 	return db.Select(txIdColumn, voutColumn, minChange).
-		Table("(?) as utxoWithMinChange", utxoWithMinChange).
+		Table("(?) as utxoWithMinChange", utxoWithMinChange.Session(&gorm.Session{})).
 		Where("change <= " + minChange).
 		Where("min_change is not null")
 }
@@ -71,7 +71,7 @@ func (c *inputsQueryComposer) searchForMinimalChangeValue(db, utxoWithChange *go
 		"change",
 		"min(case when change >= 0 then change end) over () as "+minChange,
 	).
-		Table("(?) as utxoWithChange", utxoWithChange)
+		Table("(?) as utxoWithChange", utxoWithChange.Session(&gorm.Session{}))
 }
 
 func (c *inputsQueryComposer) feeCalculatedWithChangeOutput() string {
