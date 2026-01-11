@@ -1,6 +1,10 @@
-package bsv
+package utils
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/bsv-blockchain/spv-wallet/models/bsv"
+)
 
 func FuzzOutpointFromString(f *testing.F) {
 	// Seed corpus with valid and edge case inputs
@@ -15,7 +19,7 @@ func FuzzOutpointFromString(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, input string) {
 		// The function should never panic, only return errors
-		outpoint, err := OutpointFromString(input)
+		outpoint, err := bsv.OutpointFromString(input)
 		if err == nil {
 			// If no error, verify round-trip works
 			s := outpoint.String()
