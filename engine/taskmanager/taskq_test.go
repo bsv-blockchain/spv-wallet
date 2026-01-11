@@ -86,6 +86,7 @@ func TestNewTaskManager_Multiple(t *testing.T) {
 func TestNewTaskManager_RegisterTwice(t *testing.T) {
 	ctx := context.Background()
 	c, _ := NewTaskManager(ctx)
+	defer func() { _ = c.Close(context.Background()) }()
 
 	task1Arg := "task d"
 	resultChan := make(chan int, 1)
@@ -114,6 +115,7 @@ func TestNewTaskManager_RegisterTwice(t *testing.T) {
 func TestNewTaskManager_RunTwice(t *testing.T) {
 	ctx := context.Background()
 	c, _ := NewTaskManager(ctx)
+	defer func() { _ = c.Close(context.Background()) }()
 
 	task1Arg := "task e"
 
@@ -136,6 +138,7 @@ func TestNewTaskManager_RunTwice(t *testing.T) {
 func TestNewTaskManager_NotRegistered(t *testing.T) {
 	ctx := context.Background()
 	c, _ := NewTaskManager(ctx)
+	defer func() { _ = c.Close(context.Background()) }()
 
 	task1Arg := "task f"
 

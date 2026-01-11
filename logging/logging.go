@@ -62,14 +62,14 @@ func setGlobalHandlers() {
 		return time.Now().In(time.Local) //nolint:gosmopolitan // We want local time inside logger.
 	}
 
-	zerolog.ErrorMarshalFunc = func(err error) any {
+	zerolog.ErrorMarshalFunc = func(err error) any { //nolint:reassign // intentionally customizing zerolog error marshaling
 		if errorx.Cast(err) != nil {
 			return fmt.Sprintf("%v", err)
 		}
 		return spverrors.UnfoldError(err)
 	}
 
-	zerolog.ErrorStackMarshaler = func(err error) any {
+	zerolog.ErrorStackMarshaler = func(err error) any { //nolint:reassign // intentionally customizing zerolog stack marshaling
 		if errorx.Cast(err) != nil {
 			fullMessage := fmt.Sprintf("%+v", err)
 			const startingNewLine = "\n "

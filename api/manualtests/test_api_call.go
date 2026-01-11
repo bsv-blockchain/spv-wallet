@@ -65,7 +65,11 @@ func APICallForUnknownUser(t testing.TB) *APICall {
 func APICallFor(t testing.TB, clientFactory ClientFactory) *APICall {
 	state := NewState()
 	err := state.Load()
-	require.NoError(t, err)
+	if err != nil {
+		// Skip the test if configuration is not properly set up
+		// These are manual tests that require a running spv-wallet instance
+		t.Skipf("Skipping manual test - configuration not ready: %v", err)
+	}
 
 	apiClient, err := clientFactory(state)
 	require.NoError(t, err)

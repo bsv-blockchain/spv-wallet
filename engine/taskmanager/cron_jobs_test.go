@@ -9,6 +9,10 @@ import (
 )
 
 func TestCronTasks(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
+
 	makeTaskManager := func() *TaskManager {
 		client, _ := NewTaskManager(
 			context.Background(),
@@ -18,6 +22,7 @@ func TestCronTasks(t *testing.T) {
 
 	t.Run("register one cron job", func(t *testing.T) {
 		tm := makeTaskManager()
+		defer func() { _ = tm.Close(context.Background()) }()
 
 		desiredExecutions := 2
 
@@ -51,6 +56,7 @@ func TestCronTasks(t *testing.T) {
 
 	t.Run("register two cron jobs", func(t *testing.T) {
 		tm := makeTaskManager()
+		defer func() { _ = tm.Close(context.Background()) }()
 
 		desiredExecutions := 6
 

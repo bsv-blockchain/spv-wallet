@@ -27,7 +27,7 @@ func TestIDs_Scan(t *testing.T) {
 	t.Run("empty string", func(t *testing.T) {
 		i := IDs{}
 		err := i.Scan("\"\"")
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.Empty(t, i)
 	})
 

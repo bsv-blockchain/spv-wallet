@@ -168,6 +168,8 @@ func (m *Xpub) GetID() string {
 }
 
 // getNewDestination will get a new destination, adding to the xpub and incrementing num / address
+//
+//nolint:unparam // destinationType is always pubkeyhash for now, kept for future destination type support
 func (m *Xpub) getNewDestination(ctx context.Context, chain uint32, destinationType string,
 	opts ...ModelOps,
 ) (*Destination, error) {

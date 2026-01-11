@@ -21,9 +21,10 @@ type SpvWalletActorsStateAssertions interface {
 }
 
 type assertions struct {
+	testabilities.SPVWalletApplicationAssertions
+
 	t       testing.TB
 	fixture *fixture
-	testabilities.SPVWalletApplicationAssertions
 }
 
 func (a *assertions) Alice() SpvWalletActorsStateAssertions {

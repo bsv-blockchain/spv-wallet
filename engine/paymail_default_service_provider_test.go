@@ -63,7 +63,7 @@ func testGetPaymailByAliasMultipleRequestShouldReturnStablePubKey(t *testing.T) 
 		require.NoErrorf(t, err, "error in %d iteration", i)
 
 		// then
-		require.Equalf(t, expectedRes.PubKey, res.PubKey, "different pub key return in %d iteration")
+		require.Equalf(t, expectedRes.PubKey, res.PubKey, "different pub key return in %d iteration", i)
 	}
 }
 
@@ -89,7 +89,7 @@ func testCreateAddressResolutionResponseShouldReturnDifferentResponses(t *testin
 	}
 
 	// then
-	seen := make([]*paymail.ResolutionPayload, 0)
+	seen := make([]*paymail.ResolutionPayload, 0, len(results))
 	for _, res := range results {
 
 		for _, seenRes := range seen {
@@ -123,7 +123,7 @@ func testCreateP2PDestinationResponseShouldReturnDifferentResponses(t *testing.T
 	}
 
 	// then
-	seen := make([]*paymail.PaymentDestinationPayload, 0)
+	seen := make([]*paymail.PaymentDestinationPayload, 0, len(results))
 	for _, res := range results {
 		for _, out := range res.Outputs {
 			for _, seenRes := range seen {

@@ -5,7 +5,6 @@ import (
 	"strings"
 	"testing"
 
-	bip32 "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	compat "github.com/bsv-blockchain/go-sdk/compat/bip32"
 	ec "github.com/bsv-blockchain/go-sdk/primitives/ec"
 	"github.com/stretchr/testify/assert"
@@ -103,7 +102,7 @@ func TestDeriveAddresses(t *testing.T) {
 
 	t.Run("nil key", func(t *testing.T) {
 		external, internal, err := DeriveAddresses(nil, 0)
-		assert.Error(t, err)
+		require.Error(t, err)
 		assert.Empty(t, internal)
 		assert.Empty(t, external)
 	})
@@ -169,7 +168,7 @@ func TestDeriveChildKeyFromHex(t *testing.T) {
 		key, err := compat.GenerateHDKeyFromString(testXpriv)
 		require.NoError(t, err)
 
-		var childKey *bip32.ExtendedKey
+		var childKey *compat.ExtendedKey
 		childKey, err = DeriveChildKeyFromHex(key, testHash)
 		require.NoError(t, err)
 		assert.Equal(t, derivedXpriv, childKey.String())
@@ -179,7 +178,7 @@ func TestDeriveChildKeyFromHex(t *testing.T) {
 		key, err := compat.GenerateHDKeyFromString(testXpub)
 		require.NoError(t, err)
 
-		var childKey *bip32.ExtendedKey
+		var childKey *compat.ExtendedKey
 		childKey, err = DeriveChildKeyFromHex(key, testHash)
 		require.NoError(t, err)
 		assert.Equal(t, derivedXpub, childKey.String())
@@ -189,11 +188,11 @@ func TestDeriveChildKeyFromHex(t *testing.T) {
 		key, err := compat.GenerateHDKeyFromString(testXpriv)
 		require.NoError(t, err)
 
-		var childKey *bip32.ExtendedKey
+		var childKey *compat.ExtendedKey
 		childKey, err = DeriveChildKeyFromHex(key, testHash)
 		require.NoError(t, err)
 
-		var hdPubKey *bip32.ExtendedKey
+		var hdPubKey *compat.ExtendedKey
 		hdPubKey, err = childKey.Neuter()
 		require.NoError(t, err)
 		assert.Equal(t, derivedXpub, hdPubKey.String())
@@ -209,7 +208,7 @@ func TestDerivePublicKey(t *testing.T) {
 	t.Run("nil", func(t *testing.T) {
 		var pubKey *ec.PublicKey
 		pubKey, err = DerivePublicKey(nil, 0, 0)
-		assert.ErrorIs(t, err, ErrHDKeyNil)
+		require.ErrorIs(t, err, ErrHDKeyNil)
 		assert.Nil(t, pubKey)
 	})
 
@@ -254,11 +253,11 @@ func TestGetTransactionIDFromHex(t *testing.T) {
 	t.Run("nil / empty", func(t *testing.T) {
 		id, err := GetTransactionIDFromHex("")
 		assert.Empty(t, id)
-		assert.Error(t, err)
+		require.Error(t, err)
 
 		id, err = GetTransactionIDFromHex("test")
 		assert.Empty(t, id)
-		assert.Error(t, err)
+		require.Error(t, err)
 	})
 
 	t.Run("tx id from hex", func(t *testing.T) {

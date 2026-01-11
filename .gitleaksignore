@@ -1,0 +1,39 @@
+# Gitleaks ignore file for false positives
+# This file contains fingerprints of non-secret data that triggers gitleaks detection
+# All entries below are test fixtures, example configs, or public cryptographic keys
+
+# Test fixtures - merkleroot hash used in pagination tests
+actions/merkleroots/get_merkleroots_endpoint_test.go:generic-api-key:35
+actions/v2/merkleroots/merkleroots_test.go:generic-api-key:35
+
+# Test fixtures - xprv extended private keys (test data, not real keys)
+actions/v2/users/remove_test.go:generic-api-key:25
+actions/v2/admin/users/create_test.go:generic-api-key:21
+actions/v2/admin/users/create_test.go:generic-api-key:112
+actions/v2/admin/users/create_test.go:generic-api-key:147
+actions/v2/admin/users/create_test.go:generic-api-key:202
+actions/v2/admin/users/create_test.go:generic-api-key:306
+actions/v2/admin/users/create_test.go:generic-api-key:412
+engine/tester/fixtures/users_fixtures.go:generic-api-key:42
+engine/tester/fixtures/users_fixtures.go:generic-api-key:47
+engine/tester/fixtures/users_fixtures.go:generic-api-key:55
+engine/tester/fixtures/users_fixtures.go:generic-api-key:63
+engine/tester/fixtures/users_fixtures.go:generic-api-key:71
+engine/tester/fixtures/users_fixtures.go:generic-api-key:87
+
+# Example config - xpub extended public key (public by design, safe to share)
+config.example.yaml:generic-api-key:3
+
+# Test fixtures - xpub for authentication tests
+engine/model_paymail_addresses_test.go:generic-api-key:18
+
+# Test fixtures - encryption test keys (test data only)
+engine/utils/encrypt_test.go:generic-api-key:55
+engine/utils/encrypt_test.go:generic-api-key:67
+
+# Test fixtures - private key hashes for utility tests
+engine/utils/utils_test.go:generic-api-key:24
+engine/utils/utils_test.go:generic-api-key:25
+
+# Documentation example - admin_key config example in README
+d46599558ae215fc9c78ec55879928502729b3fd:README.md:generic-api-key:362

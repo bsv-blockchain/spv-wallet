@@ -57,8 +57,7 @@ func TestAddPaymailBadRequest(t *testing.T) {
 	for name, test := range badRequests {
 		t.Run(name, func(t *testing.T) {
 			state := manualtests.NewState()
-			err := state.Load()
-			require.NoError(t, err)
+			state.LoadOrSkip(t)
 
 			c, err := state.AdminClient()
 			require.NoError(t, err)

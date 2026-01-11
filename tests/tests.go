@@ -4,6 +4,8 @@ package tests
 import (
 	"context"
 	"os"
+	"runtime"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
@@ -20,11 +22,13 @@ import (
 
 // TestSuite is for testing the entire package using real/mocked services
 type TestSuite struct {
+	suite.Suite // Extends the suite.Suite package
+
 	AppConfig       *config.AppConfig      // App config
 	Router          *gin.Engine            // Gin router with handlers
 	Logger          zerolog.Logger         // Logger
 	SpvWalletEngine engine.ClientInterface // SPV Wallet Engine
-	suite.Suite                            // Extends the suite.Suite package
+	cancelCtx       context.CancelFunc     // Context cancel function for cleanup
 }
 
 // BaseSetupSuite runs at the start of the suite
@@ -65,7 +69,11 @@ func (ts *TestSuite) BaseSetupTest() {
 	opts, err := initializer.ToEngineOptions(ts.AppConfig, ts.Logger)
 	ts.Require().NoError(err)
 
-	ts.SpvWalletEngine, err = engine.NewClient(context.Background(), opts...)
+	// Create cancellable context for proper cleanup
+	ctx, cancel := context.WithCancel(context.Background())
+	ts.cancelCtx = cancel
+
+	ts.SpvWalletEngine, err = engine.NewClient(ctx, opts...)
 	ts.Require().NoError(err)
 
 	logging.SetGinMode(gin.ReleaseMode)
@@ -82,8 +90,31 @@ func (ts *TestSuite) BaseSetupTest() {
 
 // BaseTearDownTest runs after each test
 func (ts *TestSuite) BaseTearDownTest() {
-	if ts.SpvWalletEngine != nil {
-		err := ts.SpvWalletEngine.Close(context.Background())
-		ts.Require().NoError(err)
+	teardownStart := time.Now()
+	goroutinesBefore := runtime.NumGoroutine()
+	ts.T().Logf("[TEARDOWN] Start - goroutines: %d", goroutinesBefore)
+
+	// Cancel the engine's context FIRST to signal goroutines to stop
+	// This allows goroutines listening on ctx.Done() to exit promptly
+	if ts.cancelCtx != nil {
+		ts.cancelCtx()
+		ts.T().Logf("[TEARDOWN] Context canceled after %v - goroutines: %d", time.Since(teardownStart), runtime.NumGoroutine())
 	}
+
+	// Then close engine with a timeout context
+	if ts.SpvWalletEngine != nil {
+		closeCtx, closeCancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer closeCancel()
+
+		closeStart := time.Now()
+		err := ts.SpvWalletEngine.Close(closeCtx)
+		ts.T().Logf("[TEARDOWN] Engine.Close completed after %v - goroutines: %d", time.Since(closeStart), runtime.NumGoroutine())
+		if err != nil {
+			// Log detailed error for debugging before failing
+			ts.T().Logf("Engine cleanup error: %v", err)
+			ts.Require().NoError(err)
+		}
+	}
+
+	ts.T().Logf("[TEARDOWN] Complete after %v - goroutines: %d", time.Since(teardownStart), runtime.NumGoroutine())
 }

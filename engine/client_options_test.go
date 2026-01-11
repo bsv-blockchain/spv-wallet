@@ -48,6 +48,9 @@ func TestClient_defaultModelOptions(t *testing.T) {
 }
 
 func TestWithUserAgent(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -86,6 +89,9 @@ func TestWithUserAgent(t *testing.T) {
 }
 
 func TestWithDebugging(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 
 	t.Run("check type", func(t *testing.T) {
@@ -108,6 +114,9 @@ func TestWithDebugging(t *testing.T) {
 }
 
 func TestWithEncryption(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -145,6 +154,9 @@ func TestWithEncryption(t *testing.T) {
 }
 
 func TestWithRedisConnection(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	testLogger := zerolog.Nop()
 
 	t.Run("using a nil connection", func(t *testing.T) {
@@ -189,6 +201,9 @@ func TestWithRedisConnection(t *testing.T) {
 }
 
 func TestWithFreeCache(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 
 	t.Run("check type", func(t *testing.T) {
@@ -216,6 +231,9 @@ func TestWithFreeCache(t *testing.T) {
 }
 
 func TestWithFreeCacheConnection(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -264,6 +282,9 @@ func TestWithFreeCacheConnection(t *testing.T) {
 }
 
 func TestWithPaymailClient(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -301,6 +322,9 @@ func TestWithPaymailClient(t *testing.T) {
 }
 
 func TestWithTaskQ(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -325,6 +349,9 @@ func TestWithTaskQ(t *testing.T) {
 }
 
 func TestWithLogger(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 
 	t.Run("check type", func(t *testing.T) {
@@ -360,6 +387,9 @@ func TestWithLogger(t *testing.T) {
 }
 
 func TestWithIUCDisabled(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -395,6 +425,9 @@ func TestWithIUCDisabled(t *testing.T) {
 }
 
 func TestWithCustomCachestore(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 
@@ -435,6 +468,9 @@ func TestWithCustomCachestore(t *testing.T) {
 }
 
 func TestWithCustomDatastore(t *testing.T) {
+	if raceEnabled {
+		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+	}
 	t.Parallel()
 	testLogger := zerolog.Nop()
 

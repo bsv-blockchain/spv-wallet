@@ -4385,7 +4385,6 @@ func NewMerkleRootsRequest(server string, params *MerkleRootsParams) (*http.Requ
 		queryValues := queryURL.Query()
 
 		if params.BatchSize != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "batchSize", runtime.ParamLocationQuery, *params.BatchSize); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4397,11 +4396,9 @@ func NewMerkleRootsRequest(server string, params *MerkleRootsParams) (*http.Requ
 					}
 				}
 			}
-
 		}
 
 		if params.LastEvaluatedKey != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "lastEvaluatedKey", runtime.ParamLocationQuery, *params.LastEvaluatedKey); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4413,7 +4410,6 @@ func NewMerkleRootsRequest(server string, params *MerkleRootsParams) (*http.Requ
 					}
 				}
 			}
-
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -4450,7 +4446,6 @@ func NewSearchOperationsRequest(server string, params *SearchOperationsParams) (
 		queryValues := queryURL.Query()
 
 		if params.Page != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "page", runtime.ParamLocationQuery, *params.Page); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4462,11 +4457,9 @@ func NewSearchOperationsRequest(server string, params *SearchOperationsParams) (
 					}
 				}
 			}
-
 		}
 
 		if params.Size != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "size", runtime.ParamLocationQuery, *params.Size); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4478,11 +4471,9 @@ func NewSearchOperationsRequest(server string, params *SearchOperationsParams) (
 					}
 				}
 			}
-
 		}
 
 		if params.Sort != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4494,11 +4485,9 @@ func NewSearchOperationsRequest(server string, params *SearchOperationsParams) (
 					}
 				}
 			}
-
 		}
 
 		if params.SortBy != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sortBy", runtime.ParamLocationQuery, *params.SortBy); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4510,7 +4499,6 @@ func NewSearchOperationsRequest(server string, params *SearchOperationsParams) (
 					}
 				}
 			}
-
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -4598,7 +4586,6 @@ func NewCreateTransactionOutlineRequestWithBody(server string, params *CreateTra
 		queryValues := queryURL.Query()
 
 		if params.Format != nil {
-
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "format", runtime.ParamLocationQuery, *params.Format); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -4610,7 +4597,6 @@ func NewCreateTransactionOutlineRequestWithBody(server string, params *CreateTra
 					}
 				}
 			}
-
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -6285,7 +6271,6 @@ func ParseAdminConfirmContactResponse(rsp *http.Response) (*AdminConfirmContactR
 			return nil, err
 		}
 		response.JSONDefault = &dest
-
 	}
 
 	return response, nil
@@ -6311,7 +6296,6 @@ func ParseAdminDeleteContactResponse(rsp *http.Response) (*AdminDeleteContactRes
 			return nil, err
 		}
 		response.JSONDefault = &dest
-
 	}
 
 	return response, nil
@@ -6403,7 +6387,6 @@ func ParseAdminRejectInvitationResponse(rsp *http.Response) (*AdminRejectInvitat
 			return nil, err
 		}
 		response.JSONDefault = &dest
-
 	}
 
 	return response, nil
@@ -6462,7 +6445,6 @@ func ParseAdminStatusResponse(rsp *http.Response) (*AdminStatusResponse, error) 
 			return nil, err
 		}
 		response.JSON401 = &dest
-
 	}
 
 	return response, nil

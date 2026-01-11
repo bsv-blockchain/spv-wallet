@@ -56,7 +56,7 @@ type ModelInterface interface {
 	RawXpub() string
 	Save(ctx context.Context) (err error)
 	SetOptions(opts ...ModelOps)
-	SetRecordTime(bool)
+	SetRecordTime(record bool)
 	UpdateMetadata(metadata Metadata)
 }
 

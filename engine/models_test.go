@@ -125,7 +125,7 @@ type xPubFieldsTest struct {
 func (ts *EmbeddedDBTestSuite) TestModels_GetModels() {
 	numberOfModels := 10
 	for _, testCase := range dbTestCases {
-		ts.T().Run(testCase.name+" - GetModels", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - GetModels", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 			ts.createXpubModels(tc, t, numberOfModels)
@@ -147,7 +147,7 @@ func (ts *EmbeddedDBTestSuite) TestModels_GetModels() {
 			assert.Equal(t, uint32(37), models[0].NextInternalNum)    // should be set
 		})
 
-		ts.T().Run(testCase.name+" - GetModels with projection", func(t *testing.T) {
+		ts.T().Run(testCase.name+" - GetModels with projection", func(t *testing.T) { //nolint:testifylint // suite-subtest-run: test uses genericDBClient which requires *testing.T
 			tc := ts.genericDBClient(t, testCase.database, false)
 			defer tc.Close(tc.ctx)
 			ts.createXpubModels(tc, t, numberOfModels)

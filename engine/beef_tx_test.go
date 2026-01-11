@@ -172,7 +172,7 @@ func Test_ToBeef_HappyPaths(t *testing.T) {
 			store := NewMockTransactionStore()
 			defer deferMe()
 
-			var ancestors []*Transaction
+			ancestors := make([]*Transaction, 0, len(tc.ancestors))
 			for _, ancestor := range tc.ancestors {
 				ancestors = append(ancestors, addAncestor(ctx, ancestor, client, store, t))
 			}
@@ -182,7 +182,7 @@ func Test_ToBeef_HappyPaths(t *testing.T) {
 			result, err := ToBeef(ctx, newTx, store)
 
 			// then
-			require.NotErrorIs(t, nil, err)
+			require.NoError(t, err)
 			require.Contains(t, tc.expectedBeefHex, result)
 		})
 	}
@@ -242,7 +242,7 @@ func Test_ToBeef_ErrorPaths(t *testing.T) {
 			ctx, client, deferMe := prepareModels(t)
 			defer deferMe()
 
-			var ancestors []*Transaction
+			ancestors := make([]*Transaction, 0, len(tc.ancestors))
 			for _, ancestor := range tc.ancestors {
 				ancestors = append(ancestors, addAncestor(ctx, ancestor, client, store, t))
 			}
@@ -253,12 +253,13 @@ func Test_ToBeef_ErrorPaths(t *testing.T) {
 
 			// then
 			require.Empty(t, result)
-			require.ErrorIs(t, tc.expectedError, err)
+			require.ErrorContains(t, err, tc.expectedError.Error())
 		})
 	}
 }
 
 func createProcessedTx(_ context.Context, t *testing.T, client ClientInterface, testCase *beefTestCase, ancestors []*Transaction) *Transaction {
+	//nolint:contextcheck // test function, context not needed for initialization
 	draftTx, err := newDraftTransaction(
 		testXPub, &TransactionConfig{
 			Inputs: createInputsUsingAncestors(ancestors, client),
@@ -294,11 +295,11 @@ func addAncestor(ctx context.Context, testCase *beefTestCaseAncestor, client Cli
 	require.NoError(t, err)
 
 	if testCase.isMined {
-		ancestor.BlockHeight = uint64(testCase.blockHeight)
+		ancestor.BlockHeight = uint64(testCase.blockHeight) //nolint:gosec // test code with controlled values
 
 		var bump BUMP
-		err := json.Unmarshal([]byte(testCase.bumpJSON), &bump)
-		require.NoError(t, err)
+		unmarshalErr := json.Unmarshal([]byte(testCase.bumpJSON), &bump)
+		require.NoError(t, unmarshalErr)
 		ancestor.BUMP = bump
 	} else {
 		// if we marked transaction as not mined, we need to add it's parents

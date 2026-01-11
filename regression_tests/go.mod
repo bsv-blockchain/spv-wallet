@@ -2,19 +2,21 @@ module github.com/bsv-blockchain/spv-wallet/regression-tests
 
 go 1.24.3
 
-replace github.com/bsv-blockchain/spv-wallet => ../
+replace github.com/bsv-blockchain/spv-wallet => ../ //nolint:gomoddirectives // local development
 
-replace github.com/bsv-blockchain/spv-wallet/models => ../models
+replace github.com/bsv-blockchain/spv-wallet/models => ../models //nolint:gomoddirectives // local development
+
+// Issue with godotenv v1.6.0 pre-release
+replace github.com/joho/godotenv => github.com/joho/godotenv v1.5.1 //nolint:gomoddirectives // version override
 
 require (
-	github.com/bsv-blockchain/spv-wallet v1.0.0-beta.46
-	github.com/bsv-blockchain/spv-wallet-go-client v1.0.3
-	github.com/bsv-blockchain/spv-wallet/models v1.0.0-beta.46
+	github.com/bsv-blockchain/spv-wallet v1.0.1
+	github.com/bsv-blockchain/spv-wallet-go-client v1.1.0
+	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/joho/godotenv v1.5.1
 )
 
 require (
-	github.com/bitcoin-sv/spv-wallet/models v1.0.0-beta.46 // indirect
 	github.com/boombuler/barcode v1.1.0 // indirect
 	github.com/bsv-blockchain/go-sdk v1.2.14 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
@@ -41,7 +43,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pquerna/otp v1.5.0 // indirect
 	github.com/quic-go/qpack v0.6.0 // indirect
-	github.com/quic-go/quic-go v0.58.0 // indirect
+	github.com/quic-go/quic-go v0.59.0 // indirect
 	github.com/rs/zerolog v1.34.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.1 // indirect
@@ -49,6 +51,6 @@ require (
 	golang.org/x/crypto v0.46.0 // indirect
 	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )

@@ -51,12 +51,12 @@ CLIENT_TWO_LEADER_XPRIV="xprv..."
 
 ## Usage
 
-```bash 
+```bash
 cd regression_tests
 go run .
 ```
 or using .env.config
-```bash 
+```bash
 cd regression_tests
 go run . -l
 ```

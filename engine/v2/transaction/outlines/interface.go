@@ -41,9 +41,10 @@ type TransactionBEEFService interface {
 
 // UTXO represents an unspent transaction output.
 type UTXO struct {
+	bsvmodel.CustomInstructions
+
 	TxID string
 	Vout uint32
-	bsvmodel.CustomInstructions
 }
 
 // Transaction represents a transaction outline.

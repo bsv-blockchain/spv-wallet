@@ -172,10 +172,11 @@ func (builder *whereBuilder) processWhereAnd(tx customWhereInterface, condition 
 }
 
 func (builder *whereBuilder) processWhereOr(tx customWhereInterface, condition interface{}) {
-	or := make([]string, 0)
+	conditions := condition.([]map[string]interface{})
+	or := make([]string, 0, len(conditions))
 	orVars := make(map[string]interface{})
-	for _, cond := range condition.([]map[string]interface{}) {
-		statement := make([]string, 0)
+	for _, cond := range conditions {
+		statement := make([]string, 0, len(cond))
 		accumulator := &txAccumulator{
 			WhereClauses: make([]string, 0),
 			Vars:         make(map[string]interface{}),
@@ -234,7 +235,7 @@ func convertToDict(object interface{}) map[string]interface{} {
 	if converted, ok := object.(map[string]interface{}); ok {
 		return converted
 	}
-	vJSON, _ := json.Marshal(object)
+	vJSON, _ := json.Marshal(object) //nolint:errchkjson // fallback to empty map on error is acceptable here
 
 	var converted map[string]interface{}
 	_ = json.Unmarshal(vJSON, &converted)

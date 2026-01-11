@@ -15,7 +15,7 @@ import (
 
 const (
 	bhsURL   = "http://localhost:8080"
-	bhsToken = "mQZQ6WmxURxWz5ch"
+	bhsToken = "mQZQ6WmxURxWz5ch" //nolint:gosec // test credentials for mocking
 )
 
 func bhsMockVerify(response string, applyTimeout bool) *resty.Client {

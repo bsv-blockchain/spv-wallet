@@ -31,7 +31,7 @@ func (g *Getter) GetString(xpath string) string {
 
 	strValue, ok := value.(string)
 	if !ok {
-		require.Fail(g.t, "Value on xpath %s is not a string, it is %T (%v)", xpath, value, value)
+		require.Failf(g.t, "Value is not a string", "Value on xpath %s is not a string, it is %T (%v)", xpath, value, value)
 	}
 
 	return strValue
@@ -65,7 +65,7 @@ func (g *Getter) GetInt(xpath string) int {
 
 	intValue, ok := value.(float64)
 	if !ok {
-		require.Fail(g.t, "Value on xpath %s is not a uint, it is %T (%v)", xpath, value, value)
+		require.Failf(g.t, "Value is not an int", "Value on xpath %s is not a uint, it is %T (%v)", xpath, value, value)
 	}
 
 	return int(intValue)
