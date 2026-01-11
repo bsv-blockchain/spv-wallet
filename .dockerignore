@@ -20,6 +20,7 @@ node_modules/
 vendor/
 
 # Binaries for programs and plugins
+dist/
 gin-bin
 *.exe
 *.exe~
@@ -37,7 +38,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
-..mypy_cache/
+.mypy_cache/
 
 # Test binary, build with `go test -c`
 *.test
@@ -53,19 +54,20 @@ __pycache__/
 .LSOverride
 ._*
 
-# Custom repo notes
-todo.md
-
 # Temporary directories in the project
 bin
 tmp
-.all-contributorsrc
-.gitpod.yml
-.golangci-lint.yml
-.golangci-style.yml
-.goreleaser.yml
-.yamllint.yml
+
+# Project files not needed in the container
+.cursorrules
 .editorconfig
-codecov.yml
+.github
+.gitpod.yml
+.golangci.json
+.golangci.yml
+.goreleaser.yml
+.vscode
+docs
 LICENSE
 README.md
+codecov.yml
