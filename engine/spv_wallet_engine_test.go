@@ -55,10 +55,13 @@ func DefaultClientOpts() []ClientOps {
 	tqc.MaxNumWorker = 2
 	tqc.MaxNumFetcher = 2
 
+	testLogger := zerolog.Nop()
+
 	opts := []ClientOps{
 		WithTaskqConfig(tqc),
 		WithSQLite(tester.SQLiteTestConfig()),
 		WithCustomFeeUnit(mockFeeUnit),
+		WithLogger(&testLogger),
 	}
 
 	return opts
