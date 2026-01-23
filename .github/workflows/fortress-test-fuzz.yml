@@ -58,6 +58,7 @@ jobs:
     timeout-minutes: 15 # Fuzz tests have shorter timeout
     permissions:
       contents: read # Read repository content for testing
+      actions: write # Required for workflow cancellation on failure
     runs-on: ${{ inputs.primary-runner }}
 
     steps:
@@ -65,7 +66,7 @@ jobs:
       # Checkout code (required for local actions)
       # --------------------------------------------------------------------
       - name: 📥 Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       # --------------------------------------------------------------------
       # Parse environment variables
@@ -222,27 +223,6 @@ jobs:
           fi
 
       # --------------------------------------------------------------------
-      # Generate fuzz test statistics using composite action
-      # --------------------------------------------------------------------
-      - name: 📊 Calculate fuzz test statistics
-        id: fuzz-summary
-        if: always()
-        uses: ./.github/actions/test-statistics
-        with:
-          matrix-name: "Fuzz Tests (${{ inputs.primary-runner }})"
-          matrix-os: ${{ inputs.primary-runner }}
-          matrix-go-version: ${{ inputs.go-primary-version }}
-          test-exit-code: ${{ steps.run-fuzz-tests.outputs.fuzz-exit-code || '0' }}
-          output-mode: "FULL"
-          job-status: ${{ job.status }}
-          test-start-time: ${{ steps.fuzz-timer.outputs.fuzz-start || '0' }}
-          race-detection-enabled: "false"
-          code-coverage-enabled: "false"
-          fuzz-run: "true"
-          failures-file: "fuzz-failures.txt"
-          output-file: "fuzz-output.log"
-
-      # --------------------------------------------------------------------
       # Collect performance cache statistics
       # --------------------------------------------------------------------
       - name: 📊 Collect performance cache statistics
@@ -280,3 +260,12 @@ jobs:
             fuzz-output.log
           retention-days: 1
           if-no-files-found: ignore
+
+      # --------------------------------------------------------------------
+      # Cancel workflow on failure (save CI resources)
+      # --------------------------------------------------------------------
+      - name: 🚨 Cancel workflow on failure
+        if: failure()
+        uses: ./.github/actions/cancel-workflow-on-failure
+        with:
+          reason: "Fuzz tests failed"

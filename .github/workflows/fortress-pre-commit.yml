@@ -54,6 +54,7 @@ jobs:
     runs-on: ${{ inputs.primary-runner }}
     permissions:
       contents: read
+      actions: write # Required for workflow cancellation on failure
     outputs:
       pre-commit-version: ${{ steps.pre-commit-version.outputs.version }}
       checks-executed: ${{ steps.run-checks.outputs.executed }}
@@ -62,7 +63,7 @@ jobs:
       # Checkout code (full checkout to ensure local actions are available)
       # --------------------------------------------------------------------
       - name: 📥 Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0 # Fetch full history to enable file change detection for all commit ranges
 
@@ -110,7 +111,7 @@ jobs:
       # --------------------------------------------------------------------
       - name: 💾 Restore golangci-lint analysis cache
         id: cache-golangci-lint-analysis
-        uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ env.GOLANGCI_LINT_CACHE }}
           key: ${{ inputs.primary-runner }}-golangci-lint-analysis-${{ hashFiles('.golangci.json', env.GO_SUM_FILE) }}-${{ env.GO_PRE_COMMIT_GOLANGCI_LINT_VERSION }}
@@ -125,7 +126,7 @@ jobs:
       - name: 💾 Restore go-pre-commit binary cache
         id: go-pre-commit-cache
         if: env.GO_PRE_COMMIT_USE_LOCAL != 'true'
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: |
             ~/.cache/go-pre-commit-bin
@@ -139,7 +140,7 @@ jobs:
       # --------------------------------------------------------------------
       - name: 💾 Restore go-pre-commit tools cache
         id: go-pre-commit-tools-cache
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: |
             ~/.cache/go-pre-commit-tools
@@ -884,3 +885,12 @@ jobs:
           artifact-name: cache-stats-pre-commit
           artifact-path: cache-stats-pre-commit.json
           retention-days: 1
+
+      # --------------------------------------------------------------------
+      # Cancel workflow on failure (save CI resources)
+      # --------------------------------------------------------------------
+      - name: 🚨 Cancel workflow on failure
+        if: failure()
+        uses: ./.github/actions/cancel-workflow-on-failure
+        with:
+          reason: "Pre-commit checks failed"
