@@ -182,9 +182,9 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.64.0 // indirect
-	go.opentelemetry.io/otel v1.39.0 // indirect
-	go.opentelemetry.io/otel/metric v1.39.0 // indirect
-	go.opentelemetry.io/otel/trace v1.39.0 // indirect
+	go.opentelemetry.io/otel v1.40.0 // indirect
+	go.opentelemetry.io/otel/metric v1.40.0 // indirect
+	go.opentelemetry.io/otel/trace v1.40.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/arch v0.23.0 // indirect
@@ -210,3 +210,9 @@ replace github.com/gomodule/redigo => github.com/gomodule/redigo v1.9.3
 
 // Issue with godotenv v1.6.0 pre-release
 replace github.com/joho/godotenv => github.com/joho/godotenv v1.5.1
+
+// CVE-2026-24051: Path hijacking vulnerability in otel/sdk v1.20.0-1.39.0
+// Vulnerability: Executes ioreg command with untrusted search path on macOS
+// Fixed in v1.40.0. Force upgrade of indirect test dependency.
+// Reference: https://nvd.nist.gov/vuln/detail/CVE-2026-24051
+replace go.opentelemetry.io/otel/sdk => go.opentelemetry.io/otel/sdk v1.40.0
