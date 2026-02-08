@@ -10,7 +10,7 @@ import (
 
 func TestTaskManager_Close_WaitsForCronJobs(t *testing.T) {
 	if raceEnabled {
-		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+		t.Skip("skipping due to internal data race in taskq consumer (vmihailenco/taskq/v3 Consumer.Add vs Consumer.worker)")
 	}
 
 	ctx := context.Background()
@@ -62,7 +62,7 @@ func TestTaskManager_Close_WaitsForCronJobs(t *testing.T) {
 
 func TestTaskManager_Close_RespectsContextTimeout(t *testing.T) {
 	if raceEnabled {
-		t.Skip("skipping due to data race in external taskq library (vmihailenco/taskq/v3)")
+		t.Skip("skipping due to internal data race in taskq consumer (vmihailenco/taskq/v3 Consumer.Add vs Consumer.worker)")
 	}
 
 	ctx := context.Background()

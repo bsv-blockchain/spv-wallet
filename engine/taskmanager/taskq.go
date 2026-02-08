@@ -78,6 +78,13 @@ func (c *TaskManager) loadTaskQ(ctx context.Context) error {
 		return spverrors.Newf("missing factory type to load taskq")
 	}
 
+	// Serialize factory creation and queue registration to prevent a data race
+	// in the external capnm/sysinfo library (used by taskq's consumer config).
+	// The sysinfo.Get() function writes to unsynchronized global state, so
+	// concurrent calls from parallel tests cause DATA RACE failures.
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	var factory taskq.Factory
 	switch factoryType {
 	case FactoryMemory:
@@ -96,10 +103,6 @@ func (c *TaskManager) loadTaskQ(ctx context.Context) error {
 			return spverrors.Wrapf(err, "failed to start consuming tasks from redis: %v")
 		}
 	}
-
-	// turn off logger for now
-	// NOTE: having issues with logger with system resources
-	// taskq.SetLogger(nil)
 
 	return nil
 }
