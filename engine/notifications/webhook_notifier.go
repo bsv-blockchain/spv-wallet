@@ -150,7 +150,7 @@ func (w *WebhookNotifier) sendEventsToWebhook(ctx context.Context, events []*mod
 		req.Header.Set(tokenHeader, tokenValue)
 	}
 
-	resp, err := w.httpClient.Do(req)
+	resp, err := w.httpClient.Do(req) //nolint:gosec // G704 SSRF risk accepted, URL is from webhook definition
 	if err != nil {
 		return spverrors.Wrapf(err, "failed to send request")
 	}

@@ -203,7 +203,7 @@ type BeefConfig struct {
 // BHSConfig consists of AuthToken and URL used to communicate with BlockHeadersService
 type BHSConfig struct {
 	// AuthToken is the token used for authenticating requests to Block Headers Service (BHS)
-	AuthToken string `json:"auth_token" mapstructure:"auth_token"`
+	AuthToken string `json:"auth_token" mapstructure:"auth_token"` //nolint:gosec // G117 auth token field in config struct
 	// URL is the URL used to communicate with Block Headers Service (BHS)
 	URL string `json:"url" mapstructure:"url"`
 }

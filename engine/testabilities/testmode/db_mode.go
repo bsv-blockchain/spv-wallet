@@ -172,7 +172,7 @@ func IsDockerAvailable() bool {
 			// Try user-specific Docker Desktop socket on macOS
 			if home := os.Getenv("HOME"); home != "" {
 				altSocket := home + "/.docker/run/docker.sock"
-				if _, err := os.Stat(altSocket); err == nil {
+				if _, err := os.Stat(altSocket); err == nil { //nolint:gosec // G703 path constructed from trusted HOME env variable
 					socketPath = altSocket
 				}
 			}

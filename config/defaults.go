@@ -108,7 +108,7 @@ func getARCDefaults() *ARCConfig {
 	return &ARCConfig{
 		DeploymentID: "spv-wallet-" + depIDSufix.String(),
 		URL:          "https://arc.taal.com",
-		Token:        "mainnet_06770f425eb00298839a24a49cbdc02c",
+		Token:        "mainnet_06770f425eb00298839a24a49cbdc02c", // #nosec G101 default/example credentials
 		Callback: &CallbackConfig{
 			Enabled: false,
 			Host:    "https://example.com",
@@ -139,7 +139,7 @@ func getPaymailDefaults() *PaymailConfig {
 
 func getBHSDefaults() *BHSConfig {
 	return &BHSConfig{
-		AuthToken: "mQZQ6WmxURxWz5ch",
+		AuthToken: "mQZQ6WmxURxWz5ch", // #nosec G101 default/example credentials
 		URL:       "http://localhost:8080",
 	}
 }
