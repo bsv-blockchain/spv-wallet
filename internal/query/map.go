@@ -173,7 +173,7 @@ func setValueOnPath(dicts map[string]interface{}, paths, value []string) error {
 		if isLast(i, nesting) {
 			// handle setting value
 			if isArrayOnPath(p) {
-				previousLevel[paths[i-1]] = value
+				previousLevel[paths[i-1]] = value //nolint:gosec // G602 index is safe, isLast ensures i>0 when array path
 			} else {
 				// if there was already a value set, then it is an error to set a different value.
 				if _, ok := currentLevel[p]; ok {
@@ -186,7 +186,7 @@ func setValueOnPath(dicts map[string]interface{}, paths, value []string) error {
 			switch currentLevel[p].(type) {
 			case map[string]any:
 				// if there was map, and we have to set array, then it is an error
-				if isArrayOnPath(paths[i+1]) {
+				if isArrayOnPath(paths[i+1]) { //nolint:gosec // G602 index is safe, isLast ensures i is not last element
 					return fmt.Errorf("trying to set different types at the same key [%s]", p)
 				}
 			case nil:

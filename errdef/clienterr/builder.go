@@ -59,7 +59,7 @@ func (b *Builder) Response(c *gin.Context, log *zerolog.Logger) {
 func (b *Builder) WithInstance(parts ...any) *Builder {
 	var sb strings.Builder
 	for i, p := range parts {
-		sb.WriteString(fmt.Sprintf("%v", p))
+		fmt.Fprintf(&sb, "%v", p)
 		if i < len(parts)-1 {
 			sb.WriteString("/")
 		}

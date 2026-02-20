@@ -68,8 +68,8 @@ func cleanupSQLiteFile(t *testing.T) {
 	t.Helper()
 
 	if dbPath := os.Getenv(EnvSQLiteDBPath); dbPath != "" {
-		if _, err := os.Stat(dbPath); err == nil {
-			if err := os.Remove(dbPath); err != nil {
+		if _, err := os.Stat(dbPath); err == nil { //nolint:gosec // G703 path is from env variable for test cleanup
+			if err := os.Remove(dbPath); err != nil { //nolint:gosec // G703 path is from env variable for test cleanup
 				t.Logf("Warning: Failed to remove SQLite file %s: %s", dbPath, err)
 			}
 		}

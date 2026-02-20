@@ -15,5 +15,5 @@ type AuthPayload struct {
 	// XPub is the xpub of the account
 	XPub string `json:"xpub"`
 	// AccessKey is the access key of the account
-	AccessKey string `json:"access_key"`
+	AccessKey string `json:"access_key"` //nolint:gosec // G117 access key field in auth payload struct
 }

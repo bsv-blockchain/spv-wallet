@@ -81,7 +81,7 @@ type SQLConfig struct {
 	ExistingConnection *sql.DB       `json:"-" mapstructure:"-"`                                // Used for existing database connection
 	Host               string        `json:"host" mapstructure:"host"`                          // database host IE: localhost
 	Name               string        `json:"name" mapstructure:"name"`                          // database-name
-	Password           string        `json:"password" mapstructure:"password" encrypted:"true"` // user-password
+	Password           string        `json:"password" mapstructure:"password" encrypted:"true"` //nolint:gosec // G117 password field in database config struct
 	Port               string        `json:"port" mapstructure:"port"`                          // 3306
 	Replica            bool          `json:"replica" mapstructure:"replica"`                    // True if it's a replica (Read-Only)
 	TimeZone           string        `json:"time_zone" mapstructure:"time_zone"`                // timezone (IE: Asia/Shanghai)

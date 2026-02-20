@@ -84,7 +84,7 @@ func containsAll(parts []string) string {
 	partsRegex := strings.Builder{}
 	partsRegex.WriteString("^")
 	for _, part := range parts {
-		partsRegex.WriteString(fmt.Sprintf(`(.*%s)`, part))
+		fmt.Fprintf(&partsRegex, `(.*%s)`, part)
 	}
 	partsRegex.WriteString(".*$")
 	s := partsRegex.String()
