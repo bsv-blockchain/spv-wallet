@@ -32,7 +32,7 @@ type WebhookManager struct {
 
 // NewWebhookManager creates a new WebhookManager. It starts a goroutine which checks for webhook updates.
 func NewWebhookManager(ctx context.Context, logger *zerolog.Logger, notifications *Notifications, repository WebhooksRepository) *WebhookManager {
-	rootContext, cancelAllFunc := context.WithCancel(ctx)
+	rootContext, cancelAllFunc := context.WithCancel(ctx) //nolint:gosec // G118 cancel function is stored in struct and called in Stop
 	manager := WebhookManager{
 		repository:       repository,
 		rootContext:      rootContext,
@@ -200,7 +200,7 @@ func (w *WebhookManager) update() {
 
 func (w *WebhookManager) addNotifier(model ModelWebhook) {
 	w.logger.Info().Msgf("Add a webhook notifier. URL: %s", model.GetURL())
-	ctx, cancel := context.WithCancel(w.rootContext)
+	ctx, cancel := context.WithCancel(w.rootContext) //nolint:gosec // G118 cancel function is stored in notifierWithCtx struct
 	notifier := NewWebhookNotifier(ctx, w.logger, model, w.banMsg)
 	w.webhookNotifiers.Store(model.GetURL(), &notifierWithCtx{notifier: notifier, ctx: ctx, cancelFunc: cancel})
 	w.notifications.AddNotifier(model.GetURL(), notifier.Channel)
