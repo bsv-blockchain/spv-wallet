@@ -150,7 +150,7 @@ func (t *Transactions) queryInputSourcesBatch(ctx context.Context, txIDs []strin
 	}
 
 	// Batch query transactions
-	var rows []database.TrackedTransaction
+	rows := make([]database.TrackedTransaction, 0, len(filteredIDs))
 	err := t.db.
 		WithContext(ctx).
 		Preload("SourceTxInputs").
