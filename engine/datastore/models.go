@@ -387,6 +387,6 @@ func createCtx(ctx context.Context, db *gorm.DB, timeout time.Duration, debug bo
 	optionalLogger logger.Interface,
 ) (*gorm.DB, context.CancelFunc) {
 	var cancel context.CancelFunc
-	ctx, cancel = context.WithTimeout(ctx, timeout) //nolint:gosec // G118 cancel function is returned to the caller
+	ctx, cancel = context.WithTimeout(ctx, timeout)
 	return db.Session(getGormSessionConfig(db.PrepareStmt, debug, optionalLogger)).WithContext(ctx), cancel
 }
