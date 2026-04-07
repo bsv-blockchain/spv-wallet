@@ -8,12 +8,12 @@ replace github.com/bsv-blockchain/spv-wallet/models => ../../models //nolint:gom
 replace github.com/joho/godotenv => github.com/joho/godotenv v1.5.1 //nolint:gomoddirectives // version override
 
 require (
-	github.com/bsv-blockchain/go-sdk v1.2.19
+	github.com/bsv-blockchain/go-sdk v1.2.21
 	github.com/bsv-blockchain/spv-wallet-go-client v1.1.1
 	github.com/go-viper/mapstructure/v2 v2.5.0
 	github.com/joomcode/errorx v1.2.0
-	github.com/oapi-codegen/runtime v1.3.0
-	github.com/rs/zerolog v1.34.0
+	github.com/oapi-codegen/runtime v1.3.1
+	github.com/rs/zerolog v1.35.0
 	github.com/samber/lo v1.53.0
 	github.com/spf13/viper v1.21.0
 	github.com/stretchr/testify v1.11.1
@@ -30,7 +30,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+	github.com/pelletier/go-toml/v2 v2.3.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/pquerna/otp v1.5.0 // indirect
