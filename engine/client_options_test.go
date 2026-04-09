@@ -360,8 +360,16 @@ func TestWithLogger(t *testing.T) {
 	})
 
 	t.Run("test applying nil", func(t *testing.T) {
-		opts := DefaultClientOpts()
-		opts = append(opts, WithLogger(nil))
+		tqc := taskmanager.DefaultTaskQConfig(tester.RandomTablePrefix())
+		tqc.MaxNumWorker = 2
+		tqc.MaxNumFetcher = 2
+
+		opts := []ClientOps{
+			WithTaskqConfig(tqc),
+			WithSQLite(tester.SQLiteTestConfig()),
+			WithCustomFeeUnit(mockFeeUnit),
+			WithLogger(nil),
+		}
 
 		tc, err := NewClient(context.Background(), opts...)
 		require.NoError(t, err)
