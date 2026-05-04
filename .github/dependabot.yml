@@ -106,8 +106,8 @@ updates:
     target-branch: "main"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:45"
+      day: "tuesday"
+      time: "11:45"
       timezone: "America/New_York"
     allow:
       - dependency-type: "direct"
