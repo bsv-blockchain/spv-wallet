@@ -30,7 +30,7 @@ func TestUpdateContact(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"fullName": fullNameForUpdate,
+				fullNameField: fullNameForUpdate,
 			}).
 			Put(fmt.Sprintf("/api/v2/admin/contacts/%d", contact.ID))
 
@@ -46,9 +46,9 @@ func TestUpdateContact(t *testing.T) {
 				"pubKey": "{{ matchHexWithLength 66 }}",
 				"status": "{{ .status }}"
 			}`, map[string]any{
-				"fullName": fullNameForUpdate,
-				"paymail":  fixtures.RecipientInternal.DefaultPaymail().String(),
-				"status":   contactsmodels.ContactNotConfirmed,
+				fullNameField: fullNameForUpdate,
+				"paymail":     fixtures.RecipientInternal.DefaultPaymail().String(),
+				"status":      contactsmodels.ContactNotConfirmed,
 			})
 	})
 
@@ -92,7 +92,7 @@ func TestUpdateContact(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"fullName": fullNameForUpdate,
+				fullNameField: fullNameForUpdate,
 			}).
 			Put("/api/v2/admin/contacts/99999")
 

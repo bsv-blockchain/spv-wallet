@@ -164,7 +164,7 @@ func TestTransaction_UpdateTransactionMetadata(t *testing.T) {
 		assert.Nil(t, tx.XpubMetadata)
 
 		metadata := Metadata{
-			"test-key": "test-value",
+			testMetadataKey: testMetadataValue,
 		}
 		err = tx.UpdateTransactionMetadata(testXPubID, metadata)
 		require.NoError(t, err)
@@ -177,9 +177,9 @@ func TestTransaction_UpdateTransactionMetadata(t *testing.T) {
 		err = tx.UpdateTransactionMetadata(testXPubID, addMetadata)
 		require.NoError(t, err)
 		assert.Equal(t, XpubMetadata{testXPubID: Metadata{
-			"test-key":   "test-value",
-			"test-key-2": "test-value-2",
-			"test-key-3": "test-value-3",
+			testMetadataKey: testMetadataValue,
+			"test-key-2":    "test-value-2",
+			"test-key-3":    "test-value-3",
 		}}, tx.XpubMetadata)
 
 		editMetadata := Metadata{
@@ -190,9 +190,9 @@ func TestTransaction_UpdateTransactionMetadata(t *testing.T) {
 		err = tx.UpdateTransactionMetadata(testXPubID, editMetadata)
 		require.NoError(t, err)
 		assert.Equal(t, XpubMetadata{testXPubID: Metadata{
-			"test-key":   "test-value",
-			"test-key-3": "test-value-3333",
-			"test-key-4": "test-value-4",
+			testMetadataKey: testMetadataValue,
+			"test-key-3":    "test-value-3333",
+			"test-key-4":    "test-value-4",
 		}}, tx.XpubMetadata)
 	})
 }
@@ -610,7 +610,7 @@ func TestTransaction_Display(t *testing.T) {
 			TotalValue:      123499,
 			XpubMetadata: XpubMetadata{
 				testXPubID: Metadata{
-					"test-key": "test-value",
+					testMetadataKey: testMetadataValue,
 				},
 			},
 			OutputValue: 12,
@@ -621,7 +621,7 @@ func TestTransaction_Display(t *testing.T) {
 		}
 
 		displayTx := tx.Display().(*Transaction)
-		assert.Equal(t, Metadata{"test-key": "test-value"}, displayTx.Metadata)
+		assert.Equal(t, Metadata{testMetadataKey: testMetadataValue}, displayTx.Metadata)
 		assert.Equal(t, int64(123499), displayTx.OutputValue)
 		assert.Equal(t, TransactionDirectionIn, displayTx.Direction)
 		assert.Nil(t, displayTx.XpubInIDs)

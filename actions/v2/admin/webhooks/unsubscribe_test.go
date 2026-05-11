@@ -22,7 +22,7 @@ func TestUnsubscribeWebhookHappyPath(t *testing.T) {
 		res, _ := client.R().
 			SetBody(
 				map[string]string{
-					"url":         "http://localhost:8080",
+					urlField:      "http://localhost:8080",
 					"tokenHeader": "Auth1",
 					"tokenValue":  "123",
 				},
@@ -44,7 +44,7 @@ func TestUnsubscribeWebhookHappyPath(t *testing.T) {
 			R().
 			SetBody(
 				map[string]string{
-					"url": "http://localhost:8080",
+					urlField: "http://localhost:8080",
 				}).
 			Delete(webhookAPIURL)
 
@@ -83,8 +83,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrCannotBindRequest.Code,
-				"message": spverrors.ErrCannotBindRequest.Message,
+				codeField:    spverrors.ErrCannotBindRequest.Code,
+				messageField: spverrors.ErrCannotBindRequest.Message,
 			})
 	})
 
@@ -101,7 +101,7 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 			R().
 			SetBody(
 				map[string]string{
-					"url": "http://localhost:8080",
+					urlField: "http://localhost:8080",
 				},
 			).
 			Delete(webhookAPIURL)
@@ -113,8 +113,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrNotificationsDisabled.Code,
-				"message": spverrors.ErrNotificationsDisabled.Message,
+				codeField:    spverrors.ErrNotificationsDisabled.Code,
+				messageField: spverrors.ErrNotificationsDisabled.Message,
 			})
 	})
 
@@ -132,7 +132,7 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 			R().
 			SetBody(
 				map[string]string{
-					"url": "http://nonexistent.com",
+					urlField: "http://nonexistent.com",
 				},
 			).
 			Delete(webhookAPIURL)
@@ -144,8 +144,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookSubscriptionNotFound.Code,
-				"message": spverrors.ErrWebhookSubscriptionNotFound.Message,
+				codeField:    spverrors.ErrWebhookSubscriptionNotFound.Code,
+				messageField: spverrors.ErrWebhookSubscriptionNotFound.Message,
 			})
 	})
 
@@ -171,8 +171,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookUrlRequired.Code,
-				"message": spverrors.ErrWebhookUrlRequired.Message,
+				codeField:    spverrors.ErrWebhookUrlRequired.Code,
+				messageField: spverrors.ErrWebhookUrlRequired.Message,
 			})
 	})
 
@@ -189,7 +189,7 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 		res, _ := client.
 			R().
 			SetBody(map[string]string{
-				"url": "http://test.com/%",
+				urlField: "http://test.com/%",
 			}).
 			Delete(webhookAPIURL)
 
@@ -200,8 +200,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookUrlInvalid.Code,
-				"message": spverrors.ErrWebhookUrlInvalid.Message,
+				codeField:    spverrors.ErrWebhookUrlInvalid.Code,
+				messageField: spverrors.ErrWebhookUrlInvalid.Message,
 			})
 	})
 }

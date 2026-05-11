@@ -13,6 +13,12 @@ import (
 	"github.com/bsv-blockchain/spv-wallet/internal/query"
 )
 
+const (
+	testQueryKey    = "key"
+	testQueryMapKey = "mapkey"
+	testQueryValue1 = "value1"
+)
+
 func TestContextShouldGetQueryNestedMapSuccessfulParsing(t *testing.T) {
 	var emptyQueryMap map[string]any
 	veryDeepNesting := ""
@@ -58,7 +64,7 @@ func TestContextShouldGetQueryNestedMapSuccessfulParsing(t *testing.T) {
 		"single key with empty value": {
 			url: "?key=",
 			expectedResult: map[string]any{
-				"key": "",
+				testQueryKey: "",
 			},
 		},
 		"only keys": {
@@ -83,23 +89,23 @@ func TestContextShouldGetQueryNestedMapSuccessfulParsing(t *testing.T) {
 		"multiple query param": {
 			url: "?foo=bar&mapkey=value1",
 			expectedResult: map[string]any{
-				"foo":    "bar",
-				"mapkey": "value1",
+				"foo":           "bar",
+				testQueryMapKey: testQueryValue1,
 			},
 		},
 		"map query param": {
 			url: "?mapkey[key]=value",
 			expectedResult: map[string]any{
-				"mapkey": map[string]any{
-					"key": "value",
+				testQueryMapKey: map[string]any{
+					testQueryKey: "value",
 				},
 			},
 		},
 		"multiple different value types in map query param": {
 			url: "?mapkey[key1]=value1&mapkey[key2]=1&mapkey[key3]=true",
 			expectedResult: map[string]any{
-				"mapkey": map[string]any{
-					"key1": "value1",
+				testQueryMapKey: map[string]any{
+					"key1": testQueryValue1,
 					"key2": "1",
 					"key3": "true",
 				},
@@ -108,16 +114,16 @@ func TestContextShouldGetQueryNestedMapSuccessfulParsing(t *testing.T) {
 		"multiple different value types in array value of map query param": {
 			url: "?mapkey[key][]=value1&mapkey[key][]=1&mapkey[key][]=true",
 			expectedResult: map[string]any{
-				"mapkey": map[string]any{
-					"key": []string{"value1", "1", "true"},
+				testQueryMapKey: map[string]any{
+					testQueryKey: []string{testQueryValue1, "1", "true"},
 				},
 			},
 		},
 		"nested map query param": {
 			url: "?mapkey[key][nested][moreNested]=value",
 			expectedResult: map[string]any{
-				"mapkey": map[string]any{
-					"key": map[string]any{
+				testQueryMapKey: map[string]any{
+					testQueryKey: map[string]any{
 						"nested": map[string]any{
 							"moreNested": "value",
 						},
@@ -128,29 +134,29 @@ func TestContextShouldGetQueryNestedMapSuccessfulParsing(t *testing.T) {
 		"very deep nested map query param": {
 			url: "?mapkey" + veryDeepNesting + "=value",
 			expectedResult: map[string]any{
-				"mapkey": veryDeepNestingResult,
+				testQueryMapKey: veryDeepNestingResult,
 			},
 		},
 		"map query param with explicit arrays accessors ([]) at the value level will return array": {
 			url: "?mapkey[key][]=value1&mapkey[key][]=value2",
 			expectedResult: map[string]any{
-				"mapkey": map[string]any{
-					"key": []string{"value1", "value2"},
+				testQueryMapKey: map[string]any{
+					testQueryKey: []string{testQueryValue1, "value2"},
 				},
 			},
 		},
 		"map query param with implicit arrays (duplicated key) at the value level will return only first value": {
 			url: "?mapkey[key]=value1&mapkey[key]=value2",
 			expectedResult: map[string]any{
-				"mapkey": map[string]any{
-					"key": "value1",
+				testQueryMapKey: map[string]any{
+					testQueryKey: testQueryValue1,
 				},
 			},
 		},
 		"array query param": {
 			url: "?mapkey[]=value1&mapkey[]=value2",
 			expectedResult: map[string]any{
-				"mapkey": []string{"value1", "value2"},
+				testQueryMapKey: []string{testQueryValue1, "value2"},
 			},
 		},
 	}
@@ -265,64 +271,64 @@ func TestContextShouldGetQueryNestedForKeySuccessfulParsing(t *testing.T) {
 	}{
 		"no searched map key in query string": {
 			url:            "?foo=bar",
-			key:            "mapkey",
+			key:            testQueryMapKey,
 			expectedResult: emptyQueryMap,
 		},
 		"searched map key after other query params": {
 			url: "?foo=bar&mapkey[key]=value",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": "value",
+				testQueryKey: "value",
 			},
 		},
 		"searched map key before other query params": {
 			url: "?mapkey[key]=value&foo=bar",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": "value",
+				testQueryKey: "value",
 			},
 		},
 		"single key in searched map key": {
 			url: "?mapkey[key]=value",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": "value",
+				testQueryKey: "value",
 			},
 		},
 		"multiple keys in searched map key": {
 			url: "?mapkey[key1]=value1&mapkey[key2]=value2&mapkey[key3]=value3",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key1": "value1",
+				"key1": testQueryValue1,
 				"key2": "value2",
 				"key3": "value3",
 			},
 		},
 		"nested key in searched map key": {
 			url: "?mapkey[foo][nested]=value1",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
 				"foo": map[string]any{
-					"nested": "value1",
+					"nested": testQueryValue1,
 				},
 			},
 		},
 		"multiple nested keys in single key of searched map key": {
 			url: "?mapkey[foo][nested1]=value1&mapkey[foo][nested2]=value2",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
 				"foo": map[string]any{
-					"nested1": "value1",
+					"nested1": testQueryValue1,
 					"nested2": "value2",
 				},
 			},
 		},
 		"multiple keys with nested keys of searched map key": {
 			url: "?mapkey[key1][nested]=value1&mapkey[key2][nested]=value2",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
 				"key1": map[string]any{
-					"nested": "value1",
+					"nested": testQueryValue1,
 				},
 				"key2": map[string]any{
 					"nested": "value2",
@@ -331,34 +337,34 @@ func TestContextShouldGetQueryNestedForKeySuccessfulParsing(t *testing.T) {
 		},
 		"multiple levels of nesting in searched map key": {
 			url: "?mapkey[key][nested][moreNested]=value1",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": map[string]any{
+				testQueryKey: map[string]any{
 					"nested": map[string]any{
-						"moreNested": "value1",
+						"moreNested": testQueryValue1,
 					},
 				},
 			},
 		},
 		"query keys similar to searched map key": {
 			url: "?mapkey[key]=value&mapkeys[key1]=value1&mapkey1=foo",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": "value",
+				testQueryKey: "value",
 			},
 		},
 		"handle explicit arrays accessors ([]) at the value level": {
 			url: "?mapkey[key][]=value1&mapkey[key][]=value2",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": []string{"value1", "value2"},
+				testQueryKey: []string{testQueryValue1, "value2"},
 			},
 		},
 		"implicit arrays (duplicated key) at the value level will return only first value": {
 			url: "?mapkey[key]=value1&mapkey[key]=value2",
-			key: "mapkey",
+			key: testQueryMapKey,
 			expectedResult: map[string]any{
-				"key": "value1",
+				testQueryKey: testQueryValue1,
 			},
 		},
 	}
@@ -388,27 +394,27 @@ func TestContextShouldGetQueryNestedForKeyParsingError(t *testing.T) {
 	}{
 		"searched map key is value not a map": {
 			url:   "?mapkey=value",
-			key:   "mapkey",
+			key:   testQueryMapKey,
 			error: "invalid access to map",
 		},
 		"searched map key is array": {
 			url:   "?mapkey[]=value1&mapkey[]=value2",
-			key:   "mapkey",
+			key:   testQueryMapKey,
 			error: "invalid access to map",
 		},
 		"searched map key with invalid map access": {
 			url:   "?mapkey[key]nested=value",
-			key:   "mapkey",
+			key:   testQueryMapKey,
 			error: "invalid access to map key",
 		},
 		"searched map key with valid and invalid map access": {
 			url:   "?mapkey[key]invalidNested=value&mapkey[key][nested]=value1",
-			key:   "mapkey",
+			key:   testQueryMapKey,
 			error: "invalid access to map key",
 		},
 		"searched map key with valid before invalid map access": {
 			url:   "?mapkey[key][nested]=value1&mapkey[key]invalidNested=value",
-			key:   "mapkey",
+			key:   testQueryMapKey,
 			error: "invalid access to map key",
 		},
 	}

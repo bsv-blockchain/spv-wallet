@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	testMetadataKey   = "test_key"
-	testMetadataValue = "test_value"
+	testMetadataKey   = "test-key"
+	testMetadataValue = "test-value"
 )
 
 func TestModelName_String(t *testing.T) {

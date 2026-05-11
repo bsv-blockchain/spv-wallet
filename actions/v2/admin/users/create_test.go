@@ -34,7 +34,7 @@ func TestCreateUserWithoutPaymail(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"publicKey": publicKey,
+				publicKeyField: publicKey,
 			}).
 			Post("/api/v2/admin/users")
 
@@ -48,7 +48,7 @@ func TestCreateUserWithoutPaymail(t *testing.T) {
 				"publicKey": "{{ .publicKey }}",
 				"paymails": []
 			}`, map[string]any{
-				"publicKey": publicKey,
+				publicKeyField: publicKey,
 			})
 
 		// update:
@@ -75,7 +75,7 @@ func TestCreateUserWithoutPaymail(t *testing.T) {
 				"publicKey": "{{ .publicKey }}",
 				"paymails": []
 			}`, map[string]any{
-				"publicKey": publicKey,
+				publicKeyField: publicKey,
 			})
 	})
 
@@ -120,10 +120,10 @@ func TestCreateUserWithBadURLAvatar(t *testing.T) {
 	// when:
 	res, _ := client.R().
 		SetBody(map[string]any{
-			"publicKey": publicKey,
-			"paymail": map[string]any{
-				"address":   userCandidate.DefaultPaymail(),
-				"avatarURL": avatarURL,
+			publicKeyField: publicKey,
+			paymailField: map[string]any{
+				"address":      userCandidate.DefaultPaymail(),
+				avatarURLField: avatarURL,
 			},
 		}).
 		Post("/api/v2/admin/users")
@@ -155,10 +155,10 @@ func TestCreateUserWithoutPublicName(t *testing.T) {
 	// when:
 	res, _ := client.R().
 		SetBody(map[string]any{
-			"publicKey": publicKey,
-			"paymail": map[string]any{
-				"address":   userCandidate.DefaultPaymail(),
-				"avatarURL": avatarURL,
+			publicKeyField: publicKey,
+			paymailField: map[string]any{
+				"address":      userCandidate.DefaultPaymail(),
+				avatarURLField: avatarURL,
 			},
 		}).
 		Post("/api/v2/admin/users")
@@ -182,10 +182,10 @@ func TestCreateUserWithoutPublicName(t *testing.T) {
 					}
 				]
 			}`, map[string]any{
-			"publicKey": publicKey,
-			"paymail":   userCandidate.DefaultPaymail(),
-			"alias":     userCandidate.DefaultPaymail().Alias(),
-			"avatar":    avatarURL,
+			publicKeyField: publicKey,
+			paymailField:   userCandidate.DefaultPaymail(),
+			aliasField:     userCandidate.DefaultPaymail().Alias(),
+			"avatar":       avatarURL,
 		})
 }
 
@@ -219,10 +219,10 @@ func TestCreateUserWithPaymail(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"publicKey": publicKey,
-				"paymail": map[string]any{
-					"address":    userCandidate.DefaultPaymail(),
-					"publicName": publicName,
+				publicKeyField: publicKey,
+				paymailField: map[string]any{
+					"address":       userCandidate.DefaultPaymail(),
+					publicNameField: publicName,
 				},
 			}).
 			Post("/api/v2/admin/users")
@@ -246,10 +246,10 @@ func TestCreateUserWithPaymail(t *testing.T) {
 					}
 				]
 			}`, map[string]any{
-				"publicKey":  publicKey,
-				"paymail":    userCandidate.DefaultPaymail(),
-				"publicName": publicName,
-				"alias":      userCandidate.DefaultPaymail().Alias(),
+				publicKeyField:  publicKey,
+				paymailField:    userCandidate.DefaultPaymail(),
+				publicNameField: publicName,
+				aliasField:      userCandidate.DefaultPaymail().Alias(),
 			})
 
 		// update:
@@ -285,10 +285,10 @@ func TestCreateUserWithPaymail(t *testing.T) {
 					}
 				]
 			}`, map[string]any{
-				"publicKey":  publicKey,
-				"paymail":    userCandidate.DefaultPaymail(),
-				"publicName": publicName,
-				"alias":      userCandidate.DefaultPaymail().Alias(),
+				publicKeyField:  publicKey,
+				paymailField:    userCandidate.DefaultPaymail(),
+				publicNameField: publicName,
+				aliasField:      userCandidate.DefaultPaymail().Alias(),
 			})
 	})
 }
@@ -323,12 +323,12 @@ func TestCreateUserWithAliasAndDomain(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"publicKey": publicKey,
-				"paymail": map[string]any{
-					"alias":      userCandidate.DefaultPaymail().Alias(),
-					"domain":     fixtures.PaymailDomain,
-					"publicName": publicName,
-					"avatarURL":  "",
+				publicKeyField: publicKey,
+				paymailField: map[string]any{
+					aliasField:      userCandidate.DefaultPaymail().Alias(),
+					"domain":        fixtures.PaymailDomain,
+					publicNameField: publicName,
+					avatarURLField:  "",
 				},
 			}).
 			Post("/api/v2/admin/users")
@@ -352,10 +352,10 @@ func TestCreateUserWithAliasAndDomain(t *testing.T) {
 					}
 				]
 			}`, map[string]any{
-				"publicKey":  publicKey,
-				"paymail":    userCandidate.DefaultPaymail(),
-				"publicName": publicName,
-				"alias":      userCandidate.DefaultPaymail().Alias(),
+				publicKeyField:  publicKey,
+				paymailField:    userCandidate.DefaultPaymail(),
+				publicNameField: publicName,
+				aliasField:      userCandidate.DefaultPaymail().Alias(),
 			})
 
 		// update:
@@ -391,10 +391,10 @@ func TestCreateUserWithAliasAndDomain(t *testing.T) {
 					}
 				]
 			}`, map[string]any{
-				"publicKey":  publicKey,
-				"paymail":    userCandidate.DefaultPaymail(),
-				"publicName": publicName,
-				"alias":      userCandidate.DefaultPaymail().Alias(),
+				publicKeyField:  publicKey,
+				paymailField:    userCandidate.DefaultPaymail(),
+				publicNameField: publicName,
+				aliasField:      userCandidate.DefaultPaymail().Alias(),
 			})
 	})
 }
@@ -426,11 +426,11 @@ func TestAddUserWithWrongPaymailDomain(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"publicKey": publicKey,
-				"paymail": map[string]any{
-					"address":    unsupportedPaymail,
-					"publicName": publicName,
-					"avatarURL":  "",
+				publicKeyField: publicKey,
+				paymailField: map[string]any{
+					"address":       unsupportedPaymail,
+					publicNameField: publicName,
+					avatarURLField:  "",
 				},
 			}).
 			Post("/api/v2/admin/users")
@@ -444,12 +444,12 @@ func TestAddUserWithWrongPaymailDomain(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"publicKey": publicKey,
-				"paymail": map[string]any{
-					"alias":      alias,
-					"domain":     unsupportedDomain,
-					"publicName": publicName,
-					"avatarURL":  "",
+				publicKeyField: publicKey,
+				paymailField: map[string]any{
+					aliasField:      alias,
+					"domain":        unsupportedDomain,
+					publicNameField: publicName,
+					avatarURLField:  "",
 				},
 			}).
 			Post("/api/v2/admin/users")
@@ -474,7 +474,7 @@ func TestTryToAddWithWrongPubKey(t *testing.T) {
 	// when:
 	res, _ := client.R().
 		SetBody(map[string]any{
-			"publicKey": "wrong",
+			publicKeyField: "wrong",
 		}).
 		Post("/api/v2/admin/users")
 

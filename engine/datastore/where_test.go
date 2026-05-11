@@ -53,12 +53,12 @@ func Test_whereSlice(t *testing.T) {
 	t.Parallel()
 
 	conditions := map[string]interface{}{
-		"field_in_ids": "test",
+		testFieldInIDs: "test",
 	}
 
 	t.Run("Postgres", func(t *testing.T) {
 		client, gdb := mockClient(PostgreSQL)
-		WithCustomFields([]string{"field_in_ids"}, nil)(client.options)
+		WithCustomFields([]string{testFieldInIDs}, nil)(client.options)
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
@@ -74,7 +74,7 @@ func Test_whereSlice(t *testing.T) {
 
 	t.Run("SQLite", func(t *testing.T) {
 		client, gdb := mockClient(SQLite)
-		WithCustomFields([]string{"field_in_ids"}, nil)(client.options)
+		WithCustomFields([]string{testFieldInIDs}, nil)(client.options)
 
 		raw := gdb.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			tx, err := ApplyCustomWhere(client, tx, conditions, mockObject{})
@@ -172,11 +172,11 @@ func TestCustomWhere(t *testing.T) {
 
 	t.Run("SQLite $or in json", func(t *testing.T) {
 		client, gdb := mockClient(SQLite)
-		WithCustomFields([]string{"field_in_ids", "field_out_ids"}, nil)(client.options)
+		WithCustomFields([]string{testFieldInIDs, "field_out_ids"}, nil)(client.options)
 
 		conditions := map[string]interface{}{
 			conditionOr: []map[string]interface{}{{
-				"field_in_ids": "value_id",
+				testFieldInIDs: "value_id",
 			}, {
 				"field_out_ids": "value_id",
 			}},
@@ -195,11 +195,11 @@ func TestCustomWhere(t *testing.T) {
 
 	t.Run("PostgreSQL $or in json", func(t *testing.T) {
 		client, gdb := mockClient(PostgreSQL)
-		WithCustomFields([]string{"field_in_ids", "field_out_ids"}, nil)(client.options)
+		WithCustomFields([]string{testFieldInIDs, "field_out_ids"}, nil)(client.options)
 
 		conditions := map[string]interface{}{
 			conditionOr: []map[string]interface{}{{
-				"field_in_ids": "value_id",
+				testFieldInIDs: "value_id",
 			}, {
 				"field_out_ids": "value_id",
 			}},
@@ -289,16 +289,16 @@ func TestCustomWhere(t *testing.T) {
 
 	t.Run("SQLite $and", func(t *testing.T) {
 		client, gdb := mockClient(SQLite)
-		WithCustomFields([]string{"field_in_ids", "field_out_ids"}, nil)(client.options)
+		WithCustomFields([]string{testFieldInIDs, "field_out_ids"}, nil)(client.options)
 
 		conditions := map[string]interface{}{
 			conditionAnd: []map[string]interface{}{{
 				"reference_id": "reference",
 			}, {
-				"number": 12,
+				testFieldNum: 12,
 			}, {
 				conditionOr: []map[string]interface{}{{
-					"field_in_ids": "value_id",
+					testFieldInIDs: "value_id",
 				}, {
 					"field_out_ids": "value_id",
 				}},
@@ -318,16 +318,16 @@ func TestCustomWhere(t *testing.T) {
 
 	t.Run("PostgreSQL $and", func(t *testing.T) {
 		client, gdb := mockClient(PostgreSQL)
-		WithCustomFields([]string{"field_in_ids", "field_out_ids"}, nil)(client.options)
+		WithCustomFields([]string{testFieldInIDs, "field_out_ids"}, nil)(client.options)
 
 		conditions := map[string]interface{}{
 			conditionAnd: []map[string]interface{}{{
 				"reference_id": "reference",
 			}, {
-				"number": 12,
+				testFieldNum: 12,
 			}, {
 				conditionOr: []map[string]interface{}{{
-					"field_in_ids": "value_id",
+					testFieldInIDs: "value_id",
 				}, {
 					"field_out_ids": "value_id",
 				}},
@@ -349,7 +349,7 @@ func TestCustomWhere(t *testing.T) {
 		client, gdb := mockClient(PostgreSQL)
 
 		conditions := map[string]interface{}{
-			"number": map[string]interface{}{
+			testFieldNum: map[string]interface{}{
 				conditionGreaterThan: 502,
 			},
 		}
@@ -368,11 +368,11 @@ func TestCustomWhere(t *testing.T) {
 
 		conditions := map[string]interface{}{
 			conditionAnd: []map[string]interface{}{{
-				"number": map[string]interface{}{
+				testFieldNum: map[string]interface{}{
 					conditionLessThan: 503,
 				},
 			}, {
-				"number": map[string]interface{}{
+				testFieldNum: map[string]interface{}{
 					conditionGreaterThan: 203,
 				},
 			}},
@@ -396,11 +396,11 @@ func TestCustomWhere(t *testing.T) {
 
 		conditions := map[string]interface{}{
 			conditionOr: []map[string]interface{}{{
-				"number": map[string]interface{}{
+				testFieldNum: map[string]interface{}{
 					conditionLessThanOrEqual: 503,
 				},
 			}, {
-				"number": map[string]interface{}{
+				testFieldNum: map[string]interface{}{
 					conditionGreaterThanOrEqual: 203,
 				},
 			}},
@@ -425,27 +425,27 @@ func TestCustomWhere(t *testing.T) {
 		conditions := map[string]interface{}{
 			conditionOr: []map[string]interface{}{{
 				conditionAnd: []map[string]interface{}{{
-					"number": map[string]interface{}{
+					testFieldNum: map[string]interface{}{
 						conditionLessThanOrEqual: 203,
 					},
 				}, {
 					conditionOr: []map[string]interface{}{{
-						"number": map[string]interface{}{
+						testFieldNum: map[string]interface{}{
 							conditionGreaterThanOrEqual: 1203,
 						},
 					}, {
-						"number": map[string]interface{}{
+						testFieldNum: map[string]interface{}{
 							conditionGreaterThanOrEqual: 2203,
 						},
 					}},
 				}},
 			}, {
 				conditionAnd: []map[string]interface{}{{
-					"number": map[string]interface{}{
+					testFieldNum: map[string]interface{}{
 						conditionGreaterThanOrEqual: 3203,
 					},
 				}, {
-					"number": map[string]interface{}{
+					testFieldNum: map[string]interface{}{
 						conditionGreaterThanOrEqual: 4203,
 					},
 				}},

@@ -24,7 +24,7 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		res, _ := client.R().
 			SetBody(
 				map[string]string{
-					"url":         "http://localhost:8080",
+					urlField:      "http://localhost:8080",
 					"tokenHeader": "Auth1",
 					"tokenValue":  "123",
 				},
@@ -54,7 +54,7 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		client := given.HttpClient().ForAdmin()
 
 		sameWebhook := map[string]string{
-			"url":         "http://localhost:8080",
+			urlField:      "http://localhost:8080",
 			"tokenHeader": "Auth1",
 			"tokenValue":  "123",
 		}
@@ -95,7 +95,7 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		res, _ := client.R().
 			SetBody(
 				map[string]string{
-					"url":         "http://localhost:8080",
+					urlField:      "http://localhost:8080",
 					"tokenHeader": "Auth1",
 					"tokenValue":  "123",
 				},
@@ -107,7 +107,7 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		res, _ = client.R().
 			SetBody(
 				map[string]string{
-					"url":         "http://localhost:8081",
+					urlField:      "http://localhost:8081",
 					"tokenHeader": "Auth2",
 					"tokenValue":  "456",
 				},
@@ -142,7 +142,7 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		res, _ := client.R().
 			SetBody(
 				map[string]string{
-					"url":         "http://localhost:8080",
+					urlField:      "http://localhost:8080",
 					"tokenHeader": "Auth1",
 					"tokenValue":  "123",
 				},
@@ -156,8 +156,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrNotificationsDisabled.Code,
-				"message": spverrors.ErrNotificationsDisabled.Message,
+				codeField:    spverrors.ErrNotificationsDisabled.Code,
+				messageField: spverrors.ErrNotificationsDisabled.Message,
 			})
 	})
 
@@ -184,8 +184,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrCannotBindRequest.Code,
-				"message": spverrors.ErrCannotBindRequest.Message,
+				codeField:    spverrors.ErrCannotBindRequest.Code,
+				messageField: spverrors.ErrCannotBindRequest.Message,
 			})
 
 		res, _ = client.R().
@@ -212,7 +212,7 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 			SetBody(
 				map[string]string{
 					"tokenHeader": "Authorization",
-					"url":         "http://localhost:8080",
+					urlField:      "http://localhost:8080",
 				},
 			).
 			Post(webhookAPIURL)
@@ -223,8 +223,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookTokenValueRequired.Code,
-				"message": spverrors.ErrWebhookTokenValueRequired.Message,
+				codeField:    spverrors.ErrWebhookTokenValueRequired.Code,
+				messageField: spverrors.ErrWebhookTokenValueRequired.Message,
 			})
 
 		res, _ = client.R().
@@ -250,7 +250,7 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 			R().
 			SetBody(
 				map[string]string{
-					"url":        "http://localhost:8080",
+					urlField:     "http://localhost:8080",
 					"tokenValue": "123",
 				},
 			).
@@ -262,8 +262,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookTokenHeaderRequired.Code,
-				"message": spverrors.ErrWebhookTokenHeaderRequired.Message,
+				codeField:    spverrors.ErrWebhookTokenHeaderRequired.Code,
+				messageField: spverrors.ErrWebhookTokenHeaderRequired.Message,
 			})
 
 		res, _ = client.R().
@@ -301,8 +301,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookUrlRequired.Code,
-				"message": spverrors.ErrWebhookUrlRequired.Message,
+				codeField:    spverrors.ErrWebhookUrlRequired.Code,
+				messageField: spverrors.ErrWebhookUrlRequired.Message,
 			})
 
 		res, _ = client.R().
@@ -330,7 +330,7 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				map[string]string{
 					"tokenHeader": "Authorization",
 					"tokenValue":  "Bearer 123",
-					"url":         "http://test.com/%",
+					urlField:      "http://test.com/%",
 				},
 			).
 			Post(webhookAPIURL)
@@ -341,8 +341,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 				"code": "{{ .code }}",
 				"message": "{{ .message }}"
 			}`, map[string]any{
-				"code":    spverrors.ErrWebhookUrlInvalid.Code,
-				"message": spverrors.ErrWebhookUrlInvalid.Message,
+				codeField:    spverrors.ErrWebhookUrlInvalid.Code,
+				messageField: spverrors.ErrWebhookUrlInvalid.Message,
 			})
 
 		res, _ = client.R().

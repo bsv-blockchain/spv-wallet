@@ -7,4 +7,7 @@ const (
 	testDatabaseUser     = "some_username"
 	testTablePrefix      = "test"
 	testModelName        = "test_model"
+
+	testFieldInIDs = "field_in_ids"
+	testFieldNum   = "number"
 )

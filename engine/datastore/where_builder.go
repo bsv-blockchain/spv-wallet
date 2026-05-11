@@ -244,7 +244,7 @@ func convertToDict(object interface{}) map[string]interface{} {
 
 func isEmptyCondition(condition interface{}) bool {
 	val := reflect.ValueOf(condition)
-	for ; val.Kind() == reflect.Ptr; val = val.Elem() {
+	for ; val.Kind() == reflect.Pointer; val = val.Elem() {
 		if val.IsNil() {
 			return true
 		}

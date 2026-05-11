@@ -31,7 +31,7 @@ func TestCreateContact(t *testing.T) {
 		res, _ := client.R().
 			SetBody(map[string]any{
 				"creatorPaymail": fixtures.Sender.DefaultPaymail().String(),
-				"fullName":       fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				fullNameField:    fixtures.RecipientInternal.DefaultPaymail().PublicName(),
 			}).
 			Post(fmt.Sprintf("/api/v2/admin/contacts/%s", fixtures.RecipientInternal.DefaultPaymail().String()))
 
@@ -47,9 +47,9 @@ func TestCreateContact(t *testing.T) {
 				"pubKey": "{{ matchHexWithLength 66 }}",
 				"status": "{{ .status }}"
 			}`, map[string]any{
-				"fullName": fixtures.RecipientInternal.DefaultPaymail().PublicName(),
-				"paymail":  fixtures.RecipientInternal.DefaultPaymail().String(),
-				"status":   contactsmodels.ContactNotConfirmed,
+				fullNameField: fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				"paymail":     fixtures.RecipientInternal.DefaultPaymail().String(),
+				"status":      contactsmodels.ContactNotConfirmed,
 			})
 	})
 
@@ -63,7 +63,7 @@ func TestCreateContact(t *testing.T) {
 		res, _ := client.R().
 			SetBody(map[string]any{
 				"creatorPaymail": fixtures.Sender.DefaultPaymail().String(),
-				"fullName":       fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				fullNameField:    fixtures.RecipientInternal.DefaultPaymail().PublicName(),
 			}).
 			Post(fmt.Sprintf("/api/v2/admin/contacts/%s", fixtures.RecipientInternal.DefaultPaymail().String()))
 
@@ -83,7 +83,7 @@ func TestCreateContact(t *testing.T) {
 		res, _ := client.R().
 			SetBody(map[string]any{
 				"creatorPaymail": "unknown-paymail@exmaple.com",
-				"fullName":       fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				fullNameField:    fixtures.RecipientInternal.DefaultPaymail().PublicName(),
 			}).
 			Post(fmt.Sprintf("/api/v2/admin/contacts/%s", fixtures.RecipientInternal.DefaultPaymail().String()))
 
@@ -104,7 +104,7 @@ func TestCreateContact(t *testing.T) {
 		res, _ := client.R().
 			SetBody(map[string]any{
 				"creatorPaymail": fixtures.Sender.DefaultPaymail().String(),
-				"fullName":       fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				fullNameField:    fixtures.RecipientInternal.DefaultPaymail().PublicName(),
 			}).
 			Post("/api/v2/admin/contacts/unknown-paymail@exmaple.com")
 
@@ -124,7 +124,7 @@ func TestCreateContact(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"fullName": fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				fullNameField: fixtures.RecipientInternal.DefaultPaymail().PublicName(),
 			}).
 			Post("/api/v2/admin/contacts/unknown-paymail@exmaple.com")
 

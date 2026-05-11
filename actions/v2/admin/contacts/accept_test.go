@@ -41,9 +41,9 @@ func TestAcceptContact(t *testing.T) {
 				"pubKey": "{{ matchHexWithLength 66 }}",
 				"status": "{{ .status }}"
 			}`, map[string]any{
-				"fullName": fixtures.RecipientInternal.DefaultPaymail().PublicName(),
-				"paymail":  fixtures.RecipientInternal.DefaultPaymail().String(),
-				"status":   contactsmodels.ContactNotConfirmed,
+				fullNameField: fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				"paymail":     fixtures.RecipientInternal.DefaultPaymail().String(),
+				"status":      contactsmodels.ContactNotConfirmed,
 			})
 	})
 
@@ -69,9 +69,9 @@ func TestAcceptContact(t *testing.T) {
 				"pubKey": "{{ matchHexWithLength 66 }}",
 				"status": "{{ .status }}"
 			}`, map[string]any{
-				"fullName": fixtures.RecipientInternal.DefaultPaymail().PublicName(),
-				"paymail":  fixtures.RecipientInternal.DefaultPaymail().String(),
-				"status":   contactsmodels.ContactNotConfirmed,
+				fullNameField: fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				"paymail":     fixtures.RecipientInternal.DefaultPaymail().String(),
+				"status":      contactsmodels.ContactNotConfirmed,
 			})
 
 		// when:
@@ -90,9 +90,9 @@ func TestAcceptContact(t *testing.T) {
 				"pubKey": "{{ matchHexWithLength 66 }}",
 				"status": "{{ .status }}"
 			}`, map[string]any{
-				"fullName": fixtures.RecipientInternal.DefaultPaymail().PublicName(),
-				"paymail":  fixtures.RecipientInternal.DefaultPaymail().String(),
-				"status":   contactsmodels.ContactNotConfirmed,
+				fullNameField: fixtures.RecipientInternal.DefaultPaymail().PublicName(),
+				"paymail":     fixtures.RecipientInternal.DefaultPaymail().String(),
+				"status":      contactsmodels.ContactNotConfirmed,
 			})
 	})
 

@@ -37,7 +37,7 @@ func Test_newAccessKey(t *testing.T) {
 			client.DefaultModelOptions(),
 			New(),
 			WithMetadatas(Metadata{
-				"test-key": "test-value",
+				testMetadataKey: testMetadataValue,
 			}),
 		)...)
 		assert.Len(t, key.Key, 64)
@@ -52,7 +52,7 @@ func Test_newAccessKey(t *testing.T) {
 		assert.Equal(t, testXPubID, accessKey.XpubID)
 		assert.Empty(t, accessKey.Key) // private key is lost after Save
 		assert.Len(t, accessKey.Metadata, 1)
-		assert.Equal(t, "test-value", accessKey.Metadata["test-key"])
+		assert.Equal(t, testMetadataValue, accessKey.Metadata[testMetadataKey])
 	})
 
 	t.Run("revoke", func(t *testing.T) {
@@ -150,17 +150,17 @@ func TestAccessKey_GetAccessKeys(t *testing.T) {
 		ctx, client, deferMe := CreateTestSQLiteClient(t, false, true)
 		defer deferMe()
 		opts := client.DefaultModelOptions()
-		ak := newAccessKey(testXPubID, append(opts, New(), WithMetadata("test-key", "test-value-1"))...)
+		ak := newAccessKey(testXPubID, append(opts, New(), WithMetadata(testMetadataKey, "test-value-1"))...)
 		txErr := ak.Save(ctx)
 		require.NoError(t, txErr)
 		assert.NotEmpty(t, ak.Key)
 
-		ak2 := newAccessKey(testXPubID, append(opts, New(), WithMetadata("test-key", "test-value-2"))...)
+		ak2 := newAccessKey(testXPubID, append(opts, New(), WithMetadata(testMetadataKey, "test-value-2"))...)
 		txErr = ak2.Save(ctx)
 		require.NoError(t, txErr)
 		assert.NotEmpty(t, ak2.Key)
 
-		metadata := &Metadata{"test-key": "test-value-2"}
+		metadata := &Metadata{testMetadataKey: "test-value-2"}
 		accessKeys, err := getAccessKeysByXPubID(ctx, testXPubID, metadata, nil, nil, client.DefaultModelOptions()...)
 		require.NoError(t, err)
 		assert.Len(t, accessKeys, 1)

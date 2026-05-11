@@ -43,12 +43,12 @@ func TestGetModelStringAttribute(t *testing.T) {
 
 	t.Run("valid string attribute", func(t *testing.T) {
 		m := &TestModel{
-			StringField: "test",
+			StringField: testTablePrefix,
 			ID:          "12345678",
 		}
 		field1 := GetModelStringAttribute(m, "StringField")
 		id := GetModelStringAttribute(m, sqlIDFieldProper)
-		assert.Equal(t, "test", *field1)
+		assert.Equal(t, testTablePrefix, *field1)
 		assert.Equal(t, "12345678", *id)
 	})
 

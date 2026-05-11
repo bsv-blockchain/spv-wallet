@@ -42,12 +42,12 @@ func TestGetUser(t *testing.T) {
 			    }
 			]
 		}`, map[string]any{
-			"id":         fixtures.Sender.ID(),
-			"publicKey":  fixtures.Sender.PublicKey().ToDERHex(),
-			"paymail":    fixtures.Sender.DefaultPaymail(),
-			"publicName": fixtures.Sender.DefaultPaymail().PublicName(),
-			"alias":      fixtures.Sender.DefaultPaymail().Alias(),
-			"domain":     fixtures.Sender.DefaultPaymail().Domain(),
+			"id":            fixtures.Sender.ID(),
+			publicKeyField:  fixtures.Sender.PublicKey().ToDERHex(),
+			paymailField:    fixtures.Sender.DefaultPaymail(),
+			publicNameField: fixtures.Sender.DefaultPaymail().PublicName(),
+			aliasField:      fixtures.Sender.DefaultPaymail().Alias(),
+			"domain":        fixtures.Sender.DefaultPaymail().Domain(),
 		})
 }
 

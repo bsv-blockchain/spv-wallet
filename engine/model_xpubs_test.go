@@ -80,7 +80,7 @@ func TestXpub_getNewDestination(t *testing.T) {
 		require.NoError(t, err)
 
 		metaData := map[string]interface{}{
-			"test-key": "test-value",
+			testMetadataKey: testMetadataValue,
 		}
 		_, err = xPub.getNewDestination(ctx, utils.ChainInternal, utils.ScriptTypePubKeyHash, append(client.DefaultModelOptions(), WithMetadatas(metaData))...)
 		assert.ErrorIs(t, spverrors.ErrXpubInvalidLength, err)
@@ -94,7 +94,7 @@ func TestXpub_getNewDestination(t *testing.T) {
 		require.NoError(t, err)
 
 		metaData := map[string]interface{}{
-			"test-key": "test-value",
+			testMetadataKey: testMetadataValue,
 		}
 		var destination *Destination
 		destination, err = xPub.getNewDestination(ctx, utils.ChainInternal, utils.ScriptTypePubKeyHash, append(client.DefaultModelOptions(), WithMetadatas(metaData))...)
@@ -106,7 +106,7 @@ func TestXpub_getNewDestination(t *testing.T) {
 		assert.Equal(t, utils.ChainInternal, destination.Chain)
 		assert.Equal(t, uint32(0), destination.Num)
 		assert.Equal(t, "14n4rKed7f5vkPfV7Yj8N3E8Pxa35Rytp9", destination.Address)
-		assert.Equal(t, "test-value", destination.Metadata["test-key"])
+		assert.Equal(t, testMetadataValue, destination.Metadata[testMetadataKey])
 	})
 
 	t.Run("new external destination", func(t *testing.T) {
@@ -117,7 +117,7 @@ func TestXpub_getNewDestination(t *testing.T) {
 		require.NoError(t, err)
 
 		metaData := map[string]interface{}{
-			"test-key": "test-value",
+			testMetadataKey: testMetadataValue,
 		}
 		var destination *Destination
 		destination, err = xPub.getNewDestination(ctx, utils.ChainExternal, utils.ScriptTypePubKeyHash, append(client.DefaultModelOptions(), WithMetadatas(metaData))...)
@@ -129,7 +129,7 @@ func TestXpub_getNewDestination(t *testing.T) {
 		assert.Equal(t, utils.ChainExternal, destination.Chain)
 		assert.Equal(t, uint32(0), destination.Num)
 		assert.Equal(t, "1CfaQw9udYNPccssFJFZ94DN8MqNZm9nGt", destination.Address)
-		assert.Equal(t, "test-value", destination.Metadata["test-key"])
+		assert.Equal(t, testMetadataValue, destination.Metadata[testMetadataKey])
 	})
 }
 
@@ -256,13 +256,13 @@ func TestXpub_RemovePrivateData(t *testing.T) {
 		require.NotNil(t, xPub)
 
 		xPub.Metadata = Metadata{
-			"test-key": "test-value",
+			testMetadataKey: testMetadataValue,
 		}
 		xPub.NextInternalNum = uint32(123)
 		xPub.NextExternalNum = uint32(321)
 
 		assert.NotNil(t, xPub.Metadata)
-		assert.Equal(t, "test-value", xPub.Metadata["test-key"])
+		assert.Equal(t, testMetadataValue, xPub.Metadata[testMetadataKey])
 		assert.Equal(t, uint32(123), xPub.NextInternalNum)
 		assert.Equal(t, uint32(321), xPub.NextExternalNum)
 

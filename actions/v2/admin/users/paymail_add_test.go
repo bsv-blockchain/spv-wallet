@@ -38,9 +38,9 @@ func TestAddPaymail(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"address":    secondPaymail,
-				"publicName": secondPaymail.PublicName(),
-				"avatarURL":  avatarURL,
+				"address":       secondPaymail,
+				publicNameField: secondPaymail.PublicName(),
+				avatarURLField:  avatarURL,
 			}).
 			SetPathParam("id", user.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")
@@ -56,10 +56,10 @@ func TestAddPaymail(t *testing.T) {
 			  "paymail": "{{ .paymail }}",
 			  "publicName": "{{ .publicName }}"
 			}`, map[string]any{
-				"paymail":    secondPaymail,
-				"publicName": secondPaymail.PublicName(),
-				"alias":      secondPaymail.Alias(),
-				"avatar":     avatarURL,
+				paymailField:    secondPaymail,
+				publicNameField: secondPaymail.PublicName(),
+				aliasField:      secondPaymail.Alias(),
+				"avatar":        avatarURL,
 			})
 	})
 
@@ -72,9 +72,9 @@ func TestAddPaymail(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"address":    secondPaymail,
-				"publicName": secondPaymail.PublicName(),
-				"avatarURL":  wrongAvatarURL,
+				"address":       secondPaymail,
+				publicNameField: secondPaymail.PublicName(),
+				avatarURLField:  wrongAvatarURL,
 			}).
 			SetPathParam("id", user.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")
@@ -92,8 +92,8 @@ func TestAddPaymail(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"alias":  thirdPaymail.Alias(),
-				"domain": thirdPaymail.Domain(),
+				aliasField: thirdPaymail.Alias(),
+				"domain":   thirdPaymail.Domain(),
 			}).
 			SetPathParam("id", user.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")
@@ -109,8 +109,8 @@ func TestAddPaymail(t *testing.T) {
 			  "paymail": "{{ .paymail }}",
 			  "publicName": "{{ .alias }}"
 			}`, map[string]any{
-				"paymail": thirdPaymail,
-				"alias":   thirdPaymail.Alias(),
+				paymailField: thirdPaymail,
+				aliasField:   thirdPaymail.Alias(),
 			})
 	})
 
@@ -158,7 +158,7 @@ func TestAddPaymail(t *testing.T) {
 					}
 				]
 			}`, map[string]any{
-				"publicKey": user.PublicKey().ToDERHex(),
+				publicKeyField: user.PublicKey().ToDERHex(),
 
 				"defaultPaymail":    user.DefaultPaymail(),
 				"defaultPublicName": user.DefaultPaymail().PublicName(),
@@ -196,9 +196,9 @@ func TestAddPaymailWithWrongDomain(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"address":    unsupportedPaymail,
-				"publicName": publicName,
-				"avatarURL":  "",
+				"address":       unsupportedPaymail,
+				publicNameField: publicName,
+				avatarURLField:  "",
 			}).
 			SetPathParam("id", fixtures.Sender.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")
@@ -212,10 +212,10 @@ func TestAddPaymailWithWrongDomain(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"alias":      alias,
-				"domain":     unsupportedDomain,
-				"publicName": publicName,
-				"avatar":     "",
+				aliasField:      alias,
+				"domain":        unsupportedDomain,
+				publicNameField: publicName,
+				"avatar":        "",
 			}).
 			SetPathParam("id", fixtures.Sender.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")
@@ -249,11 +249,11 @@ func TestAddPaymailWithBothPaymailAndAliasDomainPair(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"address":    paymail,
-				"alias":      alias,
-				"domain":     domain,
-				"publicName": publicName,
-				"avatarURL":  "",
+				"address":       paymail,
+				aliasField:      alias,
+				"domain":        domain,
+				publicNameField: publicName,
+				avatarURLField:  "",
 			}).
 			SetPathParam("id", fixtures.Sender.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")
@@ -272,11 +272,11 @@ func TestAddPaymailWithBothPaymailAndAliasDomainPair(t *testing.T) {
 		// when:
 		res, _ := client.R().
 			SetBody(map[string]any{
-				"alias":      alias,
-				"domain":     domain,
-				"address":    paymail,
-				"publicName": publicName,
-				"avatarURL":  "",
+				aliasField:      alias,
+				"domain":        domain,
+				"address":       paymail,
+				publicNameField: publicName,
+				avatarURLField:  "",
 			}).
 			SetPathParam("id", fixtures.Sender.ID()).
 			Post("/api/v2/admin/users/{id}/paymails")

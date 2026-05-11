@@ -60,7 +60,7 @@ func TestWithSQLite(t *testing.T) {
 				Debug:              true,
 				MaxIdleConnections: 1,
 				MaxOpenConnections: 1,
-				TablePrefix:        "test",
+				TablePrefix:        testTablePrefix,
 			},
 			DatabasePath:       "",
 			ExistingConnection: nil,

@@ -15,7 +15,7 @@ type checkForMethod interface {
 // IsModelSlice returns true if the given interface is a slice of models
 func IsModelSlice(model interface{}) bool {
 	value := reflect.ValueOf(model)
-	if value.Kind() == reflect.Ptr && value.IsNil() {
+	if value.Kind() == reflect.Pointer && value.IsNil() {
 		value = reflect.New(value.Type().Elem())
 	}
 	modelType := reflect.Indirect(value).Type()
@@ -36,7 +36,7 @@ func GetModelName(model interface{}) *string {
 
 	// Model is a pointer
 	k := GetModelType(model).Kind()
-	if reflect.ValueOf(model).Type().Kind() == reflect.Ptr && k != reflect.Struct {
+	if reflect.ValueOf(model).Type().Kind() == reflect.Pointer && k != reflect.Struct {
 		if m, ok := model.(checkForMethod); ok {
 			name := m.GetModelName()
 			return &name
@@ -63,7 +63,7 @@ func GetModelTableName(model interface{}) *string {
 
 	// Model is a pointer
 	k := GetModelType(model).Kind()
-	if reflect.ValueOf(model).Type().Kind() == reflect.Ptr && k != reflect.Struct {
+	if reflect.ValueOf(model).Type().Kind() == reflect.Pointer && k != reflect.Struct {
 		if m, ok := model.(checkForMethod); ok {
 			name := m.GetModelTableName()
 			return &name
@@ -84,7 +84,7 @@ func GetModelTableName(model interface{}) *string {
 // GetModelType gets the model type of the model interface via reflection
 func GetModelType(model interface{}) reflect.Type {
 	value := reflect.ValueOf(model)
-	if value.Kind() == reflect.Ptr && value.IsNil() {
+	if value.Kind() == reflect.Pointer && value.IsNil() {
 		value = reflect.New(value.Type().Elem())
 	}
 	modelType := reflect.Indirect(value).Type()
@@ -96,7 +96,7 @@ func GetModelType(model interface{}) reflect.Type {
 	// Traverse to the actual element (in case of Ptr to a Slice or Array)
 	for modelType.Kind() == reflect.Slice ||
 		modelType.Kind() == reflect.Array ||
-		modelType.Kind() == reflect.Ptr {
+		modelType.Kind() == reflect.Pointer {
 		modelType = modelType.Elem()
 	}
 
@@ -106,7 +106,7 @@ func GetModelType(model interface{}) reflect.Type {
 // GetModelStringAttribute retrieves a string attribute from the model
 func GetModelStringAttribute(model interface{}, attribute string) *string {
 	valueOf := reflect.ValueOf(model)
-	if model == nil || (valueOf.Kind() == reflect.Ptr &&
+	if model == nil || (valueOf.Kind() == reflect.Pointer &&
 		valueOf.IsNil()) {
 		return nil
 	}
@@ -142,7 +142,7 @@ func GetModelUnset(model interface{}) map[string]bool {
 	unset := make(map[string]bool)
 	t := reflect.TypeOf(model)
 	v := reflect.ValueOf(model)
-	if t.Kind() == reflect.Ptr {
+	if t.Kind() == reflect.Pointer {
 		t = t.Elem()
 		v = reflect.ValueOf(model).Elem()
 	}
@@ -154,7 +154,7 @@ func GetModelUnset(model interface{}) map[string]bool {
 				if field.Type.Name() == nullStringFieldType ||
 					field.Type.Name() == nullTimeFieldType {
 					vv := v.Field(field.Index[0])
-					if vv.Kind() == reflect.Ptr {
+					if vv.Kind() == reflect.Pointer {
 						vv = v.Elem()
 					}
 					value := vv.Interface()

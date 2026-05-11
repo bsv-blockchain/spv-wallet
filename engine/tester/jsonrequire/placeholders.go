@@ -143,7 +143,7 @@ func typeof(v any) (reflect.Value, reflect.Kind, any) {
 	rval := reflect.ValueOf(v)
 	kind := reflect.TypeOf(v).Kind()
 
-	if kind == reflect.Ptr {
+	if kind == reflect.Pointer {
 		rval = rval.Elem()
 		kind = rval.Kind()
 	}
