@@ -1,5 +1,5 @@
 # Get Golang for builder
-FROM golang:1.26.2@sha256:b54cbf583d390341599d7bcbc062425c081105cc5ef6d170ced98ef9d047c716 as builder
+FROM golang:1.26.3@sha256:2981696eed011d747340d7252620932677929cce7d2d539602f56a8d7e9b660b as builder
 
 # Set the working directory
 WORKDIR /go/src/github.com/bsv-blockchain/spv-wallet
@@ -10,7 +10,7 @@ COPY . ./
 RUN GOOS=linux go build -o spvwallet cmd/main.go
 
 # Get runtime image
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7@sha256:8d0a8fb39ec907e8ca62cdd24b62a63ca49a30fe465798a360741fde58437a23
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7@sha256:12db9874bd753eb98b1ab3d840e75de5d6842ac0604fbd68c012adefe97140be
 
 # Version
 LABEL version="1.0" name="SPVWallet"
