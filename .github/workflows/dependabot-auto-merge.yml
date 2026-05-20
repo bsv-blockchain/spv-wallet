@@ -65,6 +65,7 @@ jobs:
       - name: 📥 Checkout code (sparse)
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
+          persist-credentials: false # Sparse checkout only reads .github/env; no git operations needed
           sparse-checkout: |
             .github/env
             .github/actions/load-env
@@ -91,7 +92,7 @@ jobs:
       dependency-names: ${{ steps.metadata.outputs.dependency-names }}
       update-type: ${{ steps.metadata.outputs.update-type }}
       dependency-type: ${{ steps.metadata.outputs.dependency-type }}
-      action-taken: ${{ steps.determine-action.outputs.action }}
+      action-taken: ${{ steps.auto-merge.outputs.action-taken || steps.determine-action.outputs.action }}
 
     steps:
       # --------------------------------------------------------------------
@@ -103,6 +104,7 @@ jobs:
           ENV_JSON: ${{ needs.load-env.outputs.env-json }}
           GH_PAT_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
         run: |
+          set -euo pipefail
           echo "📋 Extracting Dependabot configuration from environment..."
 
           # Extract all needed variables
@@ -171,14 +173,23 @@ jobs:
       # Log dependency information
       # --------------------------------------------------------------------
       - name: 📋 Log dependency details
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          DEPENDENCY_NAMES: ${{ steps.metadata.outputs.dependency-names }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          DEPENDENCY_TYPE: ${{ steps.metadata.outputs.dependency-type }}
+          PACKAGE_ECOSYSTEM: ${{ steps.metadata.outputs.package-ecosystem }}
+          PREVIOUS_VERSION: ${{ steps.metadata.outputs.previous-version }}
+          NEW_VERSION: ${{ steps.metadata.outputs.new-version }}
         run: |
-          echo "🔍 Analyzing Dependabot PR #${{ github.event.pull_request.number }}..."
+          set -euo pipefail
+          echo "🔍 Analyzing Dependabot PR #${PR_NUMBER}..."
           echo "════════════════════════════════════════════════════════════════"
-          echo "📦 Dependency: ${{ steps.metadata.outputs.dependency-names }}"
-          echo "🔄 Update type: ${{ steps.metadata.outputs.update-type }}"
-          echo "📁 Dependency type: ${{ steps.metadata.outputs.dependency-type }}"
-          echo "🌐 Package ecosystem: ${{ steps.metadata.outputs.package-ecosystem }}"
-          echo "⬆️ Version: ${{ steps.metadata.outputs.previous-version }} → ${{ steps.metadata.outputs.new-version }}"
+          echo "📦 Dependency: ${DEPENDENCY_NAMES}"
+          echo "🔄 Update type: ${UPDATE_TYPE}"
+          echo "📁 Dependency type: ${DEPENDENCY_TYPE}"
+          echo "🌐 Package ecosystem: ${PACKAGE_ECOSYSTEM}"
+          echo "⬆️ Version: ${PREVIOUS_VERSION} → ${NEW_VERSION}"
           echo "════════════════════════════════════════════════════════════════"
 
       # --------------------------------------------------------------------
@@ -191,7 +202,9 @@ jobs:
           PR_LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
           PR_BODY: ${{ github.event.pull_request.body }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPENDENCY_NAMES: ${{ steps.metadata.outputs.dependency-names }}
         run: |
+          set -euo pipefail
           echo "════════════════════════════════════════════════════════════════"
           echo "🔒 SECURITY UPDATE DETECTION"
           echo "════════════════════════════════════════════════════════════════"
@@ -259,7 +272,7 @@ jobs:
           # Check 3: Query GitHub Security Advisories for Go ecosystem
           echo ""
           echo "🌐 Check 3: Querying GitHub Security Advisories API..."
-          DEPENDENCY="${{ steps.metadata.outputs.dependency-names }}"
+          DEPENDENCY="$DEPENDENCY_NAMES"
           echo "  Package: $DEPENDENCY"
           echo "  Ecosystem: GO"
 
@@ -301,14 +314,17 @@ jobs:
       # --------------------------------------------------------------------
       - name: 🎯 Determine action
         id: determine-action
+        env:
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          DEPENDENCY_TYPE: ${{ steps.metadata.outputs.dependency-type }}
+          IS_SECURITY: ${{ steps.check-security.outputs.is_security }}
         run: |
+          set -euo pipefail
           echo "════════════════════════════════════════════════════════════════"
           echo "🎯 ACTION DETERMINATION LOGIC"
           echo "════════════════════════════════════════════════════════════════"
 
-          UPDATE_TYPE="${{ steps.metadata.outputs.update-type }}"
-          DEP_TYPE="${{ steps.metadata.outputs.dependency-type }}"
-          IS_SECURITY="${{ steps.check-security.outputs.is_security }}"
+          DEP_TYPE="$DEPENDENCY_TYPE"
           ACTION="none"
 
           echo "📊 Input Variables:"
@@ -317,14 +333,14 @@ jobs:
           echo "  Is Security: $IS_SECURITY"
           echo ""
           echo "📋 Active Configuration:"
-          echo "  AUTO_MERGE_SECURITY: ${{ env.AUTO_MERGE_SECURITY }}"
-          echo "  AUTO_MERGE_PATCH: ${{ env.AUTO_MERGE_PATCH }}"
-          echo "  AUTO_MERGE_PATCH_INDIRECT: ${{ env.AUTO_MERGE_PATCH_INDIRECT }}"
-          echo "  AUTO_MERGE_MINOR_DEV: ${{ env.AUTO_MERGE_MINOR_DEV }}"
-          echo "  AUTO_MERGE_MINOR_PROD: ${{ env.AUTO_MERGE_MINOR_PROD }}"
-          echo "  AUTO_MERGE_MINOR_INDIRECT: ${{ env.AUTO_MERGE_MINOR_INDIRECT }}"
-          echo "  ALERT_ON_MAJOR: ${{ env.ALERT_ON_MAJOR }}"
-          echo "  ALERT_ON_MINOR_PROD: ${{ env.ALERT_ON_MINOR_PROD }}"
+          echo "  AUTO_MERGE_SECURITY: ${AUTO_MERGE_SECURITY}"
+          echo "  AUTO_MERGE_PATCH: ${AUTO_MERGE_PATCH}"
+          echo "  AUTO_MERGE_PATCH_INDIRECT: ${AUTO_MERGE_PATCH_INDIRECT}"
+          echo "  AUTO_MERGE_MINOR_DEV: ${AUTO_MERGE_MINOR_DEV}"
+          echo "  AUTO_MERGE_MINOR_PROD: ${AUTO_MERGE_MINOR_PROD}"
+          echo "  AUTO_MERGE_MINOR_INDIRECT: ${AUTO_MERGE_MINOR_INDIRECT}"
+          echo "  ALERT_ON_MAJOR: ${ALERT_ON_MAJOR}"
+          echo "  ALERT_ON_MINOR_PROD: ${ALERT_ON_MINOR_PROD}"
           echo ""
           echo "🔄 Evaluating decision tree..."
           echo "────────────────────────────────────────────────────────────────"
@@ -333,7 +349,7 @@ jobs:
           echo "🔍 Checking Rule 1: Security updates..."
           if [[ "$IS_SECURITY" == "true" ]]; then
             echo "  ✅ IS_SECURITY == true"
-            if [[ "${{ env.AUTO_MERGE_SECURITY }}" == "true" ]]; then
+            if [[ "$AUTO_MERGE_SECURITY" == "true" ]]; then
               echo "  ✅ AUTO_MERGE_SECURITY == true"
               if [[ "$UPDATE_TYPE" != "version-update:semver-major" ]]; then
                 echo "  ✅ UPDATE_TYPE != major"
@@ -363,7 +379,7 @@ jobs:
               echo "  ✅ UPDATE_TYPE == patch"
               if [[ "$DEP_TYPE" != "indirect" ]]; then
                 echo "  ✅ DEP_TYPE != indirect (is direct)"
-                if [[ "${{ env.AUTO_MERGE_PATCH }}" == "true" ]]; then
+                if [[ "$AUTO_MERGE_PATCH" == "true" ]]; then
                   echo "  ✅ AUTO_MERGE_PATCH == true"
                   ACTION="auto-merge-patch"
                   echo "  🎯 MATCH! Action: $ACTION"
@@ -392,7 +408,7 @@ jobs:
               echo "  ✅ UPDATE_TYPE == patch"
               if [[ "$DEP_TYPE" == "indirect" ]]; then
                 echo "  ✅ DEP_TYPE == indirect"
-                if [[ "${{ env.AUTO_MERGE_PATCH_INDIRECT }}" == "true" ]]; then
+                if [[ "$AUTO_MERGE_PATCH_INDIRECT" == "true" ]]; then
                   echo "  ✅ AUTO_MERGE_PATCH_INDIRECT == true"
                   ACTION="auto-merge-patch-indirect"
                   echo "  🎯 MATCH! Action: $ACTION"
@@ -421,7 +437,7 @@ jobs:
               echo "  ✅ UPDATE_TYPE == minor"
               if [[ "$DEP_TYPE" == "direct:development" ]]; then
                 echo "  ✅ DEP_TYPE == direct:development"
-                if [[ "${{ env.AUTO_MERGE_MINOR_DEV }}" == "true" ]]; then
+                if [[ "$AUTO_MERGE_MINOR_DEV" == "true" ]]; then
                   echo "  ✅ AUTO_MERGE_MINOR_DEV == true"
                   ACTION="auto-merge-minor-dev"
                   echo "  🎯 MATCH! Action: $ACTION"
@@ -450,12 +466,12 @@ jobs:
               echo "  ✅ UPDATE_TYPE == minor"
               if [[ "$DEP_TYPE" == "direct:production" ]]; then
                 echo "  ✅ DEP_TYPE == direct:production"
-                if [[ "${{ env.AUTO_MERGE_MINOR_PROD }}" == "true" ]]; then
+                if [[ "$AUTO_MERGE_MINOR_PROD" == "true" ]]; then
                   echo "  ✅ AUTO_MERGE_MINOR_PROD == true"
                   ACTION="auto-merge-minor-prod"
                   echo "  🎯 MATCH! Action: $ACTION"
                   echo "  📝 Reason: Minor update for prod dependency with auto-merge enabled"
-                elif [[ "${{ env.ALERT_ON_MINOR_PROD }}" == "true" ]]; then
+                elif [[ "$ALERT_ON_MINOR_PROD" == "true" ]]; then
                   echo "  ❌ AUTO_MERGE_MINOR_PROD == false"
                   echo "  ✅ ALERT_ON_MINOR_PROD == true"
                   ACTION="alert-minor-prod"
@@ -486,7 +502,7 @@ jobs:
               echo "  ✅ UPDATE_TYPE == minor"
               if [[ "$DEP_TYPE" == "indirect" ]]; then
                 echo "  ✅ DEP_TYPE == indirect"
-                if [[ "${{ env.AUTO_MERGE_MINOR_INDIRECT }}" == "true" ]]; then
+                if [[ "$AUTO_MERGE_MINOR_INDIRECT" == "true" ]]; then
                   echo "  ✅ AUTO_MERGE_MINOR_INDIRECT == true"
                   ACTION="auto-merge-minor-indirect"
                   echo "  🎯 MATCH! Action: $ACTION"
@@ -513,7 +529,7 @@ jobs:
             echo "🔍 Checking Rule 7: Major updates..."
             if [[ "$UPDATE_TYPE" == "version-update:semver-major" ]]; then
               echo "  ✅ UPDATE_TYPE == major"
-              if [[ "${{ env.ALERT_ON_MAJOR }}" == "true" ]]; then
+              if [[ "$ALERT_ON_MAJOR" == "true" ]]; then
                 echo "  ✅ ALERT_ON_MAJOR == true"
                 ACTION="alert-major"
                 echo "  🎯 MATCH! Action: $ACTION"
@@ -551,8 +567,10 @@ jobs:
       # Handle major version alerts
       # --------------------------------------------------------------------
       - name: 📊 Log major version alert decision
+        env:
+          ACTION: ${{ steps.determine-action.outputs.action }}
         run: |
-          ACTION="${{ steps.determine-action.outputs.action }}"
+          set -euo pipefail
           if [[ "$ACTION" == "alert-major" ]] || [[ "$ACTION" == "alert-security-major" ]]; then
             echo "════════════════════════════════════════════════════════════════"
             echo "⚠️ MAJOR VERSION ALERT - WILL EXECUTE"
@@ -571,15 +589,24 @@ jobs:
       - name: ⚠️ Alert on major version bump
         if: steps.determine-action.outputs.action == 'alert-major' || steps.determine-action.outputs.action == 'alert-security-major'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          DEPENDENCY: ${{ steps.metadata.outputs.dependency-names }}
+          NEW_VERSION: ${{ steps.metadata.outputs.new-version }}
+          PREVIOUS_VERSION: ${{ steps.metadata.outputs.previous-version }}
+          MAINTAINER: ${{ env.MAINTAINER }}
+          IS_SECURITY: ${{ steps.check-security.outputs.is_security }}
+          DEPENDENCY_TYPE: ${{ steps.metadata.outputs.dependency-type }}
+          PACKAGE_ECOSYSTEM: ${{ steps.metadata.outputs.package-ecosystem }}
+          MANUAL_REVIEW_LABEL: ${{ env.MANUAL_REVIEW_LABEL }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const issueNumber = context.issue.number;
-            const dependency = '${{ steps.metadata.outputs.dependency-names }}';
-            const newVersion = '${{ steps.metadata.outputs.new-version }}';
-            const previousVersion = '${{ steps.metadata.outputs.previous-version }}';
-            const maintainer = '${{ env.MAINTAINER }}';
-            const isSecurity = '${{ steps.check-security.outputs.is_security }}' === 'true';
+            const dependency = process.env.DEPENDENCY;
+            const newVersion = process.env.NEW_VERSION;
+            const previousVersion = process.env.PREVIOUS_VERSION;
+            const maintainer = process.env.MAINTAINER;
+            const isSecurity = process.env.IS_SECURITY === 'true';
 
             const emoji = isSecurity ? '🚨' : '⚠️';
             const prefix = isSecurity ? '**SECURITY** - ' : '';
@@ -588,8 +615,8 @@ jobs:
 
             **Dependency:** \`${dependency}\`
             **Version:** \`${previousVersion}\` → \`${newVersion}\`
-            **Type:** ${{ steps.metadata.outputs.dependency-type }}
-            **Ecosystem:** ${{ steps.metadata.outputs.package-ecosystem }}
+            **Type:** ${process.env.DEPENDENCY_TYPE}
+            **Ecosystem:** ${process.env.PACKAGE_ECOSYSTEM}
             ${isSecurity ? '\n🔒 **This is a security update with potential breaking changes**' : ''}
 
             This requires manual review for potential breaking changes.
@@ -627,7 +654,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issueNumber,
-                labels: ['${{ env.MANUAL_REVIEW_LABEL }}']
+                labels: [process.env.MANUAL_REVIEW_LABEL]
               });
             } else {
               console.log('Major version alert already exists, skipping duplicate comment');
@@ -637,8 +664,10 @@ jobs:
       # Handle minor production dependency alerts
       # --------------------------------------------------------------------
       - name: 📊 Log minor prod dependency alert decision
+        env:
+          ACTION: ${{ steps.determine-action.outputs.action }}
         run: |
-          ACTION="${{ steps.determine-action.outputs.action }}"
+          set -euo pipefail
           if [[ "$ACTION" == "alert-minor-prod" ]]; then
             echo "════════════════════════════════════════════════════════════════"
             echo "🔍 MINOR PROD DEPENDENCY ALERT - WILL EXECUTE"
@@ -657,21 +686,27 @@ jobs:
       - name: 🔍 Alert on minor production dependency
         if: steps.determine-action.outputs.action == 'alert-minor-prod'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          DEPENDENCY: ${{ steps.metadata.outputs.dependency-names }}
+          NEW_VERSION: ${{ steps.metadata.outputs.new-version }}
+          PREVIOUS_VERSION: ${{ steps.metadata.outputs.previous-version }}
+          MAINTAINER: ${{ env.MAINTAINER }}
+          PACKAGE_ECOSYSTEM: ${{ steps.metadata.outputs.package-ecosystem }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const issueNumber = context.issue.number;
-            const dependency = '${{ steps.metadata.outputs.dependency-names }}';
-            const newVersion = '${{ steps.metadata.outputs.new-version }}';
-            const previousVersion = '${{ steps.metadata.outputs.previous-version }}';
-            const maintainer = '${{ env.MAINTAINER }}';
+            const dependency = process.env.DEPENDENCY;
+            const newVersion = process.env.NEW_VERSION;
+            const previousVersion = process.env.PREVIOUS_VERSION;
+            const maintainer = process.env.MAINTAINER;
 
             const commentBody = `🔍 @${maintainer} – **Minor production dependency update**
 
             **Dependency:** \`${dependency}\`
             **Version:** \`${previousVersion}\` → \`${newVersion}\`
             **Type:** Production dependency
-            **Ecosystem:** ${{ steps.metadata.outputs.package-ecosystem }}
+            **Ecosystem:** ${process.env.PACKAGE_ECOSYSTEM}
 
             Please review for potential feature changes or compatibility issues.
 
@@ -707,15 +742,20 @@ jobs:
       # Auto-merge approved updates
       # --------------------------------------------------------------------
       - name: 📊 Log auto-merge decision
+        env:
+          ACTION: ${{ steps.determine-action.outputs.action }}
+          DEPENDENCY_NAMES: ${{ steps.metadata.outputs.dependency-names }}
+          PREVIOUS_VERSION: ${{ steps.metadata.outputs.previous-version }}
+          NEW_VERSION: ${{ steps.metadata.outputs.new-version }}
         run: |
-          ACTION="${{ steps.determine-action.outputs.action }}"
+          set -euo pipefail
           if [[ "$ACTION" == auto-merge-* ]]; then
             echo "════════════════════════════════════════════════════════════════"
             echo "🚀 AUTO-MERGE - WILL EXECUTE"
             echo "════════════════════════════════════════════════════════════════"
             echo "Action: $ACTION"
-            echo "Dependency: ${{ steps.metadata.outputs.dependency-names }}"
-            echo "Version: ${{ steps.metadata.outputs.previous-version }} → ${{ steps.metadata.outputs.new-version }}"
+            echo "Dependency: $DEPENDENCY_NAMES"
+            echo "Version: $PREVIOUS_VERSION → $NEW_VERSION"
             echo "Next steps:"
             echo "  1. Approve the PR with appropriate message"
             echo "  2. Enable auto-merge (squash)"
@@ -746,16 +786,16 @@ jobs:
           fi
 
       - name: 🚀 Auto-merge approved updates
+        id: auto-merge
         if: |
           startsWith(steps.determine-action.outputs.action, 'auto-merge-')
         run: |
+          set -euo pipefail
           echo "════════════════════════════════════════════════════════════════"
           echo "🚀 EXECUTING AUTO-MERGE"
           echo "════════════════════════════════════════════════════════════════"
 
-          ACTION="${{ steps.determine-action.outputs.action }}"
-          DEPENDENCY="${{ steps.metadata.outputs.dependency-names }}"
-          VERSION_CHANGE="${{ steps.metadata.outputs.previous-version }} → ${{ steps.metadata.outputs.new-version }}"
+          VERSION_CHANGE="$PREVIOUS_VERSION → $NEW_VERSION"
 
           echo "Processing: $ACTION"
           echo "Dependency: $DEPENDENCY"
@@ -865,6 +905,10 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GH_PAT_TOKEN || secrets.GITHUB_TOKEN }}
           TOKEN_TYPE: ${{ secrets.GH_PAT_TOKEN && 'PAT' || 'GITHUB_TOKEN' }}
+          ACTION: ${{ steps.determine-action.outputs.action }}
+          DEPENDENCY: ${{ steps.metadata.outputs.dependency-names }}
+          PREVIOUS_VERSION: ${{ steps.metadata.outputs.previous-version }}
+          NEW_VERSION: ${{ steps.metadata.outputs.new-version }}
 
       # --------------------------------------------------------------------
       # Add tracking labels
@@ -874,20 +918,26 @@ jobs:
           startsWith(steps.determine-action.outputs.action, 'auto-merge-') ||
           startsWith(steps.determine-action.outputs.action, 'alert-')
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          ACTION: ${{ steps.determine-action.outputs.action }}
+          AUTO_MERGE_LABELS: ${{ env.AUTO_MERGE_LABELS }}
+          DEPENDENCY_TYPE: ${{ steps.metadata.outputs.dependency-type }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          IS_SECURITY: ${{ steps.check-security.outputs.is_security }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const action = '${{ steps.determine-action.outputs.action }}';
+            const action = process.env.ACTION;
             const labels = [];
 
             // Add auto-merge labels if applicable
             if (action.startsWith('auto-merge-')) {
-              const autoMergeLabels = '${{ env.AUTO_MERGE_LABELS }}'.split(',').map(l => l.trim());
+              const autoMergeLabels = process.env.AUTO_MERGE_LABELS.split(',').map(l => l.trim());
               labels.push(...autoMergeLabels);
             }
 
             // Add dependency type label
-            const depType = '${{ steps.metadata.outputs.dependency-type }}';
+            const depType = process.env.DEPENDENCY_TYPE;
             if (depType === 'direct:development') {
               labels.push('dev-dependency');
             } else if (depType === 'direct:production') {
@@ -897,7 +947,7 @@ jobs:
             }
 
             // Add update type label
-            const updateType = '${{ steps.metadata.outputs.update-type }}';
+            const updateType = process.env.UPDATE_TYPE;
             if (updateType === 'version-update:semver-patch') {
               labels.push('patch-update');
             } else if (updateType === 'version-update:semver-minor') {
@@ -907,7 +957,7 @@ jobs:
             }
 
             // Add security label if applicable
-            if ('${{ steps.check-security.outputs.is_security }}' === 'true') {
+            if (process.env.IS_SECURITY === 'true') {
               labels.push('security');
             }
 
@@ -936,26 +986,32 @@ jobs:
       - name: 📊 Generate workflow summary
         env:
           ENV_JSON: ${{ needs.load-env.outputs.env-json }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          DEPENDENCY_NAMES: ${{ needs.process-pr.outputs.dependency-names }}
+          UPDATE_TYPE: ${{ needs.process-pr.outputs.update-type }}
+          DEPENDENCY_TYPE: ${{ needs.process-pr.outputs.dependency-type }}
+          ACTION_TAKEN: ${{ needs.process-pr.outputs.action-taken }}
         run: |
+          set -euo pipefail
           echo "📊 Generating workflow summary..."
 
           echo "# 🤖 Dependabot Auto-merge Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**⏰ Processed:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
-          echo "**📋 PR:** #${{ github.event.pull_request.number }}" >> $GITHUB_STEP_SUMMARY
+          echo "**📋 PR:** #${PR_NUMBER}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           echo "## 📦 Dependency Information" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| **Dependency** | ${{ needs.process-pr.outputs.dependency-names }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Update Type** | ${{ needs.process-pr.outputs.update-type }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Dependency Type** | ${{ needs.process-pr.outputs.dependency-type }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Dependency** | ${DEPENDENCY_NAMES} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Update Type** | ${UPDATE_TYPE} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Dependency Type** | ${DEPENDENCY_TYPE} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # Determine action taken
-          ACTION="${{ needs.process-pr.outputs.action-taken }}"
+          ACTION="$ACTION_TAKEN"
           case "$ACTION" in
             "auto-merge-patch")
               ACTION_DESC="✅ Auto-merged (patch update)"
@@ -1029,13 +1085,19 @@ jobs:
       # Report final workflow status
       # --------------------------------------------------------------------
       - name: 📢 Report workflow status
+        env:
+          DEPENDENCY_NAMES: ${{ needs.process-pr.outputs.dependency-names }}
+          UPDATE_TYPE: ${{ needs.process-pr.outputs.update-type }}
+          DEPENDENCY_TYPE: ${{ needs.process-pr.outputs.dependency-type }}
+          ACTION_TAKEN: ${{ needs.process-pr.outputs.action-taken }}
         run: |
+          set -euo pipefail
           echo "=== 🤖 Dependabot Auto-merge Summary ==="
-          echo "📦 Dependency: ${{ needs.process-pr.outputs.dependency-names }}"
-          echo "🔄 Update type: ${{ needs.process-pr.outputs.update-type }}"
-          echo "📁 Dependency type: ${{ needs.process-pr.outputs.dependency-type }}"
+          echo "📦 Dependency: ${DEPENDENCY_NAMES}"
+          echo "🔄 Update type: ${UPDATE_TYPE}"
+          echo "📁 Dependency type: ${DEPENDENCY_TYPE}"
 
-          ACTION="${{ needs.process-pr.outputs.action-taken }}"
+          ACTION="$ACTION_TAKEN"
           case "$ACTION" in
             auto-merge-*)
               echo "✅ Action: Auto-merge enabled"
