@@ -1,4 +1,3 @@
-//nolint:revive // Error types should be self-explanatory
 package clienterr
 
 var BadRequest = ClientErrorDefinition{
