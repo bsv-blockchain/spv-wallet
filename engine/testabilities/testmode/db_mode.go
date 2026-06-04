@@ -58,7 +58,8 @@ func StartPostgresContainer(t testing.TB) *TestContainer {
 
 	ctx := context.Background()
 
-	postgresContainer, err := postgres.Run(ctx,
+	postgresContainer, err := postgres.Run(
+		ctx,
 		"postgres:latest",
 		postgres.WithDatabase(DefaultPostgresName),
 		postgres.WithUsername(DefaultPostgresUser),

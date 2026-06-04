@@ -43,7 +43,8 @@ func upsertContact(c *gin.Context, userContext *reqctx.UserContext) {
 		c.Request.Context(),
 		req.FullName, cPaymail,
 		userContext.GetXPubID(), req.RequesterPaymail,
-		engine.WithMetadatas(req.Metadata))
+		engine.WithMetadatas(req.Metadata),
+	)
 
 	if err != nil && !errors.Is(err, spverrors.ErrAddingContactRequest) {
 		spverrors.ErrorResponse(c, err, logger)

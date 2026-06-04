@@ -45,7 +45,8 @@ func Test_ClientService_AdminCreateContact_Success(t *testing.T) {
 			defer cleanup()
 
 			// when:
-			contact, err := service.AdminCreateContact(context.Background(),
+			contact, err := service.AdminCreateContact(
+				context.Background(),
 				tt.contactPaymail,
 				tt.creatorPaymail,
 				tt.fullName,
@@ -79,7 +80,8 @@ func Test_ClientService_AdminCreateContact_PKIRetrievalFail(t *testing.T) {
 			WithInternalServerError()
 
 		// when:
-		contact, err := service.AdminCreateContact(context.Background(),
+		contact, err := service.AdminCreateContact(
+			context.Background(),
 			fixtures.RecipientExternal.DefaultPaymail().String(),
 			fixtures.Sender.DefaultPaymail().String(),
 			"John Doe",
@@ -133,7 +135,8 @@ func Test_ClientService_AdminCreateContact_Fail(t *testing.T) {
 			defer cleanup()
 
 			// when:
-			contact, err := service.AdminCreateContact(context.Background(),
+			contact, err := service.AdminCreateContact(
+				context.Background(),
 				tt.contactPaymail,
 				tt.creatorPaymail,
 				tt.fullName,
@@ -155,7 +158,8 @@ func Test_ClientService_AdminCreateContact_ContactAlreadyExists(t *testing.T) {
 		defer cleanup()
 
 		// and:
-		contact, err := service.AdminCreateContact(context.Background(),
+		contact, err := service.AdminCreateContact(
+			context.Background(),
 			fixtures.RecipientExternal.DefaultPaymail().Address(),
 			fixtures.Sender.DefaultPaymail().Address(),
 			"John Doe",
@@ -164,7 +168,8 @@ func Test_ClientService_AdminCreateContact_ContactAlreadyExists(t *testing.T) {
 		then.Created(contact).WithNoError(err)
 
 		// when:
-		contact, err = service.AdminCreateContact(context.Background(),
+		contact, err = service.AdminCreateContact(
+			context.Background(),
 			fixtures.RecipientExternal.DefaultPaymail().Address(),
 			fixtures.Sender.DefaultPaymail().Address(),
 			"John Doe",

@@ -219,7 +219,8 @@ func TestWithFreeCache(t *testing.T) {
 			WithTaskqConfig(taskmanager.DefaultTaskQConfig(testQueueName)),
 			WithSQLite(tester.SQLiteTestConfig()),
 			WithCustomFeeUnit(mockFeeUnit),
-			WithLogger(&testLogger))
+			WithLogger(&testLogger),
+		)
 		require.NoError(t, err)
 		require.NotNil(t, tc)
 		defer CloseClient(context.Background(), t, tc)

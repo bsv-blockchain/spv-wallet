@@ -183,13 +183,14 @@ func TestDraftTransaction_setChangeDestinations(t *testing.T) {
 		defer deferMe()
 		prepareAdditionalModels(ctx, t, client, false)
 
-		draftTx, err := newDraftTransaction(testXPub, &TransactionConfig{
-			Outputs: []*TransactionOutput{{
-				To:       testExternalAddress,
-				Satoshis: 1000,
-			}},
-			SendAllTo: &TransactionOutput{To: testExternalAddress},
-		}, append(client.DefaultModelOptions(), New())...,
+		draftTx, err := newDraftTransaction(
+			testXPub, &TransactionConfig{
+				Outputs: []*TransactionOutput{{
+					To:       testExternalAddress,
+					Satoshis: 1000,
+				}},
+				SendAllTo: &TransactionOutput{To: testExternalAddress},
+			}, append(client.DefaultModelOptions(), New())...,
 		)
 		require.NoError(t, err)
 
@@ -203,13 +204,14 @@ func TestDraftTransaction_setChangeDestinations(t *testing.T) {
 		defer deferMe()
 		prepareAdditionalModels(ctx, t, client, false)
 
-		draftTx, err := newDraftTransaction(testXPub, &TransactionConfig{
-			Outputs: []*TransactionOutput{{
-				To:       testExternalAddress,
-				Satoshis: 1000,
-			}},
-			SendAllTo: &TransactionOutput{To: testExternalAddress},
-		}, append(client.DefaultModelOptions(), New())...,
+		draftTx, err := newDraftTransaction(
+			testXPub, &TransactionConfig{
+				Outputs: []*TransactionOutput{{
+					To:       testExternalAddress,
+					Satoshis: 1000,
+				}},
+				SendAllTo: &TransactionOutput{To: testExternalAddress},
+			}, append(client.DefaultModelOptions(), New())...,
 		)
 		require.NoError(t, err)
 
@@ -673,7 +675,8 @@ func TestDraftTransaction_createTransaction(t *testing.T) {
 		p := xtester.MockClient(httpmock.NewMockTransport(), "handcash.io")
 		p.WillRespondWithP2PCapabilities()
 
-		ctx, client, deferMe := CreateTestSQLiteClient(t, false, true,
+		ctx, client, deferMe := CreateTestSQLiteClient(
+			t, false, true,
 			withTaskManagerMockup(),
 			WithPaymailClient(p),
 		)
@@ -928,9 +931,9 @@ func TestDraftTransaction_getInputsFromUtxos(t *testing.T) {
 		assert.Equal(t, uint64(124235), satoshisReserved)
 		assert.Len(t, inputUtxos, 1)
 		assert.Equal(t, testTxID, inputUtxos[0].TxID.String())
-		assert.Equal(t, uint32(123), (inputUtxos)[0].Vout)
-		assert.Equal(t, testLockingScript, (inputUtxos)[0].LockingScript.String())
-		assert.Equal(t, uint64(124235), (inputUtxos)[0].Satoshis)
+		assert.Equal(t, uint32(123), inputUtxos[0].Vout)
+		assert.Equal(t, testLockingScript, inputUtxos[0].LockingScript.String())
+		assert.Equal(t, uint64(124235), inputUtxos[0].Satoshis)
 	})
 
 	t.Run("get multi", func(t *testing.T) {
@@ -957,14 +960,14 @@ func TestDraftTransaction_getInputsFromUtxos(t *testing.T) {
 		assert.Len(t, inputUtxos, 2)
 
 		assert.Equal(t, testTxID, inputUtxos[0].TxID.String())
-		assert.Equal(t, uint32(124), (inputUtxos)[0].Vout)
-		assert.Equal(t, testLockingScript, (inputUtxos)[0].LockingScript.String())
-		assert.Equal(t, uint64(52313), (inputUtxos)[0].Satoshis)
+		assert.Equal(t, uint32(124), inputUtxos[0].Vout)
+		assert.Equal(t, testLockingScript, inputUtxos[0].LockingScript.String())
+		assert.Equal(t, uint64(52313), inputUtxos[0].Satoshis)
 
 		assert.Equal(t, testTxID, inputUtxos[1].TxID.String())
-		assert.Equal(t, uint32(123), (inputUtxos)[1].Vout)
-		assert.Equal(t, testLockingScript, (inputUtxos)[1].LockingScript.String())
-		assert.Equal(t, uint64(124235), (inputUtxos)[1].Satoshis)
+		assert.Equal(t, uint32(123), inputUtxos[1].Vout)
+		assert.Equal(t, testLockingScript, inputUtxos[1].LockingScript.String())
+		assert.Equal(t, uint64(124235), inputUtxos[1].Satoshis)
 	})
 }
 

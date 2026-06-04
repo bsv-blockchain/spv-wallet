@@ -372,7 +372,8 @@ func BenchmarkAction_Transaction_newTransaction(b *testing.B) {
 }
 
 func initBenchmarkData(b *testing.B) (context.Context, ClientInterface, *Xpub, *TransactionConfig, error) {
-	ctx, client, _ := CreateBenchmarkSQLiteClient(b, false, true,
+	ctx, client, _ := CreateBenchmarkSQLiteClient(
+		b, false, true,
 		withTaskManagerMockup(),
 		WithFreeCache(),
 		WithIUCDisabled(),

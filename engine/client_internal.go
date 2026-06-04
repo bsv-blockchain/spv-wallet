@@ -53,7 +53,8 @@ func (c *Client) loadDatastore() (err error) {
 				"xpub_metadata",
 				"xpub_output_value",
 			},
-		))
+		),
+	)
 
 	c.options.dataStore.ClientInterface, err = datastore.NewClient(c.options.dataStore.options...)
 	return err
@@ -206,7 +207,8 @@ func (c *Client) loadPaymailServer() (err error) {
 
 	// Set default options if none are found
 	if len(c.options.paymail.serverConfig.options) == 0 {
-		c.options.paymail.serverConfig.options = append(c.options.paymail.serverConfig.options,
+		c.options.paymail.serverConfig.options = append(
+			c.options.paymail.serverConfig.options,
 			paymailserver.WithP2PCapabilities(),
 			paymailserver.WithDomainValidationDisabled(),
 		)

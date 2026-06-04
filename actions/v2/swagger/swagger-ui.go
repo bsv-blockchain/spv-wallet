@@ -29,7 +29,8 @@ func RegisterRoutes(engine *gin.Engine, cfg *config.AppConfig) {
 		c.String(http.StatusOK, api.Yaml)
 	})
 
-	root.GET("v2/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler,
+	root.GET("v2/swagger/*any", ginSwagger.WrapHandler(
+		swaggerfiles.Handler,
 		ginSwagger.URL("/api/gen.api.yaml"),
 		ginSwagger.PersistAuthorization(true),
 		withTitle("SPV Wallet API"),

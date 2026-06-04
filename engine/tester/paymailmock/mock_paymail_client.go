@@ -204,7 +204,8 @@ func (c *PaymailClientMock) GetCallByRegex(r string) *tester.CallDetails {
 }
 
 func (c *PaymailClientMock) useBasicCapabilities() {
-	c.capabilities = append(c.capabilities,
+	c.capabilities = append(
+		c.capabilities,
 		capabilitySenderValidation(),
 		capabilityPki(),
 		capabilityPaymentDestination(),
@@ -212,14 +213,16 @@ func (c *PaymailClientMock) useBasicCapabilities() {
 }
 
 func (c *PaymailClientMock) useP2PCapabilities() {
-	c.capabilities = append(c.capabilities,
+	c.capabilities = append(
+		c.capabilities,
 		capabilityP2PTransaction(),
 		capabilityP2PPaymentDestination(),
 	)
 }
 
 func (c *PaymailClientMock) useBEEFCapabilities() {
-	c.capabilities = append(c.capabilities,
+	c.capabilities = append(
+		c.capabilities,
 		capabilityBEEFTransaction(),
 	)
 }

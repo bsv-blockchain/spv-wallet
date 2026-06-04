@@ -261,7 +261,8 @@ func Test_GetCapabilities(t *testing.T) {
 		)
 		logger := zerolog.Nop()
 
-		tc, err := engine.NewClient(context.Background(),
+		tc, err := engine.NewClient(
+			context.Background(),
 			engine.WithRedisConnection(redisClient),
 			engine.WithTaskqConfig(taskmanager.DefaultTaskQConfig(testQueueName)),
 			engine.WithSQLite(xtester.SQLiteTestConfig()),
@@ -306,7 +307,8 @@ func Test_GetCapabilities(t *testing.T) {
 		)
 		logger := zerolog.Nop()
 
-		tc, err := engine.NewClient(context.Background(),
+		tc, err := engine.NewClient(
+			context.Background(),
 			engine.WithRedisConnection(redisClient),
 			engine.WithTaskqConfig(taskmanager.DefaultTaskQConfig(testQueueName)),
 			engine.WithSQLite(xtester.SQLiteTestConfig()),

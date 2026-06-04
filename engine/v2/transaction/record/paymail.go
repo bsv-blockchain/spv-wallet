@@ -83,7 +83,8 @@ func (f *txFlow) processPaymailOutputs(annotations transaction.Annotations) (pay
 
 		err := info.add(vout, annotation.Paymail)
 		if err != nil {
-			return info, spverrors.Wrapf(err,
+			return info, spverrors.Wrapf(
+				err,
 				"failed to process paymail annotation, vout: %d, sender: %s, recipient %s, reference: %s",
 				vout, annotation.Paymail.Sender, annotation.Paymail.Receiver, annotation.Paymail.Reference,
 			)

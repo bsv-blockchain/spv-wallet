@@ -23,7 +23,8 @@ func (s *ServerConfig) Validate() error {
 		return spverrors.Newf("server port outside of bounds")
 	}
 
-	return validation.ValidateStruct(s,
+	return validation.ValidateStruct(
+		s,
 		validation.Field(&s.IdleTimeout, validation.Required),
 		validation.Field(&s.ReadTimeout, validation.Required),
 		validation.Field(&s.WriteTimeout, validation.Required),

@@ -53,7 +53,8 @@ func (c *inputsQueryComposer) utxos(db *gorm.DB) *gorm.DB {
 }
 
 func (c *inputsQueryComposer) addChangeValueCalculation(db, utxoTab *gorm.DB) *gorm.DB {
-	return db.Select(txIdColumn, voutColumn,
+	return db.Select(
+		txIdColumn, voutColumn,
 		"case when remaining_value - fee_no_change_output <= 0 then remaining_value - fee_no_change_output else remaining_value - fee_with_change_output end as change",
 	).
 		Table("(?) as utxo", utxoTab.Session(&gorm.Session{}))
@@ -67,7 +68,8 @@ func (c *inputsQueryComposer) chooseInputsToCoverOutputsAndFeesAndHaveMinimalCha
 }
 
 func (c *inputsQueryComposer) searchForMinimalChangeValue(db, utxoWithChange *gorm.DB) *gorm.DB {
-	return db.Select(txIdColumn, voutColumn,
+	return db.Select(
+		txIdColumn, voutColumn,
 		"change",
 		"min(case when change >= 0 then change end) over () as "+minChange,
 	).

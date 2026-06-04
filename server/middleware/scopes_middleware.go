@@ -12,8 +12,8 @@ import (
 )
 
 var securedMiddlewares = []api.MiddlewareFunc{
-	(api.MiddlewareFunc)(AuthV2Middleware()),
-	(api.MiddlewareFunc)(CheckSignatureMiddleware()),
+	api.MiddlewareFunc(AuthV2Middleware()),
+	api.MiddlewareFunc(CheckSignatureMiddleware()),
 }
 
 // SignatureAuthWithScopes checks for scopes and runs auth&signature middlewares

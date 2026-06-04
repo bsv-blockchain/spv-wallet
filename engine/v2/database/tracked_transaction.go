@@ -101,7 +101,8 @@ func (t *TrackedTransaction) AfterCreate(tx *gorm.DB) error {
 			for _, outpoint := range t.Inputs {
 				yield([]any{outpoint.TxID, outpoint.Vout})
 			}
-		})
+		},
+	)
 	if len(spentOutpoints) > 0 {
 		// Remove spent UTXOs
 		err := tx.

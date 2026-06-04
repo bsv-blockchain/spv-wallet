@@ -16,7 +16,8 @@ func (a *AuthenticationConfig) IsAdmin(key string) bool {
 
 // Validate checks the configuration for specific rules
 func (a *AuthenticationConfig) Validate() error {
-	return validation.ValidateStruct(a,
+	return validation.ValidateStruct(
+		a,
 		validation.Field(&a.AdminKey, validation.Required, validation.Length(32, 111)),
 		validation.Field(&a.Scheme, validation.Required, validation.In(AuthenticationSchemeXpub)),
 	)

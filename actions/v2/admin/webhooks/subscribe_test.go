@@ -16,7 +16,8 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -49,7 +50,8 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -87,7 +89,8 @@ func TestSubscribeWebhooksHappyPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -134,7 +137,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		// given:
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -166,7 +170,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -202,7 +207,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		given, then := testabilities.New(t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -241,7 +247,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		given, then := testabilities.New(t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -280,7 +287,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		given, then := testabilities.New(t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -319,7 +327,8 @@ func TestSubscribeWebhooksErrorPath(t *testing.T) {
 		given, then := testabilities.New(t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 

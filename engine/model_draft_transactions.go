@@ -473,7 +473,8 @@ func (m *DraftTransaction) processUtxos(ctx context.Context, utxos []*Utxo) erro
 			m.Configuration.Inputs, &TransactionInput{
 				Utxo:        *utxo,
 				Destination: *destination,
-			})
+			},
+		)
 	}
 
 	return nil
@@ -556,7 +557,8 @@ func (m *DraftTransaction) addOutputsToTx(tx *trx.Transaction) (err error) {
 					&trx.TransactionOutput{
 						LockingScript: s,
 						Satoshis:      sc.Satoshis,
-					})
+					},
+				)
 			default:
 				// add non-standard output script
 				tx.AddOutput(&trx.TransactionOutput{

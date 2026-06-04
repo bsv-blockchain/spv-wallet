@@ -56,7 +56,7 @@ func (r *Addresses) FindByStringAddresses(ctx context.Context, addresses iter.Se
 			CreatedAt:          row.CreatedAt,
 			UpdatedAt:          row.UpdatedAt,
 			UserID:             row.UserID,
-			CustomInstructions: (bsv.CustomInstructions)(row.CustomInstructions),
+			CustomInstructions: bsv.CustomInstructions(row.CustomInstructions),
 		}
 	}), nil
 }

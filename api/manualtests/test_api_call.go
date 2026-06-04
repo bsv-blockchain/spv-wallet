@@ -114,10 +114,11 @@ func (a *APICall) CallWithT(callback CallWithT) *APICallResponse {
 }
 
 func (a *APICall) CallWithState(callback CallWithState) *APICallResponse {
-	res, err := callback(StateForCall{
-		State: a.state,
-		T:     a.t,
-	},
+	res, err := callback(
+		StateForCall{
+			State: a.state,
+			T:     a.t,
+		},
 		a.client,
 	)
 	require.NoError(a.t, err)
@@ -134,10 +135,11 @@ func (a *APICall) CallWithState(callback CallWithState) *APICallResponse {
 // CallWithUpdateState calls an API and requires it to success
 // ALSO if success this method is saving the state.
 func (a *APICall) CallWithUpdateState(callback CallWithState) *APICallResponse {
-	res, err := callback(StateForCall{
-		State: a.state,
-		T:     a.t,
-	},
+	res, err := callback(
+		StateForCall{
+			State: a.state,
+			T:     a.t,
+		},
 		a.client,
 	)
 	require.NoError(a.t, err)

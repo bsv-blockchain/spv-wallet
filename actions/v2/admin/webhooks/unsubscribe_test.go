@@ -14,7 +14,8 @@ func TestUnsubscribeWebhookHappyPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -45,7 +46,8 @@ func TestUnsubscribeWebhookHappyPath(t *testing.T) {
 			SetBody(
 				map[string]string{
 					urlField: "http://localhost:8080",
-				}).
+				},
+			).
 			Delete(webhookAPIURL)
 
 		then.Response(res).IsOK()
@@ -66,7 +68,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -92,7 +95,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 		// given:
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -123,7 +127,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -154,7 +159,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 
@@ -181,7 +187,8 @@ func TestUnsubscribeWebhookErrorPath(t *testing.T) {
 		given, then := testabilities.NewOf(testabilities.Given(t), t)
 		cleanup := given.StartedSPVWalletWithConfiguration(
 			testengine.WithNotificationsEnabled(),
-			testengine.WithV2())
+			testengine.WithV2(),
+		)
 		defer cleanup()
 		client := given.HttpClient().ForAdmin()
 

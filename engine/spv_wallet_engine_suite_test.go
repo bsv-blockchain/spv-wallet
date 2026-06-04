@@ -157,7 +157,8 @@ func (ts *EmbeddedDBTestSuite) genericDBClient(t *testing.T, database datastore.
 	if opts == nil {
 		opts = []ClientOps{}
 	}
-	opts = append(opts,
+	opts = append(
+		opts,
 		WithDebugging(),
 		WithCustomFeeUnit(mockFeeUnit),
 	)

@@ -341,7 +341,8 @@ func (p *paymailTestMock) cleanup() {
 }
 
 func (p *paymailTestMock) mockPki(paymail, pubkey string) {
-	p.mockTransport.RegisterResponder(http.MethodGet, fmt.Sprintf("%s/id/%s", p.serverURL, paymail),
+	p.mockTransport.RegisterResponder(
+		http.MethodGet, fmt.Sprintf("%s/id/%s", p.serverURL, paymail),
 		httpmock.NewStringResponder(
 			200,
 			`{"bsvalias":"1.0","handle":"`+paymail+`","pubkey":"`+pubkey+`"}`,
@@ -350,13 +351,15 @@ func (p *paymailTestMock) mockPki(paymail, pubkey string) {
 }
 
 func (p *paymailTestMock) mockPike(paymail string) {
-	p.mockTransport.RegisterResponder(http.MethodPost, fmt.Sprintf("%s/contact/invite/%s", p.serverURL, paymail),
+	p.mockTransport.RegisterResponder(
+		http.MethodPost, fmt.Sprintf("%s/contact/invite/%s", p.serverURL, paymail),
 		httpmock.NewStringResponder(
 			200,
 			"{}",
 		),
 	)
-	p.mockTransport.RegisterResponder(http.MethodPost, fmt.Sprintf("%s/pike/outputs%s", p.serverURL, paymail),
+	p.mockTransport.RegisterResponder(
+		http.MethodPost, fmt.Sprintf("%s/pike/outputs%s", p.serverURL, paymail),
 		httpmock.NewStringResponder(
 			200,
 			"{}",

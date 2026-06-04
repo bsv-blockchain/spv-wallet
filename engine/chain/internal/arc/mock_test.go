@@ -66,7 +66,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	}
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", fmt.Sprintf("%s/v1/tx/%s", arcURL, minedTxID), responder(http.StatusOK, `{
+	transport.RegisterResponder(
+		"GET", fmt.Sprintf("%s/v1/tx/%s", arcURL, minedTxID), responder(http.StatusOK, `{
 			"blockHash": "0000000000000000034df47d8fe84ccf10267b4f6bc43be513d4604229d1c209",
 			"blockHeight": 862510,
 			"competingTxs": null,
@@ -79,7 +80,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", fmt.Sprintf("%s/v1/tx/%s", arcURL, unknownTxID), responder(http.StatusNotFound, `{
+	transport.RegisterResponder(
+		"GET", fmt.Sprintf("%s/v1/tx/%s", arcURL, unknownTxID), responder(http.StatusNotFound, `{
 			"detail": "The requested resource could not be found",
 			"extraInfo": "transaction not found",
 			"instance": null,
@@ -91,13 +93,15 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", arcURL+wrongButReachable, responder(http.StatusNotFound, `{
+	transport.RegisterResponder(
+		"GET", arcURL+wrongButReachable, responder(http.StatusNotFound, `{
 			"message": "no matching operation was found"
 		}`),
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", fmt.Sprintf("%s/v1/tx/%s", arcURL, invalidTxID), responder(http.StatusConflict, `{
+	transport.RegisterResponder(
+		"GET", fmt.Sprintf("%s/v1/tx/%s", arcURL, invalidTxID), responder(http.StatusConflict, `{
 			"detail": "Transaction could not be processed",
 			"extraInfo": "rpc error: code = Unknown desc = encoding/hex: invalid byte: U+0073 's'",
 			"instance": null,
@@ -109,7 +113,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", fmt.Sprintf("%s/v1/policy", arcURL), responder(http.StatusOK, `{
+	transport.RegisterResponder(
+		"GET", fmt.Sprintf("%s/v1/policy", arcURL), responder(http.StatusOK, `{
 			"policy": {
 				"maxscriptsizepolicy": 100000000,
 				"maxtxsigopscountspolicy": 4294967295,
@@ -124,13 +129,15 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", arcURL+wrongButReachable, responder(http.StatusNotFound, `{
+	transport.RegisterResponder(
+		"GET", arcURL+wrongButReachable, responder(http.StatusNotFound, `{
 			"message": "no matching operation was found"
 		}`),
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterMatcherResponder("POST", fmt.Sprintf("%s/v1/tx", arcURL),
+	transport.RegisterMatcherResponder(
+		"POST", fmt.Sprintf("%s/v1/tx", arcURL),
 		httpmock.BodyContainsString(efOfValidRawHex),
 		responder(http.StatusOK, `{
 			"blockHash": "",
@@ -145,7 +152,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterMatcherResponder("POST", fmt.Sprintf("%s/v1/tx", arcURL),
+	transport.RegisterMatcherResponder(
+		"POST", fmt.Sprintf("%s/v1/tx", arcURL),
 		httpmock.BodyContainsString(efHexOfTxWithMultipleInputs),
 		responder(http.StatusOK, `{
 			"blockHash": "",
@@ -160,7 +168,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterMatcherResponder("POST", fmt.Sprintf("%s/v1/tx", arcURL),
+	transport.RegisterMatcherResponder(
+		"POST", fmt.Sprintf("%s/v1/tx", arcURL),
 		httpmock.BodyContainsString(fallbackRawHex),
 		responder(http.StatusOK, `{
 			"blockHash": "",
@@ -175,7 +184,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterMatcherResponder("POST", fmt.Sprintf("%s/v1/tx", arcURL),
+	transport.RegisterMatcherResponder(
+		"POST", fmt.Sprintf("%s/v1/tx", arcURL),
 		httpmock.BodyContainsString(oldWithDoubleSpentHex),
 		responder(http.StatusOK, `{
 			"blockHash" : "",
@@ -192,7 +202,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterMatcherResponder("POST", fmt.Sprintf("%s/v1/tx", arcURL),
+	transport.RegisterMatcherResponder(
+		"POST", fmt.Sprintf("%s/v1/tx", arcURL),
 		httpmock.BodyContainsString(newWithDoubleSpentHex),
 		responder(http.StatusOK, `{
 		  "blockHash": "",
@@ -211,7 +222,8 @@ func arcMockResponses(transport *httpmock.MockTransport, applyTimeout bool) {
 	)
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterMatcherResponder("POST", fmt.Sprintf("%s/v1/tx", arcURL),
+	transport.RegisterMatcherResponder(
+		"POST", fmt.Sprintf("%s/v1/tx", arcURL),
 		httpmock.BodyContainsString(malformedTxHex),
 		responder(461, `{
 			"detail": "Transaction is malformed and cannot be processed",
@@ -238,7 +250,8 @@ func junglebusMockResponses(transport *httpmock.MockTransport, applyTimeout bool
 	}
 
 	//nolint:bodyclose // httpmock handles response body lifecycle
-	transport.RegisterResponder("GET", fmt.Sprintf("https://junglebus.gorillapool.io/v1/transaction/get/%s", txIDOfSourceTwoOfTxWithMultipleInputs), responder(http.StatusOK, `{
+	transport.RegisterResponder(
+		"GET", fmt.Sprintf("https://junglebus.gorillapool.io/v1/transaction/get/%s", txIDOfSourceTwoOfTxWithMultipleInputs), responder(http.StatusOK, `{
 			"id": "cddeda65f520dfc2494e36528cd56ab3ff88c841d931894be1d7610d874c8ec8",
 			"transaction": "AQAAAAHU58f2jMJt3XzGjJEKINLPVzwd2Mr6NDEAq8exla/vIgEAAABrSDBFAiEA3rvUh3L5fGG8nzMdxTW6AoKarzlehm3pHMDDULQ+f0sCIAmo1o/v9WUJD62kTZgsZ3iBYn3AjpkjOG7iWyedxxCxQSEDXI/Xt/qQrisBpMkdoNh/87u8M5DZ3me2n61SqLeP9J3/////AgEAAAAAAAAAGXapFAS8COAvcQwoaykycYzP1nGgyBZEiKwOAAAAAAAAABl2qRRrgpexw82ewTFRyQ0p46lvFHU1poisAAAAAA=="
 		}`),

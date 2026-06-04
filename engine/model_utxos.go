@@ -357,7 +357,8 @@ func getUtxosByConditions(ctx context.Context, conditions map[string]interface{}
 	var models []Utxo
 	if err := getModels(
 		ctx, NewBaseModel(
-			ModelNameEmpty, opts...).Client().Datastore(),
+			ModelNameEmpty, opts...,
+		).Client().Datastore(),
 		&models, conditions, queryParams, databaseLongReadTimeout,
 	); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

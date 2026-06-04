@@ -147,7 +147,8 @@ func TestPrepareBEEF_GraphTx_WithBEEFGrandparents_Tx1_Tx2_Tx3(t *testing.T) {
 	tx2 := graphBuilder.CreateRawTx("tx2", testabilities.ParentTx{Tx: tx6, Vout: 0})
 	graphBuilder.EnsureGraphIsValid()
 
-	tx0 := graphBuilder.CreateRawTx("tx0",
+	tx0 := graphBuilder.CreateRawTx(
+		"tx0",
 		testabilities.ParentTx{Tx: tx1, Vout: 0},
 		testabilities.ParentTx{Tx: tx3, Vout: 0},
 		testabilities.ParentTx{Tx: tx2, Vout: 0},

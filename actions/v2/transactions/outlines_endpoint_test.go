@@ -225,7 +225,8 @@ func TestPOSTTransactionOutlines(t *testing.T) {
 			}`,
 		},
 		"create transaction outline for paymail with sender": {
-			request: fmt.Sprintf(`{
+			request: fmt.Sprintf(
+				`{
 			  "outputs": [
 				{
 				  "type": "paymail",
@@ -270,7 +271,8 @@ func TestPOSTTransactionOutlines(t *testing.T) {
 			}`,
 		},
 		"create transaction outline for paymail and data": {
-			request: fmt.Sprintf(`{
+			request: fmt.Sprintf(
+				`{
 			  "outputs": [
 				{
 				  "type": "paymail",
@@ -322,7 +324,8 @@ func TestPOSTTransactionOutlines(t *testing.T) {
 			}`,
 		},
 		"create transaction outline for paymail without change": {
-			request: fmt.Sprintf(`{
+			request: fmt.Sprintf(
+				`{
 			  "outputs": [
 				{
 				  "type": "paymail",
@@ -374,13 +377,15 @@ func TestPOSTTransactionOutlines(t *testing.T) {
 	require.True(t, ok, "Make sure you used exactly the same test case name as the first one from the successTestCases map")
 
 	t.Run("explicit beef as requested format", func(t *testing.T) {
-		suite.Run(t,
+		suite.Run(
+			t,
 			newTxOutlineSuite(basicTestCase, initialSatoshis).withExplicitFormat("BEEF"),
 		)
 	})
 
 	t.Run("explicit raw as requested format", func(t *testing.T) {
-		suite.Run(t,
+		suite.Run(
+			t,
 			newTxOutlineSuite(basicTestCase, initialSatoshis).withExplicitFormat("RAW"),
 		)
 	})

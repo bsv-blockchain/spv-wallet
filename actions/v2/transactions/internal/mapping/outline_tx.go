@@ -42,7 +42,8 @@ func TransactionOutlineToResponse(tx *outlines.Transaction) (api.ModelsAnnotated
 				errorCollector,
 				func() (map[string]api.ModelsInputAnnotation, error) {
 					return lox.MapEntriesOrError(tx.Annotations.Inputs, outlineInputEntryToResponse)
-				}),
+				},
+			),
 			Outputs: lo.MapEntries(tx.Annotations.Outputs, outlineOutputEntryToResponse),
 		},
 	}, errorCollector.Error()
