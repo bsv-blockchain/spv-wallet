@@ -8,7 +8,7 @@ replace github.com/bsv-blockchain/spv-wallet/models => ../../models //nolint:gom
 replace github.com/joho/godotenv => github.com/joho/godotenv v1.5.1 //nolint:gomoddirectives // version override
 
 require (
-	github.com/bsv-blockchain/go-sdk v1.2.23
+	github.com/bsv-blockchain/go-sdk v1.2.24
 	github.com/bsv-blockchain/spv-wallet-go-client v1.2.0
 	github.com/go-viper/mapstructure/v2 v2.5.0
 	github.com/joomcode/errorx v1.2.0
@@ -28,7 +28,7 @@ require (
 	github.com/fsnotify/fsnotify v1.10.1 // indirect
 	github.com/go-resty/resty/v2 v2.17.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/mattn/go-colorable v0.1.14 // indirect
+	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/pelletier/go-toml/v2 v2.3.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
