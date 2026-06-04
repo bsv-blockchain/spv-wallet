@@ -1,8 +1,8 @@
 github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/boombuler/barcode v1.1.0 h1:ChaYjBR63fr4LFyGn8E8nt7dBSt3MiU3zMOZqFvVkHo=
 github.com/boombuler/barcode v1.1.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
-github.com/bsv-blockchain/go-sdk v1.2.23 h1:DRZWaqgW6Ra+uFe1+sLFi+WPcjTdBm8NAwfr6ODOF68=
-github.com/bsv-blockchain/go-sdk v1.2.23/go.mod h1:5mmw1QLusuAkjWmQgUOurQYCXdIsQEsWXbAZ9zwme3g=
+github.com/bsv-blockchain/go-sdk v1.2.24 h1:lUUcOQirAmmnJfUOQtNIWy0fVGBgSdisLOstouCvrGg=
+github.com/bsv-blockchain/go-sdk v1.2.24/go.mod h1:yTDARQK2SJBod2w+10/Rtu5VdyBFn7gkOwNbnI2zplg=
 github.com/bsv-blockchain/spv-wallet-go-client v1.2.0 h1:EAqrbcSfsvigQ3wSFMhkFM88nAlzzMz1mo42eRPZZQY=
 github.com/bsv-blockchain/spv-wallet-go-client v1.2.0/go.mod h1:CpzVvYHoVow7XkQJbv+PoVg+fklvn5zoYzA2RLZwbkk=
 github.com/bytedance/gopkg v0.1.4 h1:oZnQwnX82KAIWb7033bEwtxvTqXcYMxDBaQxo5JJHWM=
