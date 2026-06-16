@@ -11,7 +11,7 @@ replace github.com/joho/godotenv => github.com/joho/godotenv v1.5.1 //nolint:gom
 
 require (
 	github.com/bsv-blockchain/spv-wallet v1.0.1
-	github.com/bsv-blockchain/spv-wallet-go-client v1.2.0
+	github.com/bsv-blockchain/spv-wallet-go-client v1.2.1
 	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/joho/godotenv v1.5.1
 )
