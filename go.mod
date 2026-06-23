@@ -10,7 +10,7 @@ go 1.25.0
 replace github.com/bsv-blockchain/spv-wallet/models => ./models
 
 require (
-	github.com/99designs/gqlgen v0.17.91
+	github.com/99designs/gqlgen v0.17.92
 	github.com/bitcoinschema/go-map v0.2.2
 	github.com/bsv-blockchain/go-paymail v0.26.2
 	github.com/bsv-blockchain/go-sdk v1.2.24
@@ -34,7 +34,7 @@ require (
 	github.com/mrz1836/go-logger v1.0.6
 	github.com/mrz1836/go-sanitize v1.5.7
 	github.com/mrz1836/go-validate v1.0.5
-	github.com/oapi-codegen/runtime v1.4.1
+	github.com/oapi-codegen/runtime v1.4.2
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/rafaeljusto/redigomock v2.4.0+incompatible
@@ -44,8 +44,8 @@ require (
 	github.com/spf13/viper v1.21.0
 	github.com/stretchr/testify v1.11.1
 	github.com/swaggo/swag v1.16.6
-	github.com/testcontainers/testcontainers-go v0.42.0
-	github.com/testcontainers/testcontainers-go/modules/postgres v0.42.0
+	github.com/testcontainers/testcontainers-go v0.43.0
+	github.com/testcontainers/testcontainers-go/modules/postgres v0.43.0
 	github.com/vmihailenco/taskq/v3 v3.2.9
 	go.elastic.co/ecszerolog v0.2.0
 	gorm.io/datatypes v1.2.7
@@ -133,7 +133,7 @@ require (
 	github.com/magiconair/properties v1.8.10 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
-	github.com/mattn/go-sqlite3 v1.14.45
+	github.com/mattn/go-sqlite3 v1.14.47
 	github.com/miekg/dns v1.1.72 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/go-archive v0.2.0 // indirect
@@ -173,7 +173,7 @@ require (
 	github.com/tklauser/numcpus v0.12.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.1 // indirect
-	github.com/vektah/gqlparser/v2 v2.5.34 // indirect
+	github.com/vektah/gqlparser/v2 v2.5.35 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
