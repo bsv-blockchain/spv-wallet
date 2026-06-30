@@ -10,7 +10,7 @@ go 1.25.0
 replace github.com/bsv-blockchain/spv-wallet/models => ./models
 
 require (
-	github.com/99designs/gqlgen v0.17.92
+	github.com/99designs/gqlgen v0.17.93
 	github.com/bitcoinschema/go-map v0.2.2
 	github.com/bsv-blockchain/go-paymail v0.26.2
 	github.com/bsv-blockchain/go-sdk v1.2.24
@@ -51,7 +51,7 @@ require (
 	gorm.io/datatypes v1.2.7
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/driver/sqlite v1.6.0
-	gorm.io/gorm v1.31.1
+	gorm.io/gorm v1.31.2
 	gorm.io/plugin/dbresolver v1.6.2
 )
 
