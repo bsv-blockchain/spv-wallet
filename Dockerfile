@@ -1,5 +1,5 @@
 # Get Golang for builder
-FROM golang:1.26.4@sha256:f96cc555eb8db430159a3aa6797cd5bae561945b7b0fe7d0e284c63a3b291609 as builder
+FROM golang:1.26.5@sha256:983a0823d3dab83604654972fe6bbda13142a7c57f987804fbdddb9d47dad9ec as builder
 
 # Set the working directory
 WORKDIR /go/src/github.com/bsv-blockchain/spv-wallet
