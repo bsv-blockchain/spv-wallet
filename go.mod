@@ -17,7 +17,7 @@ require (
 	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/coocood/freecache v1.2.7
 	github.com/fergusstrange/embedded-postgres v1.34.0
-	github.com/getkin/kin-openapi v0.141.0
+	github.com/getkin/kin-openapi v0.142.0
 	github.com/gin-contrib/pprof v1.5.4
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
@@ -34,7 +34,7 @@ require (
 	github.com/mrz1836/go-logger v1.0.6
 	github.com/mrz1836/go-sanitize v1.5.7
 	github.com/mrz1836/go-validate v1.0.5
-	github.com/oapi-codegen/runtime v1.4.2
+	github.com/oapi-codegen/runtime v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/rafaeljusto/redigomock v2.4.0+incompatible
@@ -133,7 +133,7 @@ require (
 	github.com/magiconair/properties v1.8.10 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
-	github.com/mattn/go-sqlite3 v1.14.47
+	github.com/mattn/go-sqlite3 v1.14.48
 	github.com/miekg/dns v1.1.72 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/go-archive v0.2.0 // indirect
