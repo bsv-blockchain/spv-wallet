@@ -24,7 +24,7 @@ name: Stale Check
 on:
   schedule:
     # ┌─ min  ─┬─ hour ─┬─ dom ─┬─ mon ─┬─ dow ─┐
-    - cron: "0 12 1 * *" # 1st of every month at 12:00 UTC (7:00 AM EST)
+    - cron: "0 12 1 * *" # 1st of every month at 12:00 UTC
   workflow_dispatch: # Allow manual triggering
 
 # Security: Restrict default permissions (jobs must explicitly request what they need)
