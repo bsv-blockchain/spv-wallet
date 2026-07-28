@@ -13,11 +13,11 @@ require (
 	github.com/99designs/gqlgen v0.17.94
 	github.com/bitcoinschema/go-map v0.2.2
 	github.com/bsv-blockchain/go-paymail v0.26.3
-	github.com/bsv-blockchain/go-sdk v1.3.1
+	github.com/bsv-blockchain/go-sdk v1.3.2
 	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/coocood/freecache v1.2.7
 	github.com/fergusstrange/embedded-postgres v1.34.0
-	github.com/getkin/kin-openapi v0.144.0
+	github.com/getkin/kin-openapi v0.145.0
 	github.com/gin-contrib/pprof v1.5.4
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
@@ -27,7 +27,7 @@ require (
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/iancoleman/strcase v0.3.0
-	github.com/jarcoal/httpmock v1.4.1
+	github.com/jarcoal/httpmock v1.4.2
 	github.com/joomcode/errorx v1.2.0
 	github.com/mrz1836/go-cache v1.1.11
 	github.com/mrz1836/go-cachestore v1.1.6
@@ -36,7 +36,7 @@ require (
 	github.com/mrz1836/go-validate v1.0.5
 	github.com/oapi-codegen/runtime v1.6.0
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.24.0
+	github.com/prometheus/client_golang v1.24.1
 	github.com/rafaeljusto/redigomock v2.4.0+incompatible
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/zerolog v1.35.1
