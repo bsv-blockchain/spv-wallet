@@ -8,7 +8,7 @@ replace github.com/bsv-blockchain/spv-wallet/models => ../../models //nolint:gom
 replace github.com/joho/godotenv => github.com/joho/godotenv v1.5.1 //nolint:gomoddirectives // version override
 
 require (
-	github.com/bsv-blockchain/go-sdk v1.3.2
+	github.com/bsv-blockchain/go-sdk v1.3.3
 	github.com/bsv-blockchain/spv-wallet-go-client v1.2.1
 	github.com/go-viper/mapstructure/v2 v2.5.0
 	github.com/joomcode/errorx v1.2.0
