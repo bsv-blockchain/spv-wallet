@@ -58,6 +58,12 @@ func CreateLogger(writer io.Writer, instanceName string, level zerolog.Level, lo
 }
 
 func setGlobalHandlers() {
+	// ecszerolog.New() sets TimeFieldFormat to "2006-01-02T15:04:05.999Z", whose ".999" layout
+	// drops the fractional part entirely when it's zero, producing timestamps like
+	// "2026-08-12T14:18:05Z" instead of "2026-08-12T14:18:05.000Z". Reassert a fixed-width
+	// format here so fractional seconds are always present.
+	zerolog.TimeFieldFormat = "2006-01-02T15:04:05.000Z"
+
 	zerolog.TimestampFunc = func() time.Time {
 		return time.Now().In(time.Local) //nolint:gosmopolitan // We want local time inside logger.
 	}
