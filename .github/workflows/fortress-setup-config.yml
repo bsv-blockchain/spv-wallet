@@ -12,6 +12,15 @@
 #    (`fortress.yml`) calls this workflow directly off `paths-check`, with no
 #    `env-json` input — env loading happens inside.
 #
+#  SECURITY INVARIANT (load-bearing — read before changing triggers):
+#  - This workflow and the composite actions under `.github/actions/` are only ever invoked
+#    from `push` / `pull_request` runs with a powerless (read-only on forks) token. Some
+#    steps still interpolate CI-/config-controlled `${{ ... }}` values into shell and jq.
+#    DO NOT wire any of them to `pull_request_target` or `workflow_run` (which carry a
+#    privileged token while checking out an untrusted ref) without first routing every
+#    `${{ }}`→shell/jq sink through `env:` and referencing quoted `"$VAR"`. See the Phase-1
+#    security fixes (e.g. fortress-coverage.yml / dependabot-auto-merge.yml) for the pattern.
+#
 # ------------------------------------------------------------------------------------
 name: GoFortress (Setup Configuration)
 on:
@@ -85,6 +94,9 @@ on:
       gitleaks-enabled:
         description: "Whether Gitleaks secret scanning is enabled"
         value: ${{ jobs.setup-config.outputs.gitleaks-enabled }}
+      osv-enabled:
+        description: "Whether OSV-Scanner dependency scanning is enabled"
+        value: ${{ jobs.setup-config.outputs.osv-enabled }}
       is-release-run:
         description: "Whether this is a release-eligible run (tag starting with v)"
         value: ${{ jobs.setup-config.outputs.is-release-run }}
@@ -208,6 +220,7 @@ jobs:
       nancy-enabled: ${{ steps.config.outputs.nancy-enabled }}
       govulncheck-enabled: ${{ steps.config.outputs.govulncheck-enabled }}
       gitleaks-enabled: ${{ steps.config.outputs.gitleaks-enabled }}
+      osv-enabled: ${{ steps.config.outputs.osv-enabled }}
       is-release-run: ${{ steps.config.outputs.is-release-run }}
       start-epoch: ${{ steps.timer.outputs.start-epoch }}
       start-time: ${{ steps.timer.outputs.start-time }}
@@ -308,8 +321,23 @@ jobs:
           echo "📋 Parsing environment variables..."
 
           # Extract each variable from JSON and set as output
-          echo "$ENV_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' | while IFS='=' read -r key value; do
-            echo "$key=$value" >> $GITHUB_ENV
+          # Harden $GITHUB_ENV writes (defense-in-depth): base64 the value so newlines and
+          # special chars can't corrupt the read loop; accept only valid env-var names and
+          # reject values with an embedded newline (which could inject arbitrary extra vars).
+          # base64's decode flag differs by platform (GNU: -d, BSD/macOS: -D) — detect it.
+          if printf '' | base64 -d >/dev/null 2>&1; then B64D=-d; else B64D=-D; fi
+          echo "$ENV_JSON" | jq -r 'to_entries[] | .key, (.value | tostring | @base64)' | while IFS= read -r key; do
+            IFS= read -r value_b64
+            if [[ ! "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+              echo "⚠️ Skipping invalid env var name: $key" >&2
+              continue
+            fi
+            value=$(printf '%s' "$value_b64" | base64 "$B64D")
+            if [[ "$value" == *$'\n'* ]]; then
+              echo "⚠️ Skipping $key: value contains a newline" >&2
+              continue
+            fi
+            printf '%s=%s\n' "$key" "$value" >> "$GITHUB_ENV"
           done
 
           echo "✅ Environment variables parsed successfully"
@@ -699,7 +727,7 @@ jobs:
           echo "benchmark-mode=${{ env.BENCHMARK_MODE }}" >> $GITHUB_OUTPUT
           echo "benchmark-timeout=${{ env.BENCHMARK_TIMEOUT }}" >> $GITHUB_OUTPUT
           # Security scans - enable if any individual tool is enabled
-          if [[ "${{ env.ENABLE_SECURITY_SCAN_NANCY }}" == "true" || "${{ env.ENABLE_SECURITY_SCAN_GOVULNCHECK }}" == "true" || "${{ env.ENABLE_SECURITY_SCAN_GITLEAKS }}" == "true" ]]; then
+          if [[ "${{ env.ENABLE_SECURITY_SCAN_NANCY }}" == "true" || "${{ env.ENABLE_SECURITY_SCAN_GOVULNCHECK }}" == "true" || "${{ env.ENABLE_SECURITY_SCAN_GITLEAKS }}" == "true" || "${{ env.ENABLE_SECURITY_SCAN_OSV }}" == "true" ]]; then
             echo "security-scans-enabled=true" >> $GITHUB_OUTPUT
           else
             echo "security-scans-enabled=false" >> $GITHUB_OUTPUT
@@ -707,6 +735,7 @@ jobs:
           echo "nancy-enabled=${{ env.ENABLE_SECURITY_SCAN_NANCY }}" >> $GITHUB_OUTPUT
           echo "govulncheck-enabled=${{ env.ENABLE_SECURITY_SCAN_GOVULNCHECK }}" >> $GITHUB_OUTPUT
           echo "gitleaks-enabled=${{ env.ENABLE_SECURITY_SCAN_GITLEAKS }}" >> $GITHUB_OUTPUT
+          echo "osv-enabled=${{ env.ENABLE_SECURITY_SCAN_OSV }}" >> $GITHUB_OUTPUT
           echo "static-analysis-enabled=${{ env.ENABLE_STATIC_ANALYSIS }}" >> $GITHUB_OUTPUT
           echo "fuzz-testing-enabled=${{ env.ENABLE_FUZZ_TESTING }}" >> $GITHUB_OUTPUT
           echo "go-tests-enabled=${{ env.ENABLE_GO_TESTS }}" >> $GITHUB_OUTPUT
@@ -883,7 +912,8 @@ jobs:
           echo "| **Gitleaks** | $([ "${{ env.ENABLE_SECURITY_SCAN_GITLEAKS }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_SECURITY_SCAN_GITLEAKS }}" == "true" ] && echo "Secret scanning" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
           echo "| **Go Linting** | $([ "${{ env.ENABLE_GO_LINT }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_GO_LINT }}" == "true" ] && echo "golangci-lint" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
           echo "| **Govulncheck** | $([ "${{ env.ENABLE_SECURITY_SCAN_GOVULNCHECK }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_SECURITY_SCAN_GOVULNCHECK }}" == "true" ] && echo "Go vulnerability scan" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Nancy** | $([ "${{ env.ENABLE_SECURITY_SCAN_NANCY }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_SECURITY_SCAN_NANCY }}" == "true" ] && echo "Dependency checks" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Nancy** | $([ "${{ env.ENABLE_SECURITY_SCAN_NANCY }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_SECURITY_SCAN_NANCY }}" == "true" ] && echo "Dependency checks" || echo "Skipped (retired)") |" >> $GITHUB_STEP_SUMMARY
+          echo "| **OSV-Scanner** | $([ "${{ env.ENABLE_SECURITY_SCAN_OSV }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_SECURITY_SCAN_OSV }}" == "true" ] && echo "OSV.dev dependency scan" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
           echo "| **Pre-Commit** | $([ "${{ env.ENABLE_GO_PRE_COMMIT }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_GO_PRE_COMMIT }}" == "true" ] && echo "17x faster hooks" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
           echo "| **Race Detection** | $([ "${{ env.ENABLE_RACE_DETECTION }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_RACE_DETECTION }}" == "true" ] && echo "-race flag" || echo "No race detection") |" >> $GITHUB_STEP_SUMMARY
           echo "| **Static Analysis** | $([ "${{ env.ENABLE_STATIC_ANALYSIS }}" == "true" ] && echo "✅" || echo "❌") | $([ "${{ env.ENABLE_STATIC_ANALYSIS }}" == "true" ] && echo "go vet" || echo "Skipped") |" >> $GITHUB_STEP_SUMMARY
