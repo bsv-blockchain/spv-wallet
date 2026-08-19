@@ -109,6 +109,10 @@ runs:
               UNIQUE=$(to_int "$(echo "$SUMMARY" | jq -r '.summary.unique_total // 0')")
               TOTAL=$(to_int "$(echo "$SUMMARY" | jq -r '.summary.total // 0')")
               DURATION=$(echo "$SUMMARY" | jq -r '.summary.duration // "unknown"')
+              # exit_code is the real `go test` process exit code (added in mage-x's
+              # CI summary as a ground-truth signal independent of parsed counts).
+              # Older mage-x versions omit it; // 0 keeps this backward compatible.
+              EXIT_CODE=$(to_int "$(echo "$SUMMARY" | jq -r '.summary.exit_code // 0')")
 
               echo "  • Status: $STATUS"
               echo "  • Passed: $PASSED"
@@ -117,14 +121,29 @@ runs:
               echo "  • Unique Tests: $UNIQUE"
               echo "  • Test Runs: $TOTAL"
               echo "  • Duration: $DURATION"
+              if [[ "$EXIT_CODE" -gt 0 ]]; then
+                echo "  • Exit Code: $EXIT_CODE"
+              fi
 
               TOTAL_UNIQUE=$((TOTAL_UNIQUE + UNIQUE))
               TOTAL_TESTS=$((TOTAL_TESTS + TOTAL))
               TOTAL_SKIPPED=$((TOTAL_SKIPPED + SKIPPED))
 
-              if [[ "$STATUS" == "failed" ]] || [[ "$FAILED" -gt 0 ]]; then
+              # Do not trust "failed" test counts alone: a build failure, or any
+              # other process-level failure the summary doesn't attribute to a
+              # specific package or test, reports status "error"/"failed" and/or a
+              # non-zero exit_code while failed can still be 0. Any one of these
+              # signals disagreeing with "everything passed" must fail validation.
+              if [[ "$STATUS" == "failed" ]] || [[ "$STATUS" == "error" ]] || [[ "$FAILED" -gt 0 ]] || [[ "$EXIT_CODE" -gt 0 ]]; then
                 VALIDATION_FAILED=true
                 TOTAL_FAILURES=$((TOTAL_FAILURES + FAILED))
+
+                if [[ "$FAILED" -eq 0 ]]; then
+                  echo ""
+                  echo "  🚨 Process failed (status=$STATUS, exit_code=$EXIT_CODE) with no individual test" \
+                       "failures reported - likely a build or setup error. See the raw test output" \
+                       "for this job."
+                fi
 
                 # Extract failure details
                 echo ""
@@ -301,9 +320,15 @@ runs:
               STATUS=$(echo "$SUMMARY" | jq -r '.summary.status // "unknown"')
               PASSED=$(to_int "$(echo "$SUMMARY" | jq -r '.summary.passed // 0')")
               FAILED=$(to_int "$(echo "$SUMMARY" | jq -r '.summary.failed // 0')")
+              EXIT_CODE=$(to_int "$(echo "$SUMMARY" | jq -r '.summary.exit_code // 0')")
 
-              if [[ "$STATUS" == "passed" ]]; then
+              if [[ "$STATUS" == "passed" && "$EXIT_CODE" -eq 0 ]]; then
                 echo "- ✅ **$TEST_LABEL**: $PASSED tests passed" >> $GITHUB_STEP_SUMMARY
+              elif [[ "$FAILED" -eq 0 ]]; then
+                # status isn't "passed" (or a non-zero exit_code disagrees with it)
+                # but no individual test failure was reported - a build or process
+                # error, not a test failure. "0 failures" alone would be misleading.
+                echo "- ❌ **$TEST_LABEL**: build/process failure (exit code $EXIT_CODE)" >> $GITHUB_STEP_SUMMARY
               else
                 echo "- ❌ **$TEST_LABEL**: $FAILED failures" >> $GITHUB_STEP_SUMMARY
               fi
