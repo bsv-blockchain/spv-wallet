@@ -82,7 +82,7 @@ func TestIncomingPaymailRawTX(t *testing.T) {
 		testState.lockingScript = lockingScript
 	})
 
-	t.Run("step 2 - call receive-transaction capability", func(t *testing.T) {
+	t.Run("step 2 - call receive-transaction capability", func(*testing.T) {
 		// given:
 		txSpec := given.Tx().
 			WithInput(satoshis+1).
@@ -128,7 +128,7 @@ func TestIncomingPaymailRawTX(t *testing.T) {
 		testState.txID = txSpec.ID()
 	})
 
-	t.Run("step 3 - check balance", func(t *testing.T) {
+	t.Run("step 3 - check balance", func(*testing.T) {
 		// given:
 		recipientClient := given.HttpClient().ForGivenUser(fixtures.RecipientInternal)
 
@@ -141,7 +141,7 @@ func TestIncomingPaymailRawTX(t *testing.T) {
 		}`, satoshis)
 	})
 
-	t.Run("step 4 - get operations", func(t *testing.T) {
+	t.Run("step 4 - get operations", func(*testing.T) {
 		// given:
 		recipientClient := given.HttpClient().ForGivenUser(fixtures.RecipientInternal)
 
@@ -290,7 +290,7 @@ func TestIncomingPaymailBeef(t *testing.T) {
 		testState.txID = txSpec.ID()
 	})
 
-	t.Run("step 3 - check balance", func(t *testing.T) {
+	t.Run("step 3 - check balance", func(*testing.T) {
 		// given:
 		recipientClient := given.HttpClient().ForGivenUser(fixtures.RecipientInternal)
 
@@ -303,7 +303,7 @@ func TestIncomingPaymailBeef(t *testing.T) {
 		}`, satoshis)
 	})
 
-	t.Run("step 4 - get operations", func(t *testing.T) {
+	t.Run("step 4 - get operations", func(*testing.T) {
 		// given:
 		recipientClient := given.HttpClient().ForGivenUser(fixtures.RecipientInternal)
 
