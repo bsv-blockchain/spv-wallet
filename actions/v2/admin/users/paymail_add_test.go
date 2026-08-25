@@ -239,7 +239,7 @@ func TestAddPaymailWithBothPaymailAndAliasDomainPair(t *testing.T) {
 	// and:
 	client := given.HttpClient().ForAdmin()
 
-	t.Run("Add using consistent fields", func(t *testing.T) {
+	t.Run("Add using consistent fields", func(*testing.T) {
 		// given:
 		alias := "user"
 		domain := fixtures.PaymailDomain
@@ -262,7 +262,7 @@ func TestAddPaymailWithBothPaymailAndAliasDomainPair(t *testing.T) {
 		then.Response(res).IsCreated()
 	})
 
-	t.Run("Try to add with inconsistent paymail and alias-domain pair", func(t *testing.T) {
+	t.Run("Try to add with inconsistent paymail and alias-domain pair", func(*testing.T) {
 		// given:
 		alias := "user"
 		domain := fixtures.PaymailDomain
