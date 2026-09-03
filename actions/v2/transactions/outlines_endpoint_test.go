@@ -448,7 +448,7 @@ func TestPOSTTransactionOutlinesErrors(t *testing.T) {
 			Post(transactionsOutlinesURL)
 
 		// then:
-		then.Response(res).IsBadRequest().WithJSONf(apierror.ExpectedJSON("error-tx-spec-paymail-address-no-default", "cannot choose paymail address of the sender"))
+		then.Response(res).IsBadRequest().WithJSON(apierror.ExpectedJSON("error-tx-spec-paymail-address-no-default", "cannot choose paymail address of the sender"))
 	})
 
 	t.Run("Bad Request: no body", func(t *testing.T) {
@@ -709,7 +709,7 @@ func TestPOSTTransactionOutlinesErrors(t *testing.T) {
 			// then:
 			then.Response(res).
 				HasStatus(test.expectedStatus).
-				WithJSONf(test.expectedErr)
+				WithJSON(test.expectedErr)
 		})
 	}
 }

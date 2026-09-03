@@ -92,7 +92,7 @@ func TestCreateAndDeleteUser(t *testing.T) {
 		res, _ := client.R().Get("/api/v2/users/current")
 
 		// then:
-		then.Response(res).HasStatus(http.StatusUnauthorized).WithJSONf(apierror.ExpectedJSON("error-unauthorized", "unauthorized"))
+		then.Response(res).HasStatus(http.StatusUnauthorized).WithJSON(apierror.ExpectedJSON("error-unauthorized", "unauthorized"))
 	})
 }
 
@@ -117,5 +117,5 @@ func TestDeleteUserWithUTXO(t *testing.T) {
 	res, _ := client.R().
 		Delete("/api/v2/users/current")
 
-	then.Response(res).HasStatus(http.StatusBadRequest).WithJSONf(apierror.ExpectedJSON("error-user-has-existing-utxos", "cannot delete user with existing UTXOs"))
+	then.Response(res).HasStatus(http.StatusBadRequest).WithJSON(apierror.ExpectedJSON("error-user-has-existing-utxos", "cannot delete user with existing UTXOs"))
 }

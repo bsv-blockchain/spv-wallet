@@ -221,7 +221,7 @@ func TestOutlinesRecordOpReturnErrorCases(t *testing.T) {
 				Post(transactionsOutlinesRecordURL)
 
 			// then:
-			then.Response(res).HasStatus(test.expectHttpCode).WithJSONf(test.expectedErr)
+			then.Response(res).HasStatus(test.expectHttpCode).WithJSON(test.expectedErr)
 		})
 	}
 }
@@ -285,7 +285,7 @@ func TestOutlinesRecordOpReturnOnBroadcastError(t *testing.T) {
 				Post(transactionsOutlinesRecordURL)
 
 			// then:
-			then.Response(res).HasStatus(500).WithJSONf(apierror.ExpectedJSON("error-tx-broadcast", "failed to broadcast transaction"))
+			then.Response(res).HasStatus(500).WithJSON(apierror.ExpectedJSON("error-tx-broadcast", "failed to broadcast transaction"))
 		})
 	}
 }

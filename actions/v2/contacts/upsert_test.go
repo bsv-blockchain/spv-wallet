@@ -70,7 +70,7 @@ func TestUpsertContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(401).
-			WithJSONf(apierror.ExpectedJSON("error-admin-auth-on-user-endpoint", "cannot call user's endpoints with admin authorization"))
+			WithJSON(apierror.ExpectedJSON("error-admin-auth-on-user-endpoint", "cannot call user's endpoints with admin authorization"))
 	})
 
 	t.Run("Create contact with not found requester paymail", func(t *testing.T) {
@@ -90,7 +90,7 @@ func TestUpsertContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(404).
-			WithJSONf(apierror.ExpectedJSON("error-paymail-not-found", "paymail not found"))
+			WithJSON(apierror.ExpectedJSON("error-paymail-not-found", "paymail not found"))
 	})
 
 	t.Run("Create contact with mismatching requester paymail", func(t *testing.T) {
@@ -110,7 +110,7 @@ func TestUpsertContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-paymail-user-do-not-own", "user do not own paymail"))
+			WithJSON(apierror.ExpectedJSON("error-paymail-user-do-not-own", "user do not own paymail"))
 	})
 
 	t.Run("Create contact without creator paymail", func(t *testing.T) {
@@ -130,7 +130,7 @@ func TestUpsertContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(404).
-			WithJSONf(apierror.ExpectedJSON("error-paymail-not-found", "paymail not found"))
+			WithJSON(apierror.ExpectedJSON("error-paymail-not-found", "paymail not found"))
 	})
 
 	t.Run("Create contact without full name", func(t *testing.T) {
@@ -150,6 +150,6 @@ func TestUpsertContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-contact-full-name-required", "full name is required"))
+			WithJSON(apierror.ExpectedJSON("error-contact-full-name-required", "full name is required"))
 	})
 }

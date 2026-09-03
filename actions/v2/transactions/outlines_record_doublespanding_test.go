@@ -102,6 +102,6 @@ func TestDoubleSpending(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-utxo-spent", "UTXO is already spent"))
+			WithJSON(apierror.ExpectedJSON("error-utxo-spent", "UTXO is already spent"))
 	})
 }
