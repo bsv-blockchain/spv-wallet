@@ -56,7 +56,7 @@ func TestConfirmContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-contact-wrong-status", "contact is in wrong status"))
+			WithJSON(apierror.ExpectedJSON("error-contact-wrong-status", "contact is in wrong status"))
 	})
 
 	t.Run("Contact in wrong status", func(t *testing.T) {
@@ -72,7 +72,7 @@ func TestConfirmContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(400).
-			WithJSONf(apierror.ExpectedJSON("error-contact-wrong-status", "contact is in wrong status"))
+			WithJSON(apierror.ExpectedJSON("error-contact-wrong-status", "contact is in wrong status"))
 	})
 
 	t.Run("Confirm contact with admin xpub", func(t *testing.T) {
@@ -89,7 +89,7 @@ func TestConfirmContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(401).
-			WithJSONf(apierror.ExpectedJSON("error-admin-auth-on-user-endpoint", "cannot call user's endpoints with admin authorization"))
+			WithJSON(apierror.ExpectedJSON("error-admin-auth-on-user-endpoint", "cannot call user's endpoints with admin authorization"))
 	})
 
 	t.Run("No contact to confirm", func(t *testing.T) {
@@ -104,6 +104,6 @@ func TestConfirmContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(404).
-			WithJSONf(apierror.ExpectedJSON("error-contact-not-found", "contact not found"))
+			WithJSON(apierror.ExpectedJSON("error-contact-not-found", "contact not found"))
 	})
 }

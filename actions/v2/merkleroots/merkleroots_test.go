@@ -64,7 +64,7 @@ func TestGETMerkleRootsSuccess(t *testing.T) {
 				Get(url)
 
 			// then:
-			then.Response(res).IsOK().WithJSONf(string(expResponseJSON))
+			then.Response(res).IsOK().WithJSON(string(expResponseJSON))
 		})
 	}
 }
@@ -112,7 +112,7 @@ func TestGETMerkleRootsFailure(t *testing.T) {
 				Get(merklerootsURL)
 
 			// then:
-			then.Response(res).HasStatus(tt.responseCode).WithJSONf(tt.expectErr)
+			then.Response(res).HasStatus(tt.responseCode).WithJSON(tt.expectErr)
 		})
 	}
 

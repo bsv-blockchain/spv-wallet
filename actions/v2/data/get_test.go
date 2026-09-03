@@ -100,7 +100,7 @@ func TestErrorCases(t *testing.T) {
 		res, _ := client.R().Get("/api/v2/data/" + wrongID)
 
 		// then:
-		then.Response(res).HasStatus(400).WithJSONf(
+		then.Response(res).HasStatus(400).WithJSON(
 			apierror.ExpectedJSON("error-invalid-data-id", "invalid data id"),
 		)
 	})

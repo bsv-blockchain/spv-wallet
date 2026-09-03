@@ -30,7 +30,7 @@ func TestGetContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(404).
-			WithJSONf(apierror.ExpectedJSON("error-contact-not-found", "contact not found"))
+			WithJSON(apierror.ExpectedJSON("error-contact-not-found", "contact not found"))
 	})
 
 	t.Run("Get contact", func(t *testing.T) {
@@ -79,6 +79,6 @@ func TestGetContact(t *testing.T) {
 		// then:
 		then.Response(res).
 			HasStatus(401).
-			WithJSONf(apierror.ExpectedJSON("error-admin-auth-on-user-endpoint", "cannot call user's endpoints with admin authorization"))
+			WithJSON(apierror.ExpectedJSON("error-admin-auth-on-user-endpoint", "cannot call user's endpoints with admin authorization"))
 	})
 }

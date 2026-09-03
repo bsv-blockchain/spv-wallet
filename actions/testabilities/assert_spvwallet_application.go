@@ -29,6 +29,7 @@ type SPVWalletResponseAssertions interface {
 	IsOK() SPVWalletResponseAssertions
 	IsCreated() SPVWalletResponseAssertions
 	HasStatus(status int) SPVWalletResponseAssertions
+	WithJSON(expected string)
 	WithJSONf(expectedFormat string, args ...any)
 	WithJSONMatching(expectedTemplateFormat string, params map[string]any)
 	WithProblemDetails(status int, errType string, containDetails ...string)
@@ -105,19 +106,19 @@ func (a *responseAssertions) Response(response *resty.Response) SPVWalletRespons
 func (a *responseAssertions) IsUnauthorized() {
 	a.t.Helper()
 	a.HasStatus(http.StatusUnauthorized).
-		WithJSONf(apierror.MissingAuthHeaderJSON)
+		WithJSON(apierror.MissingAuthHeaderJSON)
 }
 
 func (a *responseAssertions) IsUnauthorizedForAdmin() {
 	a.t.Helper()
 	a.HasStatus(http.StatusUnauthorized).
-		WithJSONf(apierror.AdminNotAuthorizedJSON)
+		WithJSON(apierror.AdminNotAuthorizedJSON)
 }
 
 func (a *responseAssertions) IsUnauthorizedForUser() {
 	a.t.Helper()
 	a.HasStatus(http.StatusUnauthorized).
-		WithJSONf(apierror.UserNotAuthorizedJSON)
+		WithJSON(apierror.UserNotAuthorizedJSON)
 }
 
 func (a *responseAssertions) IsOK() SPVWalletResponseAssertions {
@@ -139,6 +140,14 @@ func (a *responseAssertions) HasStatus(status int) SPVWalletResponseAssertions {
 	a.t.Helper()
 	a.assert.Equal(status, a.response.StatusCode())
 	return a
+}
+
+// WithJSON asserts that the response body matches the given pre-rendered JSON string.
+// Use this when the expected JSON is not a format string; use WithJSONf when formatting is required.
+func (a *responseAssertions) WithJSON(expected string) {
+	a.t.Helper()
+	a.assertJSONContentType()
+	assertJSONEq(a.t, expected, a.response.String())
 }
 
 func (a *responseAssertions) WithJSONf(expectedFormat string, args ...any) {
