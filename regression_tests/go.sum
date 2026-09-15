@@ -1,8 +1,8 @@
 github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/boombuler/barcode v1.1.0 h1:ChaYjBR63fr4LFyGn8E8nt7dBSt3MiU3zMOZqFvVkHo=
 github.com/boombuler/barcode v1.1.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
-github.com/bsv-blockchain/go-sdk v1.4.1 h1:J2hECn17QkLXq8K8O0m0qA7yih4YmWFTX6o9Ox72Tf8=
-github.com/bsv-blockchain/go-sdk v1.4.1/go.mod h1:p2aRf3+hHx8uaQazzVBbX/iFv/vatCFbazrM7RmvT08=
+github.com/bsv-blockchain/go-sdk v1.5.1 h1:NGqtUAVjSfwrWPEX2bFNt7yAuwRa0b3G6El4tHZDNHc=
+github.com/bsv-blockchain/go-sdk v1.5.1/go.mod h1:clGHSZoOwrnqJrzEw4VHYZk3JQXbrr+mnybCXZCdrt4=
 github.com/bsv-blockchain/spv-wallet-go-client v1.3.0 h1:O/NcZzdjFjr3ZS2p/klnIOUIP/hjjrPt23fU1YFLn2g=
 github.com/bsv-blockchain/spv-wallet-go-client v1.3.0/go.mod h1:99/9Arhh7PV6lTYbnTgL/GzyLEFKFSb8v4nW9rgAV9M=
 github.com/bytedance/gopkg v0.1.4 h1:oZnQwnX82KAIWb7033bEwtxvTqXcYMxDBaQxo5JJHWM=
@@ -59,6 +59,8 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd h1:TRLaZ9cD/w
 github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
 github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9Gz0M=
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
+github.com/mrz1836/go-whatsonchain v1.1.0 h1:m/bVHDx8t5zDcuV/l4h6ZXPcu0DQ7ZZB/p+Oy/llC1c=
+github.com/mrz1836/go-whatsonchain v1.1.0/go.mod h1:SAMQltVzWjjBSSIM9KBoLRTFuv9fIrejyEUK95qPDZI=
 github.com/pelletier/go-toml/v2 v2.4.3 h1:GTRvJQutkOSftxIFD5xw9aepkYNuPWmVJpffdDPYVpY=
 github.com/pelletier/go-toml/v2 v2.4.3/go.mod h1:2gIqNv+qfxSVS7cM2xJQKtLSTLUE9V8t9Stt+h56mCY=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=

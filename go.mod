@@ -13,7 +13,7 @@ require (
 	github.com/99designs/gqlgen v0.17.95
 	github.com/bitcoinschema/go-map v0.2.2
 	github.com/bsv-blockchain/go-paymail v0.27.0
-	github.com/bsv-blockchain/go-sdk v1.4.1
+	github.com/bsv-blockchain/go-sdk v1.5.1
 	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/coocood/freecache v1.2.7
 	github.com/fergusstrange/embedded-postgres v1.34.0
@@ -59,6 +59,7 @@ require (
 	github.com/go-openapi/swag/pools v0.29.2 // indirect
 	github.com/moby/moby/api v1.56.0 // indirect
 	github.com/moby/moby/client v0.6.0 // indirect
+	github.com/mrz1836/go-whatsonchain v1.1.0 // indirect
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.3 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.9.0 // indirect
 )
