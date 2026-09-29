@@ -216,23 +216,26 @@ func (c *Client) Cluster() cluster.ClientInterface {
 
 // Close will safely close any open connections (cache, datastore, etc.)
 func (c *Client) Close(ctx context.Context) error {
-	if c.V2Interface != nil {
-		err := c.V2Interface.Close(ctx)
-		if err != nil {
-			return spverrors.Wrapf(err, "failed to close envine V2")
-		}
-		return nil
-	}
-
-	// Close WebhookManager and Notifications
+	// Close WebhookManager and Notifications (loaded for both V1 and V2).
+	// This must happen before the datastore is closed, because the WebhookManager
+	// runs a background goroutine that periodically reads webhooks from the datastore.
 	if c.options.notifications != nil {
 		if c.options.notifications.client != nil {
 			if err := c.options.notifications.client.Close(); err != nil {
 				return spverrors.Wrapf(err, "failed to close notifications")
 			}
+			c.options.notifications.client = nil
 		}
 		if c.options.notifications.webhookManager != nil {
 			c.options.notifications.webhookManager.Stop()
+			c.options.notifications.webhookManager = nil
+		}
+	}
+
+	// Close engine V2
+	if c.V2Interface != nil {
+		if err := c.V2Interface.Close(ctx); err != nil {
+			return spverrors.Wrapf(err, "failed to close engine V2")
 		}
 	}
 
