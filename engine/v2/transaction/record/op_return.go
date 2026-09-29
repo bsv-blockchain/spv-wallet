@@ -22,33 +22,27 @@ func getDataFromOpReturn(lockingScript *script.Script) ([]byte, error) {
 		return nil, txerrors.ErrParsingScript.Wrap(err)
 	}
 
-	var bytes []byte
-
 	// Find the OP_RETURN chunk
-	for i, chunk := range chunks {
-		if chunk.Op == script.OpRETURN {
-			// The OP_RETURN chunk.Data contains: OP_RETURN_OPCODE + PUSH_LENGTH + DATA
-			// Example: 0x6a 0x0b "hello world"
-			// We need to skip the first two bytes and extract the data
-			if len(chunk.Data) > 2 {
-				// chunk.Data[0] = 0x6a (OP_RETURN opcode)
-				// chunk.Data[1] = length of data
-				// chunk.Data[2...] = actual data
-				pushLength := int(chunk.Data[1])
-				if len(chunk.Data) >= pushLength+2 {
-					bytes = chunk.Data[2 : pushLength+2]
-				}
-			}
-
-			// Also check for subsequent chunks (alternative format)
-			for j := i + 1; j < len(chunks); j++ {
-				if chunks[j].Op > script.OpPUSHDATA4 || chunks[j].Op == script.OpZERO {
-					return nil, txerrors.ErrOnlyPushDataAllowed
-				}
-				bytes = append(bytes, chunks[j].Data...)
-			}
-			return bytes, nil
+	for _, chunk := range chunks {
+		if chunk.Op != script.OpRETURN {
+			continue
 		}
+
+		// Since go-sdk v1.6.0 the OP_RETURN chunk's Data holds every byte after the OP_RETURN opcode
+		// (e.g. PUSH_LENGTH + DATA), so parse it as a regular sequence of operations.
+		ops, err := script.NewFromBytes(chunk.Data).ParseOps()
+		if err != nil {
+			return nil, txerrors.ErrParsingScript.Wrap(err)
+		}
+
+		var bytes []byte
+		for _, op := range ops {
+			if op.Op > script.OpPUSHDATA4 || op.Op == script.OpZERO {
+				return nil, txerrors.ErrOnlyPushDataAllowed
+			}
+			bytes = append(bytes, op.Data...)
+		}
+		return bytes, nil
 	}
 
 	return nil, txerrors.ErrAnnotationMismatch
