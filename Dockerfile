@@ -10,7 +10,7 @@ COPY . ./
 RUN GOOS=linux go build -o spvwallet cmd/main.go
 
 # Get runtime image
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.8@sha256:beeada7dd17903dfb69fd5f6916c054720bf28a52daaa2f7a1910a1394244bd2
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.8@sha256:5ed244b62bbf4095080144d9d35eb8fcd3d39a9801f94aadd63b9d10978a01ae
 
 # Version
 LABEL version="1.0" name="SPVWallet"
