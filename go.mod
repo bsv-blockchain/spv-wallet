@@ -13,7 +13,7 @@ require (
 	github.com/99designs/gqlgen v0.17.95
 	github.com/bitcoinschema/go-map v0.2.2
 	github.com/bsv-blockchain/go-paymail v0.27.0
-	github.com/bsv-blockchain/go-sdk v1.6.0
+	github.com/bsv-blockchain/go-sdk v1.7.1
 	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/coocood/freecache v1.2.7
 	github.com/fergusstrange/embedded-postgres v1.34.0
