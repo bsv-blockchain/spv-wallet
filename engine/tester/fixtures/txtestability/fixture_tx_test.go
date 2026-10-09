@@ -21,6 +21,7 @@ func TestMockTXGeneration(t *testing.T) {
 		spec           txtestability.TransactionSpec
 		specCase       func(spec txtestability.TransactionSpec) txtestability.TransactionSpec
 		shouldBeSigned bool
+		verifyErr      error
 		beef           string
 		rawTX          string
 		ef             string
@@ -29,9 +30,11 @@ func TestMockTXGeneration(t *testing.T) {
 			specCase: func(spec txtestability.TransactionSpec) txtestability.TransactionSpec {
 				return spec
 			},
-			beef:  "0100beef00010100000000000000000000",
-			rawTX: "01000000000000000000",
-			ef:    "010000000000000000ef000000000000",
+			// a transaction without inputs is invalid by consensus rules
+			verifyErr: spv.ErrNoInputs,
+			beef:      "0100beef00010100000000000000000000",
+			rawTX:     "01000000000000000000",
+			ef:        "010000000000000000ef000000000000",
 		},
 		"signed complex tx": {
 			specCase: func(tx txtestability.TransactionSpec) txtestability.TransactionSpec {
@@ -59,8 +62,13 @@ func TestMockTXGeneration(t *testing.T) {
 			ok, err := spv.VerifyScripts(context.Background(), tx)
 
 			// then:
-			require.NoError(t, err)
-			require.True(t, ok)
+			if test.verifyErr != nil {
+				require.ErrorIs(t, err, test.verifyErr)
+				require.False(t, ok)
+			} else {
+				require.NoError(t, err)
+				require.True(t, ok)
+			}
 
 			require.Equal(t, test.beef, spec.BEEF())
 			require.Equal(t, test.rawTX, spec.RawTX())
