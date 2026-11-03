@@ -1,6 +1,6 @@
 module github.com/bsv-blockchain/spv-wallet
 
-go 1.26.0
+go 1.26.10
 
 // NOTE: The following replace directives are essential for maintaining the cohesion and functionality of this project.
 // We are using the packages github.com/bsv-blockchain/spv-wallet/models and github.com/bsv-blockchain/spv-wallet/engine directly
@@ -12,13 +12,13 @@ replace github.com/bsv-blockchain/spv-wallet/models => ./models
 require (
 	github.com/99designs/gqlgen v0.17.98
 	github.com/bitcoinschema/go-map v0.2.2
-	github.com/bsv-blockchain/go-paymail v0.27.2
+	github.com/bsv-blockchain/go-paymail v0.28.0
 	github.com/bsv-blockchain/go-sdk v1.7.3
 	github.com/bsv-blockchain/spv-wallet/models v1.0.1
 	github.com/coocood/freecache v1.2.7
 	github.com/fergusstrange/embedded-postgres v1.34.0
-	github.com/getkin/kin-openapi v0.151.0
-	github.com/gin-contrib/pprof v1.5.6
+	github.com/getkin/kin-openapi v0.152.0
+	github.com/gin-contrib/pprof v1.5.7
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-redis/redis/v8 v8.11.5
@@ -34,7 +34,7 @@ require (
 	github.com/mrz1836/go-logger v1.0.6
 	github.com/mrz1836/go-sanitize v1.6.0
 	github.com/mrz1836/go-validate v1.0.5
-	github.com/oapi-codegen/runtime v1.7.0
+	github.com/oapi-codegen/runtime v1.8.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.25.0
 	github.com/rafaeljusto/redigomock v2.4.0+incompatible
@@ -79,8 +79,8 @@ require (
 	github.com/bitcoinschema/go-bpu v0.2.3 // indirect
 	github.com/bsm/redislock v0.9.4 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
-	github.com/bytedance/sonic v1.15.4 // indirect
-	github.com/bytedance/sonic/loader v0.5.2 // indirect
+	github.com/bytedance/sonic v1.15.5 // indirect
+	github.com/bytedance/sonic/loader v0.5.3 // indirect
 	github.com/capnm/sysinfo v0.0.0-20130621111458-5909a53897f3 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -118,7 +118,7 @@ require (
 	github.com/go-playground/validator/v10 v10.30.5 // indirect
 	github.com/go-resty/resty/v2 v2.17.2
 	github.com/go-sql-driver/mysql v1.10.1 // indirect
-	github.com/goccy/go-json v0.11.2 // indirect
+	github.com/goccy/go-json v0.12.0 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
@@ -189,7 +189,7 @@ require (
 	golang.org/x/arch v0.32.0 // indirect
 	golang.org/x/crypto v0.58.0
 	golang.org/x/mod v0.42.0 // indirect
-	golang.org/x/net v0.61.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
