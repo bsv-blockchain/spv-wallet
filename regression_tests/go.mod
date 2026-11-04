@@ -1,6 +1,6 @@
 module github.com/bsv-blockchain/spv-wallet/regression-tests
 
-go 1.26.0
+go 1.26.10
 
 replace github.com/bsv-blockchain/spv-wallet => ../ //nolint:gomoddirectives // local development
 
@@ -20,8 +20,8 @@ require (
 	github.com/boombuler/barcode v1.1.0 // indirect
 	github.com/bsv-blockchain/go-sdk v1.7.3 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
-	github.com/bytedance/sonic v1.15.4 // indirect
-	github.com/bytedance/sonic/loader v0.5.2 // indirect
+	github.com/bytedance/sonic v1.15.5 // indirect
+	github.com/bytedance/sonic/loader v0.5.3 // indirect
 	github.com/cloudwego/base64x v0.1.7 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.16 // indirect
 	github.com/gin-contrib/sse v1.1.2 // indirect
@@ -30,7 +30,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.2 // indirect
 	github.com/go-playground/validator/v10 v10.30.5 // indirect
 	github.com/go-resty/resty/v2 v2.17.2 // indirect
-	github.com/goccy/go-json v0.11.2 // indirect
+	github.com/goccy/go-json v0.12.0 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.1 // indirect
@@ -51,7 +51,7 @@ require (
 	go.mongodb.org/mongo-driver/v2 v2.9.2 // indirect
 	golang.org/x/arch v0.32.0 // indirect
 	golang.org/x/crypto v0.58.0 // indirect
-	golang.org/x/net v0.61.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
